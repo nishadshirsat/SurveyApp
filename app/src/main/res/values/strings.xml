@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">Hawkers Survey App</string>
+
+
+    <string-array name="education">
+    <item>a. Primary (5th std)</item>
+    <item>b. Middle (6th to 8th std)</item>
+    <item>c. Secondary (till 10th Std)</item>
+    <item>d. Higher Secondary (till 12th Std)</item>
+    <item>e. Diploma/ Graduate/ Postgraduate</item>
+    <item>f. Illiterate</item>
+
+    </string-array>
+
+    <string-array name="category">
+        <item>GEN</item>
+        <item>SC</item>
+        <item>ST</item>
+        <item>OBC</item>
+        <item>PERSONNEL</item>
+        <item>WOMEN</item>
+        <item>WIDOW</item>
+        <item>MINORITY</item>
+        <item>OTHERS</item>
+        <item>PERSON WITH DISABILITIES</item>
+    </string-array>
 </resources>
