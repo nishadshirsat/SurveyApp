@@ -6,18 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.PersonalDetailsActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:scrollbars="none"
-        android:layout_above="@+id/BtnNext">
+        android:scrollbars="none">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -347,7 +347,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/edittext_bg"
                         android:hint="e.g. 05/06/1996"
-                        android:inputType="text"
+                        android:inputType="date"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp"
                         android:paddingRight="20dp"
@@ -357,7 +357,7 @@
                     <ImageView
                         android:id="@+id/ImgCalendar"
                         android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/calendar" />
 
@@ -1159,14 +1159,15 @@
                     android:orientation="horizontal"
                     android:weightSum="3">
 
-                    <TextView
-                        android:id="@+id/TextAddharCard"
+                    <EditText
+                        android:id="@+id/EditAadhar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="text"
+                        android:background="@drawable/edittext_bg"
+                        android:hint="Aadhar No"
+                        android:inputType="number"
                         android:padding="10dp"
-                        android:hint="e.g. filename"
                         android:textSize="14sp" />
 
                     <Button
@@ -1178,7 +1179,11 @@
                         android:background="@drawable/edittext_bg"
                         android:text="Capture Biometric"
                         android:inputType="text"
-                        android:padding="10dp"
+                        android:paddingTop="10dp"
+                        android:visibility="gone"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -1236,7 +1241,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/edittext_bg"
                         android:hint="Account No"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:padding="10dp"
                         android:textSize="14sp" />
 
@@ -1281,6 +1286,7 @@
                         android:background="@drawable/edittext_bg"
                         android:hint="IFSC Code"
                         android:inputType="text"
+                        android:textAllCaps="true"
                         android:padding="10dp"
                         android:textSize="14sp" />
 
@@ -1469,26 +1475,29 @@
 
             </LinearLayout>
 
-        </RelativeLayout>
+            <Button
+                android:id="@+id/BtnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:drawableRight="@drawable/ic_forward_black_24dp"
+                android:drawableTint="@color/white"
+                android:padding="10dp"
+                android:text="NEXT"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/BtnNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="10dp"
-        android:background="@color/colorPrimaryDark"
-        android:drawableRight="@drawable/ic_forward_black_24dp"
-        android:drawableTint="@color/white"
-        android:padding="10dp"
-        android:text="NEXT"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
 
 
 </RelativeLayout>

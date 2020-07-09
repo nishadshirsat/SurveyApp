@@ -21,7 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.streethawkerssurveyapp.R;
-import com.example.streethawkerssurveyapp.activities.MainActivity;
+import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 
 public class LoginFragment extends Fragment {
 
@@ -110,7 +110,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                mContext.startActivity(new Intent(mContext, MainActivity.class));
+                mContext.startActivity(new Intent(mContext, PersonalDetailsActivity.class));
 
             }
         });

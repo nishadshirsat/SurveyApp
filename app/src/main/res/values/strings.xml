@@ -3,12 +3,12 @@
 
 
     <string-array name="education">
-    <item>a. Primary (5th std)</item>
-    <item>b. Middle (6th to 8th std)</item>
-    <item>c. Secondary (till 10th Std)</item>
-    <item>d. Higher Secondary (till 12th Std)</item>
-    <item>e. Diploma/ Graduate/ Postgraduate</item>
-    <item>f. Illiterate</item>
+        <item>a. Primary (5th std)</item>
+        <item>b. Middle (6th to 8th std)</item>
+        <item>c. Secondary (till 10th Std)</item>
+        <item>d. Higher Secondary (till 12th Std)</item>
+        <item>e. Diploma/ Graduate/ Postgraduate</item>
+        <item>f. Illiterate</item>
 
     </string-array>
 
