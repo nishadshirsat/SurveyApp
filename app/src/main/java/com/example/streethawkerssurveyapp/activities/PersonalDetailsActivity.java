@@ -11,20 +11,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -40,6 +44,7 @@ import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,6 +142,8 @@ public class PersonalDetailsActivity extends MainActivity {
      CRIMINALCASE_POLICA_NAME="",
      CRIMINALCASE_STATUS="";
 
+    private Calendar myCalendar;
+    private int mYear,mMonth,mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +151,13 @@ public class PersonalDetailsActivity extends MainActivity {
         setContentView(R.layout.activity_main);
         bindView();
 
+        myCalendar = Calendar.getInstance();
+        mYear = myCalendar.get(Calendar.YEAR);
+        mMonth = myCalendar.get(Calendar.MONTH);
+        mDay = myCalendar.get(Calendar.DAY_OF_MONTH);
+
         onCLickListners();
+
 
     }
 
@@ -186,35 +199,44 @@ public class PersonalDetailsActivity extends MainActivity {
             public void onClick(View v) {
 
                 if (mLinearOne.getVisibility() == View.VISIBLE) {
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.VISIBLE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
+
+                    if (validate1()){
+                        mLinearOne.setVisibility(View.GONE);
+                        mLinearTwo.setVisibility(View.VISIBLE);
+                        mLinearThree.setVisibility(View.GONE);
+                        mLinearFour.setVisibility(View.GONE);
+                        mLinearFive.setVisibility(View.GONE);
+                    }
+
                 } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
 
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.VISIBLE);
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
+                    if (validate2()) {
+                        mLinearTwo.setVisibility(View.GONE);
+                        mLinearOne.setVisibility(View.GONE);
+                        mLinearThree.setVisibility(View.VISIBLE);
+                        mLinearFour.setVisibility(View.GONE);
+                        mLinearFive.setVisibility(View.GONE);
+                    }
 
                 } else if (mLinearThree.getVisibility() == View.VISIBLE) {
 
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFour.setVisibility(View.VISIBLE);
-                    mLinearFive.setVisibility(View.GONE);
+                    if(validate3()) {
+                        mLinearThree.setVisibility(View.GONE);
+                        mLinearOne.setVisibility(View.GONE);
+                        mLinearTwo.setVisibility(View.GONE);
+                        mLinearFour.setVisibility(View.VISIBLE);
+                        mLinearFive.setVisibility(View.GONE);
+                    }
 
                 } else if (mLinearFour.getVisibility() == View.VISIBLE) {
 
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.VISIBLE);
-
+                    if(validate4()) {
+                        mLinearFour.setVisibility(View.GONE);
+                        mLinearOne.setVisibility(View.GONE);
+                        mLinearThree.setVisibility(View.GONE);
+                        mLinearTwo.setVisibility(View.GONE);
+                        mLinearFive.setVisibility(View.VISIBLE);
+                    }
                 } else {
 
 //                    mLinearFive.setVisibility(View.VISIBLE);
@@ -228,8 +250,9 @@ public class PersonalDetailsActivity extends MainActivity {
                             + mEditMName.getText().toString().trim()+" "
                             +  mEditLName.getText().toString().trim();
 
-                    AddSurvey();
-
+                    if (validate()) {
+                        AddSurvey();
+                    }
 //                    startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
 
                 }
@@ -237,6 +260,245 @@ public class PersonalDetailsActivity extends MainActivity {
 
             }
         });
+
+        mImgCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this,R.style.DialogTheme),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                mEditDob.setText( (monthOfYear + 1) + "/" +dayOfMonth  + "/" + year);
+
+
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
+
+        mEditDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this,R.style.DialogTheme),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                mEditDate.setText( (monthOfYear + 1) + "/" +dayOfMonth  + "/" + year);
+
+
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
+
+    }
+
+    private boolean validate4() {
+        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        } else if (mEditPArea.getText().toString().trim().isEmpty()) {
+            mEditPArea.setError("Enter Permanant Area");
+            mEditPArea.requestFocus();
+            return false;
+        }else if (mEditPHouseNo.getText().toString().trim().isEmpty()) {
+            mEditPHouseNo.setError("Enter Permanant House No");
+            mEditPHouseNo.requestFocus();
+            return false;
+        }else if (mEditPRoad.getText().toString().trim().isEmpty()) {
+            mEditPRoad.setError("Enter Permanant Road");
+            mEditPRoad.requestFocus();
+            return false;
+        }else if (mEditPCity.getText().toString().trim().isEmpty()) {
+            mEditPCity.setError("Enter Permanant City");
+            mEditPCity.requestFocus();
+            return false;
+        }else if (mEditPPincode.getText().toString().trim().isEmpty()) {
+            mEditPPincode.setError("Enter Permanant Pincode");
+            mEditPPincode.requestFocus();
+            return false;
+        }else if (mEditAadhar.getText().toString().trim().isEmpty()) {
+            mEditAadhar.setError("Enter Aadhar Number");
+            mEditAadhar.requestFocus();
+            return false;
+        }else if (mEditAccNo.getText().toString().trim().isEmpty()) {
+            mEditAccNo.setError("Enter Account No");
+            mEditAccNo.requestFocus();
+            return false;
+        }else if (mEditBankName.getText().toString().trim().isEmpty()) {
+            mEditBankName.setError("Enter Bank Name");
+            mEditBankName.requestFocus();
+            return false;
+        }else if (mEditBranchName.getText().toString().trim().isEmpty()) {
+            mEditBranchName.setError("Enter Branch Name");
+            mEditBranchName.requestFocus();
+            return false;
+        }else if (mEditIfscCode.getText().toString().trim().isEmpty()) {
+            mEditIfscCode.setError("Enter IFSC Code");
+            mEditIfscCode.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validate3() {
+        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        }else if (mSpinnerCategory.getSelectedItem().toString().trim().isEmpty()) {
+            mEditArea.setError("Select Category");
+            mSpinnerCategory.requestFocus();
+            return false;
+        }else if (mEditArea.getText().toString().trim().isEmpty()) {
+            mEditArea.setError("Enter Area");
+            mEditArea.requestFocus();
+            return false;
+        }else if (mEditHouseNo.getText().toString().trim().isEmpty()) {
+            mEditHouseNo.setError("Enter House No");
+            mEditHouseNo.requestFocus();
+            return false;
+        }else if (mEditRoad.getText().toString().trim().isEmpty()) {
+            mEditRoad.setError("Enter Road");
+            mEditRoad.requestFocus();
+            return false;
+        }else if (mEditCity.getText().toString().trim().isEmpty()) {
+            mEditCity.setError("Enter City");
+            mEditCity.requestFocus();
+            return false;
+        }else if (mEditPincode.getText().toString().trim().isEmpty()) {
+            mEditPincode.setError("Enter Pincode");
+            mEditPincode.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validate2() {
+
+        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        } else if (mEditMobile.getText().toString().trim().isEmpty()) {
+            mEditMobile.setError("Enter Mobile Number");
+            mEditMobile.requestFocus();
+            return false;
+        }else if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
+            mEditFatherName.setError("Select Education");
+            mSpinnerEducation.requestFocus();
+            return false;
+        }else if (mEditFatherName.getText().toString().trim().isEmpty()) {
+            mEditFatherName.setError("Enter Father First Name");
+            mEditFatherName.requestFocus();
+            return false;
+        }else if (mEditFatherMName.getText().toString().trim().isEmpty()) {
+            mEditFatherMName.setError("Enter Father Middle Name");
+            mEditFatherMName.requestFocus();
+            return false;
+        }else if (mEditFatherLName.getText().toString().trim().isEmpty()) {
+            mEditFatherLName.setError("Enter Father Last Name");
+            mEditFatherLName.requestFocus();
+            return false;
+        }else if (mEditMotherFName.getText().toString().trim().isEmpty()) {
+            mEditMotherFName.setError("Enter Mother First Name");
+            mEditMotherFName.requestFocus();
+            return false;
+        }else if (mEditMotherMName.getText().toString().trim().isEmpty()) {
+            mEditMotherMName.setError("Enter Mother Middle Name");
+            mEditMotherMName.requestFocus();
+            return false;
+        }else if (mEditMotherLName.getText().toString().trim().isEmpty()) {
+            mEditMotherLName.setError("Enter Mother Last Name");
+            mEditMotherLName.requestFocus();
+            return false;
+        }
+
+        return true;
+
+    }
+
+    private boolean validate1() {
+
+        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        } else if (mEditFName.getText().toString().trim().isEmpty()) {
+            mEditFName.setError("Enter First Name");
+            mEditFName.requestFocus();
+            return false;
+        }else if (mEditMName.getText().toString().trim().isEmpty()) {
+            mEditMName.setError("Enter Middle Name");
+            mEditMName.requestFocus();
+            return false;
+        }else if (mEditLName.getText().toString().trim().isEmpty()) {
+            mEditLName.setError("Enter Last Name");
+            mEditLName.requestFocus();
+            return false;
+        }else if (mEditAge.getText().toString().trim().isEmpty()) {
+            mEditAge.setError("Enter Age");
+            mEditAge.requestFocus();
+            return false;
+        } else if (mEditDob.getText().toString().trim().isEmpty()) {
+            mEditDob.setError("Enter Date Of Birth");
+            mEditDob.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validate() {
+        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        }else if (mEditSNo.getText().toString().trim().isEmpty()) {
+            mEditSNo.setError("Enter S No");
+            mEditSNo.requestFocus();
+            return false;
+        }else if (mEditDate.getText().toString().trim().isEmpty()) {
+            mEditDate.setError("Enter Date");
+            mEditDate.requestFocus();
+            return false;
+        }else if (mEditFir.getText().toString().trim().isEmpty()) {
+            mEditFir.setError("Enter FIR");
+            mEditFir.requestFocus();
+            return false;
+        }else if (mEditNamePolice.getText().toString().trim().isEmpty()) {
+            mEditNamePolice.setError("Enter Police Name");
+            mEditNamePolice.requestFocus();
+            return false;
+        }else if (mEditStatusCase.getText().toString().trim().isEmpty()) {
+            mEditStatusCase.setError("Enter Status Case");
+            mEditStatusCase.requestFocus();
+            return false;
+        }
+
+        return true;
 
     }
 
