@@ -31,6 +31,27 @@ import androidx.core.content.ContextCompat;
 public class ApplicationConstant {
 
 
+    public class USERDETAILS {
+
+        public static final String UserType = "usertype";
+        public static final String UserName = "username";
+        public static final String UserPassword = "password";
+        public static final String LoginPassword = "login_password";
+        public static final String EncreptedUserPassword = "encript_password";
+        public static final String OwnerName = "OwnerName";
+        public static final String MainBalance = "MainBalance";
+        public static final String LastSeen = "LastSeen";
+        public static final String FlagRemember = "remember";
+
+        public static final String Api_AgentCode = "agent_code";
+        public static final String Api_USERNAME = "api_username";
+        public static final String Api_PASSWORD = "api_password";
+        public static final String AEPSBalance = "aeps";
+
+        public static final String API_KEY = "";
+    }
+
+
 
     public static void displayToastMessage(Context mContext, String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
@@ -132,50 +153,50 @@ public class ApplicationConstant {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-//    public static String createImageFile(String file_image, String subfolder,Context context) throws IOException {
-//
-//        String filePath = "";
-//
-//        String folder_main = context.getResources().getString(R.string.app_name);
-//
-//        File f = new File(Environment.getExternalStorageDirectory(), folder_main);
-//        if (!f.exists()) {
-//            f.mkdirs();
-//        }
-//
-//        File sub_folder = new File(f, subfolder);
-//        if (!sub_folder.exists()) {
-//            sub_folder.mkdirs();
-//        }
-//
-//
-//        File f1 = new File(sub_folder, file_image);
-//        if (!f1.exists()) {
-//            filePath = f1.getAbsolutePath();
-//
-//            return  filePath;
-//        }else {
-//
-//            deleteCache(context,f1);
-//
-//            File f1_new = new File(sub_folder, file_image);
-//
-//            filePath = f1_new.getAbsolutePath();
-//
-//
-//            return  filePath;
-//
-//        }
-//    }
-//
-//    public static void deleteCache(Context context, File dir) {
-//        try {
-//            dir = context.getCacheDir();
-//
-//            dir.delete();
-////      deleteDir(dir);
-//        } catch (Exception e) { e.printStackTrace();}
-//    }
+    public static String createImageFile(String file_image, String subfolder,Context context) throws IOException {
+
+        String filePath = "";
+
+        String folder_main = context.getResources().getString(R.string.app_name);
+
+        File f = new File(Environment.getExternalStorageDirectory(), folder_main);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+
+        File sub_folder = new File(f, subfolder);
+        if (!sub_folder.exists()) {
+            sub_folder.mkdirs();
+        }
+
+
+        File f1 = new File(sub_folder, file_image);
+        if (!f1.exists()) {
+            filePath = f1.getAbsolutePath();
+
+            return  filePath;
+        }else {
+
+            deleteCache(context,f1);
+
+            File f1_new = new File(sub_folder, file_image);
+
+            filePath = f1_new.getAbsolutePath();
+
+
+            return  filePath;
+
+        }
+    }
+
+    public static void deleteCache(Context context, File dir) {
+        try {
+            dir = context.getCacheDir();
+
+            dir.delete();
+//      deleteDir(dir);
+        } catch (Exception e) { e.printStackTrace();}
+    }
 
 
 }

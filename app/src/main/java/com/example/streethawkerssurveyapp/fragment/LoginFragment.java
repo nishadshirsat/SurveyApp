@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,11 +29,13 @@ import retrofit2.Response;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.LoginActivity;
 import com.example.streethawkerssurveyapp.activities.MainActivity;
+import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.response_pack.LoginResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+import com.example.streethawkerssurveyapp.utils.PrefUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,11 +53,29 @@ public class LoginFragment extends Fragment {
 
     ProgressDialog progressDialog;
 
+    private String Flag_Remember = "", userName, passWord;
+
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_login, container, false);
 
         bindView(rootView);
+
+
+        Flag_Remember = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.FlagRemember, "");
+        userName = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserName, "");
+        passWord = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserPassword, "");
+
+
+        if (Flag_Remember.equals("true")) {
+            mEditUsername.setText(userName);
+            mEditPassword.setText(passWord);
+            mCheck_remember.setChecked(true);
+
+        } else {
+            mCheck_remember.setChecked(false);
+        }
 
         mImgEyePwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +98,24 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+
+        mCheck_remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (mCheck_remember.isChecked()) {
+                    PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.FlagRemember, "true");
+
+                } else {
+
+                    PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.FlagRemember, "false");
+                    PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserName, "");
+                    PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserPassword, "");
+
+
+                }
+            }
+        });
+
 
         mTextForgotPwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,10 +227,17 @@ public class LoginFragment extends Fragment {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
                 if (response.body() != null) {
 
                     if (response.body().isStatus()){
-                        mContext.startActivity(new Intent(mContext, MainActivity.class));
+                        PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserName, mEditUsername.getText().toString().trim());
+                        PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserPassword, mEditPassword.getText().toString().trim());
+                        PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.API_KEY, response.body().getData().getApiKey());
+
+                        mContext.startActivity(new Intent(mContext, PersonalDetailsActivity.class));
 
                     }else {
 
