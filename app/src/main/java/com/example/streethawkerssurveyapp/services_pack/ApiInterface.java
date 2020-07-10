@@ -2,6 +2,7 @@ package com.example.streethawkerssurveyapp.services_pack;
 
 import com.example.streethawkerssurveyapp.response_pack.LoginResponse;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
+import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 
 import java.util.Map;
 
@@ -60,11 +61,25 @@ public interface ApiInterface {
             @Part("criminal_case_name_of_police") RequestBody criminal_case_name_of_police,
             @Part("criminal_case_status") RequestBody criminal_case_status);
 
-//    @GET("/posts")
-//    Observable<JsonElement> getDataFromService(
-//            @Header("Authorization")token: String = "Bearer " + PreferenceUtils.getToken(),
-//    @QueryMap
-//    HashMap<String, Object> queryParams);
+
+    @FormUrlEncoded
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> getUpdateSurvey(
+            @HeaderMap Map<String, String> token,
+            @Field("uri_number") String uri_number,
+            @Field("type_of_vending") String type_of_vending,
+            @Field("name_of_vending_site") String name_of_vending_site,
+            @Field("timing_of_vending_from") String timing_of_vending_from,
+            @Field("timing_of_vending_to") String timing_of_vending_to,
+            @Field("number_of_yrs_of_vending") String number_of_yrs_of_vending,
+            @Field("annual_income") String annual_income,
+            @Field("applicant_recognized_as_a_street_vendor") String applicant_recognized_as_a_street_vendor,
+            @Field("type_of_structure") String type_of_structure,
+            @Field("date_of_start_of_vending_activity") String date_of_start_of_vending_activity,
+            @Field("tehbazari_available") String tehbazari_available,
+            @Field("choice_of_vending_area") String choice_of_vending_area
+    );
+
 
 
 }

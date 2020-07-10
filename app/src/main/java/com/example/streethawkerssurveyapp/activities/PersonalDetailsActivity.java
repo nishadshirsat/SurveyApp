@@ -157,6 +157,14 @@ public class PersonalDetailsActivity extends MainActivity {
         mDay = myCalendar.get(Calendar.DAY_OF_MONTH);
 
         onCLickListners();
+       ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.SURVEY_ID,"");
+
+       if (ApplicationConstant.SurveyId.trim().isEmpty()){
+           ApplicationConstant.SurveyId = "1";
+           PrefUtils.saveToPrefs(PersonalDetailsActivity.this,ApplicationConstant.SURVEY_ID,"1");
+       }
+
+       onCLickListners();
 
 
     }
@@ -596,7 +604,7 @@ public class PersonalDetailsActivity extends MainActivity {
                 MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
 
         RequestBody NAME_VENDOR_ = RequestBody.create(MediaType.parse("multipart/form-data"), NAME_VENDOR);
-        RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), SURVEY_ID);
+        RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), ApplicationConstant.SurveyId);
         RequestBody SEX_ = RequestBody.create(MediaType.parse("multipart/form-data"), SEX);
         RequestBody AGE_ = RequestBody.create(MediaType.parse("multipart/form-data"), AGE);
         RequestBody DOB_ = RequestBody.create(MediaType.parse("multipart/form-data"), DOB);
@@ -650,8 +658,11 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     if (response.body().isStatus()) {
 
-                        ApplicationConstant.DisplayMessageDialog(PersonalDetailsActivity.this,"Personal Details",
+                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
                                 "Personal Details saved successfully");
+
+                        ApplicationConstant.URI_NO = response.body().getUriNumber();
+                        startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
 
 
                     } else {
