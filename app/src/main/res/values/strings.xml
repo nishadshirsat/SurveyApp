@@ -3,13 +3,45 @@
 
 
     <string-array name="education">
-    <item>a. Primary (5th std)</item>
-    <item>b. Middle (6th to 8th std)</item>
-    <item>c. Secondary (till 10th Std)</item>
-    <item>d. Higher Secondary (till 12th Std)</item>
-    <item>e. Diploma/ Graduate/ Postgraduate</item>
-    <item>f. Illiterate</item>
+        <item>a. Primary (5th std)</item>
+        <item>b. Middle (6th to 8th std)</item>
+        <item>c. Secondary (till 10th Std)</item>
+        <item>d. Higher Secondary (till 12th Std)</item>
+        <item>e. Diploma/ Graduate/ Postgraduate</item>
+        <item>f. Illiterate</item>
+    </string-array>
 
+    <string-array name="vehicals">
+        <item>Pucca</item>
+        <item>Kuchha</item>
+        <item> Metallic cycle cart</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="choice">
+        <item>First Choice (within 1 km)</item>
+        <item>Second Choice (within 3 km)</item>
+        <item>Third Choice (within 5km) </item>
+        <item>Fourth Choice (5+km)</item>
+        <item>Fifth Choice (5+km)</item>
+    </string-array>
+
+    <string-array name="items">
+        <item>a. Food/ Snack with gas cylinder/ fire </item>
+        <item>b. Food/ Snack without gas cylinder/ fire</item>
+        <item>c. Vegetables</item>
+        <item>d. Electronic items</item>
+        <item>e. Clothes</item>
+        <item>f. Household items</item>
+        <item>g. Fancy items</item>
+        <item>h.  Pan/tobacco</item>
+        <item>i.  Flower</item>
+        <item>j. Footwear</item>
+        <item>k. Utilities</item>
+        <item>l. Fruits</item>
+        <item>m. Pottery</item>
+        <item>n. Toys</item>
+        <item>o. Bags</item>
     </string-array>
 
     <string-array name="category">
