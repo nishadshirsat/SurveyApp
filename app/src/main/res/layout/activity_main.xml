@@ -201,6 +201,7 @@
                 </LinearLayout>
 
                 <RadioGroup
+                    android:id="@+id/radioGender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -535,6 +536,18 @@
 
                     </LinearLayout>
 
+                    <EditText
+                        android:id="@+id/EditFatherLName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_bg"
+                        android:hint="Surname"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -568,7 +581,7 @@
                         android:textSize="14sp" />
 
                     <EditText
-                        android:id="@+id/EditFatherLName"
+                        android:id="@+id/EditFatherSurname"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -578,8 +591,6 @@
                         android:inputType="text"
                         android:padding="10dp"
                         android:textSize="14sp" />
-
-
                 </LinearLayout>
 
                 <View
@@ -1485,7 +1496,6 @@
         android:drawableTint="@color/white"
         android:padding="10dp"
         android:text="NEXT"
-        android:layout_marginTop="15dp"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold" />

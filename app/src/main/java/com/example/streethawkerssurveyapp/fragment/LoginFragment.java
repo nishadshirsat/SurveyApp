@@ -1,10 +1,12 @@
 package com.example.streethawkerssurveyapp.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -19,9 +21,21 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.LoginActivity;
 import com.example.streethawkerssurveyapp.activities.MainActivity;
+import com.example.streethawkerssurveyapp.response_pack.LoginResponse;
+import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
+import com.example.streethawkerssurveyapp.services_pack.ApiService;
+import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 public class LoginFragment extends Fragment {
 
@@ -33,6 +47,8 @@ public class LoginFragment extends Fragment {
     private CheckBox mCheck_remember;
     private Button mButtonLogin;
     private TextView mTextForgotPwd;
+
+    ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,13 +126,41 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                mContext.startActivity(new Intent(mContext, MainActivity.class));
+                if (validate()){
+                    String android_id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
 
+                    getLoginRole(mEditUsername.getText().toString().trim(),
+                            mEditPassword.getText().toString().trim(),
+                            android_id);
+                }
             }
         });
 
-
         return rootView;
+    }
+
+    private boolean validate() {
+        if (!ApplicationConstant.isNetworkAvailable(getActivity())) {
+
+            ApplicationConstant.displayMessageDialog(getActivity(), "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        } else if (mEditUsername.getText().toString().trim().isEmpty()) {
+            mEditUsername.setError("Enter username");
+            mEditUsername.requestFocus();
+
+            return false;
+
+        } else if (mEditPassword.getText().toString().trim().isEmpty()) {
+            mEditPassword.setError("Enter password");
+            mEditPassword.requestFocus();
+
+            return false;
+
+        }
+
+        return true;
+
     }
 
     private void bindView(View rootView) {
@@ -130,4 +174,49 @@ public class LoginFragment extends Fragment {
         mButtonLogin = (Button) rootView.findViewById(R.id.ButtonLogin);
         mTextForgotPwd = (TextView) rootView.findViewById(R.id.TextForgotPwd);
     }
+
+
+    private void getLoginRole(String username, String password, String picDeviceID) {
+
+        progressDialog = CustomProgressDialog.getDialogue(getActivity());
+        progressDialog.show();
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<LoginResponse> call = apiservice.getLoginResponse(username,password);
+
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()){
+                        mContext.startActivity(new Intent(mContext, MainActivity.class));
+
+                    }else {
+
+                    }
+
+
+                } else {
+                    try {
+                        ApplicationConstant.DisplayMessageDialog(getActivity(),"",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(getActivity(), "Response", t.getMessage());
+
+            }
+        });
+
+    }
+
 }
