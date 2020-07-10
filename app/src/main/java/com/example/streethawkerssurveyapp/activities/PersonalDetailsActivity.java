@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -20,12 +21,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,7 +107,10 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditNamePolice;
     private EditText mEditStatusCase;
     private Button mBtnNext;
-    private String photoPath ="";
+    private String photoPath = "";
+    RadioGroup RGSex;
+    RadioGroup RGWidow;
+    RadioGroup RGCriminal;
 
     Uri photoURI;
 
@@ -115,35 +121,36 @@ public class PersonalDetailsActivity extends MainActivity {
     private
     String
 
-     NAME_VENDOR="",
-     SURVEY_ID="2",
-     SEX="",
-     AGE="",
-     DOB="",
-     CONTACT_NO="",
-     LANDLINE_NO="",
-     EDUCATION_STATUS="",
-     NAME_OFFATHER_HUSBAND="",
-     NAME_MOTHER="",
-     NAME_SPOUSE="",
-     WHETHER_WIDOWED="",
-     CATEGORY="",
-     RESIDENTIAL_ADDRESS="",
-     PERMENENT_ADDRESS="",
-     AADHAR_NO="",
-     BANKACC_NO="",
-     BANKNAME="",
-     BRANCH_NAME="",
-     IFSC="",
-     IS_CRIMINALCASE="",
-     CRIMINALCASE_NO="",
-     CRIMINALCASE_DATE="",
-     CRIMINALCASE_FIRNO="",
-     CRIMINALCASE_POLICA_NAME="",
-     CRIMINALCASE_STATUS="";
+            NAME_VENDOR = "",
+            SURVEY_ID = "2",
+            SEX = "",
+            AGE = "",
+            DOB = "",
+            CONTACT_NO = "",
+            LANDLINE_NO = "",
+            EDUCATION_STATUS = "",
+            NAME_OFFATHER_HUSBAND = "",
+            NAME_MOTHER = "",
+            NAME_SPOUSE = "",
+            WHETHER_WIDOWED = "",
+            CATEGORY = "",
+            RESIDENTIAL_ADDRESS = "",
+            PERMENENT_ADDRESS = "",
+            AADHAR_NO = "",
+            BANKACC_NO = "",
+            BANKNAME = "",
+            BRANCH_NAME = "",
+            IFSC = "",
+            IS_CRIMINALCASE = "",
+            CRIMINALCASE_NO = "",
+            CRIMINALCASE_DATE = "",
+            CRIMINALCASE_FIRNO = "",
+            CRIMINALCASE_POLICA_NAME = "",
+            CRIMINALCASE_STATUS = "";
+
 
     private Calendar myCalendar;
-    private int mYear,mMonth,mDay;
+    private int mYear, mMonth, mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,14 +164,14 @@ public class PersonalDetailsActivity extends MainActivity {
         mDay = myCalendar.get(Calendar.DAY_OF_MONTH);
 
         onCLickListners();
-       ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.SURVEY_ID,"");
+        ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
 
-       if (ApplicationConstant.SurveyId.trim().isEmpty()){
-           ApplicationConstant.SurveyId = "1";
-           PrefUtils.saveToPrefs(PersonalDetailsActivity.this,ApplicationConstant.SURVEY_ID,"1");
-       }
+        if (ApplicationConstant.SurveyId.trim().isEmpty()) {
+            ApplicationConstant.SurveyId = "1";
+            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "1");
+        }
 
-       onCLickListners();
+        onCLickListners();
 
 
     }
@@ -190,7 +197,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     // Continue only if the File was successfully created
                     if (photoFile != null) {
                         photoURI = SurveyAppFileProvider.getUriForFile(PersonalDetailsActivity.this,
-                                BuildConfig.APPLICATION_ID+".android.fileprovider",
+                                BuildConfig.APPLICATION_ID + ".android.fileprovider",
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, 1);
@@ -208,7 +215,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 if (mLinearOne.getVisibility() == View.VISIBLE) {
 
-                    if (validate1()){
+                    if (validate1()) {
                         mLinearOne.setVisibility(View.GONE);
                         mLinearTwo.setVisibility(View.VISIBLE);
                         mLinearThree.setVisibility(View.GONE);
@@ -228,7 +235,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 } else if (mLinearThree.getVisibility() == View.VISIBLE) {
 
-                    if(validate3()) {
+                    if (validate3()) {
                         mLinearThree.setVisibility(View.GONE);
                         mLinearOne.setVisibility(View.GONE);
                         mLinearTwo.setVisibility(View.GONE);
@@ -238,7 +245,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 } else if (mLinearFour.getVisibility() == View.VISIBLE) {
 
-                    if(validate4()) {
+                    if (validate4()) {
                         mLinearFour.setVisibility(View.GONE);
                         mLinearOne.setVisibility(View.GONE);
                         mLinearThree.setVisibility(View.GONE);
@@ -254,9 +261,78 @@ public class PersonalDetailsActivity extends MainActivity {
 //                    mLinearFour.setVisibility(View.GONE);
 
 
-                    NAME_VENDOR = mEditFName.getText().toString().trim()+" "
-                            + mEditMName.getText().toString().trim()+" "
-                            +  mEditLName.getText().toString().trim();
+                    NAME_VENDOR = mEditFName.getText().toString().trim() + " "
+                            + mEditMName.getText().toString().trim() + " "
+                            + mEditLName.getText().toString().trim();
+                    SEX = String.valueOf(RGSex.getCheckedRadioButtonId());
+                    AGE = mEditAge.getText().toString().trim();
+                    DOB = mEditDob.getText().toString().trim();
+                    CONTACT_NO = mEditMobile.getText().toString().trim();
+                    LANDLINE_NO = mEditLandline.getText().toString().trim();
+                    mSpinnerEducation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                            EDUCATION_STATUS = mSpinnerEducation.getItemAtPosition(position).toString();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+                    NAME_OFFATHER_HUSBAND = mEditFatherName.getText().toString().trim() + " "
+                            + mEditFatherMName.getText().toString().trim() + " "
+                            + mEditFatherLName.getText().toString().trim();
+
+                    NAME_MOTHER = mEditMotherFName.getText().toString().trim() + " "
+                            + mEditMotherMName.getText().toString().trim() + " "
+                            + mEditMotherLName.getText().toString().trim();
+
+                    NAME_SPOUSE = mEditSpouceFName.getText().toString().trim() + " "
+                            + mEditSpouceMName.getText().toString().trim() + " "
+                            + mEditSpouceLName.getText().toString().trim();
+
+                    WHETHER_WIDOWED = String.valueOf(RGWidow.getCheckedRadioButtonId());
+                    mSpinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                            CATEGORY = mSpinnerCategory.getItemAtPosition(position).toString();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                    RESIDENTIAL_ADDRESS = mEditArea.getText().toString().trim() + " "
+                            + mEditHouseNo.getText().toString().trim() + " "
+                            + mEditRoad.getText().toString().trim()
+                            + mEditCity.getText().toString().trim()
+                            + mEditPincode.getText().toString().trim();
+
+                    PERMENENT_ADDRESS = mEditPArea.getText().toString().trim() + " "
+                            + mEditPHouseNo.getText().toString().trim() + " "
+                            + mEditPRoad.getText().toString().trim()
+                            + mEditPCity.getText().toString().trim()
+                            + mEditPPincode.getText().toString().trim();
+
+                    AADHAR_NO = mEditAadhar.getText().toString().trim();
+                    BANKACC_NO = mEditAccNo.getText().toString().trim();
+                    BANKNAME = mEditBankName.getText().toString().trim();
+                    IFSC = mEditIfscCode.getText().toString().trim();
+
+                    IS_CRIMINALCASE = String.valueOf(RGCriminal.getCheckedRadioButtonId());
+                    SURVEY_ID = mEditSNo.getText().toString().trim();
+                    CRIMINALCASE_DATE = mEditDate.getText().toString().trim();
+                    CRIMINALCASE_FIRNO = mEditFir.getText().toString().trim();
+                    CRIMINALCASE_POLICA_NAME = mEditNamePolice.getText().toString().trim();
+                    CRIMINALCASE_STATUS = mEditStatusCase.getText().toString().trim();
+
 
                     if (validate()) {
                         AddSurvey();
@@ -273,15 +349,14 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this,R.style.DialogTheme),
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this, R.style.DialogTheme),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                mEditDob.setText( (monthOfYear + 1) + "/" +dayOfMonth  + "/" + year);
-
+                                mEditDob.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
 
 
                             }
@@ -295,15 +370,14 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this,R.style.DialogTheme),
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this, R.style.DialogTheme),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                mEditDate.setText( (monthOfYear + 1) + "/" +dayOfMonth  + "/" + year);
-
+                                mEditDate.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
 
 
                             }
@@ -325,39 +399,39 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditPArea.setError("Enter Permanant Area");
             mEditPArea.requestFocus();
             return false;
-        }else if (mEditPHouseNo.getText().toString().trim().isEmpty()) {
+        } else if (mEditPHouseNo.getText().toString().trim().isEmpty()) {
             mEditPHouseNo.setError("Enter Permanant House No");
             mEditPHouseNo.requestFocus();
             return false;
-        }else if (mEditPRoad.getText().toString().trim().isEmpty()) {
+        } else if (mEditPRoad.getText().toString().trim().isEmpty()) {
             mEditPRoad.setError("Enter Permanant Road");
             mEditPRoad.requestFocus();
             return false;
-        }else if (mEditPCity.getText().toString().trim().isEmpty()) {
+        } else if (mEditPCity.getText().toString().trim().isEmpty()) {
             mEditPCity.setError("Enter Permanant City");
             mEditPCity.requestFocus();
             return false;
-        }else if (mEditPPincode.getText().toString().trim().isEmpty()) {
+        } else if (mEditPPincode.getText().toString().trim().isEmpty()) {
             mEditPPincode.setError("Enter Permanant Pincode");
             mEditPPincode.requestFocus();
             return false;
-        }else if (mEditAadhar.getText().toString().trim().isEmpty()) {
+        } else if (mEditAadhar.getText().toString().trim().isEmpty()) {
             mEditAadhar.setError("Enter Aadhar Number");
             mEditAadhar.requestFocus();
             return false;
-        }else if (mEditAccNo.getText().toString().trim().isEmpty()) {
+        } else if (mEditAccNo.getText().toString().trim().isEmpty()) {
             mEditAccNo.setError("Enter Account No");
             mEditAccNo.requestFocus();
             return false;
-        }else if (mEditBankName.getText().toString().trim().isEmpty()) {
+        } else if (mEditBankName.getText().toString().trim().isEmpty()) {
             mEditBankName.setError("Enter Bank Name");
             mEditBankName.requestFocus();
             return false;
-        }else if (mEditBranchName.getText().toString().trim().isEmpty()) {
+        } else if (mEditBranchName.getText().toString().trim().isEmpty()) {
             mEditBranchName.setError("Enter Branch Name");
             mEditBranchName.requestFocus();
             return false;
-        }else if (mEditIfscCode.getText().toString().trim().isEmpty()) {
+        } else if (mEditIfscCode.getText().toString().trim().isEmpty()) {
             mEditIfscCode.setError("Enter IFSC Code");
             mEditIfscCode.requestFocus();
             return false;
@@ -372,27 +446,27 @@ public class PersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        }else if (mSpinnerCategory.getSelectedItem().toString().trim().isEmpty()) {
+        } else if (mSpinnerCategory.getSelectedItem().toString().trim().isEmpty()) {
             mEditArea.setError("Select Category");
             mSpinnerCategory.requestFocus();
             return false;
-        }else if (mEditArea.getText().toString().trim().isEmpty()) {
+        } else if (mEditArea.getText().toString().trim().isEmpty()) {
             mEditArea.setError("Enter Area");
             mEditArea.requestFocus();
             return false;
-        }else if (mEditHouseNo.getText().toString().trim().isEmpty()) {
+        } else if (mEditHouseNo.getText().toString().trim().isEmpty()) {
             mEditHouseNo.setError("Enter House No");
             mEditHouseNo.requestFocus();
             return false;
-        }else if (mEditRoad.getText().toString().trim().isEmpty()) {
+        } else if (mEditRoad.getText().toString().trim().isEmpty()) {
             mEditRoad.setError("Enter Road");
             mEditRoad.requestFocus();
             return false;
-        }else if (mEditCity.getText().toString().trim().isEmpty()) {
+        } else if (mEditCity.getText().toString().trim().isEmpty()) {
             mEditCity.setError("Enter City");
             mEditCity.requestFocus();
             return false;
-        }else if (mEditPincode.getText().toString().trim().isEmpty()) {
+        } else if (mEditPincode.getText().toString().trim().isEmpty()) {
             mEditPincode.setError("Enter Pincode");
             mEditPincode.requestFocus();
             return false;
@@ -412,31 +486,31 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditMobile.setError("Enter Mobile Number");
             mEditMobile.requestFocus();
             return false;
-        }else if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
+        } else if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
             mEditFatherName.setError("Select Education");
             mSpinnerEducation.requestFocus();
             return false;
-        }else if (mEditFatherName.getText().toString().trim().isEmpty()) {
+        } else if (mEditFatherName.getText().toString().trim().isEmpty()) {
             mEditFatherName.setError("Enter Father First Name");
             mEditFatherName.requestFocus();
             return false;
-        }else if (mEditFatherMName.getText().toString().trim().isEmpty()) {
+        } else if (mEditFatherMName.getText().toString().trim().isEmpty()) {
             mEditFatherMName.setError("Enter Father Middle Name");
             mEditFatherMName.requestFocus();
             return false;
-        }else if (mEditFatherLName.getText().toString().trim().isEmpty()) {
+        } else if (mEditFatherLName.getText().toString().trim().isEmpty()) {
             mEditFatherLName.setError("Enter Father Last Name");
             mEditFatherLName.requestFocus();
             return false;
-        }else if (mEditMotherFName.getText().toString().trim().isEmpty()) {
+        } else if (mEditMotherFName.getText().toString().trim().isEmpty()) {
             mEditMotherFName.setError("Enter Mother First Name");
             mEditMotherFName.requestFocus();
             return false;
-        }else if (mEditMotherMName.getText().toString().trim().isEmpty()) {
+        } else if (mEditMotherMName.getText().toString().trim().isEmpty()) {
             mEditMotherMName.setError("Enter Mother Middle Name");
             mEditMotherMName.requestFocus();
             return false;
-        }else if (mEditMotherLName.getText().toString().trim().isEmpty()) {
+        } else if (mEditMotherLName.getText().toString().trim().isEmpty()) {
             mEditMotherLName.setError("Enter Mother Last Name");
             mEditMotherLName.requestFocus();
             return false;
@@ -457,15 +531,15 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditFName.setError("Enter First Name");
             mEditFName.requestFocus();
             return false;
-        }else if (mEditMName.getText().toString().trim().isEmpty()) {
+        } else if (mEditMName.getText().toString().trim().isEmpty()) {
             mEditMName.setError("Enter Middle Name");
             mEditMName.requestFocus();
             return false;
-        }else if (mEditLName.getText().toString().trim().isEmpty()) {
+        } else if (mEditLName.getText().toString().trim().isEmpty()) {
             mEditLName.setError("Enter Last Name");
             mEditLName.requestFocus();
             return false;
-        }else if (mEditAge.getText().toString().trim().isEmpty()) {
+        } else if (mEditAge.getText().toString().trim().isEmpty()) {
             mEditAge.setError("Enter Age");
             mEditAge.requestFocus();
             return false;
@@ -484,23 +558,23 @@ public class PersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        }else if (mEditSNo.getText().toString().trim().isEmpty()) {
+        } else if (mEditSNo.getText().toString().trim().isEmpty()) {
             mEditSNo.setError("Enter S No");
             mEditSNo.requestFocus();
             return false;
-        }else if (mEditDate.getText().toString().trim().isEmpty()) {
+        } else if (mEditDate.getText().toString().trim().isEmpty()) {
             mEditDate.setError("Enter Date");
             mEditDate.requestFocus();
             return false;
-        }else if (mEditFir.getText().toString().trim().isEmpty()) {
+        } else if (mEditFir.getText().toString().trim().isEmpty()) {
             mEditFir.setError("Enter FIR");
             mEditFir.requestFocus();
             return false;
-        }else if (mEditNamePolice.getText().toString().trim().isEmpty()) {
+        } else if (mEditNamePolice.getText().toString().trim().isEmpty()) {
             mEditNamePolice.setError("Enter Police Name");
             mEditNamePolice.requestFocus();
             return false;
-        }else if (mEditStatusCase.getText().toString().trim().isEmpty()) {
+        } else if (mEditStatusCase.getText().toString().trim().isEmpty()) {
             mEditStatusCase.setError("Enter Status Case");
             mEditStatusCase.requestFocus();
             return false;
@@ -513,13 +587,16 @@ public class PersonalDetailsActivity extends MainActivity {
     private void bindView() {
 
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
+        RGSex = (RadioGroup) findViewById(R.id.RGSex);
+        RGWidow = (RadioGroup) findViewById(R.id.RGWidow);
+        RGCriminal = (RadioGroup) findViewById(R.id.RGCriminal);
         mImgVendorPhoto = (ImageView) findViewById(R.id.ImgVendorPhoto);
         mEditFName = (EditText) findViewById(R.id.EditFName);
         mEditMName = (EditText) findViewById(R.id.EditMName);
         mEditLName = (EditText) findViewById(R.id.EditLName);
-        mRadioM = (RadioButton) findViewById(R.id.RadioM);
-        mRadioF = (RadioButton) findViewById(R.id.RadioF);
-        mRadioO = (RadioButton) findViewById(R.id.RadioO);
+        mRadioM = (RadioButton) findViewById(Integer.parseInt(SEX));
+        mRadioF = (RadioButton) findViewById(Integer.parseInt(SEX));
+        mRadioO = (RadioButton) findViewById(Integer.parseInt(SEX));
         mEditAge = (EditText) findViewById(R.id.EditAge);
         mEditDob = (EditText) findViewById(R.id.EditDob);
         mImgCalendar = (ImageView) findViewById(R.id.ImgCalendar);
@@ -537,8 +614,8 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditSpouceFName = (EditText) findViewById(R.id.EditSpouceFName);
         mEditSpouceMName = (EditText) findViewById(R.id.EditSpouceMName);
         mEditSpouceLName = (EditText) findViewById(R.id.EditSpouceLName);
-        mRadioY = (RadioButton) findViewById(R.id.RadioY);
-        mRadioN = (RadioButton) findViewById(R.id.RadioN);
+        mRadioY = (RadioButton) findViewById(Integer.parseInt(WHETHER_WIDOWED));
+        mRadioN = (RadioButton) findViewById(Integer.parseInt(WHETHER_WIDOWED));
         mSpinnerCategory = (Spinner) findViewById(R.id.SpinnerCategory);
         mEditArea = (EditText) findViewById(R.id.EditArea);
         mEditHouseNo = (EditText) findViewById(R.id.EditHouseNo);
@@ -557,8 +634,8 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditBankName = (EditText) findViewById(R.id.EditBankName);
         mEditBranchName = (EditText) findViewById(R.id.EditBranchName);
         mEditIfscCode = (EditText) findViewById(R.id.EditIfscCode);
-        mRadioCY = (RadioButton) findViewById(R.id.RadioCY);
-        mRadioCN = (RadioButton) findViewById(R.id.RadioCN);
+        mRadioCY = (RadioButton) findViewById(Integer.parseInt(IS_CRIMINALCASE));
+        mRadioCN = (RadioButton) findViewById(Integer.parseInt(IS_CRIMINALCASE));
         mLinearFive = (LinearLayout) findViewById(R.id.LinearFive);
         mEditSNo = (EditText) findViewById(R.id.EditSNo);
         mEditDate = (EditText) findViewById(R.id.EditDate);
@@ -572,7 +649,7 @@ public class PersonalDetailsActivity extends MainActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
 
                 Glide.with(PersonalDetailsActivity.this).load(photoURI)
@@ -632,20 +709,20 @@ public class PersonalDetailsActivity extends MainActivity {
 
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer "+PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.USERDETAILS.API_KEY,""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
         Call<SurveyResponse> call = apiservice.getAddSurvey(headers,
-                body_fhoto,SURVEY_ID_
-                ,NAME_VENDOR_,SEX_,AGE_
-                ,DOB_,CONTACT_NO_,LANDLINE_NO_,EDUCATION_STATUS_,
-                NAME_OFFATHER_HUSBAND_,NAME_MOTHER_,
-                NAME_SPOUSE_,WHETHER_WIDOWED_,CATEGORY_,
-                RESIDENTIAL_ADDRESS_,PERMENENT_ADDRESS_,AADHAR_NO_,
-                BANKACC_NO_,BANKNAME_,BRANCH_NAME_,
-                IFSC_,IS_CRIMINALCASE_,CRIMINALCASE_NO_,CRIMINALCASE_DATE_,
-                CRIMINALCASE_FIRNO_,CRIMINALCASE_POLICA_NAME_,CRIMINALCASE_STATUS_
-                );
+                body_fhoto, SURVEY_ID_
+                , NAME_VENDOR_, SEX_, AGE_
+                , DOB_, CONTACT_NO_, LANDLINE_NO_, EDUCATION_STATUS_,
+                NAME_OFFATHER_HUSBAND_, NAME_MOTHER_,
+                NAME_SPOUSE_, WHETHER_WIDOWED_, CATEGORY_,
+                RESIDENTIAL_ADDRESS_, PERMENENT_ADDRESS_, AADHAR_NO_,
+                BANKACC_NO_, BANKNAME_, BRANCH_NAME_,
+                IFSC_, IS_CRIMINALCASE_, CRIMINALCASE_NO_, CRIMINALCASE_DATE_,
+                CRIMINALCASE_FIRNO_, CRIMINALCASE_POLICA_NAME_, CRIMINALCASE_STATUS_
+        );
 
         call.enqueue(new Callback<SurveyResponse>() {
             @Override
@@ -672,13 +749,13 @@ public class PersonalDetailsActivity extends MainActivity {
                                 String.valueOf(response.body().isStatus()));
                     }
 
-                }else {
+                } else {
 
                     try {
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
                                 "Response",
                                 response.errorBody().string());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 

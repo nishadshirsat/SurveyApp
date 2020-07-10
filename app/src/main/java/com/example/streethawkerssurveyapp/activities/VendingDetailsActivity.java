@@ -82,6 +82,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mBtnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(VendingDetailsActivity.this,VendorsFamDetailsActivity.class));
             }
         });
@@ -90,15 +91,17 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (mLinearOne.getVisibility() == View.VISIBLE) {
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.VISIBLE);
-                    mLinearThree.setVisibility(View.GONE);
+                    if(validate1()) {
+                        mLinearOne.setVisibility(View.GONE);
+                        mLinearTwo.setVisibility(View.VISIBLE);
+                        mLinearThree.setVisibility(View.GONE);
+                    }
                 } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
-
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.VISIBLE);
-
+                    if(validate2()) {
+                        mLinearTwo.setVisibility(View.GONE);
+                        mLinearOne.setVisibility(View.GONE);
+                        mLinearThree.setVisibility(View.VISIBLE);
+                    }
                 }
                 else {
 
@@ -112,6 +115,48 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean validate2() {
+        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validate1() {
+
+        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        }else if(mSpinnerItems.getSelectedItem().toString().isEmpty()){
+            mEditVendingSite.setError("Select Items");
+            mSpinnerItems.requestFocus();
+            return false;
+        }else if(mEditVendingSite.getText().toString().trim().isEmpty()){
+            mEditVendingSite.setError("Enter Vending Site");
+            mEditVendingSite.requestFocus();
+            return false;
+        }else if(mEditFromTime.getText().toString().trim().isEmpty()){
+            mEditFromTime.setError("Enter From Time");
+            mEditFromTime.requestFocus();
+            return false;
+        }else if(mEditToTime.getText().toString().trim().isEmpty()){
+            mEditToTime.setError("Enter To Time");
+            mEditToTime.requestFocus();
+            return false;
+        }else if(mEditAge.getText().toString().trim().isEmpty()){
+            mEditAge.setError("Enter Age");
+            mEditAge.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
     private void bindView() {

@@ -212,6 +212,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/RGSex"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -836,6 +837,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/RGWidow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -1404,6 +1406,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/RGCriminal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -1507,6 +1510,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Date of case"
                             android:inputType="text"
+                            android:editable="false"
                             android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
