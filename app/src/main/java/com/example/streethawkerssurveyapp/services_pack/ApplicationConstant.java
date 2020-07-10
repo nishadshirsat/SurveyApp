@@ -31,6 +31,11 @@ import androidx.core.content.ContextCompat;
 public class ApplicationConstant {
 
 
+    public static final String SURVEY_ID = "surveyId";
+    public static String URI_NO = "";
+    public static String SurveyId ="0";
+
+
     public class USERDETAILS {
 
         public static final String UserType = "usertype";

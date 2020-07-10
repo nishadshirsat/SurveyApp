@@ -102,8 +102,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner"/>
 
 
                     </LinearLayout>
@@ -136,8 +135,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner" />
 
 
                     </LinearLayout>
@@ -170,8 +168,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner"/>
 
 
                     </LinearLayout>
@@ -204,8 +201,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner" />
 
 
                     </LinearLayout>

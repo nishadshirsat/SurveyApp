@@ -1,7 +1,14 @@
 package com.example.streethawkerssurveyapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +20,17 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
+import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
+import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
+import com.example.streethawkerssurveyapp.services_pack.ApiService;
+import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+import com.example.streethawkerssurveyapp.utils.PrefUtils;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VendingDetailsActivity extends AppCompatActivity {
 
@@ -37,6 +55,23 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private Button mBtnNext;
     private Button mBtnPrevious;
 
+    private ProgressDialog progressDialog;
+
+    private String
+    URI_NO="",
+    TYPE_OF_VENDING="",
+    VENDING_SITE="",
+    VENDING_FROM="",
+    VENDING_TO="",
+    YRS_OF_VENDING="",
+    ANNUAL_INCOME="",
+    IS_RECOGNIZED_STREET_VENDOR="",
+    TYPE_OF_STRUCTURE="",
+    STARTING_DATE_VENDING="",
+    TEHABZARI_AVAILABLE="",
+    VENDING_AREA_CHOCE="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +88,28 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(VendingDetailsActivity.this,DocumentScanActivity.class));
+
+                if (mLinearOne.getVisibility() == View.VISIBLE) {
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.VISIBLE);
+                    mLinearThree.setVisibility(View.GONE);
+                } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
+
+                    mLinearTwo.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.VISIBLE);
+
+                }
+                else {
+
+                   URI_NO = ApplicationConstant.URI_NO;
+
+                    UpdateSurvey();
+
+
+                }
+
+
             }
         });
     }
@@ -82,4 +138,74 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
 
     }
+
+    private void UpdateSurvey() {
+
+        progressDialog = CustomProgressDialog.getDialogue(VendingDetailsActivity.this);
+        progressDialog.show();
+
+        String username = PrefUtils.getFromPrefs(VendingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, "");
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer "+PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.USERDETAILS.API_KEY,""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.getUpdateSurvey(headers,
+                URI_NO,TYPE_OF_VENDING,VENDING_SITE,VENDING_FROM,VENDING_TO,YRS_OF_VENDING,
+                ANNUAL_INCOME,IS_RECOGNIZED_STREET_VENDOR,TYPE_OF_STRUCTURE,STARTING_DATE_VENDING,
+                TEHABZARI_AVAILABLE,VENDING_AREA_CHOCE
+
+        );
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        ApplicationConstant.DisplayMessageDialog(VendingDetailsActivity.this,"",
+                                "Vending Details saved successfully");
+
+//                        startActivity(new Intent(VendingDetailsActivity.this, DocumentScanActivity.class));
+
+
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this,
+                                "Response",
+                                String.valueOf(response.body().isStatus()));
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "Response", t.getMessage().toString());
+
+            }
+        });
+    }
+
+
+
 }
