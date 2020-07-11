@@ -28,18 +28,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
                     android:text="A. PERSONAL DETAILS"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:layout_marginTop="15dp"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/LinearOne"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="15dp"
+                    android:orientation="vertical"
                     android:visibility="visible">
 
                     <LinearLayout
@@ -81,8 +81,7 @@
                             android:layout_height="110dp"
                             android:layout_weight="0.8"
                             android:background="@drawable/edittext_bg"
-                            android:src="@drawable/ic_camera_black_24dp"
-                          />
+                            android:src="@drawable/ic_camera_black_24dp" />
 
 
                     </LinearLayout>
@@ -140,9 +139,9 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
-                            android:inputType="text"
                             android:imeOptions="actionNext"
-                             android:padding="10dp"
+                            android:inputType="text"
+                            android:padding="10dp"
                             android:textSize="14sp" />
 
                         <EditText
@@ -213,6 +212,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/RGSex"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -301,6 +301,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Yrs"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -361,6 +362,7 @@
                             android:hint="e.g. 05/06/1996"
                             android:inputType="date"
                             android:paddingLeft="20dp"
+                            android:imeOptions="actionNext"
                             android:paddingTop="10dp"
                             android:paddingRight="20dp"
                             android:paddingBottom="10dp"
@@ -380,7 +382,6 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/dark_gray" />
-
 
 
                 </LinearLayout>
@@ -442,6 +443,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Mobile"
                             android:inputType="number"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="16sp" />
 
@@ -453,6 +455,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Landline"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
                             android:padding="10dp"
                             android:textSize="16sp" />
@@ -516,6 +519,7 @@
                             android:dropDownSelector="@drawable/downarrow"
                             android:entries="@array/education"
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -577,6 +581,7 @@
                             android:hint="First"
                             android:inputType="text"
                             android:padding="10dp"
+                            android:imeOptions="actionNext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -587,6 +592,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Middle"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -599,6 +605,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Surname"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -660,6 +667,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -672,6 +680,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Middle"
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -684,6 +693,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Surname"
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -697,15 +707,14 @@
                         android:background="@color/dark_gray" />
 
 
-
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/LinearThree"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="20dp"
+                    android:orientation="vertical"
                     android:visibility="gone">
 
                     <LinearLayout
@@ -757,6 +766,7 @@
                             android:hint="First"
                             android:inputType="text"
                             android:padding="10dp"
+                            android:imeOptions="actionNext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -767,6 +777,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Middle"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -779,6 +790,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Surname"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -825,6 +837,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/RGWidow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -908,6 +921,7 @@
                             android:entries="@array/category"
                             android:inputType="text"
                             android:padding="10dp"
+                            android:imeOptions="actionNext"
                             android:textSize="14sp" />
 
 
@@ -966,6 +980,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Area"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -979,6 +994,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="House No."
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -990,6 +1006,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Road"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -1012,6 +1029,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="City"
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1023,6 +1041,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Pincode No."
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -1094,6 +1113,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Area"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -1107,6 +1127,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="House No."
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1118,6 +1139,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Road"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -1139,6 +1161,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="City"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -1152,6 +1175,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Pincode No."
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1212,6 +1236,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Aadhar No"
                             android:inputType="number"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1288,6 +1313,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Account No"
                             android:inputType="number"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1299,6 +1325,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Bank Name"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -1321,6 +1348,7 @@
                             android:hint="Branch Name"
                             android:inputType="text"
                             android:padding="10dp"
+                            android:imeOptions="actionNext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -1333,6 +1361,7 @@
                             android:hint="IFSC Code"
                             android:inputType="text"
                             android:padding="10dp"
+                            android:imeOptions="actionNext"
                             android:textAllCaps="true"
                             android:textSize="14sp" />
 
@@ -1377,6 +1406,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/RGCriminal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -1467,6 +1497,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="S.No"
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1479,6 +1510,8 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Date of case"
                             android:inputType="text"
+                            android:editable="false"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1490,6 +1523,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="FIR No."
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -1512,6 +1546,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Name of Police"
                             android:inputType="text"
+                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1521,6 +1556,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
+                            android:imeOptions="actionNext"
                             android:background="@drawable/edittext_bg"
                             android:hint="Status of case"
                             android:inputType="text"

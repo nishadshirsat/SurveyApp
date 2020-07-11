@@ -9,8 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 
 public class VendorsFamDetailsActivity extends AppCompatActivity {
 
@@ -32,6 +34,10 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
     private EditText mEditAadhar;
     private Button mBtnNext;
     private Button mBtnPrevious;
+    private TextView mTextAdd;
+
+    private int FamCount = 0;
+    private int FamInc = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,18 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vendors_fam_details);
 
         bindView();
+
+        mTextAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FamCount < FamInc ){
+//                    viewAddMembers("Members");
+//                    passengerItemAdapter1.notifyDataSetChanged();
+                } else {
+                    ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Added "+FamCount+" Family Members Already");
+                }
+            }
+        });
 
         mBtnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,9 +67,80 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(VendorsFamDetailsActivity.this,VendingDetailsActivity.class));
+
+                if(validate()){
+                    startActivity(new Intent(VendorsFamDetailsActivity.this,VendingDetailsActivity.class));
+                }
+
             }
         });
+    }
+
+    private boolean validate() {
+
+        if (!ApplicationConstant.isNetworkAvailable(VendorsFamDetailsActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        } else if (mEditFamName.getText().toString().trim().isEmpty()) {
+            mEditFamName.setError("Enter Family Name");
+            mEditFamName.requestFocus();
+            return false;
+        }else if (mEditFamRelation.getText().toString().trim().isEmpty()) {
+            mEditFamRelation.setError("Enter Family Relation");
+            mEditFamRelation.requestFocus();
+            return false;
+        }else if (mEditFamAge.getText().toString().trim().isEmpty()) {
+            mEditFamAge.setError("Enter Family Age");
+            mEditFamAge.requestFocus();
+            return false;
+        }else if (mEditFamAadhar.getText().toString().trim().isEmpty()) {
+            mEditFamAadhar.setError("Enter Family Aadhar No");
+            mEditFamAadhar.requestFocus();
+            return false;
+        }else if (mEditPlot.getText().toString().trim().isEmpty()) {
+            mEditPlot.setError("Enter Plot");
+            mEditPlot.requestFocus();
+            return false;
+        }else if (mEditHouseSize.getText().toString().trim().isEmpty()) {
+            mEditHouseSize.setError("Enter House Size");
+            mEditHouseSize.requestFocus();
+            return false;
+        }else if (mEditArea.getText().toString().trim().isEmpty()) {
+            mEditArea.setError("Enter Area");
+            mEditArea.requestFocus();
+            return false;
+        }else if (mEditKuccha.getText().toString().trim().isEmpty()) {
+            mEditKuccha.setError("Enter Kuccha");
+            mEditKuccha.requestFocus();
+            return false;
+        }else if (mEditRent.getText().toString().trim().isEmpty()) {
+            mEditRent.setError("Enter Rent");
+            mEditRent.requestFocus();
+            return false;
+        }else if (mEditName.getText().toString().trim().isEmpty()) {
+            mEditName.setError("Enter Name");
+            mEditName.requestFocus();
+            return false;
+        }else if (mEditRelation.getText().toString().trim().isEmpty()) {
+            mEditRelation.setError("Enter Relation");
+            mEditRelation.requestFocus();
+            return false;
+        }
+        else if (mEditAge.getText().toString().trim().isEmpty()) {
+            mEditAge.setError("Enter Age");
+            mEditAge.requestFocus();
+            return false;
+        }
+        else if (mEditAadhar.getText().toString().trim().isEmpty()) {
+            mEditAadhar.setError("Enter Aadhar Number");
+            mEditAadhar.requestFocus();
+            return false;
+        }
+
+
+        return true;
     }
 
     private void bindView() {
@@ -73,5 +162,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         mEditAadhar = (EditText) findViewById(R.id.EditAadhar);
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
+        mTextAdd = (TextView) findViewById(R.id.TextAdd);
     }
 }

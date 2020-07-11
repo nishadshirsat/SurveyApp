@@ -411,6 +411,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/RGVendor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -622,6 +623,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/RGDocument"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -679,7 +681,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text=" Choice of vending area/market allotment"
+                                android:text="Choice of vending area/market allotment"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
