@@ -52,14 +52,14 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private EditText mEditAge;
     private LinearLayout mLinearTwo;
     private EditText mEditAnnualIncome;
-    private RadioButton mRadioY;
-    private RadioButton mRadioN;
+//    private RadioButton mRadioY;
+//    private RadioButton mRadioN;
     private Spinner mSpinnerVehical;
     private EditText mEditDob;
     private ImageView mImgCalendar;
     private LinearLayout mLinearThree;
-    private RadioButton mRadioDY;
-    private RadioButton mRadioDN;
+//    private RadioButton mRadioDY;
+//    private RadioButton mRadioDN;
     private Spinner mSpinnerChoice;
     private Button mBtnNext;
     private Button mBtnPrevious;
@@ -112,6 +112,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                             }
                         }, mYear, mMonth, mDay);
+
                 datePickerDialog.show();
 
             }
@@ -161,7 +162,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     VENDING_TO=mEditToTime.getText().toString().trim();
                     YRS_OF_VENDING=mEditAge.getText().toString().trim();
                     ANNUAL_INCOME=mEditAnnualIncome.getText().toString().trim();
-                    ANNUAL_INCOME=mEditAnnualIncome.getText().toString().trim();
                     IS_RECOGNIZED_STREET_VENDOR = String.valueOf(RGVendor.getCheckedRadioButtonId());
                     mSpinnerVehical.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -177,7 +177,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                         }
                     });
 
-                    STARTING_DATE_VENDING=mEditDob.getText().toString().trim();
+//                    STARTING_DATE_VENDING=mEditDob.getText().toString().trim();
                     TEHABZARI_AVAILABLE= String.valueOf(RGDocument.getCheckedRadioButtonId());
                     mSpinnerChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -286,14 +286,14 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mEditAge = (EditText) findViewById(R.id.EditAge);
         mLinearTwo = (LinearLayout) findViewById(R.id.LinearTwo);
         mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
-        mRadioY = (RadioButton) findViewById(Integer.parseInt(IS_RECOGNIZED_STREET_VENDOR));
-        mRadioN = (RadioButton) findViewById(Integer.parseInt(IS_RECOGNIZED_STREET_VENDOR));
+//        mRadioY = (RadioButton) findViewById(Integer.parseInt(IS_RECOGNIZED_STREET_VENDOR));
+//        mRadioN = (RadioButton) findViewById(Integer.parseInt(IS_RECOGNIZED_STREET_VENDOR));
         mSpinnerVehical = (Spinner) findViewById(R.id.SpinnerVehical);
         mEditDob = (EditText) findViewById(R.id.EditDob);
         mImgCalendar = (ImageView) findViewById(R.id.ImgCalendar);
         mLinearThree = (LinearLayout) findViewById(R.id.LinearThree);
-        mRadioDY = (RadioButton) findViewById(Integer.parseInt(TEHABZARI_AVAILABLE));
-        mRadioDN = (RadioButton) findViewById(Integer.parseInt(TEHABZARI_AVAILABLE));
+//        mRadioDY = (RadioButton) findViewById(Integer.parseInt(TEHABZARI_AVAILABLE));
+//        mRadioDN = (RadioButton) findViewById(Integer.parseInt(TEHABZARI_AVAILABLE));
         mSpinnerChoice = (Spinner) findViewById(R.id.SpinnerChoice);
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
@@ -342,6 +342,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
                         });
 
                         AlertDialog alertDialog = builder.create();
+                        alertDialog.setCancelable(false);
+                        alertDialog.setCanceledOnTouchOutside(false);
                         alertDialog.show();
 
 //                        ApplicationConstant.displayToastMessage(VendingDetailsActivity.this,

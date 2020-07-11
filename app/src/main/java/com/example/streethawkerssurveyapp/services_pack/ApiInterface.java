@@ -1,9 +1,15 @@
 package com.example.streethawkerssurveyapp.services_pack;
 
+import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
+import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.LoginResponse;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -80,6 +86,41 @@ public interface ApiInterface {
             @Field("choice_of_vending_area") String choice_of_vending_area
     );
 
+//    @FormUrlEncoded
+//    @POST("update-survey")
+//    Call<UpdateSurveyResponse> getUpdateFamilySurvey(
+//            @HeaderMap Map<String, String> token,
+//            @Field("uri_number") String uri_number,
+//            @Field("family_members") String family_members,
+//            @Field("family_member_details") String family_member_details,
+////            @Field("family_member_details") List<FamilyMembers> family_member_details,
+//            @Field("land_fixed_assets") String land_fixed_assets,
+//            @Field("family_members_been_surveyed") String family_members_been_surveyed,
+//            @Field("family_member_survey_details") String family_member_survey_details
+//    );
 
+    @Multipart
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> getUpdateFamilySurvey(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part("family_members") RequestBody family_members,
+            @Part("family_member_details") RequestBody family_member_details,
+//            @Field("family_member_details") List<FamilyMembers> family_member_details,
+            @Part("land_fixed_assets") RequestBody land_fixed_assets,
+            @Part("family_members_been_surveyed") RequestBody family_members_been_surveyed,
+            @Part("family_member_survey_details") RequestBody family_member_survey_details
+    );
 
+    @Multipart
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> getUpdateDocuments(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part MultipartBody.Part identity_proof_documents,
+            @Part MultipartBody.Part vending_history_proof_documents,
+//            @Field("family_member_details") List<FamilyMembers> family_member_details,
+            @Part MultipartBody.Part allotment_of_tehbazari_document,
+            @Part MultipartBody.Part undertaking_by_the_applicant
+    );
 }

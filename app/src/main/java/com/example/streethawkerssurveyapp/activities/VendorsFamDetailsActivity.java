@@ -1,26 +1,59 @@
 package com.example.streethawkerssurveyapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.adapter.FamilyDetailsAdpater;
+import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
+import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
+import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
+import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
+import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class VendorsFamDetailsActivity extends AppCompatActivity {
 
     private LinearLayout mLinearMain;
-    private EditText mEditFamName;
-    private EditText mEditFamRelation;
-    private EditText mEditFamAge;
-    private EditText mEditFamAadhar;
+
+//    private EditText mEditFamName;
+//    private EditText mEditFamRelation;
+//    private EditText mEditFamAge;
+//    private EditText mEditFamAadhar;
+
     private EditText mEditPlot;
     private EditText mEditHouseSize;
     private EditText mEditArea;
@@ -39,6 +72,17 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
     private int FamCount = 0;
     private int FamInc = 0;
 
+    private RecyclerView view_FamilyMembers;
+
+    private List<FamilyMembers> listFamily = new ArrayList<>();
+    private List<LandAssets> listLandAssets = new ArrayList<>();
+    private List<FamilyMembers> listSurveyedFamily = new ArrayList<>();
+
+    ProgressDialog progressDialog;
+
+    String URI_NO = "";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +93,72 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         mTextAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (FamCount < FamInc ){
-//                    viewAddMembers("Members");
-//                    passengerItemAdapter1.notifyDataSetChanged();
-                } else {
-                    ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Added "+FamCount+" Family Members Already");
-                }
+//                if (FamCount < FamInc ){
+////                    viewAddMembers("Members");
+////                    passengerItemAdapter1.notifyDataSetChanged();
+//                } else {
+//                    ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Added "+FamCount+" Family Members Already");
+//                }
+
+                View viewAdd = LayoutInflater.from(VendorsFamDetailsActivity.this).inflate(R.layout.layout_add_family, null);
+                final EditText fEditFamName = (EditText) viewAdd.findViewById(R.id.EditFamName);
+                final EditText  fEditFamRelation = (EditText) viewAdd.findViewById(R.id.EditFamRelation);
+                final EditText fEditFamAge = (EditText) viewAdd.findViewById(R.id.EditFamAge);
+                final EditText fEditFamAadhar = (EditText) viewAdd.findViewById(R.id.EditFamAadhar);
+               TextView fTextAddMember = (TextView)viewAdd. findViewById(R.id.TextAddMember);
+                ImageView image_cancel = (ImageView)viewAdd. findViewById(R.id.image_cancel);
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(VendorsFamDetailsActivity.this);
+
+                builder.setView(viewAdd);
+                final android.app.AlertDialog alertDialog = builder.create();
+
+                image_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                fTextAddMember.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (fEditFamName.getText().toString().trim().isEmpty()){
+                            fEditFamName.setError("enter name");
+                            fEditFamName.requestFocus();
+                        }else  if (fEditFamRelation.getText().toString().trim().isEmpty()){
+                            fEditFamRelation.setError("enter relation");
+                            fEditFamRelation.requestFocus();
+                        }else if (fEditFamAge.getText().toString().trim().isEmpty()){
+                            fEditFamAge.setError("enter age");
+                            fEditFamAge.requestFocus();
+                        }else if (fEditFamAadhar.getText().toString().trim().isEmpty()){
+                            fEditFamAadhar.setError("enter aadhar");
+                            fEditFamAadhar.requestFocus();
+                        }else {
+                            FamilyMembers familyMembers = new FamilyMembers(fEditFamName.getText().toString().trim(),
+                                    fEditFamRelation.getText().toString().trim(),
+                                    fEditFamAge.getText().toString().trim(),
+                                    fEditFamAadhar.getText().toString().trim());
+
+
+                            listFamily.add(familyMembers);
+                            FamilyDetailsAdpater familyDetailsAdpater = new FamilyDetailsAdpater(VendorsFamDetailsActivity.this);
+                            familyDetailsAdpater.setDetails(listFamily);
+
+                            view_FamilyMembers.setAdapter(familyDetailsAdpater);
+                            alertDialog.dismiss();
+
+                        }
+
+                    }
+                });
+
+
+                alertDialog.show();
+
+
             }
         });
 
@@ -68,8 +172,18 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                Gson gson = gsonBuilder.create();
+
+                String JSONObject_Family = gson.toJson(listFamily);
+
+//                ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"",JSONObject_Family);
+
+
+
                 if(validate()){
-                    startActivity(new Intent(VendorsFamDetailsActivity.this,VendingDetailsActivity.class));
+                    UpdateFamilySurvey();
+
                 }
 
             }
@@ -83,23 +197,30 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else if (mEditFamName.getText().toString().trim().isEmpty()) {
-            mEditFamName.setError("Enter Family Name");
-            mEditFamName.requestFocus();
+        }
+        else if (listFamily.isEmpty()){
+            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add family members");
             return false;
-        }else if (mEditFamRelation.getText().toString().trim().isEmpty()) {
-            mEditFamRelation.setError("Enter Family Relation");
-            mEditFamRelation.requestFocus();
-            return false;
-        }else if (mEditFamAge.getText().toString().trim().isEmpty()) {
-            mEditFamAge.setError("Enter Family Age");
-            mEditFamAge.requestFocus();
-            return false;
-        }else if (mEditFamAadhar.getText().toString().trim().isEmpty()) {
-            mEditFamAadhar.setError("Enter Family Aadhar No");
-            mEditFamAadhar.requestFocus();
-            return false;
-        }else if (mEditPlot.getText().toString().trim().isEmpty()) {
+        }
+
+//        else if (mEditFamName.getText().toString().trim().isEmpty()) {
+//            mEditFamName.setError("Enter Family Name");
+//            mEditFamName.requestFocus();
+//            return false;
+//        }else if (mEditFamRelation.getText().toString().trim().isEmpty()) {
+//            mEditFamRelation.setError("Enter Family Relation");
+//            mEditFamRelation.requestFocus();
+//            return false;
+//        }else if (mEditFamAge.getText().toString().trim().isEmpty()) {
+//            mEditFamAge.setError("Enter Family Age");
+//            mEditFamAge.requestFocus();
+//            return false;
+//        }else if (mEditFamAadhar.getText().toString().trim().isEmpty()) {
+//            mEditFamAadhar.setError("Enter Family Aadhar No");
+//            mEditFamAadhar.requestFocus();
+//            return false;
+//        }
+        else if (mEditPlot.getText().toString().trim().isEmpty()) {
             mEditPlot.setError("Enter Plot");
             mEditPlot.requestFocus();
             return false;
@@ -119,7 +240,10 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             mEditRent.setError("Enter Rent");
             mEditRent.requestFocus();
             return false;
-        }else if (mEditName.getText().toString().trim().isEmpty()) {
+        }
+
+
+        else if (mEditName.getText().toString().trim().isEmpty()) {
             mEditName.setError("Enter Name");
             mEditName.requestFocus();
             return false;
@@ -145,10 +269,13 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
     private void bindView() {
         mLinearMain = (LinearLayout) findViewById(R.id.LinearMain);
-        mEditFamName = (EditText) findViewById(R.id.EditFamName);
-        mEditFamRelation = (EditText) findViewById(R.id.EditFamRelation);
-        mEditFamAge = (EditText) findViewById(R.id.EditFamAge);
-        mEditFamAadhar = (EditText) findViewById(R.id.EditFamAadhar);
+
+//        mEditFamName = (EditText) findViewById(R.id.EditFamName);
+//        mEditFamRelation = (EditText) findViewById(R.id.EditFamRelation);
+//
+//        mEditFamAge = (EditText) findViewById(R.id.EditFamAge);
+//        mEditFamAadhar = (EditText) findViewById(R.id.EditFamAadhar);
+
         mEditPlot = (EditText) findViewById(R.id.EditPlot);
         mEditHouseSize = (EditText) findViewById(R.id.EditHouseSize);
         mEditArea = (EditText) findViewById(R.id.EditArea);
@@ -163,5 +290,155 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
         mTextAdd = (TextView) findViewById(R.id.TextAdd);
+
+
+        view_FamilyMembers = (RecyclerView) findViewById(R.id.view_FamilyMembers);
+        view_FamilyMembers.setLayoutManager(new LinearLayoutManager(VendorsFamDetailsActivity.this));
     }
+
+
+    private void UpdateFamilySurvey() {
+
+        JSONObject objectFamily = null;
+
+        LandAssets landAssets = new LandAssets(mEditPlot.getText().toString().trim(),
+                mEditHouseSize.getText().toString().trim(),
+                mEditArea.getText().toString().trim(),
+                mEditKuccha.getText().toString().trim(),
+                mEditRent.getText().toString().trim()
+                );
+        listLandAssets.add(landAssets);
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+            String json_family = new Gson().toJson(listFamily);
+
+        String JSONObject_Family = gson.toJson(listFamily);
+
+        Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+//        String json_family = prettyGson.toJson(JSONObject_Family);
+
+
+
+//        try {
+//            JSONArray jsonArray = new JSONArray(jsonArray);
+//
+//            objectFamily = new JSONObject(json_family);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        String JSONObject_LandAsset = gson.toJson(listLandAssets);
+//        String json_landAssets = prettyGson.toJson(JSONObject_LandAsset);
+
+        String json_landAssets = new Gson().toJson(listLandAssets);
+
+
+        FamilyMembers familyMembers = new FamilyMembers(mEditName.getText().toString().trim(),
+                mEditRelation.getText().toString().trim(),
+                mEditAge.getText().toString().trim(),
+                mEditAadhar.getText().toString().trim());
+
+        listSurveyedFamily.add(familyMembers);
+
+//        String JSONObject_S_Family = gson.toJson(listSurveyedFamily);
+//        String json_surveyFam = prettyGson.toJson(JSONObject_S_Family);
+
+        String json_surveyFam = new Gson().toJson(listSurveyedFamily);
+
+        URI_NO = ApplicationConstant.URI_NO;
+
+        progressDialog = CustomProgressDialog.getDialogue(VendorsFamDetailsActivity.this);
+        progressDialog.show();
+
+        String username = PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, "");
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+
+        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), URI_NO);
+        RequestBody family_members_ = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
+        RequestBody json_family_ = RequestBody.create(MediaType.parse("multipart/form-data"), json_family);
+        RequestBody json_landAssets_ = RequestBody.create(MediaType.parse("multipart/form-data"), json_landAssets);
+        RequestBody isFamilySurveyed = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
+        RequestBody json_surveyFam_ = RequestBody.create(MediaType.parse("multipart/form-data"), json_surveyFam);
+
+
+
+//        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+//        Call<UpdateSurveyResponse> call = apiservice.getUpdateFamilySurvey(headers,URI_NO
+//                ,"1",json_family,json_landAssets,"1",json_surveyFam
+//
+//        );
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.getUpdateFamilySurvey(headers,URI_NO_
+                ,family_members_,json_family_,json_landAssets_,isFamilySurveyed,json_surveyFam_
+
+        );
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VendorsFamDetailsActivity.this);
+                        builder.setTitle("Vending Family Details");
+                        builder.setMessage("Saved successfully");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                startActivity(new Intent(VendorsFamDetailsActivity.this,VendingDetailsActivity.class));
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.setCancelable(false);
+                        alertDialog.setCanceledOnTouchOutside(false);
+                        alertDialog.show();
+
+//                        ApplicationConstant.displayToastMessage(VendorsFamDetailsActivity.this,
+//                                "Vending Details saved successfully");
+
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this,
+                                "Response",
+                                String.valueOf(response.body().isStatus()));
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "Response", t.getMessage().toString());
+
+            }
+        });
+    }
+
 }

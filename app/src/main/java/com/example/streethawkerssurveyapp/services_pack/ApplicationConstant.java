@@ -33,7 +33,7 @@ public class ApplicationConstant {
 
     public static final String SURVEY_ID = "surveyId";
     public static String URI_NO = "";
-    public static String SurveyId ="0";
+    public static String SurveyId ="1.0";
 
 
     public class USERDETAILS {
