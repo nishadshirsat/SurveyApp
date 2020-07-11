@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.services.AudioRecordService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.scanlibrary.ScanActivity;
 import com.scanlibrary.ScanConstants;
@@ -140,30 +141,11 @@ public class DocumentScanActivity extends AppCompatActivity {
                     mLinearFour.setVisibility(View.VISIBLE);
 
                 }
-//                else if (mLinearFour.getVisibility() == View.VISIBLE) {
-//
-//                    mLinearFour.setVisibility(View.GONE);
-//                    mLinearOne.setVisibility(View.GONE);
-//                    mLinearThree.setVisibility(View.GONE);
-//                    mLinearTwo.setVisibility(View.GONE);
-//                    mLinearFive.setVisibility(View.VISIBLE);
-//
-//                }
 
                 else {
 
-//                    mLinearFive.setVisibility(View.VISIBLE);
-//                    mLinearOne.setVisibility(View.GONE);
-//                    mLinearThree.setVisibility(View.GONE);
-//                    mLinearTwo.setVisibility(View.GONE);
-//                    mLinearFour.setVisibility(View.GONE);
+                    stopService(new Intent(DocumentScanActivity.this, AudioRecordService.class));
 
-
-//                    NAME_VENDOR = mEditFName.getText().toString().trim()+" "
-//                            + mEditMName.getText().toString().trim()+" "
-//                            +  mEditLName.getText().toString().trim();
-//
-//                    AddSurvey();
 
 //                    startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
 

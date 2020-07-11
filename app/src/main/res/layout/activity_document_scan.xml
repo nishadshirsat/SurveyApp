@@ -705,6 +705,7 @@
                     android:background="@color/colorPrimaryDark"
                     android:drawableLeft="@drawable/backward_arrow"
                     android:drawablePadding="10dp"
+                    android:visibility="gone"
                     android:drawableTint="@color/white"
                     android:padding="10dp"
                     android:text="PREVIOUS"

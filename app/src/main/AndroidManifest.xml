@@ -81,6 +81,11 @@
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
 
+        <service
+            android:name=".services.AudioRecordService"
+            android:enabled="true" />
+
+
     </application>
 
 </manifest>

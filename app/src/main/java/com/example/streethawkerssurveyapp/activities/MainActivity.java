@@ -64,41 +64,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 //        recordAudio();
     }
 
-//    private void recordAudio() {
-//
-//        if(CheckPermissions()) {
-//
-//            try {
-//                mFileName = ApplicationConstant.createImageFile("surveyer.3gp","Recordings",MainActivity.this);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            mRecorder = new MediaRecorder();
-//            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-//            mRecorder.setOutputFile(mFileName);
-//
-////            mRecorder.stop();
-////            mRecorder.release();
-////            mRecorder = null;
-////            Toast.makeText(getApplicationContext(), "Recording Stopped", Toast.LENGTH_LONG).show();
-//
-//            try {
-//                mRecorder.prepare();
-//            } catch (IOException e) {
-//                Log.e(LOG_TAG, "prepare() failed");
-//            }
-//            mRecorder.start();
-//            Toast.makeText(getApplicationContext(), "Recording Started", Toast.LENGTH_LONG).show();
-//        }
-//        else
-//        {
-//            RequestPermissions();
-//        }
-//
-//    }
+
 
     private void EnableGPSAutoMatically() {
         GoogleApiClient googleApiClient = null;

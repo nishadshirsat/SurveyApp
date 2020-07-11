@@ -455,6 +455,7 @@
                     android:drawableLeft="@drawable/backward_arrow"
                     android:drawableTint="@color/white"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:drawablePadding="10dp"
                     android:text="PREVIOUS"
                     android:layout_gravity="right"

@@ -31,6 +31,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
+import com.example.streethawkerssurveyapp.services.AudioRecordService;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
@@ -150,6 +151,10 @@ public class PersonalDetailsActivity extends MainActivity {
            ApplicationConstant.SurveyId = "1";
            PrefUtils.saveToPrefs(PersonalDetailsActivity.this,ApplicationConstant.SURVEY_ID,"1");
        }
+
+       Intent intent = new Intent(PersonalDetailsActivity.this, AudioRecordService.class);
+       intent.putExtra("FILE",ApplicationConstant.SurveyId);
+       startService(intent);
 
        onCLickListners();
 

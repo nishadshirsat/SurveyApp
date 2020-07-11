@@ -8,7 +8,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -168,11 +170,23 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                     if (response.body().isStatus()) {
 
-                        ApplicationConstant.DisplayMessageDialog(VendingDetailsActivity.this,"",
-                                "Vending Details saved successfully");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(VendingDetailsActivity.this);
+                        builder.setTitle("Vending Details");
+                        builder.setMessage("Saved successfully");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                startActivity(new Intent(VendingDetailsActivity.this, DocumentScanActivity.class));
 
-//                        startActivity(new Intent(VendingDetailsActivity.this, DocumentScanActivity.class));
+                            }
+                        });
 
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+//                        ApplicationConstant.displayToastMessage(VendingDetailsActivity.this,
+//                                "Vending Details saved successfully");
 
 
                     } else {
