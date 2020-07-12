@@ -362,13 +362,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_bg"
-                            android:hint="e.g. 05/06/1996"
+                            android:hint="e.g. 1996-05-06"
                             android:inputType="date"
                             android:paddingLeft="20dp"
                             android:imeOptions="actionNext"
                             android:paddingTop="10dp"
                             android:paddingRight="20dp"
-                            android:editable="false"
+                            android:focusableInTouchMode="false"
                             android:paddingBottom="10dp"
                             android:textSize="14sp" />
 
@@ -1097,7 +1097,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Permanent Address"
+                                android:text="Permanent Address (Same as Resident)"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1586,6 +1586,7 @@
         android:id="@+id/relative_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
         android:gravity="bottom">
 

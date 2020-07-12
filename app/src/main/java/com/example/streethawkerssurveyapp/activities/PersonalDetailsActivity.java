@@ -61,9 +61,9 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditFName;
     private EditText mEditMName;
     private EditText mEditLName;
-//    private RadioButton mRadioM;
-//    private RadioButton mRadioF;
-//    private RadioButton mRadioO;
+    private RadioButton mRadioM;
+    private RadioButton mRadioF;
+    private RadioButton mRadioO;
     private EditText mEditAge;
     private EditText mEditDob;
     private ImageView mImgCalendar;
@@ -81,8 +81,8 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditSpouceFName;
     private EditText mEditSpouceMName;
     private EditText mEditSpouceLName;
-//    private RadioButton mRadioY;
-//    private RadioButton mRadioN;
+    private RadioButton mRadioY;
+    private RadioButton mRadioN;
     private Spinner mSpinnerCategory;
     private EditText mEditArea;
     private EditText mEditHouseNo;
@@ -101,19 +101,20 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditBankName;
     private EditText mEditBranchName;
     private EditText mEditIfscCode;
-//    private RadioButton mRadioCY;
-//    private RadioButton mRadioCN;
+    private RadioButton mRadioCY;
+    private RadioButton mRadioCN;
     private LinearLayout mLinearFive;
     private EditText mEditSNo;
     private EditText mEditDate;
     private EditText mEditFir;
     private EditText mEditNamePolice;
     private EditText mEditStatusCase;
-    private Button mBtnNext,mBtnPrevious;
+    private Button mBtnNext, mBtnPrevious;
     private String photoPath = "";
     RadioGroup RGSex;
     RadioGroup RGWidow;
     RadioGroup RGCriminal;
+    int radioId;
     boolean doubleBackToExitPressedOnce = false;
 
 
@@ -126,31 +127,31 @@ public class PersonalDetailsActivity extends MainActivity {
     private
     String
 
-     NAME_VENDOR="",
-     SEX="",
-     AGE="",
-     DOB="",
-     CONTACT_NO="",
-     LANDLINE_NO="",
-     EDUCATION_STATUS="",
-     NAME_OFFATHER_HUSBAND="",
-     NAME_MOTHER="",
-     NAME_SPOUSE="",
-     WHETHER_WIDOWED="",
-     CATEGORY="",
-     RESIDENTIAL_ADDRESS="",
-     PERMENENT_ADDRESS="",
-     AADHAR_NO="",
-     BANKACC_NO="",
-     BANKNAME="",
-     BRANCH_NAME="",
-     IFSC="",
-     IS_CRIMINALCASE="",
-     CRIMINALCASE_NO="",
-     CRIMINALCASE_DATE="",
-     CRIMINALCASE_FIRNO="",
-     CRIMINALCASE_POLICA_NAME="",
-     CRIMINALCASE_STATUS="";
+            NAME_VENDOR = "",
+            SEX = "",
+            AGE = "",
+            DOB = "",
+            CONTACT_NO = "",
+            LANDLINE_NO = "",
+            EDUCATION_STATUS = "",
+            NAME_OFFATHER_HUSBAND = "",
+            NAME_MOTHER = "",
+            NAME_SPOUSE = "",
+            WHETHER_WIDOWED = "",
+            CATEGORY = "",
+            RESIDENTIAL_ADDRESS = "",
+            PERMENENT_ADDRESS = "",
+            AADHAR_NO = "",
+            BANKACC_NO = "",
+            BANKNAME = "",
+            BRANCH_NAME = "",
+            IFSC = "",
+            IS_CRIMINALCASE = "",
+            CRIMINALCASE_NO = "",
+            CRIMINALCASE_DATE = "",
+            CRIMINALCASE_FIRNO = "",
+            CRIMINALCASE_POLICA_NAME = "",
+            CRIMINALCASE_STATUS = "";
 
 
     private Calendar myCalendar;
@@ -181,18 +182,18 @@ public class PersonalDetailsActivity extends MainActivity {
         if (ApplicationConstant.SurveyId.trim().isEmpty()) {
             ApplicationConstant.SurveyId = "1.0";
             PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "1.0");
-        }else {
+        } else {
             double count = Double.parseDouble(ApplicationConstant.SurveyId);
             count = count + 1.0;
 
-            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, ""+count);
+            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "" + count);
         }
 
-//       Intent intent = new Intent(PersonalDetailsActivity.this, AudioRecordService.class);
-//       intent.putExtra("FILE",ApplicationConstant.SurveyId);
-//       startService(intent);
+        Intent intent = new Intent(PersonalDetailsActivity.this, AudioRecordService.class);
+        intent.putExtra("FILE", ApplicationConstant.SurveyId);
+        startService(intent);
 
-       onCLickListners();
+        onCLickListners();
 
     }
 
@@ -215,6 +216,21 @@ public class PersonalDetailsActivity extends MainActivity {
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+
+            }
+        });
+
+        RGCriminal.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
+                IS_CRIMINALCASE = radioSexButton.getText().toString().trim();
+                if (IS_CRIMINALCASE.contains("Yes")) {
+                    mLinearFive.setVisibility(View.VISIBLE);
+
+                } else {
+                    mLinearFive.setVisibility(View.GONE);
+                }
 
             }
         });
@@ -251,7 +267,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     // Create the File where the photo should go
                     File photoFile = null;
                     try {
-                        photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId+"_profile.png", "Profile", PersonalDetailsActivity.this);
+                        photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_profile.png", "Profile", PersonalDetailsActivity.this);
                         photoFile = new File(photoPath);
                     } catch (IOException ex) {
                         // Error occurred while creating the File
@@ -259,7 +275,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     // Continue only if the File was successfully created
                     if (photoFile != null) {
                         photoURI = SurveyAppFileProvider.getUriForFile(PersonalDetailsActivity.this,
-                                BuildConfig.APPLICATION_ID+".android.fileprovider",
+                                BuildConfig.APPLICATION_ID + ".android.fileprovider",
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, 1);
@@ -275,14 +291,13 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 if (mLinearFive.getVisibility() == View.VISIBLE) {
 
-                        mLinearFour.setVisibility(View.VISIBLE);
-                        mLinearOne.setVisibility(View.GONE);
-                        mLinearThree.setVisibility(View.GONE);
-                        mLinearTwo.setVisibility(View.GONE);
-                        mLinearFive.setVisibility(View.GONE);
+                    mLinearFour.setVisibility(View.VISIBLE);
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.GONE);
+                    mLinearFive.setVisibility(View.GONE);
 
-                } else
-                if (mLinearFour.getVisibility() == View.VISIBLE) {
+                } else if (mLinearFour.getVisibility() == View.VISIBLE) {
 
                     mLinearFour.setVisibility(View.GONE);
                     mLinearOne.setVisibility(View.GONE);
@@ -290,8 +305,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     mLinearTwo.setVisibility(View.GONE);
                     mLinearFive.setVisibility(View.GONE);
 
-                } else
-                if (mLinearThree.getVisibility() == View.VISIBLE) {
+                } else if (mLinearThree.getVisibility() == View.VISIBLE) {
 
                     mLinearFour.setVisibility(View.GONE);
                     mLinearOne.setVisibility(View.GONE);
@@ -299,8 +313,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     mLinearTwo.setVisibility(View.VISIBLE);
                     mLinearFive.setVisibility(View.GONE);
 
-                } else
-                if (mLinearTwo.getVisibility() == View.VISIBLE) {
+                } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
 
                     mLinearFour.setVisibility(View.GONE);
                     mLinearOne.setVisibility(View.VISIBLE);
@@ -312,7 +325,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 } else {
 
-                   onBackPressed();
+                    onBackPressed();
 
                 }
 
@@ -322,6 +335,28 @@ public class PersonalDetailsActivity extends MainActivity {
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                try {
+                    int selectedId = RGSex.getCheckedRadioButtonId();
+                    RadioButton radioSexButton = (RadioButton) findViewById(selectedId);
+                    SEX = radioSexButton.getText().toString().trim();
+//                    Toast.makeText(PersonalDetailsActivity.this, SEX, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    int checkedId = RGWidow.getCheckedRadioButtonId();
+                    RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
+                    WHETHER_WIDOWED = radioSexButton.getText().toString().trim();
+//                    Toast.makeText(PersonalDetailsActivity.this, SEX, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                mLinearFive.setVisibility(View.GONE);
+
 
                 if (mLinearOne.getVisibility() == View.VISIBLE) {
 
@@ -356,18 +391,20 @@ public class PersonalDetailsActivity extends MainActivity {
                         mLinearFive.setVisibility(View.GONE);
                     }
 
-                } else if (mLinearFour.getVisibility() == View.VISIBLE) {
-
-                    if (validate4()) {
-                        mLinearFour.setVisibility(View.GONE);
-                        mLinearOne.setVisibility(View.GONE);
-                        mLinearThree.setVisibility(View.GONE);
-                        mLinearTwo.setVisibility(View.GONE);
-                        mLinearFive.setVisibility(View.VISIBLE);
-
-                        mBtnNext.setText("Submit");
-                    }
-                } else {
+                }
+//                else if (mLinearFour.getVisibility() == View.VISIBLE) {
+//
+//                    if (validate4()) {
+//                        mLinearFour.setVisibility(View.GONE);
+//                        mLinearOne.setVisibility(View.GONE);
+//                        mLinearThree.setVisibility(View.GONE);
+//                        mLinearTwo.setVisibility(View.GONE);
+//                        mLinearFive.setVisibility(View.VISIBLE);
+//
+//                        mBtnNext.setText("Submit");
+//                    }
+//                }
+                else {
 
 //                    mLinearFive.setVisibility(View.VISIBLE);
 //                    mLinearOne.setVisibility(View.GONE);
@@ -375,12 +412,11 @@ public class PersonalDetailsActivity extends MainActivity {
 //                    mLinearTwo.setVisibility(View.GONE);
 //                    mLinearFour.setVisibility(View.GONE);
 
+                    mBtnNext.setText("Submit");
 
                     NAME_VENDOR = mEditFName.getText().toString().trim() + " "
                             + mEditMName.getText().toString().trim() + " "
                             + mEditLName.getText().toString().trim();
-//                    SEX = String.valueOf(RGSex.getCheckedRadioButtonId());
-                    SEX = "M";
                     AGE = mEditAge.getText().toString().trim();
                     DOB = mEditDob.getText().toString().trim();
                     CONTACT_NO = mEditMobile.getText().toString().trim();
@@ -411,7 +447,6 @@ public class PersonalDetailsActivity extends MainActivity {
                             + mEditSpouceMName.getText().toString().trim() + " "
                             + mEditSpouceLName.getText().toString().trim();
 
-                    WHETHER_WIDOWED = String.valueOf(RGWidow.getCheckedRadioButtonId());
                     mSpinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -442,22 +477,23 @@ public class PersonalDetailsActivity extends MainActivity {
                     BANKNAME = mEditBankName.getText().toString().trim();
                     IFSC = mEditIfscCode.getText().toString().trim();
 
+
 //                    IS_CRIMINALCASE = String.valueOf(RGCriminal.getCheckedRadioButtonId());
-                    IS_CRIMINALCASE = "1";
+//                    IS_CRIMINALCASE = "1";
                     CRIMINALCASE_NO = mEditSNo.getText().toString().trim();
-//                    CRIMINALCASE_DATE = mEditDate.getText().toString().trim();
+                    CRIMINALCASE_DATE = mEditDate.getText().toString().trim();
                     CRIMINALCASE_FIRNO = mEditFir.getText().toString().trim();
                     CRIMINALCASE_POLICA_NAME = mEditNamePolice.getText().toString().trim();
                     CRIMINALCASE_STATUS = mEditStatusCase.getText().toString().trim();
 
 
-                    if (validate()) {
+                    if (validate4()) {
 
                         if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
                             AddSurvey();
 
-                        }else {
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Unable to get Location please check GPS enabled and permissions check");
+                        } else {
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Unable to get Location please check GPS enabled and permissions check");
                         }
                     }
 //                    startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
@@ -467,7 +503,6 @@ public class PersonalDetailsActivity extends MainActivity {
 
             }
         });
-
 
 
     }
@@ -520,6 +555,35 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditIfscCode.setError("Enter IFSC Code");
             mEditIfscCode.requestFocus();
             return false;
+        } else if (IS_CRIMINALCASE.trim().isEmpty()) {
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Select Options");
+//            mEditAge.requestFocus();
+            return false;
+        }else if (mLinearFive.getVisibility() == View.VISIBLE) {
+            if (mEditSNo.getText().toString().trim().isEmpty()) {
+                mEditSNo.setError("Enter S No");
+                mEditSNo.requestFocus();
+                return false;
+            } else if (mEditDate.getText().toString().trim().isEmpty()) {
+                mEditDate.setError("Enter Date");
+                mEditDate.requestFocus();
+                return false;
+            } else if (mEditFir.getText().toString().trim().isEmpty()) {
+                mEditFir.setError("Enter FIR");
+                mEditFir.requestFocus();
+                return false;
+            } else if (mEditNamePolice.getText().toString().trim().isEmpty()) {
+                mEditNamePolice.setError("Enter Police Name");
+                mEditNamePolice.requestFocus();
+                return false;
+            } else if (mEditStatusCase.getText().toString().trim().isEmpty()) {
+                mEditStatusCase.setError("Enter Status Case");
+                mEditStatusCase.requestFocus();
+                return false;
+            }
+        } else if (!getLocation.isGPSEnabled) {
+            this.getLocation.showSettingsAlert();
+            return false;
         }
 
         return true;
@@ -530,6 +594,10 @@ public class PersonalDetailsActivity extends MainActivity {
 
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
+            return false;
+        } else if (WHETHER_WIDOWED.trim().isEmpty()) {
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Select Options");
+//            mEditAge.requestFocus();
             return false;
         } else if (mSpinnerCategory.getSelectedItem().toString().trim().isEmpty()) {
             mEditArea.setError("Select Category");
@@ -575,7 +643,7 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditMobile.setError("Enter Correct Mobile Number");
             mEditMobile.requestFocus();
             return false;
-        }else if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
+        } else if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
             mEditFatherName.setError("Select Education");
             mSpinnerEducation.requestFocus();
             return false;
@@ -608,7 +676,6 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditMotherLName.requestFocus();
             return false;
         }
-
         return true;
 
     }
@@ -620,13 +687,11 @@ public class PersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        }   else if (photoPath.isEmpty()) {
+        } else if (photoPath.isEmpty()) {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Capture profile photo");
 
             return false;
-        }
-
-        else if (mEditFName.getText().toString().trim().isEmpty()) {
+        } else if (mEditFName.getText().toString().trim().isEmpty()) {
             mEditFName.setError("Enter First Name");
             mEditFName.requestFocus();
             return false;
@@ -640,11 +705,14 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditLName.setError("Enter Last Name");
             mEditLName.requestFocus();
             return false;
+        } else if (SEX.trim().isEmpty()) {
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Select Gender");
+            return false;
         } else if (mEditAge.getText().toString().trim().isEmpty()) {
             mEditAge.setError("Enter Age");
             mEditAge.requestFocus();
             return false;
-        }  else if (mEditAge.getText().toString().trim().length() > 3) {
+        } else if (mEditAge.getText().toString().trim().length() > 3) {
             mEditAge.setError("Enter Correct Age");
             mEditAge.requestFocus();
             return false;
@@ -663,31 +731,32 @@ public class PersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else if (mEditSNo.getText().toString().trim().isEmpty()) {
-            mEditSNo.setError("Enter S No");
-            mEditSNo.requestFocus();
+        } else if (mLinearFive.getVisibility() == View.VISIBLE) {
+            if (mEditSNo.getText().toString().trim().isEmpty()) {
+                mEditSNo.setError("Enter S No");
+                mEditSNo.requestFocus();
+                return false;
+            } else if (mEditDate.getText().toString().trim().isEmpty()) {
+                mEditDate.setError("Enter Date");
+                mEditDate.requestFocus();
+                return false;
+            } else if (mEditFir.getText().toString().trim().isEmpty()) {
+                mEditFir.setError("Enter FIR");
+                mEditFir.requestFocus();
+                return false;
+            } else if (mEditNamePolice.getText().toString().trim().isEmpty()) {
+                mEditNamePolice.setError("Enter Police Name");
+                mEditNamePolice.requestFocus();
+                return false;
+            } else if (mEditStatusCase.getText().toString().trim().isEmpty()) {
+                mEditStatusCase.setError("Enter Status Case");
+                mEditStatusCase.requestFocus();
+                return false;
+            }
+        } else if (!getLocation.isGPSEnabled) {
+            this.getLocation.showSettingsAlert();
             return false;
-        } else if (mEditDate.getText().toString().trim().isEmpty()) {
-            mEditDate.setError("Enter Date");
-            mEditDate.requestFocus();
-            return false;
-        } else if (mEditFir.getText().toString().trim().isEmpty()) {
-            mEditFir.setError("Enter FIR");
-            mEditFir.requestFocus();
-            return false;
-        } else if (mEditNamePolice.getText().toString().trim().isEmpty()) {
-            mEditNamePolice.setError("Enter Police Name");
-            mEditNamePolice.requestFocus();
-            return false;
-        } else if (mEditStatusCase.getText().toString().trim().isEmpty()) {
-            mEditStatusCase.setError("Enter Status Case");
-            mEditStatusCase.requestFocus();
-            return false;
-        }else if (!getLocation.isGPSEnabled) {
-        this.getLocation.showSettingsAlert();
-        return false;
-    }
-
+        }
 
 
         return true;
@@ -704,9 +773,9 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditFName = (EditText) findViewById(R.id.EditFName);
         mEditMName = (EditText) findViewById(R.id.EditMName);
         mEditLName = (EditText) findViewById(R.id.EditLName);
-//        mRadioM = (RadioButton) findViewById(Integer.parseInt(SEX));
-//        mRadioF = (RadioButton) findViewById(Integer.parseInt(SEX));
-//        mRadioO = (RadioButton) findViewById(Integer.parseInt(SEX));
+        mRadioM = (RadioButton) findViewById(R.id.RadioM);
+        mRadioF = (RadioButton) findViewById(R.id.RadioF);
+        mRadioO = (RadioButton) findViewById(R.id.RadioO);
         mEditAge = (EditText) findViewById(R.id.EditAge);
         mEditDob = (EditText) findViewById(R.id.EditDob);
         mImgCalendar = (ImageView) findViewById(R.id.ImgCalendar);
@@ -724,8 +793,8 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditSpouceFName = (EditText) findViewById(R.id.EditSpouceFName);
         mEditSpouceMName = (EditText) findViewById(R.id.EditSpouceMName);
         mEditSpouceLName = (EditText) findViewById(R.id.EditSpouceLName);
-//        mRadioY = (RadioButton) findViewById(Integer.parseInt(WHETHER_WIDOWED));
-//        mRadioN = (RadioButton) findViewById(Integer.parseInt(WHETHER_WIDOWED));
+        mRadioY = (RadioButton) findViewById(R.id.RadioY);
+        mRadioN = (RadioButton) findViewById(R.id.RadioN);
         mSpinnerCategory = (Spinner) findViewById(R.id.SpinnerCategory);
         mEditArea = (EditText) findViewById(R.id.EditArea);
         mEditHouseNo = (EditText) findViewById(R.id.EditHouseNo);
@@ -744,8 +813,8 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditBankName = (EditText) findViewById(R.id.EditBankName);
         mEditBranchName = (EditText) findViewById(R.id.EditBranchName);
         mEditIfscCode = (EditText) findViewById(R.id.EditIfscCode);
-//        mRadioCY = (RadioButton) findViewById(Integer.parseInt(IS_CRIMINALCASE));
-//        mRadioCN = (RadioButton) findViewById(Integer.parseInt(IS_CRIMINALCASE));
+        mRadioCY = (RadioButton) findViewById(R.id.RadioCY);
+        mRadioCN = (RadioButton) findViewById(R.id.RadioCN);
         mLinearFive = (LinearLayout) findViewById(R.id.LinearFive);
         mEditSNo = (EditText) findViewById(R.id.EditSNo);
         mEditDate = (EditText) findViewById(R.id.EditDate);
@@ -760,7 +829,7 @@ public class PersonalDetailsActivity extends MainActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
 
                 Glide.with(PersonalDetailsActivity.this).load(photoURI)
@@ -788,13 +857,12 @@ public class PersonalDetailsActivity extends MainActivity {
 
         String UNiq_Id = "";
 
-        if (ApplicationConstant.SurveyId.trim().isEmpty()){
-            UNiq_Id =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.URI_NO_,"");
+        if (ApplicationConstant.SurveyId.trim().isEmpty()) {
+            UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
-        }else {
+        } else {
             UNiq_Id = ApplicationConstant.SurveyId;
         }
-
 
 
 // MultipartBody.Part is used to send also the actual file name
@@ -802,7 +870,7 @@ public class PersonalDetailsActivity extends MainActivity {
                 MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
 
         RequestBody NAME_VENDOR_ = RequestBody.create(MediaType.parse("multipart/form-data"), NAME_VENDOR);
-        RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"),UNiq_Id);
+        RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
         RequestBody SEX_ = RequestBody.create(MediaType.parse("multipart/form-data"), SEX);
         RequestBody AGE_ = RequestBody.create(MediaType.parse("multipart/form-data"), AGE);
         RequestBody DOB_ = RequestBody.create(MediaType.parse("multipart/form-data"), DOB);
@@ -828,25 +896,25 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody CRIMINALCASE_POLICA_NAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_POLICA_NAME);
         RequestBody CRIMINALCASE_STATUS_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_STATUS);
 
-        RequestBody LATITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), ""+getLocation.getLatitude());
-        RequestBody LONGITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), ""+getLocation.getLongitude());
+        RequestBody LATITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + getLocation.getLatitude());
+        RequestBody LONGITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + getLocation.getLongitude());
 
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer "+PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.USERDETAILS.API_KEY,""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
         Call<SurveyResponse> call = apiservice.getAddSurvey(headers,
-                body_fhoto,SURVEY_ID_
-                ,NAME_VENDOR_,SEX_,AGE_
-                ,DOB_,CONTACT_NO_,LANDLINE_NO_,EDUCATION_STATUS_,
-                NAME_OFFATHER_HUSBAND_,NAME_MOTHER_,
-                NAME_SPOUSE_,WHETHER_WIDOWED_,CATEGORY_,
-                RESIDENTIAL_ADDRESS_,PERMENENT_ADDRESS_,AADHAR_NO_,
-                BANKACC_NO_,BANKNAME_,BRANCH_NAME_,
-                IFSC_,IS_CRIMINALCASE_,CRIMINALCASE_NO_,CRIMINALCASE_DATE_,
-                CRIMINALCASE_FIRNO_,CRIMINALCASE_POLICA_NAME_,LATITUDE,LONGITUDE,CRIMINALCASE_STATUS_
-                );
+                body_fhoto, SURVEY_ID_
+                , NAME_VENDOR_, SEX_, AGE_
+                , DOB_, CONTACT_NO_, LANDLINE_NO_, EDUCATION_STATUS_,
+                NAME_OFFATHER_HUSBAND_, NAME_MOTHER_,
+                NAME_SPOUSE_, WHETHER_WIDOWED_, CATEGORY_,
+                RESIDENTIAL_ADDRESS_, PERMENENT_ADDRESS_, AADHAR_NO_,
+                BANKACC_NO_, BANKNAME_, BRANCH_NAME_,
+                IFSC_, IS_CRIMINALCASE_, CRIMINALCASE_NO_, CRIMINALCASE_DATE_,
+                CRIMINALCASE_FIRNO_, CRIMINALCASE_POLICA_NAME_, LATITUDE, LONGITUDE, CRIMINALCASE_STATUS_
+        );
 
         call.enqueue(new Callback<SurveyResponse>() {
             @Override
@@ -859,7 +927,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     if (response.body().isStatus()) {
 
-                        PrefUtils.saveToPrefs(PersonalDetailsActivity.this,ApplicationConstant.URI_NO_,response.body().getUriNumber());
+                        PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, response.body().getUriNumber());
 
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
                         builder.setTitle("Personal Details");
@@ -868,7 +936,7 @@ public class PersonalDetailsActivity extends MainActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                startActivity(new Intent(PersonalDetailsActivity.this,VendorsFamDetailsActivity.class));
+                                startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
 
                             }
                         });
@@ -879,10 +947,8 @@ public class PersonalDetailsActivity extends MainActivity {
                         alertDialog.show();
 
 
-
 //                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
 //                                "Personal Details saved successfully");
-
 
 
                     } else {
@@ -892,13 +958,13 @@ public class PersonalDetailsActivity extends MainActivity {
                                 String.valueOf(response.body().isStatus()));
                     }
 
-                }else {
+                } else {
 
                     try {
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
                                 "Response",
                                 response.errorBody().string());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -930,7 +996,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }

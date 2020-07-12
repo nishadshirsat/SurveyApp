@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
@@ -57,13 +58,14 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private Spinner mSpinnerVehical;
     private EditText mEditDob;
     private ImageView mImgCalendar;
-    private LinearLayout mLinearThree;
+    private LinearLayout mLinearThree,LinearVehical;
 //    private RadioButton mRadioDY;
 //    private RadioButton mRadioDN;
     private Spinner mSpinnerChoice;
     private Button mBtnNext;
     private Button mBtnPrevious;
     RadioGroup RGDocument, RGVendor;
+    TextView TextYes;
 
     private ProgressDialog progressDialog;
 
@@ -117,6 +119,23 @@ public class VendingDetailsActivity extends AppCompatActivity {
             }
         });
 
+        RGVendor.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
+                IS_RECOGNIZED_STREET_VENDOR = radioSexButton.getText().toString().trim();
+                if (IS_RECOGNIZED_STREET_VENDOR.contains("Yes")) {
+                    TextYes.setVisibility(View.VISIBLE);
+                    LinearVehical.setVisibility(View.VISIBLE);
+
+                } else {
+                    TextYes.setVisibility(View.GONE);
+                    LinearVehical.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
         mBtnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,6 +184,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                     }
                 } else {
+
+                    TextYes.setVisibility(View.GONE);
+                    LinearVehical.setVisibility(View.GONE);
 
                     mSpinnerItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -299,6 +321,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private void bindView() {
 
         mLinearMain = (LinearLayout) findViewById(R.id.LinearMain);
+        LinearVehical = (LinearLayout) findViewById(R.id.LinearVehical);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
         RGDocument = (RadioGroup) findViewById(R.id.RGDocument);
         RGVendor = (RadioGroup) findViewById(R.id.RGVendor);
@@ -313,6 +336,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 //        mRadioN = (RadioButton) findViewById(Integer.parseInt(IS_RECOGNIZED_STREET_VENDOR));
         mSpinnerVehical = (Spinner) findViewById(R.id.SpinnerVehical);
         mEditDob = (EditText) findViewById(R.id.EditDob);
+        TextYes = (TextView) findViewById(R.id.TextYes);
         mImgCalendar = (ImageView) findViewById(R.id.ImgCalendar);
         mLinearThree = (LinearLayout) findViewById(R.id.LinearThree);
 //        mRadioDY = (RadioButton) findViewById(Integer.parseInt(TEHABZARI_AVAILABLE));

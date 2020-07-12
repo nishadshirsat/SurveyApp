@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
@@ -68,6 +69,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
     private Button mBtnNext;
     private Button mBtnPrevious;
     private TextView mTextAdd;
+    RadioGroup RGFam;
+    LinearLayout LinearYes,LinearDetails;
 
     private int FamCount = 0;
     private int FamInc = 0;
@@ -77,6 +80,9 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
     private List<FamilyMembers> listFamily = new ArrayList<>();
     private List<LandAssets> listLandAssets = new ArrayList<>();
     private List<FamilyMembers> listSurveyedFamily = new ArrayList<>();
+
+    String IS_Fam = "";
+
 
     ProgressDialog progressDialog;
 
@@ -89,6 +95,23 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         bindView();
 
         mBtnNext.setText("Submit");
+
+        RGFam.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
+                IS_Fam = radioSexButton.getText().toString().trim();
+                if (IS_Fam.contains("Yes")) {
+                    LinearYes.setVisibility(View.VISIBLE);
+                    LinearDetails.setVisibility(View.VISIBLE);
+
+                } else {
+                    LinearYes.setVisibility(View.GONE);
+                    LinearDetails.setVisibility(View.GONE);
+                }
+
+            }
+        });
 
 
         mTextAdd.setOnClickListener(new View.OnClickListener() {
@@ -228,47 +251,45 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //            mEditFamAadhar.requestFocus();
 //            return false;
 //        }
-        else if (mEditPlot.getText().toString().trim().isEmpty()) {
-            mEditPlot.setError("Enter Plot");
-            mEditPlot.requestFocus();
-            return false;
-        }else if (mEditHouseSize.getText().toString().trim().isEmpty()) {
-            mEditHouseSize.setError("Enter House Size");
-            mEditHouseSize.requestFocus();
-            return false;
-        }else if (mEditArea.getText().toString().trim().isEmpty()) {
-            mEditArea.setError("Enter Area");
-            mEditArea.requestFocus();
-            return false;
-        }else if (mEditKuccha.getText().toString().trim().isEmpty()) {
-            mEditKuccha.setError("Enter Kuccha");
-            mEditKuccha.requestFocus();
-            return false;
-        }else if (mEditRent.getText().toString().trim().isEmpty()) {
-            mEditRent.setError("Enter Rent");
-            mEditRent.requestFocus();
-            return false;
-        }
-
-
-        else if (mEditName.getText().toString().trim().isEmpty()) {
-            mEditName.setError("Enter Name");
-            mEditName.requestFocus();
-            return false;
-        }else if (mEditRelation.getText().toString().trim().isEmpty()) {
-            mEditRelation.setError("Enter Relation");
-            mEditRelation.requestFocus();
-            return false;
-        }
-        else if (mEditAge.getText().toString().trim().isEmpty()) {
-            mEditAge.setError("Enter Age");
-            mEditAge.requestFocus();
-            return false;
-        }
-        else if (mEditAadhar.getText().toString().trim().isEmpty()) {
-            mEditAadhar.setError("Enter Aadhar Number");
-            mEditAadhar.requestFocus();
-            return false;
+//        else if (mEditPlot.getText().toString().trim().isEmpty()) {
+//            mEditPlot.setError("Enter Plot");
+//            mEditPlot.requestFocus();
+//            return false;
+//        }else if (mEditHouseSize.getText().toString().trim().isEmpty()) {
+//            mEditHouseSize.setError("Enter House Size");
+//            mEditHouseSize.requestFocus();
+//            return false;
+//        }else if (mEditArea.getText().toString().trim().isEmpty()) {
+//            mEditArea.setError("Enter Area");
+//            mEditArea.requestFocus();
+//            return false;
+//        }else if (mEditKuccha.getText().toString().trim().isEmpty()) {
+//            mEditKuccha.setError("Enter Kuccha");
+//            mEditKuccha.requestFocus();
+//            return false;
+//        }else if (mEditRent.getText().toString().trim().isEmpty()) {
+//            mEditRent.setError("Enter Rent");
+//            mEditRent.requestFocus();
+//            return false;
+//        }
+        else if (LinearDetails.getVisibility() == View.VISIBLE) {
+            if (mEditName.getText().toString().trim().isEmpty()) {
+                mEditName.setError("Enter Name");
+                mEditName.requestFocus();
+                return false;
+            } else if (mEditRelation.getText().toString().trim().isEmpty()) {
+                mEditRelation.setError("Enter Relation");
+                mEditRelation.requestFocus();
+                return false;
+            } else if (mEditAge.getText().toString().trim().isEmpty()) {
+                mEditAge.setError("Enter Age");
+                mEditAge.requestFocus();
+                return false;
+            } else if (mEditAadhar.getText().toString().trim().isEmpty()) {
+                mEditAadhar.setError("Enter Aadhar Number");
+                mEditAadhar.requestFocus();
+                return false;
+            }
         }
 
 
@@ -298,6 +319,9 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
         mTextAdd = (TextView) findViewById(R.id.TextAdd);
+        RGFam=(RadioGroup)findViewById(R.id.RGFam);
+        LinearYes =(LinearLayout) findViewById(R.id.LinearYes);
+        LinearDetails =(LinearLayout) findViewById(R.id.LinearDetails);
 
 
         view_FamilyMembers = (RecyclerView) findViewById(R.id.view_FamilyMembers);
@@ -370,7 +394,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         RequestBody family_members_ = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
         RequestBody json_family_ = RequestBody.create(MediaType.parse("multipart/form-data"), json_family);
         RequestBody json_landAssets_ = RequestBody.create(MediaType.parse("multipart/form-data"), json_landAssets);
-        RequestBody isFamilySurveyed = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
+        RequestBody isFamilySurveyed = RequestBody.create(MediaType.parse("multipart/form-data"), IS_Fam);
         RequestBody json_surveyFam_ = RequestBody.create(MediaType.parse("multipart/form-data"), json_surveyFam);
 
 

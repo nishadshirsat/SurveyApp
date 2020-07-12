@@ -72,8 +72,7 @@ public class AudioRecordService extends Service {
         private void recordAudio(String surveyId) {
 
             try {
-                mFileName = ApplicationConstant.createImageFile(surveyId+"_surveyer.3gp","Recordings", AudioRecordService.this);
-
+                mFileName = ApplicationConstant.createImageFile(surveyId+"_surveyer.mp3","Recordings", AudioRecordService.this);
                 PrefUtils.saveToPrefs(AudioRecordService.this,ApplicationConstant.RECORDING,mFileName);
             } catch (IOException e) {
                 e.printStackTrace();

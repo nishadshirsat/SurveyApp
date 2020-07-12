@@ -440,6 +440,7 @@
                         android:background="@color/dark_gray" />
 
                     <TextView
+                        android:id="@+id/TextYes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="If yes,"
@@ -449,6 +450,7 @@
                         android:layout_marginTop="20dp"/>
 
                     <LinearLayout
+                        android:id="@+id/LinearVehical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
