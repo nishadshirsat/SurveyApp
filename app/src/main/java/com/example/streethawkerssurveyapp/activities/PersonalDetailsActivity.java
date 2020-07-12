@@ -182,15 +182,57 @@ public class PersonalDetailsActivity extends MainActivity {
             PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "1.0");
         }
 
-       Intent intent = new Intent(PersonalDetailsActivity.this, AudioRecordService.class);
-       intent.putExtra("FILE",ApplicationConstant.SurveyId);
-       startService(intent);
+//       Intent intent = new Intent(PersonalDetailsActivity.this, AudioRecordService.class);
+//       intent.putExtra("FILE",ApplicationConstant.SurveyId);
+//       startService(intent);
 
        onCLickListners();
 
     }
 
     private void onCLickListners() {
+
+        mImgCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this, R.style.DialogTheme),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                mEditDob.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
+
+        mEditDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this, R.style.DialogTheme),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                mEditDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
 
         mImgVendorPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -272,9 +314,6 @@ public class PersonalDetailsActivity extends MainActivity {
             }
         });
 
-
-
-
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -338,7 +377,7 @@ public class PersonalDetailsActivity extends MainActivity {
 //                    SEX = String.valueOf(RGSex.getCheckedRadioButtonId());
                     SEX = "M";
                     AGE = mEditAge.getText().toString().trim();
-//                    DOB = mEditDob.getText().toString().trim();
+                    DOB = mEditDob.getText().toString().trim();
                     CONTACT_NO = mEditMobile.getText().toString().trim();
                     LANDLINE_NO = mEditLandline.getText().toString().trim();
                     mSpinnerEducation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -424,47 +463,7 @@ public class PersonalDetailsActivity extends MainActivity {
             }
         });
 
-        mImgCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this, R.style.DialogTheme),
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-
-                                mEditDob.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-
-
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-
-            }
-        });
-
-        mEditDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PersonalDetailsActivity.this, R.style.DialogTheme),
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-
-                                mEditDate.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
-
-
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-
-            }
-        });
 
     }
 
@@ -474,27 +473,29 @@ public class PersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else if (mEditPArea.getText().toString().trim().isEmpty()) {
-            mEditPArea.setError("Enter Permanant Area");
-            mEditPArea.requestFocus();
-            return false;
-        } else if (mEditPHouseNo.getText().toString().trim().isEmpty()) {
-            mEditPHouseNo.setError("Enter Permanant House No");
-            mEditPHouseNo.requestFocus();
-            return false;
-        } else if (mEditPRoad.getText().toString().trim().isEmpty()) {
-            mEditPRoad.setError("Enter Permanant Road");
-            mEditPRoad.requestFocus();
-            return false;
-        } else if (mEditPCity.getText().toString().trim().isEmpty()) {
-            mEditPCity.setError("Enter Permanant City");
-            mEditPCity.requestFocus();
-            return false;
-        } else if (mEditPPincode.getText().toString().trim().isEmpty()) {
-            mEditPPincode.setError("Enter Permanant Pincode");
-            mEditPPincode.requestFocus();
-            return false;
-        } else if (mEditAadhar.getText().toString().trim().isEmpty()) {
+        }
+//        else if (mEditPArea.getText().toString().trim().isEmpty()) {
+//            mEditPArea.setError("Enter Permanant Area");
+//            mEditPArea.requestFocus();
+//            return false;
+//        } else if (mEditPHouseNo.getText().toString().trim().isEmpty()) {
+//            mEditPHouseNo.setError("Enter Permanant House No");
+//            mEditPHouseNo.requestFocus();
+//            return false;
+//        } else if (mEditPRoad.getText().toString().trim().isEmpty()) {
+//            mEditPRoad.setError("Enter Permanant Road");
+//            mEditPRoad.requestFocus();
+//            return false;
+//        } else if (mEditPCity.getText().toString().trim().isEmpty()) {
+//            mEditPCity.setError("Enter Permanant City");
+//            mEditPCity.requestFocus();
+//            return false;
+//        } else if (mEditPPincode.getText().toString().trim().isEmpty()) {
+//            mEditPPincode.setError("Enter Permanant Pincode");
+//            mEditPPincode.requestFocus();
+//            return false;
+//        }
+        else if (mEditAadhar.getText().toString().trim().isEmpty()) {
             mEditAadhar.setError("Enter Aadhar Number");
             mEditAadhar.requestFocus();
             return false;
@@ -565,7 +566,11 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditMobile.setError("Enter Mobile Number");
             mEditMobile.requestFocus();
             return false;
-        } else if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
+        } else if (mEditMobile.getText().toString().trim().length() < 10) {
+            mEditMobile.setError("Enter Correct Mobile Number");
+            mEditMobile.requestFocus();
+            return false;
+        }else if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
             mEditFatherName.setError("Select Education");
             mSpinnerEducation.requestFocus();
             return false;
@@ -573,11 +578,13 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditFatherName.setError("Enter Father First Name");
             mEditFatherName.requestFocus();
             return false;
-        } else if (mEditFatherMName.getText().toString().trim().isEmpty()) {
-            mEditFatherMName.setError("Enter Father Middle Name");
-            mEditFatherMName.requestFocus();
-            return false;
-        } else if (mEditFatherLName.getText().toString().trim().isEmpty()) {
+        }
+//        else if (mEditFatherMName.getText().toString().trim().isEmpty()) {
+//            mEditFatherMName.setError("Enter Father Middle Name");
+//            mEditFatherMName.requestFocus();
+//            return false;
+//        }
+        else if (mEditFatherLName.getText().toString().trim().isEmpty()) {
             mEditFatherLName.setError("Enter Father Last Name");
             mEditFatherLName.requestFocus();
             return false;
@@ -585,11 +592,13 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditMotherFName.setError("Enter Mother First Name");
             mEditMotherFName.requestFocus();
             return false;
-        } else if (mEditMotherMName.getText().toString().trim().isEmpty()) {
-            mEditMotherMName.setError("Enter Mother Middle Name");
-            mEditMotherMName.requestFocus();
-            return false;
-        } else if (mEditMotherLName.getText().toString().trim().isEmpty()) {
+        }
+//        else if (mEditMotherMName.getText().toString().trim().isEmpty()) {
+//            mEditMotherMName.setError("Enter Mother Middle Name");
+//            mEditMotherMName.requestFocus();
+//            return false;
+//        }
+        else if (mEditMotherLName.getText().toString().trim().isEmpty()) {
             mEditMotherLName.setError("Enter Mother Last Name");
             mEditMotherLName.requestFocus();
             return false;
@@ -616,16 +625,22 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditFName.setError("Enter First Name");
             mEditFName.requestFocus();
             return false;
-        } else if (mEditMName.getText().toString().trim().isEmpty()) {
-            mEditMName.setError("Enter Middle Name");
-            mEditMName.requestFocus();
-            return false;
-        } else if (mEditLName.getText().toString().trim().isEmpty()) {
+        }
+//        else if (mEditMName.getText().toString().trim().isEmpty()) {
+//            mEditMName.setError("Enter Middle Name");
+//            mEditMName.requestFocus();
+//            return false;
+//        }
+        else if (mEditLName.getText().toString().trim().isEmpty()) {
             mEditLName.setError("Enter Last Name");
             mEditLName.requestFocus();
             return false;
         } else if (mEditAge.getText().toString().trim().isEmpty()) {
             mEditAge.setError("Enter Age");
+            mEditAge.requestFocus();
+            return false;
+        }  else if (mEditAge.getText().toString().trim().length() > 3) {
+            mEditAge.setError("Enter Correct Age");
             mEditAge.requestFocus();
             return false;
         } else if (mEditDob.getText().toString().trim().isEmpty()) {

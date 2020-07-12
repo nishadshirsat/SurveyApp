@@ -106,7 +106,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                mEditDob.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
+                                mEditDob.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
 
 
                             }
@@ -200,7 +200,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                         }
                     });
 
-//                    STARTING_DATE_VENDING=mEditDob.getText().toString().trim();
+                    STARTING_DATE_VENDING=mEditDob.getText().toString().trim();
                     TEHABZARI_AVAILABLE= String.valueOf(RGDocument.getCheckedRadioButtonId());
                     mSpinnerChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
