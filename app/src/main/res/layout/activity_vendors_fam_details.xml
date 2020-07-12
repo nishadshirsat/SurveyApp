@@ -13,7 +13,6 @@
         android:layout_above="@+id/relative_buttons"
         android:scrollbars="none">
 
-
             <LinearLayout
                 android:id="@+id/LinearMain"
                 android:layout_width="match_parent"
@@ -125,13 +124,12 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/view_LandAssets"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:layout_height="wrap_content">
 
+                </androidx.recyclerview.widget.RecyclerView>
                     <EditText
                         android:id="@+id/EditPlot"
                         android:layout_width="0dp"
@@ -144,6 +142,20 @@
                         android:padding="10dp"
                         android:textSize="14sp" />
 
+                <TextView
+                    android:id="@+id/TextAddAssets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="ADD"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:layout_gravity="right"
+                    android:drawableRight="@drawable/ic_add_circle_black_24dp"
+                    android:drawablePadding="05dp"
+                    android:drawableTint="@color/colorPrimaryDark"
+                    android:layout_marginTop="15dp"/>
                     <EditText
                         android:id="@+id/EditHouseSize"
                         android:layout_width="0dp"
@@ -172,12 +184,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
 
                     <EditText
                         android:id="@+id/EditKuccha"
@@ -245,7 +251,6 @@
                 </LinearLayout>
 
                 <RadioGroup
-                    android:id="@+id/RGFam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
