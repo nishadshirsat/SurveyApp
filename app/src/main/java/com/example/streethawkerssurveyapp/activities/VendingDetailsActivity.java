@@ -68,7 +68,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private String
-            URI_NO = "",
             TYPE_OF_VENDING = "",
             VENDING_SITE = "",
             VENDING_FROM = "",
@@ -167,7 +166,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     }
                 } else {
 
-                    URI_NO = ApplicationConstant.URI_NO;
                     mSpinnerItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -330,14 +328,14 @@ public class VendingDetailsActivity extends AppCompatActivity {
         progressDialog = CustomProgressDialog.getDialogue(VendingDetailsActivity.this);
         progressDialog.show();
 
-        String username = PrefUtils.getFromPrefs(VendingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, "");
+       String UNiq_Id =  PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.URI_NO_,"");
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(VendingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
         Call<UpdateSurveyResponse> call = apiservice.getUpdateSurvey(headers,
-                URI_NO, TYPE_OF_VENDING, VENDING_SITE, VENDING_FROM, VENDING_TO, YRS_OF_VENDING,
+                UNiq_Id, TYPE_OF_VENDING, VENDING_SITE, VENDING_FROM, VENDING_TO, YRS_OF_VENDING,
                 ANNUAL_INCOME, IS_RECOGNIZED_STREET_VENDOR, TYPE_OF_STRUCTURE, STARTING_DATE_VENDING,
                 TEHABZARI_AVAILABLE, VENDING_AREA_CHOCE
 

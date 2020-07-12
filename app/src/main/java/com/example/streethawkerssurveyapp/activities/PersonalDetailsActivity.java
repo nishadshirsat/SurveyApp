@@ -766,13 +766,23 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody request_photo =
                 RequestBody.create(MediaType.parse("image/png"), file1);
 
+        String UNiq_Id = "";
+
+        if (ApplicationConstant.SurveyId.trim().isEmpty()){
+            UNiq_Id =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.URI_NO_,"");
+
+        }else {
+            UNiq_Id = ApplicationConstant.SurveyId;
+        }
+
+
 
 // MultipartBody.Part is used to send also the actual file name
         MultipartBody.Part body_fhoto =
                 MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
 
         RequestBody NAME_VENDOR_ = RequestBody.create(MediaType.parse("multipart/form-data"), NAME_VENDOR);
-        RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), ApplicationConstant.SurveyId);
+        RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"),UNiq_Id);
         RequestBody SEX_ = RequestBody.create(MediaType.parse("multipart/form-data"), SEX);
         RequestBody AGE_ = RequestBody.create(MediaType.parse("multipart/form-data"), AGE);
         RequestBody DOB_ = RequestBody.create(MediaType.parse("multipart/form-data"), DOB);
@@ -829,7 +839,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     if (response.body().isStatus()) {
 
-                        ApplicationConstant.URI_NO = response.body().getUriNumber();
+                        PrefUtils.saveToPrefs(PersonalDetailsActivity.this,ApplicationConstant.URI_NO_,response.body().getUriNumber());
 
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
                         builder.setTitle("Personal Details");

@@ -101,7 +101,6 @@ public class DocumentScanActivity extends AppCompatActivity {
     private String Fine_Reciept_PATH="";
 
     private ProgressDialog progressDialog;
-    String URI_NO = "";
 
 
     File file1 = null;
@@ -674,7 +673,7 @@ public class DocumentScanActivity extends AppCompatActivity {
 
         file6 = new File(recordingFile);
 
-        URI_NO = ApplicationConstant.URI_NO;
+        String UNiq_Id =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.URI_NO_,"");
 
         progressDialog = CustomProgressDialog.getDialogue(DocumentScanActivity.this);
         progressDialog.show();
@@ -715,7 +714,7 @@ public class DocumentScanActivity extends AppCompatActivity {
   MultipartBody.Part body_file5 =
                 MultipartBody.Part.createFormData("recording", file6.getName(), request_file5);
 
-        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), URI_NO);
+        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);

@@ -80,8 +80,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    String URI_NO = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -356,18 +354,19 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         String json_surveyFam = new Gson().toJson(listSurveyedFamily);
 
-        URI_NO = ApplicationConstant.URI_NO;
+
+        String UNiq_Id =  PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.URI_NO_,"");
+
 
         progressDialog = CustomProgressDialog.getDialogue(VendorsFamDetailsActivity.this);
         progressDialog.show();
 
-        String username = PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, "");
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
 
-        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), URI_NO);
+        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
         RequestBody family_members_ = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
         RequestBody json_family_ = RequestBody.create(MediaType.parse("multipart/form-data"), json_family);
         RequestBody json_landAssets_ = RequestBody.create(MediaType.parse("multipart/form-data"), json_landAssets);
