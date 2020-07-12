@@ -108,11 +108,9 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                 IS_Fam = radioSexButton.getText().toString().trim();
                 if (IS_Fam.contains("Yes")) {
                     LinearYes.setVisibility(View.VISIBLE);
-                    LinearDetails.setVisibility(View.VISIBLE);
 
                 } else {
                     LinearYes.setVisibility(View.GONE);
-                    LinearDetails.setVisibility(View.GONE);
                 }
 
             }
@@ -177,7 +175,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                             LandAssetsAdpater landAssetsAdpater = new LandAssetsAdpater(VendorsFamDetailsActivity.this);
                             landAssetsAdpater.setDetails(listLandAssets);
 
-                            view_FamilyMembers.setAdapter(landAssetsAdpater);
+                            view_LandAssets.setAdapter(landAssetsAdpater);
                             alertDialog.dismiss();
 
                         }
@@ -289,8 +287,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
 //                ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"",JSONObject_Family);
 
-
-
                 if(validate()){
                     UpdateFamilySurvey();
 
@@ -359,25 +355,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //            return false;
 //        }
 
-
-        else if (mEditName.getText().toString().trim().isEmpty()) {
-            mEditName.setError("Enter Name");
-            mEditName.requestFocus();
-            return false;
-        }else if (mEditRelation.getText().toString().trim().isEmpty()) {
-            mEditRelation.setError("Enter Relation");
-            mEditRelation.requestFocus();
-            return false;
-        }
-        else if (mEditAge.getText().toString().trim().isEmpty()) {
-            mEditAge.setError("Enter Age");
-            mEditAge.requestFocus();
-            return false;
-        }
-        else if (mEditAadhar.getText().toString().trim().isEmpty()) {
-            mEditAadhar.setError("Enter Aadhar Number");
-            mEditAadhar.requestFocus();
-            return false;
 //        else if (mEditPlot.getText().toString().trim().isEmpty()) {
 //            mEditPlot.setError("Enter Plot");
 //            mEditPlot.requestFocus();
@@ -399,7 +376,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //            mEditRent.requestFocus();
 //            return false;
 //        }
-        else if (LinearDetails.getVisibility() == View.VISIBLE) {
+        else if (LinearYes.getVisibility() == View.VISIBLE) {
             if (mEditName.getText().toString().trim().isEmpty()) {
                 mEditName.setError("Enter Name");
                 mEditName.requestFocus();
@@ -448,12 +425,14 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         mTextAdd = (TextView) findViewById(R.id.TextAdd);
         RGFam=(RadioGroup)findViewById(R.id.RGFam);
         LinearYes =(LinearLayout) findViewById(R.id.LinearYes);
-        LinearDetails =(LinearLayout) findViewById(R.id.LinearDetails);
         TextAddAssets = (TextView) findViewById(R.id.TextAddAssets);
 
 
         view_FamilyMembers = (RecyclerView) findViewById(R.id.view_FamilyMembers);
+        view_LandAssets = (RecyclerView) findViewById(R.id.view_LandAssets);
+
         view_FamilyMembers.setLayoutManager(new LinearLayoutManager(VendorsFamDetailsActivity.this));
+        view_LandAssets.setLayoutManager(new LinearLayoutManager(VendorsFamDetailsActivity.this));
     }
 
 
