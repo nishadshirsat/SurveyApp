@@ -121,18 +121,18 @@ public interface ApiInterface {
             @Part("uri_number") RequestBody uri_number,
             @Part MultipartBody.Part identity_proof_documents,
             @Part MultipartBody.Part vending_history_proof_documents,
-//            @Field("family_member_details") List<FamilyMembers> family_member_details,
             @Part MultipartBody.Part allotment_of_tehbazari_document,
-            @Part MultipartBody.Part recording,
+//            @Part MultipartBody.Part recording,
             @Part MultipartBody.Part undertaking_by_the_applicant
     );
 
-//    @Multipart
-//    @POST("update-survey")
-//    Call<UpdateSurveyResponse> getUpdateDocuments(
-//            @HeaderMap Map<String, String> token,
-//            @Part("uri_number") RequestBody uri_number,
-//
-//            @Part MultipartBody.Part recording,
-//    );
+    @Multipart
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> getUpdateRecording(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part MultipartBody.Part recording
+    );
+
+
 }

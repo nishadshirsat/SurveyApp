@@ -566,6 +566,7 @@
                             android:hint="e.g. 05/06/1996"
                             android:inputType="date"
                             android:paddingLeft="20dp"
+                            android:focusableInTouchMode="false"
                             android:paddingTop="10dp"
                             android:paddingRight="20dp"
                             android:paddingBottom="10dp"

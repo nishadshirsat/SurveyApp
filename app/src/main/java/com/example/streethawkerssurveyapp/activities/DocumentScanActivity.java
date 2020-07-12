@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
@@ -25,6 +26,7 @@ import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.scanlibrary.ScanActivity;
@@ -274,6 +276,10 @@ public class DocumentScanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+//                Upload_Recordings();
+
+                stopService(new Intent(DocumentScanActivity.this, AudioRecordService.class));
+
 
                 if (mLinearOne.getVisibility() == View.VISIBLE) {
 
@@ -317,9 +323,9 @@ public class DocumentScanActivity extends AppCompatActivity {
                     file4 = new File(TehBazari_Doc_PATH);
                     file5 = new File(Undertaking_PATH);
 
-                    stopService(new Intent(DocumentScanActivity.this, AudioRecordService.class));
 
-                    Upload_Documents();
+                    Upload_Recordings();
+
 
 //                    startActivity(new Intent(PersonalDetailsActivity.this, DocumentScanActivity.class));
 
@@ -668,10 +674,6 @@ public class DocumentScanActivity extends AppCompatActivity {
 
     private void Upload_Documents() {
 
-        String recordingFile =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.RECORDING,"");
-
-
-        file6 = new File(recordingFile);
 
         String UNiq_Id =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.URI_NO_,"");
 
@@ -693,8 +695,7 @@ public class DocumentScanActivity extends AppCompatActivity {
         RequestBody request_file4 =
                 RequestBody.create(MediaType.parse("image/png"), file5);
 
-        RequestBody request_file5 =
-                RequestBody.create(MediaType.parse("audio/*"), file6);
+
 
 
 // MultipartBody.Part is used to send also the actual file name
@@ -711,15 +712,14 @@ public class DocumentScanActivity extends AppCompatActivity {
   MultipartBody.Part body_file4 =
                 MultipartBody.Part.createFormData("undertaking_by_the_applicant", file1.getName(), request_file4);
 
-  MultipartBody.Part body_file5 =
-                MultipartBody.Part.createFormData("recording", file6.getName(), request_file5);
+
 
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
         Call<UpdateSurveyResponse> call = apiservice.getUpdateDocuments(headers,URI_NO_,body_file1,body_file2
-                ,body_file3,body_file5,body_file4
+                ,body_file3,body_file4
 
         );
 
@@ -783,6 +783,104 @@ public class DocumentScanActivity extends AppCompatActivity {
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
                 ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "Response", t.getMessage().toString());
+
+            }
+        });
+    }
+
+
+    private void Upload_Recordings() {
+
+        String recordingFile =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.RECORDING,"");
+
+//        String recordingFile = null;
+//        try {
+//            recordingFile = ApplicationConstant.createImageFile("6.0_surveyer.3gp","Recordings", DocumentScanActivity.this);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+        file6 = new File(recordingFile);
+
+        String UNiq_Id =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.URI_NO_,"");
+
+        progressDialog = CustomProgressDialog.getDialogue(DocumentScanActivity.this);
+        progressDialog.show();
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(DocumentScanActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+      Uri recordUri = SurveyAppFileProvider.getUriForFile(DocumentScanActivity.this,
+                BuildConfig.APPLICATION_ID + ".android.fileprovider",
+              file6);
+
+        RequestBody request_file5 =
+                RequestBody.create(MediaType.parse(getContentResolver().getType(recordUri)), file6);
+
+
+// MultipartBody.Part is used to send also the actual file name
+
+  MultipartBody.Part body_file5 =
+                MultipartBody.Part.createFormData("recording", file6.getName(), request_file5);
+
+        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
+//        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), "2781767");
+
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.getUpdateRecording(headers,URI_NO_,body_file5
+
+        );
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+
+                        ApplicationConstant.displayToastMessage(DocumentScanActivity.this,
+                                "Recording saved successfully");
+                        Upload_Documents();
+
+
+                    } else {
+
+                        ApplicationConstant.displayToastMessage(DocumentScanActivity.this,
+                                String.valueOf(response.body().isStatus()));
+
+                        Upload_Documents();
+
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayToastMessage(DocumentScanActivity.this,
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    Upload_Documents();
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayToastMessage(DocumentScanActivity.this,  t.getMessage().toString());
+                Upload_Documents();
 
             }
         });

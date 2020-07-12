@@ -581,10 +581,12 @@ public class PersonalDetailsActivity extends MainActivity {
                 mEditStatusCase.requestFocus();
                 return false;
             }
-        } else if (!getLocation.isGPSEnabled) {
-            this.getLocation.showSettingsAlert();
-            return false;
         }
+
+//        else if (!getLocation.isGPSEnabled) {
+//            this.getLocation.showSettingsAlert();
+//            return false;
+//        }
 
         return true;
     }

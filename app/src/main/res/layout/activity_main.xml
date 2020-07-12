@@ -1518,7 +1518,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Date of case"
                             android:inputType="date"
-                            android:editable="false"
+                            android:focusableInTouchMode="false"
                             android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />

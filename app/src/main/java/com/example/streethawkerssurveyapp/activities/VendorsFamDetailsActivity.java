@@ -186,8 +186,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
                 alertDialog.show();
 
-
-
             }
         });
 
