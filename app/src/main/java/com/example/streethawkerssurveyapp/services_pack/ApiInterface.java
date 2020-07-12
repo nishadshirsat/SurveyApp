@@ -126,4 +126,13 @@ public interface ApiInterface {
             @Part MultipartBody.Part recording,
             @Part MultipartBody.Part undertaking_by_the_applicant
     );
+
+//    @Multipart
+//    @POST("update-survey")
+//    Call<UpdateSurveyResponse> getUpdateDocuments(
+//            @HeaderMap Map<String, String> token,
+//            @Part("uri_number") RequestBody uri_number,
+//
+//            @Part MultipartBody.Part recording,
+//    );
 }

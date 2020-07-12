@@ -92,6 +92,8 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED&& ContextCompat.checkSelfPermission(LoginActivity.this,
+                Manifest.permission.MODIFY_AUDIO_SETTINGS)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Permission is not granted
@@ -104,7 +106,8 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
                     Manifest.permission.READ_CONTACTS) && ActivityCompat.shouldShowRequestPermissionRationale(LoginActivity.this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) && ActivityCompat.shouldShowRequestPermissionRationale(LoginActivity.this,
                     Manifest.permission.ACCESS_FINE_LOCATION)  && ActivityCompat.shouldShowRequestPermissionRationale(LoginActivity.this,
-                    Manifest.permission.RECORD_AUDIO)) {
+                    Manifest.permission.RECORD_AUDIO) && ActivityCompat.shouldShowRequestPermissionRationale(LoginActivity.this,
+                    Manifest.permission.MODIFY_AUDIO_SETTINGS)) {
                 // Show an explanation to the user asynchronously -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -128,6 +131,7 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
                                         Manifest.permission.ACCESS_COARSE_LOCATION,
                                         Manifest.permission.ACCESS_FINE_LOCATION,
                                         Manifest.permission.RECORD_AUDIO,
+                                        Manifest.permission.MODIFY_AUDIO_SETTINGS,
                                         Manifest.permission.READ_CONTACTS},
 
                                 READ_PHONE_REQUEST);
@@ -163,6 +167,7 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
                                         Manifest.permission.ACCESS_FINE_LOCATION,
                                         Manifest.permission.READ_PHONE_STATE,
                                         Manifest.permission.RECORD_AUDIO,
+                                        Manifest.permission.MODIFY_AUDIO_SETTINGS,
                                         Manifest.permission.READ_CONTACTS},
                                 READ_PHONE_REQUEST);
                     }

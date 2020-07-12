@@ -177,9 +177,15 @@ public class PersonalDetailsActivity extends MainActivity {
         onCLickListners();
         ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
 
+
         if (ApplicationConstant.SurveyId.trim().isEmpty()) {
             ApplicationConstant.SurveyId = "1.0";
             PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "1.0");
+        }else {
+            double count = Double.parseDouble(ApplicationConstant.SurveyId);
+            count = count + 1.0;
+
+            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, ""+count);
         }
 
        Intent intent = new Intent(PersonalDetailsActivity.this, AudioRecordService.class);
@@ -218,7 +224,6 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     }
                 }
-
             }
         });
 

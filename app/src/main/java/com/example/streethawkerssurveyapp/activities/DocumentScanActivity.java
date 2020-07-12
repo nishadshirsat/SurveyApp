@@ -742,12 +742,6 @@ public class DocumentScanActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
 
-                                double count = Double.parseDouble(ApplicationConstant.SurveyId);
-                                count = count + 1.0;
-
-                                ApplicationConstant.displayToastMessage(DocumentScanActivity.this,""+count);
-
-                                PrefUtils.saveToPrefs(DocumentScanActivity.this, ApplicationConstant.SURVEY_ID, ""+count);
 
                                 startActivity(new Intent(DocumentScanActivity.this,PersonalDetailsActivity.class));
 
