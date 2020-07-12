@@ -44,6 +44,7 @@ import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+import com.example.streethawkerssurveyapp.utils.GetLocation;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
 
@@ -108,7 +109,7 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditFir;
     private EditText mEditNamePolice;
     private EditText mEditStatusCase;
-    private Button mBtnNext;
+    private Button mBtnNext,mBtnPrevious;
     private String photoPath = "";
     RadioGroup RGSex;
     RadioGroup RGWidow;
@@ -155,11 +156,18 @@ public class PersonalDetailsActivity extends MainActivity {
     private Calendar myCalendar;
     private int mYear, mMonth, mDay;
 
+    public GetLocation getLocation;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindView();
+
+        if (getLocation == null) {
+            getLocation = new GetLocation(PersonalDetailsActivity.this);
+        }
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -214,6 +222,58 @@ public class PersonalDetailsActivity extends MainActivity {
             }
         });
 
+        mBtnPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (mLinearFive.getVisibility() == View.VISIBLE) {
+
+                        mLinearFour.setVisibility(View.VISIBLE);
+                        mLinearOne.setVisibility(View.GONE);
+                        mLinearThree.setVisibility(View.GONE);
+                        mLinearTwo.setVisibility(View.GONE);
+                        mLinearFive.setVisibility(View.GONE);
+
+                } else
+                if (mLinearFour.getVisibility() == View.VISIBLE) {
+
+                    mLinearFour.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.VISIBLE);
+                    mLinearTwo.setVisibility(View.GONE);
+                    mLinearFive.setVisibility(View.GONE);
+
+                } else
+                if (mLinearThree.getVisibility() == View.VISIBLE) {
+
+                    mLinearFour.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.VISIBLE);
+                    mLinearFive.setVisibility(View.GONE);
+
+                } else
+                if (mLinearTwo.getVisibility() == View.VISIBLE) {
+
+                    mLinearFour.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.VISIBLE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.GONE);
+                    mLinearFive.setVisibility(View.GONE);
+
+                    mBtnPrevious.setVisibility(View.GONE);
+
+                } else {
+
+                   onBackPressed();
+
+                }
+
+            }
+        });
+
+
+
 
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,6 +287,9 @@ public class PersonalDetailsActivity extends MainActivity {
                         mLinearThree.setVisibility(View.GONE);
                         mLinearFour.setVisibility(View.GONE);
                         mLinearFive.setVisibility(View.GONE);
+
+                        mBtnPrevious.setVisibility(View.VISIBLE);
+
                     }
 
                 } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
@@ -258,7 +321,7 @@ public class PersonalDetailsActivity extends MainActivity {
                         mLinearTwo.setVisibility(View.GONE);
                         mLinearFive.setVisibility(View.VISIBLE);
 
-                        mBtnNext.setText("Submit Personal Details");
+                        mBtnNext.setText("Submit");
                     }
                 } else {
 
@@ -345,7 +408,13 @@ public class PersonalDetailsActivity extends MainActivity {
 
 
                     if (validate()) {
-                        AddSurvey();
+
+                        if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
+                            AddSurvey();
+
+                        }else {
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Unable to get Location please check GPS enabled and permissions check");
+                        }
                     }
 //                    startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
 
@@ -594,7 +663,12 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditStatusCase.setError("Enter Status Case");
             mEditStatusCase.requestFocus();
             return false;
-        }
+        }else if (!getLocation.isGPSEnabled) {
+        this.getLocation.showSettingsAlert();
+        return false;
+    }
+
+
 
         return true;
 
@@ -659,6 +733,7 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditNamePolice = (EditText) findViewById(R.id.EditNamePolice);
         mEditStatusCase = (EditText) findViewById(R.id.EditStatusCase);
         mBtnNext = (Button) findViewById(R.id.BtnNext);
+        mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
     }
 
     @Override
@@ -723,6 +798,9 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody CRIMINALCASE_POLICA_NAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_POLICA_NAME);
         RequestBody CRIMINALCASE_STATUS_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_STATUS);
 
+        RequestBody LATITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), ""+getLocation.getLatitude());
+        RequestBody LONGITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), ""+getLocation.getLongitude());
+
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer "+PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.USERDETAILS.API_KEY,""));
@@ -737,7 +815,7 @@ public class PersonalDetailsActivity extends MainActivity {
                 RESIDENTIAL_ADDRESS_,PERMENENT_ADDRESS_,AADHAR_NO_,
                 BANKACC_NO_,BANKNAME_,BRANCH_NAME_,
                 IFSC_,IS_CRIMINALCASE_,CRIMINALCASE_NO_,CRIMINALCASE_DATE_,
-                CRIMINALCASE_FIRNO_,CRIMINALCASE_POLICA_NAME_,CRIMINALCASE_STATUS_
+                CRIMINALCASE_FIRNO_,CRIMINALCASE_POLICA_NAME_,LATITUDE,LONGITUDE,CRIMINALCASE_STATUS_
                 );
 
         call.enqueue(new Callback<SurveyResponse>() {

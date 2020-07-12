@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     AlertDialog alertDialog;
     private String Flag_Remember = "", userName, passWord;
     private int READ_PHONE_REQUEST = 20;
-    private GetLocation getLocation;
 
 
     private MediaRecorder mRecorder;
@@ -56,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         this.EnableGPSAutoMatically();
 
-        if (this.getLocation == null) {
-            this.getLocation = new GetLocation(MainActivity.this);
-        }
 
 
 //        recordAudio();

@@ -120,8 +120,29 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
         mBtnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(VendingDetailsActivity.this,VendorsFamDetailsActivity.class));
+            public void onClick(View view) {
+
+
+                if (mLinearThree.getVisibility() == View.VISIBLE) {
+
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.VISIBLE);
+
+                } else
+                if (mLinearTwo.getVisibility() == View.VISIBLE) {
+
+                    mLinearOne.setVisibility(View.VISIBLE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.GONE);
+
+
+                } else {
+
+                    onBackPressed();
+
+                }
+
             }
         });
         mBtnNext.setOnClickListener(new View.OnClickListener() {
@@ -133,12 +154,16 @@ public class VendingDetailsActivity extends AppCompatActivity {
                         mLinearOne.setVisibility(View.GONE);
                         mLinearTwo.setVisibility(View.VISIBLE);
                         mLinearThree.setVisibility(View.GONE);
+
                     }
                 } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
                     if (validate2()) {
                         mLinearTwo.setVisibility(View.GONE);
                         mLinearOne.setVisibility(View.GONE);
                         mLinearThree.setVisibility(View.VISIBLE);
+
+                        mBtnNext.setText("Submit");
+
                     }
                 } else {
 

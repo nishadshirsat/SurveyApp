@@ -65,6 +65,8 @@ public interface ApiInterface {
             @Part("criminal_case_date") RequestBody criminal_case_date,
             @Part("criminal_case_fir_number") RequestBody criminal_case_fir_number,
             @Part("criminal_case_name_of_police") RequestBody criminal_case_name_of_police,
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
             @Part("criminal_case_status") RequestBody criminal_case_status);
 
 
@@ -121,6 +123,7 @@ public interface ApiInterface {
             @Part MultipartBody.Part vending_history_proof_documents,
 //            @Field("family_member_details") List<FamilyMembers> family_member_details,
             @Part MultipartBody.Part allotment_of_tehbazari_document,
+            @Part MultipartBody.Part recording,
             @Part MultipartBody.Part undertaking_by_the_applicant
     );
 }

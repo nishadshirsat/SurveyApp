@@ -109,6 +109,7 @@ public class DocumentScanActivity extends AppCompatActivity {
     private File file3 =null;
     private File file4=null;
     private File file5=null;
+    private File file6=null;
 
 
     @Override
@@ -120,8 +121,37 @@ public class DocumentScanActivity extends AppCompatActivity {
 
         mBtnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DocumentScanActivity.this, VendingDetailsActivity.class));
+            public void onClick(View view) {
+
+                if (mLinearFour.getVisibility() == View.VISIBLE) {
+
+                    mLinearFour.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.VISIBLE);
+                    mLinearTwo.setVisibility(View.GONE);
+
+                } else
+                if (mLinearThree.getVisibility() == View.VISIBLE) {
+
+                    mLinearFour.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.VISIBLE);
+
+                } else
+                if (mLinearTwo.getVisibility() == View.VISIBLE) {
+
+                    mLinearFour.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.VISIBLE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.GONE);
+
+                } else {
+
+                    onBackPressed();
+
+                }
+
             }
         });
 
@@ -272,6 +302,9 @@ public class DocumentScanActivity extends AppCompatActivity {
                         mLinearOne.setVisibility(View.GONE);
                         mLinearTwo.setVisibility(View.GONE);
                         mLinearFour.setVisibility(View.VISIBLE);
+
+                        mBtnNext.setText("Submit");
+
                     }
 
                 }else    if (TehBazari_Doc_PATH.trim().isEmpty()){
@@ -636,6 +669,10 @@ public class DocumentScanActivity extends AppCompatActivity {
 
     private void Upload_Documents() {
 
+        String recordingFile =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.RECORDING,"");
+
+
+        file6 = new File(recordingFile);
 
         URI_NO = ApplicationConstant.URI_NO;
 
@@ -657,6 +694,9 @@ public class DocumentScanActivity extends AppCompatActivity {
         RequestBody request_file4 =
                 RequestBody.create(MediaType.parse("image/png"), file5);
 
+        RequestBody request_file5 =
+                RequestBody.create(MediaType.parse("audio/*"), file6);
+
 
 // MultipartBody.Part is used to send also the actual file name
         MultipartBody.Part body_file1 =
@@ -672,11 +712,15 @@ public class DocumentScanActivity extends AppCompatActivity {
   MultipartBody.Part body_file4 =
                 MultipartBody.Part.createFormData("undertaking_by_the_applicant", file1.getName(), request_file4);
 
+  MultipartBody.Part body_file5 =
+                MultipartBody.Part.createFormData("recording", file6.getName(), request_file5);
+
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), URI_NO);
 
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
-        Call<UpdateSurveyResponse> call = apiservice.getUpdateDocuments(headers,URI_NO_,body_file1,body_file2,body_file3,body_file4
+        Call<UpdateSurveyResponse> call = apiservice.getUpdateDocuments(headers,URI_NO_,body_file1,body_file2
+                ,body_file3,body_file5,body_file4
 
         );
 

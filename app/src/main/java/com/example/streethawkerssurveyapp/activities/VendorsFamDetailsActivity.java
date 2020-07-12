@@ -90,6 +90,9 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         bindView();
 
+        mBtnNext.setText("Submit");
+
+
         mTextAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,10 +167,17 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         mBtnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(VendorsFamDetailsActivity.this,PersonalDetailsActivity.class));
+            public void onClick(View view) {
+
+
+                    onBackPressed();
+
+
+
             }
         });
+
+
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

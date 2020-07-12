@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activities.VendorsFamDetailsActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:layout_above="@+id/relative_buttons"
         android:scrollbars="none">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/LinearMain"
@@ -282,8 +279,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner"/>
 
 
                     </LinearLayout>
@@ -316,8 +312,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner"/>
 
 
                     </LinearLayout>
@@ -350,8 +345,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner" />
 
 
                     </LinearLayout>
@@ -384,8 +378,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner" />
 
 
                     </LinearLayout>
@@ -433,8 +426,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner"/>
 
 
                     </LinearLayout>
@@ -467,8 +459,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner" />
 
 
                     </LinearLayout>
@@ -501,8 +492,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner" />
 
 
                     </LinearLayout>
@@ -535,8 +525,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:padding="10dp"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner"/>
 
 
                     </LinearLayout>
@@ -596,8 +585,7 @@
                             android:layout_weight="1"
                             android:padding="10dp"
                             android:background="@drawable/edittext_bg"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner" />
 
 
                     </LinearLayout>
@@ -648,8 +636,7 @@
                             android:layout_weight="1"
                             android:padding="10dp"
                             android:background="@drawable/edittext_bg"
-                            android:src="@drawable/scanner"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:src="@drawable/scanner"/>
 
 
                     </LinearLayout>
@@ -665,60 +652,52 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/LinearMain"
-                android:layout_marginBottom="20dp"
-                android:gravity="bottom">
-
-                <Button
-                    android:id="@+id/BtnNext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:drawableRight="@drawable/ic_forward_black_24dp"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/white"
-                    android:padding="10dp"
-                    android:text="NEXT"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/BtnPrevious"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:drawableLeft="@drawable/backward_arrow"
-                    android:drawablePadding="10dp"
-                    android:visibility="gone"
-                    android:drawableTint="@color/white"
-                    android:padding="10dp"
-                    android:text="PREVIOUS"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
 
     </ScrollView>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/relative_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/BtnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:background="@color/colorPrimaryDark"
+            android:drawableRight="@drawable/ic_forward_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/white"
+            android:padding="10dp"
+            android:text="NEXT"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/BtnPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="right"
+            android:background="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/backward_arrow"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/white"
+            android:padding="10dp"
+            android:text="PREVIOUS"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

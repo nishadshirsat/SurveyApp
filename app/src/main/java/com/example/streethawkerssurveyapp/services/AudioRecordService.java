@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.utils.PrefUtils;
 
 import java.io.IOException;
 
@@ -72,6 +73,8 @@ public class AudioRecordService extends Service {
 
             try {
                 mFileName = ApplicationConstant.createImageFile(surveyId+"_surveyer.3gp","Recordings", AudioRecordService.this);
+
+                PrefUtils.saveToPrefs(AudioRecordService.this,ApplicationConstant.RECORDING,mFileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
