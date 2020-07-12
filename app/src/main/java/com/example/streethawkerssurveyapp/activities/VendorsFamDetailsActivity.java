@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.adapter.FamilyDetailsAdpater;
+import com.example.streethawkerssurveyapp.adapter.LandAssetsAdpater;
 import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
@@ -54,11 +55,13 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //    private EditText mEditFamAge;
 //    private EditText mEditFamAadhar;
 
-    private EditText mEditPlot;
-    private EditText mEditHouseSize;
-    private EditText mEditArea;
-    private EditText mEditKuccha;
-    private EditText mEditRent;
+//    private EditText mEditPlot;
+//    private EditText mEditHouseSize;
+//    private EditText mEditArea;
+//    private EditText mEditKuccha;
+//    private EditText mEditRent;
+
+
     private RadioButton mRadioY;
     private RadioButton mRadioN;
     private EditText mEditName;
@@ -68,11 +71,13 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
     private Button mBtnNext;
     private Button mBtnPrevious;
     private TextView mTextAdd;
+    private TextView TextAddAssets;
 
     private int FamCount = 0;
     private int FamInc = 0;
 
     private RecyclerView view_FamilyMembers;
+    private RecyclerView view_LandAssets;
 
     private List<FamilyMembers> listFamily = new ArrayList<>();
     private List<LandAssets> listLandAssets = new ArrayList<>();
@@ -90,6 +95,80 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         mBtnNext.setText("Submit");
 
+        TextAddAssets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                View viewAdd = LayoutInflater.from(VendorsFamDetailsActivity.this).inflate(R.layout.layout_add_land_assets, null);
+                ImageView lImage_cancel = (ImageView) viewAdd.findViewById(R.id.image_cancel);
+                final EditText lEditPlot = (EditText) viewAdd.findViewById(R.id.EditPlot);
+                final EditText lEditHouseSize = (EditText)viewAdd. findViewById(R.id.EditHouseSize);
+                final EditText lEditArea = (EditText) viewAdd.findViewById(R.id.EditArea);
+                final EditText lEditKuccha = (EditText) viewAdd.findViewById(R.id.EditKuccha);
+                final EditText lEditRent = (EditText) viewAdd.findViewById(R.id.EditRent);
+                TextView lTextAddLandAssets = (TextView) viewAdd.findViewById(R.id.TextAddLandAssets);
+
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(VendorsFamDetailsActivity.this);
+
+                builder.setView(viewAdd);
+                final android.app.AlertDialog alertDialog = builder.create();
+
+                lImage_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                lTextAddLandAssets.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (lEditPlot.getText().toString().trim().isEmpty()){
+                            lEditPlot.setError("enter plot");
+                            lEditPlot.requestFocus();
+                        }else  if (lEditHouseSize.getText().toString().trim().isEmpty()){
+                            lEditHouseSize.setError("enter house size");
+                            lEditHouseSize.requestFocus();
+                        }else if (lEditArea.getText().toString().trim().isEmpty()){
+                            lEditArea.setError("enter area");
+                            lEditArea.requestFocus();
+                        }else if (lEditKuccha.getText().toString().trim().isEmpty()){
+                            lEditKuccha.setError("enter kuccha");
+                            lEditKuccha.requestFocus();
+                        }else if (lEditRent.getText().toString().trim().isEmpty()){
+                            lEditRent.setError("enter rent");
+                            lEditRent.requestFocus();
+                        }else {
+
+
+                            LandAssets landAssets = new LandAssets(lEditPlot.getText().toString().trim(),
+                                    lEditHouseSize.getText().toString().trim(),
+                                    lEditArea.getText().toString().trim(),
+                                    lEditKuccha.getText().toString().trim(),
+                                    lEditRent.getText().toString().trim()
+                            );
+                            listLandAssets.add(landAssets);
+
+                            LandAssetsAdpater landAssetsAdpater = new LandAssetsAdpater(VendorsFamDetailsActivity.this);
+                            landAssetsAdpater.setDetails(listLandAssets);
+
+                            view_FamilyMembers.setAdapter(landAssetsAdpater);
+                            alertDialog.dismiss();
+
+                        }
+
+                    }
+                });
+
+
+                alertDialog.show();
+
+
+
+            }
+        });
 
         mTextAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +290,11 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             return false;
         }
 
+        else if (listLandAssets.isEmpty()){
+            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add Land Assets");
+            return false;
+        }
+
 //        else if (mEditFamName.getText().toString().trim().isEmpty()) {
 //            mEditFamName.setError("Enter Family Name");
 //            mEditFamName.requestFocus();
@@ -228,27 +312,29 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //            mEditFamAadhar.requestFocus();
 //            return false;
 //        }
-        else if (mEditPlot.getText().toString().trim().isEmpty()) {
-            mEditPlot.setError("Enter Plot");
-            mEditPlot.requestFocus();
-            return false;
-        }else if (mEditHouseSize.getText().toString().trim().isEmpty()) {
-            mEditHouseSize.setError("Enter House Size");
-            mEditHouseSize.requestFocus();
-            return false;
-        }else if (mEditArea.getText().toString().trim().isEmpty()) {
-            mEditArea.setError("Enter Area");
-            mEditArea.requestFocus();
-            return false;
-        }else if (mEditKuccha.getText().toString().trim().isEmpty()) {
-            mEditKuccha.setError("Enter Kuccha");
-            mEditKuccha.requestFocus();
-            return false;
-        }else if (mEditRent.getText().toString().trim().isEmpty()) {
-            mEditRent.setError("Enter Rent");
-            mEditRent.requestFocus();
-            return false;
-        }
+
+
+//        else if (mEditPlot.getText().toString().trim().isEmpty()) {
+//            mEditPlot.setError("Enter Plot");
+//            mEditPlot.requestFocus();
+//            return false;
+//        }else if (mEditHouseSize.getText().toString().trim().isEmpty()) {
+//            mEditHouseSize.setError("Enter House Size");
+//            mEditHouseSize.requestFocus();
+//            return false;
+//        }else if (mEditArea.getText().toString().trim().isEmpty()) {
+//            mEditArea.setError("Enter Area");
+//            mEditArea.requestFocus();
+//            return false;
+//        }else if (mEditKuccha.getText().toString().trim().isEmpty()) {
+//            mEditKuccha.setError("Enter Kuccha");
+//            mEditKuccha.requestFocus();
+//            return false;
+//        }else if (mEditRent.getText().toString().trim().isEmpty()) {
+//            mEditRent.setError("Enter Rent");
+//            mEditRent.requestFocus();
+//            return false;
+//        }
 
 
         else if (mEditName.getText().toString().trim().isEmpty()) {
@@ -284,11 +370,11 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //        mEditFamAge = (EditText) findViewById(R.id.EditFamAge);
 //        mEditFamAadhar = (EditText) findViewById(R.id.EditFamAadhar);
 
-        mEditPlot = (EditText) findViewById(R.id.EditPlot);
-        mEditHouseSize = (EditText) findViewById(R.id.EditHouseSize);
-        mEditArea = (EditText) findViewById(R.id.EditArea);
-        mEditKuccha = (EditText) findViewById(R.id.EditKuccha);
-        mEditRent = (EditText) findViewById(R.id.EditRent);
+//        mEditPlot = (EditText) findViewById(R.id.EditPlot);
+//        mEditHouseSize = (EditText) findViewById(R.id.EditHouseSize);
+//        mEditArea = (EditText) findViewById(R.id.EditArea);
+//        mEditKuccha = (EditText) findViewById(R.id.EditKuccha);
+//        mEditRent = (EditText) findViewById(R.id.EditRent);
         mRadioY = (RadioButton) findViewById(R.id.RadioY);
         mRadioN = (RadioButton) findViewById(R.id.RadioN);
         mEditName = (EditText) findViewById(R.id.EditName);
@@ -298,10 +384,14 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
         mTextAdd = (TextView) findViewById(R.id.TextAdd);
+        TextAddAssets = (TextView) findViewById(R.id.TextAddAssets);
 
 
         view_FamilyMembers = (RecyclerView) findViewById(R.id.view_FamilyMembers);
         view_FamilyMembers.setLayoutManager(new LinearLayoutManager(VendorsFamDetailsActivity.this));
+
+        view_LandAssets = (RecyclerView) findViewById(R.id.view_LandAssets);
+        view_LandAssets.setLayoutManager(new LinearLayoutManager(VendorsFamDetailsActivity.this));
     }
 
 
@@ -309,13 +399,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         JSONObject objectFamily = null;
 
-        LandAssets landAssets = new LandAssets(mEditPlot.getText().toString().trim(),
-                mEditHouseSize.getText().toString().trim(),
-                mEditArea.getText().toString().trim(),
-                mEditKuccha.getText().toString().trim(),
-                mEditRent.getText().toString().trim()
-                );
-        listLandAssets.add(landAssets);
+
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();

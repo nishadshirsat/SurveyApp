@@ -13,7 +13,6 @@
         android:layout_above="@+id/relative_buttons"
         android:scrollbars="none">
 
-
             <LinearLayout
                 android:id="@+id/LinearMain"
                 android:layout_width="match_parent"
@@ -125,81 +124,30 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/view_LandAssets"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/TextAddAssets"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:textSize="20sp"
+                    android:text="ADD"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:layout_gravity="right"
+                    android:drawableRight="@drawable/ic_add_circle_black_24dp"
+                    android:drawablePadding="05dp"
+                    android:drawableTint="@color/colorPrimaryDark"
+                    android:layout_marginTop="15dp"/>
 
-                    <EditText
-                        android:id="@+id/EditPlot"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/edittext_bg"
-                        android:hint="Plot"
-                        android:inputType="number"
-                        android:padding="10dp"
-                        android:textSize="14sp" />
 
-                    <EditText
-                        android:id="@+id/EditHouseSize"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/edittext_bg"
-                        android:hint="House Size"
-                        android:inputType="number"
-                        android:padding="10dp"
-                        android:textSize="14sp" />
 
-                    <EditText
-                        android:id="@+id/EditArea"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/edittext_bg"
-                        android:hint="Area"
-                        android:inputType="text"
-                        android:padding="10dp"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <EditText
-                        android:id="@+id/EditKuccha"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/edittext_bg"
-                        android:hint="Kuccha"
-                        android:inputType="text"
-                        android:padding="10dp"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/EditRent"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/edittext_bg"
-                        android:hint="Rental Income"
-                        android:inputType="number"
-                        android:padding="10dp"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
