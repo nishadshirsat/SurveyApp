@@ -49,8 +49,8 @@ public class AudioRecordService extends Service {
 
             }
         };
-        Toast.makeText(AudioRecordService.this, "Recording Started", Toast.LENGTH_LONG).show();
 
+        Toast.makeText(AudioRecordService.this, "Recording Started", Toast.LENGTH_LONG).show();
 
         Thread t = new Thread(r);
         t.start();
@@ -94,6 +94,17 @@ public class AudioRecordService extends Service {
                 Log.e(LOG_TAG, "prepare() failed");
             }
             mRecorder.start();
+
+//            Handler mainHandler = new Handler(getMainLooper());
+//
+//            mainHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    // Do your stuff here related to UI, e.g. show toast
+//                    Toast.makeText(getApplicationContext(), "I'm a toast!", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+
         }
 
 }
