@@ -85,6 +85,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private Calendar myCalendar;
     private int mYear, mMonth, mDay;
 
+    private Spinner spinner_to_vending,spinner_from_vending;
+    private String FromVending="";
+    private String ToVending="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,10 +131,27 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 if (IS_RECOGNIZED_STREET_VENDOR.contains("Yes")) {
                     TextYes.setVisibility(View.VISIBLE);
                     LinearVehical.setVisibility(View.VISIBLE);
+                    IS_RECOGNIZED_STREET_VENDOR ="1";
 
                 } else {
                     TextYes.setVisibility(View.GONE);
                     LinearVehical.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
+        RGDocument.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
+                TEHABZARI_AVAILABLE = radioSexButton.getText().toString().trim();
+
+                if (TEHABZARI_AVAILABLE.contains("Yes")) {
+                    TEHABZARI_AVAILABLE ="1";
+
+                } else {
+
                 }
 
             }
@@ -163,6 +184,78 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
             }
         });
+
+        mSpinnerItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                TYPE_OF_VENDING = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner_from_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                FromVending = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner_to_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                ToVending = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        mSpinnerVehical.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                TYPE_OF_STRUCTURE = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        mSpinnerChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                VENDING_AREA_CHOCE = parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,19 +281,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     TextYes.setVisibility(View.GONE);
                     LinearVehical.setVisibility(View.GONE);
 
-                    mSpinnerItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                            TYPE_OF_VENDING = mSpinnerItems.getItemAtPosition(position).toString();
-
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
 
                     VENDING_SITE=mEditVendingSite.getText().toString().trim();
                     VENDING_FROM=mEditFromTime.getText().toString().trim();
@@ -208,35 +289,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     YRS_OF_VENDING=mEditAge.getText().toString().trim();
                     ANNUAL_INCOME=mEditAnnualIncome.getText().toString().trim();
                     IS_RECOGNIZED_STREET_VENDOR = String.valueOf(RGVendor.getCheckedRadioButtonId());
-                    mSpinnerVehical.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                            TYPE_OF_STRUCTURE = mSpinnerVehical.getItemAtPosition(position).toString();
-
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
 
                     STARTING_DATE_VENDING=mEditDob.getText().toString().trim();
-                    TEHABZARI_AVAILABLE= String.valueOf(RGDocument.getCheckedRadioButtonId());
-                    mSpinnerChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                            VENDING_AREA_CHOCE = mSpinnerChoice.getItemAtPosition(position).toString();
-
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
 
 
                     if (validate3()) {
@@ -319,7 +375,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
     }
 
     private void bindView() {
-
+        spinner_from_vending = (Spinner) findViewById(R.id.spinner_from_vending);
+        spinner_to_vending = (Spinner) findViewById(R.id.spinner_to_vending);
         mLinearMain = (LinearLayout) findViewById(R.id.LinearMain);
         LinearVehical = (LinearLayout) findViewById(R.id.LinearVehical);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);

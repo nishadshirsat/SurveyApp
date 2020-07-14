@@ -72,7 +72,7 @@ public class AudioRecordService extends Service {
         private void recordAudio(String surveyId) {
 
             try {
-                mFileName = ApplicationConstant.createImageFile(surveyId+"_surveyer.3gp","Recordings", AudioRecordService.this);
+                mFileName = ApplicationConstant.createImageFile(surveyId+"_surveyer.mp3","Recordings", AudioRecordService.this);
 
                 PrefUtils.saveToPrefs(AudioRecordService.this,ApplicationConstant.RECORDING,mFileName);
             } catch (IOException e) {
@@ -81,8 +81,8 @@ public class AudioRecordService extends Service {
 
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
             mRecorder.setOutputFile(mFileName);
 
 

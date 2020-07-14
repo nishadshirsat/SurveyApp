@@ -1,8 +1,11 @@
 package com.example.streethawkerssurveyapp.fragment;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,8 +22,11 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,6 +61,9 @@ public class LoginFragment extends Fragment {
 
     private String Flag_Remember = "", userName, passWord;
 
+    android.app.AlertDialog alertDialog;
+    private int READ_PHONE_REQUEST = 20;
+
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,11 +71,9 @@ public class LoginFragment extends Fragment {
 
         bindView(rootView);
 
-
         Flag_Remember = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.FlagRemember, "");
         userName = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserName, "");
         passWord = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserPassword, "");
-
 
         if (Flag_Remember.equals("true")) {
             mEditUsername.setText(userName);
@@ -110,7 +117,6 @@ public class LoginFragment extends Fragment {
                     PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.FlagRemember, "false");
                     PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserName, "");
                     PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserPassword, "");
-
 
                 }
             }
@@ -166,11 +172,8 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
 
                 if (validate()){
-                    String android_id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
 
-                    getLoginRole(mEditUsername.getText().toString().trim(),
-                            mEditPassword.getText().toString().trim(),
-                            android_id);
+                    checkForPermissions();
                 }
             }
         });
@@ -263,6 +266,134 @@ public class LoginFragment extends Fragment {
             }
         });
 
+    }
+
+    public void checkForPermissions(){
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.MODIFY_AUDIO_SETTINGS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.CAMERA) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.READ_PHONE_STATE) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.READ_CONTACTS) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION)  && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.RECORD_AUDIO) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.MODIFY_AUDIO_SETTINGS)) {
+                // Show an explanation to the user asynchronously -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+//              Toast.makeText(getActivity(),"WAITING FOR USER RESPONSE",Toast.LENGTH_SHORT).show();
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+                builder.setTitle("Permissions Needed");
+                builder.setMessage("Want to access your camera and storage to set your profile");
+                builder.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        alertDialog.dismiss();
+
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.READ_PHONE_STATE,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                        Manifest.permission.RECORD_AUDIO,
+                                        Manifest.permission.MODIFY_AUDIO_SETTINGS,
+                                        Manifest.permission.READ_CONTACTS},
+
+                                READ_PHONE_REQUEST);
+                    }
+                });
+
+                builder.setNegativeButton("Deny", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog = builder.create();
+                alertDialog.show();
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setCancelable(false);
+
+            } else {
+                // No explanation needed; request the permission
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+                builder.setTitle("Permissions Needed");
+                builder.setMessage("Want to access your camera and storage to set your profile");
+                builder.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                        Manifest.permission.READ_PHONE_STATE,
+                                        Manifest.permission.RECORD_AUDIO,
+                                        Manifest.permission.MODIFY_AUDIO_SETTINGS,
+                                        Manifest.permission.READ_CONTACTS},
+                                READ_PHONE_REQUEST);
+                    }
+                });
+
+                builder.setNegativeButton("Deny", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog = builder.create();
+                alertDialog.show();
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setCancelable(false);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+
+
+        } else {
+            // Permission has already been granted
+//            Toast.makeText(getActivity(),"Permission Granted",Toast.LENGTH_SHORT).show();
+
+            String android_id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+
+            getLoginRole(mEditUsername.getText().toString().trim(),
+                    mEditPassword.getText().toString().trim(),
+                    android_id);
+        }
     }
 
 }

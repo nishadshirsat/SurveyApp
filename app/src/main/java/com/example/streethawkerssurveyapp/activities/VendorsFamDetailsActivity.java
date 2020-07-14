@@ -88,9 +88,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
     String IS_Fam = "";
 
-
     ProgressDialog progressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +106,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                 IS_Fam = radioSexButton.getText().toString().trim();
                 if (IS_Fam.contains("Yes")) {
                     LinearYes.setVisibility(View.VISIBLE);
+                    IS_Fam = "1";
 
                 } else {
                     LinearYes.setVisibility(View.GONE);

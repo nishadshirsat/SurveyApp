@@ -1097,8 +1097,19 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Permanent Address (Same as Resident)"
+                                android:text="Permanent Address"
                                 android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btn_same_resident"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:text="Same as Redidential"
+                                android:background="@color/colorPrimaryDark"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
                                 android:textSize="16sp" />
 
                         </LinearLayout>
@@ -1381,6 +1392,19 @@
                         android:layout_marginTop="20dp"
                         android:background="@color/dark_gray" />
 
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearFive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1412,6 +1436,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
+
 
                     <RadioGroup
                         android:id="@+id/RGCriminal"
@@ -1447,129 +1472,71 @@
                         android:layout_marginTop="20dp"
                         android:background="@color/dark_gray" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/LinearFive"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
 
                     <LinearLayout
+                        android:id="@+id/linear_cases"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:orientation="vertical">
+
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="2"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="13.b"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="2"
+                                android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:text="If yes,"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="13.b"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:text="If yes,"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/view_Criminal_Case"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        </androidx.recyclerview.widget.RecyclerView>
 
-                        <EditText
-                            android:id="@+id/EditSNo"
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/TextAddCases"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="S.No"
-                            android:inputType="number"
-                            android:imeOptions="actionNext"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:id="@+id/EditDate"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="Date of case"
-                            android:inputType="date"
-                            android:focusableInTouchMode="false"
-                            android:imeOptions="actionNext"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:id="@+id/EditFir"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="FIR No."
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
+                            android:textSize="20sp"
+                            android:text="ADD"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"
+                            android:padding="5dp"
+                            android:layout_gravity="right"
+                            android:drawableRight="@drawable/ic_add_circle_black_24dp"
+                            android:drawablePadding="05dp"
+                            android:drawableTint="@color/colorPrimaryDark"
+                            android:layout_marginTop="15dp"/>
 
 
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <EditText
-                            android:id="@+id/EditNamePolice"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="Name of Police"
-                            android:inputType="text"
-                            android:imeOptions="actionNext"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:id="@+id/EditStatusCase"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_weight="1"
-                            android:imeOptions="actionNext"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="Status of case"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
 
                     </LinearLayout>
 

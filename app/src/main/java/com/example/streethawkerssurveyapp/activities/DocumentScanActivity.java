@@ -1,14 +1,17 @@
 package com.example.streethawkerssurveyapp.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -41,6 +44,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -111,6 +116,11 @@ public class DocumentScanActivity extends AppCompatActivity {
     private File file4=null;
     private File file5=null;
     private File file6=null;
+
+    private String Flag_Remember = "", userName, passWord;
+
+    android.app.AlertDialog alertDialog;
+    private int READ_PHONE_REQUEST = 20;
 
 
     @Override
@@ -312,15 +322,18 @@ public class DocumentScanActivity extends AppCompatActivity {
 
                     }
 
-                }else    if (TehBazari_Doc_PATH.trim().isEmpty()){
-                    ApplicationConstant.displayMessageDialog(DocumentScanActivity.this,"","Tehbazari Doc is missing");
-
-                }else if (Undertaking_PATH.trim().isEmpty()){
+                }
+//                else  if (TehBazari_Doc_PATH.trim().isEmpty()){
+//                    ApplicationConstant.displayMessageDialog(DocumentScanActivity.this,"","Tehbazari Doc is missing");
+//
+//                }
+                else if (Undertaking_PATH.trim().isEmpty()){
                     ApplicationConstant.displayMessageDialog(DocumentScanActivity.this,"","Undertaking Doc is missing");
 
                 } else {
 
                     file4 = new File(TehBazari_Doc_PATH);
+
                     file5 = new File(Undertaking_PATH);
 
 
@@ -440,9 +453,10 @@ public class DocumentScanActivity extends AppCompatActivity {
     }
 
     protected void startScan() {
-        Intent intent = new Intent(this, ScanActivity.class);
-        intent.putExtra(ScanConstants.OPEN_INTENT_PREFERENCE, ScanConstants.OPEN_CAMERA);
-        startActivityForResult(intent, REQUEST_CODE);
+
+        checkForPermissions();
+
+
     }
 
 
@@ -703,14 +717,19 @@ public class DocumentScanActivity extends AppCompatActivity {
                 MultipartBody.Part.createFormData("identity_proof_documents", file1.getName(), request_file1);
 
         MultipartBody.Part body_file2 =
-                MultipartBody.Part.createFormData("vending_history_proof_documents", file1.getName(), request_file2);
+                MultipartBody.Part.createFormData("vending_history_proof_documents", file2.getName(), request_file2);
 
-        MultipartBody.Part body_file3 =
-                MultipartBody.Part.createFormData("allotment_of_tehbazari_document", file1.getName(), request_file3);
+        MultipartBody.Part body_file3 = null;
+        if (TehBazari_Doc_PATH.trim().isEmpty()){
+            body_file3 = null;
+        }else {
 
+            body_file3 =  MultipartBody.Part.createFormData("allotment_of_tehbazari_document", file4.getName(), request_file3);
 
-  MultipartBody.Part body_file4 =
-                MultipartBody.Part.createFormData("undertaking_by_the_applicant", file1.getName(), request_file4);
+        }
+
+          MultipartBody.Part body_file4 =
+                MultipartBody.Part.createFormData("undertaking_by_the_applicant", file5.getName(), request_file4);
 
 
 
@@ -741,9 +760,8 @@ public class DocumentScanActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-
-
                                 startActivity(new Intent(DocumentScanActivity.this,PersonalDetailsActivity.class));
+                                finish();
 
                             }
                         });
@@ -886,6 +904,134 @@ public class DocumentScanActivity extends AppCompatActivity {
         });
     }
 
+    public void checkForPermissions(){
+        if (ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(DocumentScanActivity.this,
+                Manifest.permission.MODIFY_AUDIO_SETTINGS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.CAMERA) && ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) && ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) && ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.READ_PHONE_STATE) && ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.READ_CONTACTS) && ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) && ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)  && ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.RECORD_AUDIO) && ActivityCompat.shouldShowRequestPermissionRationale(DocumentScanActivity.this,
+                    Manifest.permission.MODIFY_AUDIO_SETTINGS)) {
+                // Show an explanation to the user asynchronously -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+//              Toast.makeText(DocumentScanActivity.this,"WAITING FOR USER RESPONSE",Toast.LENGTH_SHORT).show();
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DocumentScanActivity.this);
+                builder.setTitle("Permissions Needed");
+                builder.setMessage("Want to access your camera and storage to set your profile");
+                builder.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        alertDialog.dismiss();
+
+                        ActivityCompat.requestPermissions(DocumentScanActivity.this,
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.READ_PHONE_STATE,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                        Manifest.permission.RECORD_AUDIO,
+                                        Manifest.permission.MODIFY_AUDIO_SETTINGS,
+                                        Manifest.permission.READ_CONTACTS},
+
+                                READ_PHONE_REQUEST);
+                    }
+                });
+
+                builder.setNegativeButton("Deny", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog = builder.create();
+                alertDialog.show();
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setCancelable(false);
+
+            } else {
+                // No explanation needed; request the permission
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DocumentScanActivity.this);
+                builder.setTitle("Permissions Needed");
+                builder.setMessage("Want to access your camera and storage to set your profile");
+                builder.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+
+                        ActivityCompat.requestPermissions(DocumentScanActivity.this,
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.CAMERA,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                        Manifest.permission.READ_PHONE_STATE,
+                                        Manifest.permission.RECORD_AUDIO,
+                                        Manifest.permission.MODIFY_AUDIO_SETTINGS,
+                                        Manifest.permission.READ_CONTACTS},
+                                READ_PHONE_REQUEST);
+                    }
+                });
+
+                builder.setNegativeButton("Deny", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog = builder.create();
+                alertDialog.show();
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setCancelable(false);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
 
 
+        } else {
+            // Permission has already been granted
+
+            try {
+                Intent intent = new Intent(this, ScanActivity.class);
+                intent.putExtra(ScanConstants.OPEN_INTENT_PREFERENCE, ScanConstants.OPEN_CAMERA);
+                startActivityForResult(intent, REQUEST_CODE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                ApplicationConstant.displayMessageDialog(DocumentScanActivity.this,"",e.getMessage().toString().trim());
+            }
+
+        }
+    }
 }

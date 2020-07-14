@@ -25,11 +25,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/text_plot"
+                    android:id="@+id/text_case_no"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="plot"
+                    android:text="Case"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -66,10 +66,10 @@
 
 
             <TextView
-                android:id="@+id/text_HouseSize"
+                android:id="@+id/text_case_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="housesize"
+                android:text="CaseDate"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -77,30 +77,30 @@
 
 
             <TextView
-                android:id="@+id/text_Area"
+                android:id="@+id/text_fir_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Area"
+                android:text="Fir number"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/text_kuccha"
+                android:id="@+id/text_name_polica"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="kucchaa"
+                android:text="Polica name"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/text_Income"
+                android:id="@+id/text_case_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="income"
+                android:text="Case Status"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />

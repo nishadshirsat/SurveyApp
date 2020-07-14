@@ -18,6 +18,11 @@
         <item>other</item>
     </string-array>
 
+    <string-array name="time_select">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+
     <string-array name="choice">
         <item>First Choice (within 1 km)</item>
         <item>Second Choice (within 3 km)</item>

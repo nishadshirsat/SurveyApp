@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.adapter.ViewPagerAdapter;
@@ -31,22 +32,19 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
         getSupportActionBar().hide();
         bindView();
 
-        checkForPermissions();
     }
 
     private void bindView() {
 
         mViewpager = (ViewPager) findViewById(R.id.view_Details);
-
         mTabs = (TabLayout) findViewById(R.id.tabs);
-
 
         mTabs.addTab(mTabs.newTab().setText("Login"));
 //        mTabs.addTab(mTabs.newTab().setText(""));
         mTabs.setTabGravity(TabLayout.GRAVITY_FILL);
 //        mTabs.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
 
-//        mTabs.setupWithViewPager(mViewpager);
+//      mTabs.setupWithViewPager(mViewpager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(LoginActivity.this.getSupportFragmentManager(), mTabs.getTabCount());
         //Adding adapter to pager
         mViewpager.setAdapter(adapter);
@@ -78,21 +76,21 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
     public void checkForPermissions(){
         if (ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this,
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this,
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this,
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this,
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this,
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this,
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(LoginActivity.this,
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED&& ContextCompat.checkSelfPermission(LoginActivity.this,
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(LoginActivity.this,
                 Manifest.permission.MODIFY_AUDIO_SETTINGS)
                 != PackageManager.PERMISSION_GRANTED) {
 
@@ -193,8 +191,14 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
 
         } else {
             // Permission has already been granted
-//      Toast.makeText(LoginActivity.this,"Permission Granted",Toast.LENGTH_SHORT).show();
+      Toast.makeText(LoginActivity.this,"Permission Granted",Toast.LENGTH_SHORT).show();
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkForPermissions();
+
+    }
 }
