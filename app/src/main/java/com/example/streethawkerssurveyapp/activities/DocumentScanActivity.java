@@ -1019,7 +1019,6 @@ public class DocumentScanActivity extends AppCompatActivity {
                 // result of the request.
             }
 
-
         } else {
             // Permission has already been granted
 

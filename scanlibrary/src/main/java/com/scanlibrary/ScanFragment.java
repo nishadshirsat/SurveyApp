@@ -3,11 +3,14 @@ package com.scanlibrary;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,6 +85,9 @@ public class ScanFragment extends Fragment {
         Uri uri = getUri();
         try {
             Bitmap bitmap = Utils.getBitmap(getActivity(), uri);
+
+//            Bitmap bitmap =  handleSamplingAndRotationBitmap(getActivity(),uri) ;
+
             getActivity().getContentResolver().delete(uri, null, null);
             return bitmap;
         } catch (IOException e) {
@@ -236,5 +243,7 @@ public class ScanFragment extends Fragment {
     protected void dismissDialog() {
         progressDialogFragment.dismissAllowingStateLoss();
     }
+
+
 
 }
