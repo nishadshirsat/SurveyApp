@@ -32,6 +32,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    dexOptions {
+        jumboMode = true
+        javaMaxHeapSize "12g"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
