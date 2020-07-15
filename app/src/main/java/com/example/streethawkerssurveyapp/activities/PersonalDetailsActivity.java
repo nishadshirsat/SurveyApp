@@ -441,7 +441,8 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                EDUCATION_STATUS = parent.getItemAtPosition(position).toString().trim().split(".")[1].toString().trim();
+                EDUCATION_STATUS = parent.getItemAtPosition(position).toString().trim();
+//                        .split(".")[1].toString().trim();
 
             }
 

@@ -11,7 +11,9 @@ import retrofit2.Response;
 
 import android.app.DatePickerDialog;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
@@ -66,7 +69,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private Button mBtnPrevious;
     RadioGroup RGDocument, RGVendor;
     TextView TextYes;
-
     private ProgressDialog progressDialog;
 
     private String
@@ -82,8 +84,15 @@ public class VendingDetailsActivity extends AppCompatActivity {
             TEHABZARI_AVAILABLE = "",
             VENDING_AREA_CHOCE = "";
 
+    static final int TIME_DIALOG_ID = 1111;
+
     private Calendar myCalendar;
     private int mYear, mMonth, mDay;
+    private int hour;
+    private int minute;
+    private int sec;
+    TimePickerDialog picker;
+    String format="";
 
     private Spinner spinner_to_vending,spinner_from_vending;
     private String FromVending="";
@@ -100,6 +109,56 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mYear = myCalendar.get(Calendar.YEAR);
         mMonth = myCalendar.get(Calendar.MONTH);
         mDay = myCalendar.get(Calendar.DAY_OF_MONTH);
+
+        hour = myCalendar.get(Calendar.HOUR_OF_DAY);
+        minute = myCalendar.get(Calendar.MINUTE);
+        sec = myCalendar.get(Calendar.SECOND);
+
+
+        mEditFromTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes) + format);
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+            }
+        });
+
+        mEditToTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditToTime.setText(String.format("%02d:%02d", hourOfDay, minutes) + format);
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+
+            }
+        });
 
         mImgCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,33 +258,33 @@ public class VendingDetailsActivity extends AppCompatActivity {
             }
         });
 
-        spinner_from_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//        spinner_from_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//                FromVending = parent.getItemAtPosition(position).toString();
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
-                FromVending = parent.getItemAtPosition(position).toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinner_to_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                ToVending = parent.getItemAtPosition(position).toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spinner_to_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//                ToVending = parent.getItemAtPosition(position).toString();
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         mSpinnerVehical.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -307,6 +366,12 @@ public class VendingDetailsActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+
+
+
     private boolean validate3() {
         if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
 
@@ -375,8 +440,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
     }
 
     private void bindView() {
-        spinner_from_vending = (Spinner) findViewById(R.id.spinner_from_vending);
-        spinner_to_vending = (Spinner) findViewById(R.id.spinner_to_vending);
+
         mLinearMain = (LinearLayout) findViewById(R.id.LinearMain);
         LinearVehical = (LinearLayout) findViewById(R.id.LinearVehical);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);

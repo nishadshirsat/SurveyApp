@@ -202,24 +202,14 @@
                             android:id="@+id/EditFromTime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.6"
+                            android:layout_weight="1.45"
                             android:background="@drawable/edittext_bg"
                             android:hint="From"
                             android:inputType="date"
+                            android:focusableInTouchMode="false"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
-                        <Spinner
-                            android:id="@+id/spinner_from_vending"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.7"
-                            android:background="@drawable/edittext_bg"
-                            android:dropDownSelector="@drawable/downarrow"
-                            android:entries="@array/time_select"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -238,24 +228,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:layout_weight="0.7"
+                            android:layout_weight="1.35"
                             android:background="@drawable/edittext_bg"
                             android:hint="To"
                             android:inputType="date"
+                            android:focusableInTouchMode="false"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
-                        <Spinner
-                            android:id="@+id/spinner_to_vending"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.7"
-                            android:background="@drawable/edittext_bg"
-                            android:dropDownSelector="@drawable/downarrow"
-                            android:entries="@array/time_select"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
 
                     </LinearLayout>
 
