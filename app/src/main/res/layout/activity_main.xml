@@ -1101,16 +1101,17 @@
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/btn_same_resident"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="15dp"
                                 android:text="Same as Redidential"
-                                android:background="@color/colorPrimaryDark"
                                 android:textStyle="bold"
+                                android:padding="@dimen/padding_5"
+                                android:background="@color/colorPrimaryDark"
                                 android:textColor="@color/white"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 

@@ -184,7 +184,7 @@ public class PersonalDetailsActivity extends MainActivity {
     private TextView TextAddCases;
     private List<CriminalCases> listCriminalCases = new ArrayList<>();
 
-    private Button btn_same_resident;
+    private TextView btn_same_resident;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -483,7 +483,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     if ( radioSexButton.getText().toString().trim().equals("a. Male")){
                         SEX = "M";
-                    } else if ( radioSexButton.getText().toString().trim().equals("a. Female")){
+                    } else if ( radioSexButton.getText().toString().trim().equals("b. Female")){
                         SEX = "F";
                     } else {
                         SEX = "O";
@@ -550,7 +550,7 @@ public class PersonalDetailsActivity extends MainActivity {
                         mLinearTwo.setVisibility(View.GONE);
                         mLinearFive.setVisibility(View.VISIBLE);
 
-                        mBtnNext.setText("Submit");
+//                        mBtnNext.setText("Submit");
                     }
                 }
                 else {
@@ -665,6 +665,10 @@ public class PersonalDetailsActivity extends MainActivity {
 //        }
         else if (mEditAadhar.getText().toString().trim().isEmpty()) {
             mEditAadhar.setError("Enter Aadhar Number");
+            mEditAadhar.requestFocus();
+            return false;
+        } else if (mEditAadhar.getText().toString().trim().length()<12) {
+            mEditAadhar.setError("Enter Correct Aadhar Number");
             mEditAadhar.requestFocus();
             return false;
         } else if (mEditAccNo.getText().toString().trim().isEmpty()) {
@@ -865,7 +869,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private void bindView() {
 
-        btn_same_resident = (Button) findViewById(R.id.btn_same_resident);
+        btn_same_resident = (TextView) findViewById(R.id.btn_same_resident);
         linear_cases = (LinearLayout) findViewById(R.id.linear_cases);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
         RGSex = (RadioGroup) findViewById(R.id.RGSex);

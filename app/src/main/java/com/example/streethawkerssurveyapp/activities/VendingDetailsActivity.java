@@ -128,7 +128,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-                        mEditFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes) + format);
+                        mEditFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes) );
                     }
                 }, hour, minute, false);
 
@@ -150,12 +150,11 @@ public class VendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-                        mEditToTime.setText(String.format("%02d:%02d", hourOfDay, minutes) + format);
+                        mEditToTime.setText(String.format("%02d:%02d", hourOfDay, minutes) );
                     }
                 }, hour, minute, false);
 
                 picker.show();
-
 
             }
         });
@@ -339,8 +338,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                     TextYes.setVisibility(View.GONE);
                     LinearVehical.setVisibility(View.GONE);
-
-
 
                     VENDING_SITE=mEditVendingSite.getText().toString().trim();
                     VENDING_FROM=mEditFromTime.getText().toString().trim();

@@ -306,10 +306,10 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             return false;
         }
 
-        else if (listLandAssets.isEmpty()){
-            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add Land Assets");
-            return false;
-        }
+//        else if (listLandAssets.isEmpty()){
+//            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add Land Assets");
+//            return false;
+//        }
 
 //        else if (mEditFamName.getText().toString().trim().isEmpty()) {
 //            mEditFamName.setError("Enter Family Name");
