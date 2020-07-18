@@ -33,7 +33,7 @@
         <activity android:name=".activities.CorporationZoneActivity"></activity>
         <activity android:name=".activities.ScanActivity" />
         <activity android:name=".activities.DashboardActivity" /> <!-- <activity android:name=".activities.MainActivity"/> -->
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.DocumentScanActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,7 +49,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activities.VendingDetailsActivity"
+            android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
@@ -57,7 +57,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activities.DocumentScanActivity"
+            android:name=".activities.VendingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 

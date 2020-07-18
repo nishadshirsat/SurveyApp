@@ -376,7 +376,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                M = mCheckM.getText().toString().trim();
+                if (mCheckM.getText().toString().trim().contains("Monday")) {
+                    M = "M";
+                }
+
             }
         });
 
@@ -384,7 +387,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                T = mCheckT.getText().toString().trim();
+                if (mCheckT.getText().toString().trim().contains("Tuesday")) {
+                    T = "T";
+                }
+
             }
         });
 
@@ -392,7 +398,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                W = mCheckW.getText().toString().trim();
+                if (mCheckW.getText().toString().trim().contains("Wednesday")) {
+                    W = "W";
+                }
             }
         });
 
@@ -400,7 +408,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Th = mCheckTh.getText().toString().trim();
+                if (mCheckTh.getText().toString().trim().contains("Thursday")) {
+                    Th = "T";
+                }
             }
         });
 
@@ -408,7 +418,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                F = mCheckF.getText().toString().trim();
+                if (mCheckF.getText().toString().trim().contains("Friday")) {
+                    F = "F";
+                }
             }
         });
 
@@ -416,7 +428,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                S = mCheckS.getText().toString().trim();
+                if (mCheckS.getText().toString().trim().contains("Saturday")) {
+                    S = "S";
+                }
             }
         });
 
@@ -424,7 +438,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Su = mCheckSu.getText().toString().trim();
+                if (mCheckSu.getText().toString().trim().contains("Sunday")) {
+                    Su = "S";
+                }
             }
         });
 
@@ -483,7 +499,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     TextYes.setVisibility(View.GONE);
                     LinearVehical.setVisibility(View.GONE);
 
-                    WEEKDAY = M + "," + T + "," + W + "," + Th + "," + F + "," + S + "," + Su;
+                    String Week=M+","+T+","+W+","+Th+","+F+","+S+","+Su;
+
+                    WEEKDAY = Week;
                     VENDING_SITE = mEditVendingSite.getText().toString().trim();
                     VENDING_FROM = mEditFromTime.getText().toString().trim();
                     VENDING_TO = mEditToTime.getText().toString().trim();

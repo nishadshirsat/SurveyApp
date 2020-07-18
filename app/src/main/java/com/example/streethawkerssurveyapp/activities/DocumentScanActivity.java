@@ -344,7 +344,10 @@ public class DocumentScanActivity extends AppCompatActivity {
                 else if (Undertaking_PATH.trim().isEmpty()) {
                     ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Undertaking Doc is missing");
 
-                } else {
+                } else if (Comments.trim().isEmpty()) {
+                    ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Please Enter Comment");
+
+                }else {
 
                     file4 = new File(TehBazari_Doc_PATH);
 
