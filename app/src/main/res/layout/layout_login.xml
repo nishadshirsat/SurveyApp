@@ -108,11 +108,11 @@
                 <Button
                     android:id="@+id/ButtonLogin"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="55dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/button_bg"
                     android:text="LOGIN"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16dp"
                     android:textStyle="bold" />
             </LinearLayout>

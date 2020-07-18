@@ -21,6 +21,7 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -53,20 +54,31 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private EditText mEditVendingSite;
     private EditText mEditFromTime;
     private EditText mEditToTime;
+    private EditText mEditLFromTime;
+    private EditText mEditLToTime;
+    private EditText mEditEFromTime;
+    private EditText mEditEToTime;
     private EditText mEditAge;
     private LinearLayout mLinearTwo;
     private EditText mEditAnnualIncome;
-//    private RadioButton mRadioY;
+    //    private RadioButton mRadioY;
 //    private RadioButton mRadioN;
     private Spinner mSpinnerVehical;
     private EditText mEditDob;
     private ImageView mImgCalendar;
-    private LinearLayout mLinearThree,LinearVehical;
-//    private RadioButton mRadioDY;
+    private LinearLayout mLinearThree, LinearVehical;
+    //    private RadioButton mRadioDY;
 //    private RadioButton mRadioDN;
     private Spinner mSpinnerChoice;
     private Button mBtnNext;
     private Button mBtnPrevious;
+    private CheckBox mCheckM;
+    private CheckBox mCheckT;
+    private CheckBox mCheckW;
+    private CheckBox mCheckTh;
+    private CheckBox mCheckF;
+    private CheckBox mCheckS;
+    private CheckBox mCheckSu;
     RadioGroup RGDocument, RGVendor;
     TextView TextYes;
     private ProgressDialog progressDialog;
@@ -76,13 +88,25 @@ public class VendingDetailsActivity extends AppCompatActivity {
             VENDING_SITE = "",
             VENDING_FROM = "",
             VENDING_TO = "",
+            VENDING_LFROM = "",
+            VENDING_LTO = "",
+            VENDING_EFROM = "",
+            VENDING_ETO = "",
             YRS_OF_VENDING = "",
             ANNUAL_INCOME = "",
             IS_RECOGNIZED_STREET_VENDOR = "",
             TYPE_OF_STRUCTURE = "",
             STARTING_DATE_VENDING = "",
             TEHABZARI_AVAILABLE = "",
-            VENDING_AREA_CHOCE = "";
+            VENDING_AREA_CHOCE = "",
+            WEEKDAY = "",
+            M = "",
+            T = "",
+            W = "",
+            Th = "",
+            F = "",
+            S = "",
+            Su = "";
 
     static final int TIME_DIALOG_ID = 1111;
 
@@ -92,11 +116,11 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private int minute;
     private int sec;
     TimePickerDialog picker;
-    String format="";
+    String format = "";
 
-    private Spinner spinner_to_vending,spinner_from_vending;
-    private String FromVending="";
-    private String ToVending="";
+    private Spinner spinner_to_vending, spinner_from_vending;
+    private String FromVending = "";
+    private String ToVending = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +128,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vending_details);
 
         bindView();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle("Vending Details");
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -128,7 +156,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-                        mEditFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes) );
+                        mEditFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
                     }
                 }, hour, minute, false);
 
@@ -150,7 +178,95 @@ public class VendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-                        mEditToTime.setText(String.format("%02d:%02d", hourOfDay, minutes) );
+                        mEditToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+            }
+        });
+
+        mEditLFromTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+            }
+        });
+
+        mEditLToTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+            }
+        });
+
+        mEditEFromTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+            }
+        });
+
+        mEditEToTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
                     }
                 }, hour, minute, false);
 
@@ -189,7 +305,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 if (IS_RECOGNIZED_STREET_VENDOR.contains("Yes")) {
                     TextYes.setVisibility(View.VISIBLE);
                     LinearVehical.setVisibility(View.VISIBLE);
-                    IS_RECOGNIZED_STREET_VENDOR ="1";
+                    IS_RECOGNIZED_STREET_VENDOR = "1";
 
                 } else {
                     TextYes.setVisibility(View.GONE);
@@ -206,7 +322,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 TEHABZARI_AVAILABLE = radioSexButton.getText().toString().trim();
 
                 if (TEHABZARI_AVAILABLE.contains("Yes")) {
-                    TEHABZARI_AVAILABLE ="1";
+                    TEHABZARI_AVAILABLE = "1";
 
                 } else {
 
@@ -226,8 +342,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     mLinearThree.setVisibility(View.GONE);
                     mLinearTwo.setVisibility(View.VISIBLE);
 
-                } else
-                if (mLinearTwo.getVisibility() == View.VISIBLE) {
+                } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
 
                     mLinearOne.setVisibility(View.VISIBLE);
                     mLinearThree.setVisibility(View.GONE);
@@ -257,33 +372,62 @@ public class VendingDetailsActivity extends AppCompatActivity {
             }
         });
 
-//        spinner_from_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//                FromVending = parent.getItemAtPosition(position).toString();
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        mCheckM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-//        spinner_to_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//                ToVending = parent.getItemAtPosition(position).toString();
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+                M = mCheckM.getText().toString().trim();
+            }
+        });
+
+        mCheckT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                T = mCheckT.getText().toString().trim();
+            }
+        });
+
+        mCheckW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                W = mCheckW.getText().toString().trim();
+            }
+        });
+
+        mCheckTh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Th = mCheckTh.getText().toString().trim();
+            }
+        });
+
+        mCheckF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                F = mCheckF.getText().toString().trim();
+            }
+        });
+
+        mCheckS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                S = mCheckS.getText().toString().trim();
+            }
+        });
+
+        mCheckSu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Su = mCheckSu.getText().toString().trim();
+            }
+        });
+
 
         mSpinnerVehical.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -339,16 +483,20 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     TextYes.setVisibility(View.GONE);
                     LinearVehical.setVisibility(View.GONE);
 
-                    VENDING_SITE=mEditVendingSite.getText().toString().trim();
-                    VENDING_FROM=mEditFromTime.getText().toString().trim();
-                    VENDING_TO=mEditToTime.getText().toString().trim();
-                    YRS_OF_VENDING=mEditAge.getText().toString().trim();
-                    ANNUAL_INCOME=mEditAnnualIncome.getText().toString().trim();
+                    WEEKDAY = M + "," + T + "," + W + "," + Th + "," + F + "," + S + "," + Su;
+                    VENDING_SITE = mEditVendingSite.getText().toString().trim();
+                    VENDING_FROM = mEditFromTime.getText().toString().trim();
+                    VENDING_TO = mEditToTime.getText().toString().trim();
+                    VENDING_LFROM = mEditLFromTime.getText().toString().trim();
+                    VENDING_LTO = mEditLToTime.getText().toString().trim();
+                    VENDING_EFROM = mEditEFromTime.getText().toString().trim();
+                    VENDING_ETO = mEditEToTime.getText().toString().trim();
+                    YRS_OF_VENDING = mEditAge.getText().toString().trim();
+                    ANNUAL_INCOME = mEditAnnualIncome.getText().toString().trim();
                     IS_RECOGNIZED_STREET_VENDOR = String.valueOf(RGVendor.getCheckedRadioButtonId());
 
 
-                    STARTING_DATE_VENDING=mEditDob.getText().toString().trim();
-
+                    STARTING_DATE_VENDING = mEditDob.getText().toString().trim();
 
 
                     if (validate3()) {
@@ -364,16 +512,15 @@ public class VendingDetailsActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     private boolean validate3() {
         if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
 
             ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
+            return false;
+        } else if (mEditDob.getText().toString().trim().isEmpty()) {
+            mEditDob.setError("Enter Date");
+            mEditDob.requestFocus();
             return false;
         } else if (mSpinnerChoice.getSelectedItem().toString().isEmpty()) {
             mSpinnerChoice.requestFocus();
@@ -388,6 +535,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
             ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
+        } else if (mEditAge.getText().toString().trim().isEmpty()) {
+            mEditAge.setError("Enter Age");
+            mEditAge.requestFocus();
+            return false;
         } else if (mEditAnnualIncome.getText().toString().trim().isEmpty()) {
             mEditAnnualIncome.setError("Enter Vending Site");
             mEditAnnualIncome.requestFocus();
@@ -395,10 +546,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
         } else if (mSpinnerVehical.getSelectedItem().toString().isEmpty()) {
             mEditAnnualIncome.setError("Select Vehicals");
             mSpinnerVehical.requestFocus();
-            return false;
-        } else if (mEditDob.getText().toString().trim().isEmpty()) {
-            mEditDob.setError("Enter Date");
-            mEditDob.requestFocus();
             return false;
         }
         return true;
@@ -427,10 +574,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
             mEditToTime.setError("Enter To Time");
             mEditToTime.requestFocus();
             return false;
-        } else if (mEditAge.getText().toString().trim().isEmpty()) {
-            mEditAge.setError("Enter Age");
-            mEditAge.requestFocus();
-            return false;
         }
 
         return true;
@@ -447,6 +590,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mEditVendingSite = (EditText) findViewById(R.id.EditVendingSite);
         mEditFromTime = (EditText) findViewById(R.id.EditFromTime);
         mEditToTime = (EditText) findViewById(R.id.EditToTime);
+        mEditLFromTime = (EditText) findViewById(R.id.EditLFromTime);
+        mEditLToTime = (EditText) findViewById(R.id.EditLToTime);
+        mEditEFromTime = (EditText) findViewById(R.id.EditEFromTime);
+        mEditEToTime = (EditText) findViewById(R.id.EditEToTime);
         mEditAge = (EditText) findViewById(R.id.EditAge);
         mLinearTwo = (LinearLayout) findViewById(R.id.LinearTwo);
         mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
@@ -463,6 +610,14 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
 
+        mCheckM = (CheckBox) findViewById(R.id.CheckM);
+        mCheckT = (CheckBox) findViewById(R.id.CheckT);
+        mCheckW = (CheckBox) findViewById(R.id.CheckW);
+        mCheckTh = (CheckBox) findViewById(R.id.CheckTh);
+        mCheckF = (CheckBox) findViewById(R.id.CheckF);
+        mCheckS = (CheckBox) findViewById(R.id.CheckS);
+        mCheckSu = (CheckBox) findViewById(R.id.CheckSu);
+
     }
 
     private void UpdateSurvey() {
@@ -470,7 +625,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
         progressDialog = CustomProgressDialog.getDialogue(VendingDetailsActivity.this);
         progressDialog.show();
 
-       String UNiq_Id =  PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.URI_NO_,"");
+        String UNiq_Id = PrefUtils.getFromPrefs(VendingDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(VendingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
@@ -522,13 +677,13 @@ public class VendingDetailsActivity extends AppCompatActivity {
                                 String.valueOf(response.body().isStatus()));
                     }
 
-                }else {
+                } else {
 
                     try {
                         ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this,
                                 "Response",
                                 response.errorBody().string());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -546,5 +701,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
 }

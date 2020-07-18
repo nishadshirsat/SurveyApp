@@ -76,13 +76,13 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="ADD"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:padding="5dp"
                 android:layout_gravity="right"
                 android:drawableRight="@drawable/ic_add_circle_black_24dp"
                 android:drawablePadding="05dp"
-                android:drawableTint="@color/colorPrimaryDark"
+                android:drawableTint="@color/colorAccent"
                 android:layout_marginTop="15dp"/>
 
             <View
@@ -137,13 +137,13 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="ADD"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:padding="5dp"
                 android:layout_gravity="right"
                 android:drawableRight="@drawable/ic_add_circle_black_24dp"
                 android:drawablePadding="05dp"
-                android:drawableTint="@color/colorPrimaryDark"
+                android:drawableTint="@color/colorAccent"
                 android:layout_marginTop="15dp"/>
 
 
@@ -349,7 +349,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
             android:drawableRight="@drawable/ic_forward_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
@@ -365,7 +365,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_gravity="right"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
             android:drawableLeft="@drawable/backward_arrow"
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"

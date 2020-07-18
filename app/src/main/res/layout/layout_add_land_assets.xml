@@ -116,13 +116,13 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="ADD"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         android:padding="5dp"
         android:layout_gravity="right"
         android:drawableRight="@drawable/ic_add_circle_black_24dp"
         android:drawablePadding="05dp"
-        android:drawableTint="@color/colorPrimaryDark"
+        android:drawableTint="@color/colorAccent"
         android:layout_marginTop="15dp"/>
 
 </LinearLayout>

@@ -83,6 +83,7 @@
                             android:layout_height="110dp"
                             android:layout_weight="0.8"
                             android:background="@drawable/edittext_bg"
+                            android:tint="@color/colorAccent"
                             android:src="@drawable/ic_camera_black_24dp" />
 
 
@@ -963,7 +964,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Residential / Correspondence Address"
+                                android:text="Present Residential / Correspondence Address"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1109,7 +1110,7 @@
                                 android:text="Same as Redidential"
                                 android:textStyle="bold"
                                 android:padding="@dimen/padding_5"
-                                android:background="@color/colorPrimaryDark"
+                                android:background="@color/colorAccent"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
 
@@ -1527,13 +1528,13 @@
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
                             android:text="ADD"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textStyle="bold"
                             android:padding="5dp"
                             android:layout_gravity="right"
                             android:drawableRight="@drawable/ic_add_circle_black_24dp"
                             android:drawablePadding="05dp"
-                            android:drawableTint="@color/colorPrimaryDark"
+                            android:drawableTint="@color/colorAccent"
                             android:layout_marginTop="15dp"/>
 
 
@@ -1564,7 +1565,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
             android:drawableRight="@drawable/ic_forward_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
@@ -1580,13 +1581,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_gravity="right"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
             android:drawableLeft="@drawable/backward_arrow"
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
             android:text="PREVIOUS"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />

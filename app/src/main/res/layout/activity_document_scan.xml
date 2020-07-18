@@ -88,7 +88,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text="Aadhar Card"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -121,7 +121,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text=" Driving Licence"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -154,7 +154,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text="Voter-ID-Card "
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -187,7 +187,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text=" Bank Passbook"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -268,7 +268,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text="Festival Receipts"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -301,7 +301,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text="Tokens"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -334,7 +334,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text="Challan (s)"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -367,7 +367,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text="Traffic Police Challan(s)"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -415,7 +415,7 @@
                             android:padding="10dp"
                             android:gravity="center"
                             android:text="Police Challan"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -448,7 +448,7 @@
                             android:padding="10dp"
                             android:gravity="center"
                             android:text="Receipt of Fine or Fees"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -481,7 +481,7 @@
                             android:inputType="text"
                             android:padding="10dp"
                             android:text="Certificates issued by Local Authorities"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -514,7 +514,7 @@
                             android:padding="10dp"
                             android:gravity="center"
                             android:text="Document attested by the relevant RWA or Market Association as conferring such rights 26"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
@@ -641,13 +641,115 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/dark_gray" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="28."
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="8dp"
+                                android:text="Acknowledge receipt"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                        <ImageView
+                            android:id="@+id/ImgAckReceipt"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_weight="1"
+                            android:padding="10dp"
+                            android:background="@drawable/edittext_bg"
+                            android:src="@drawable/scanner"/>
+
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/dark_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/size_20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="29."
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="Comments"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <EditText
+                            android:id="@+id/EditComments"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittext_bg"
+                            android:hint="Comments"
+                            android:inputType="textMultiLine"
+                            android:layout_gravity="start"
+                            android:gravity="start"
+                            android:padding="10dp"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/dark_gray" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -669,7 +771,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
             android:drawableRight="@drawable/ic_forward_black_24dp"
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
@@ -685,7 +787,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_gravity="right"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
             android:drawableLeft="@drawable/backward_arrow"
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
