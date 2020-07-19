@@ -97,6 +97,10 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         bindView();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle("Vendors Family Details");
+
         mBtnNext.setText("Submit");
 
         RGFam.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -570,6 +574,12 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.DashboardActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/profile_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/relative1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:id="@+id/relative2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="10dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_marginLeft="12dp"
+                                        android:text="Welcome,"
+                                        android:textColor="@color/black"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/profile_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_marginLeft="12dp"
+                                        android:text="Kaustubh Patil"
+                                        android:layout_marginTop="@dimen/padding_5"
+                                        android:textColor="@color/colorPrimaryDark"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/profile_number"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_marginLeft="12dp"
+                                        android:layout_marginTop="5dp"
+                                        android:inputType="number"
+                                        android:maxLength="10"
+                                        android:text="7458967458"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/AreaName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_marginLeft="12dp"
+                                        android:layout_marginTop="5dp"
+                                        android:inputType="text"
+                                        android:text="Area :- Shivajinagar, Pune"
+                                        android:visibility="gone"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_marginStart="12dp"
+                                        android:layout_marginLeft="12dp"
+                                        android:layout_marginTop="5dp"
+                                        android:visibility="visible"
+                                        >
+
+                                        <TextView
+                                            android:id="@+id/TextUsertype"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="User Type :"
+                                            android:textStyle="bold"
+                                            android:textSize="@dimen/text_size_14sp"
+                                            android:textColor="@color/colorPrimary"/>
+
+                                        <TextView
+                                            android:id="@+id/TextUsername"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Surveyor"
+                                            android:layout_marginLeft="5dp"
+                                            android:textStyle="bold"
+                                            android:textSize="@dimen/text_size_14sp"
+                                            android:textColor="@color/colorPrimary"/>
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="02dp"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:id="@+id/linear_newSurvey"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="65dp"
+                                android:layout_height="65dp"
+                                android:src="@mipmap/new_survey"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="New Survey"
+                                android:layout_marginTop="10dp"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:textColor="@color/colorAccent"/>
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_weight="0.012"
+                            android:layout_margin="05dp"
+                            android:background="@color/colorAccent"/>
+
+                        <LinearLayout
+                            android:id="@+id/linear_pending"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/image_dth"
+                                android:layout_width="65dp"
+                                android:layout_height="65dp"
+                                android:src="@mipmap/pending_survey"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pending Survey"
+                                android:layout_marginTop="10dp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="16sp"
+                                android:textColor="@color/colorAccent"/>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="02dp"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:id="@+id/linear_view"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/image_postpaid"
+                                android:layout_width="65dp"
+                                android:layout_height="65dp"
+                                android:src="@mipmap/view_survey"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="View Survey"
+                                android:layout_marginTop="10dp"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:textColor="@color/colorAccent"/>
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_weight="0.012"
+                            android:layout_margin="05dp"
+                            android:background="@color/colorAccent"/>
+
+                        <LinearLayout
+                            android:id="@+id/linear_suspended"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="65dp"
+                                android:layout_height="65dp"
+                                android:src="@mipmap/suspended_survey"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Suspended Survey"
+                                android:layout_marginTop="10dp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="@dimen/txt_16sp"
+                                android:textColor="@color/colorAccent"/>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/survey_banner"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

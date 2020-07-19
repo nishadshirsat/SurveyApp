@@ -21,6 +21,7 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -53,20 +54,31 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private EditText mEditVendingSite;
     private EditText mEditFromTime;
     private EditText mEditToTime;
+    private EditText mEditLFromTime;
+    private EditText mEditLToTime;
+    private EditText mEditEFromTime;
+    private EditText mEditEToTime;
     private EditText mEditAge;
     private LinearLayout mLinearTwo;
     private EditText mEditAnnualIncome;
-//    private RadioButton mRadioY;
+    //    private RadioButton mRadioY;
 //    private RadioButton mRadioN;
     private Spinner mSpinnerVehical;
     private EditText mEditDob;
     private ImageView mImgCalendar;
-    private LinearLayout mLinearThree,LinearVehical;
-//    private RadioButton mRadioDY;
+    private LinearLayout mLinearThree, LinearVehical;
+    //    private RadioButton mRadioDY;
 //    private RadioButton mRadioDN;
     private Spinner mSpinnerChoice;
     private Button mBtnNext;
     private Button mBtnPrevious;
+    private CheckBox mCheckM;
+    private CheckBox mCheckT;
+    private CheckBox mCheckW;
+    private CheckBox mCheckTh;
+    private CheckBox mCheckF;
+    private CheckBox mCheckS;
+    private CheckBox mCheckSu;
     RadioGroup RGDocument, RGVendor;
     TextView TextYes;
     private ProgressDialog progressDialog;
@@ -76,13 +88,25 @@ public class VendingDetailsActivity extends AppCompatActivity {
             VENDING_SITE = "",
             VENDING_FROM = "",
             VENDING_TO = "",
+            VENDING_LFROM = "",
+            VENDING_LTO = "",
+            VENDING_EFROM = "",
+            VENDING_ETO = "",
             YRS_OF_VENDING = "",
             ANNUAL_INCOME = "",
             IS_RECOGNIZED_STREET_VENDOR = "",
             TYPE_OF_STRUCTURE = "",
             STARTING_DATE_VENDING = "",
             TEHABZARI_AVAILABLE = "",
-            VENDING_AREA_CHOCE = "";
+            VENDING_AREA_CHOCE = "",
+            WEEKDAY = "",
+            M = "",
+            T = "",
+            W = "",
+            Th = "",
+            F = "",
+            S = "",
+            Su = "";
 
     static final int TIME_DIALOG_ID = 1111;
 
@@ -104,6 +128,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vending_details);
 
         bindView();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle("Vending Details");
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -155,6 +183,95 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 }, hour, minute, false);
 
                 picker.show();
+
+            }
+        });
+
+        mEditLFromTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+            }
+        });
+
+        mEditLToTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+            }
+        });
+
+        mEditEFromTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
+            }
+        });
+
+        mEditEToTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        if (hourOfDay >= 12) {
+                            format = "PM";
+                        } else {
+                            format = "AM";
+                        }
+                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                    }
+                }, hour, minute, false);
+
+                picker.show();
+
             }
         });
 
@@ -255,33 +372,78 @@ public class VendingDetailsActivity extends AppCompatActivity {
             }
         });
 
-//        spinner_from_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//                FromVending = parent.getItemAtPosition(position).toString();
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        mCheckM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-//        spinner_to_vending.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//                ToVending = parent.getItemAtPosition(position).toString();
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+                if (mCheckM.getText().toString().trim().contains("Monday")) {
+                    M = "M";
+                }
+
+            }
+        });
+
+        mCheckT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mCheckT.getText().toString().trim().contains("Tuesday")) {
+                    T = "T";
+                }
+
+            }
+        });
+
+        mCheckW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mCheckW.getText().toString().trim().contains("Wednesday")) {
+                    W = "W";
+                }
+            }
+        });
+
+        mCheckTh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mCheckTh.getText().toString().trim().contains("Thursday")) {
+                    Th = "T";
+                }
+            }
+        });
+
+        mCheckF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mCheckF.getText().toString().trim().contains("Friday")) {
+                    F = "F";
+                }
+            }
+        });
+
+        mCheckS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mCheckS.getText().toString().trim().contains("Saturday")) {
+                    S = "S";
+                }
+            }
+        });
+
+        mCheckSu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mCheckSu.getText().toString().trim().contains("Sunday")) {
+                    Su = "S";
+                }
+            }
+        });
+
 
         mSpinnerVehical.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -337,6 +499,19 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     TextYes.setVisibility(View.GONE);
                     LinearVehical.setVisibility(View.GONE);
 
+                    String Week=M+","+T+","+W+","+Th+","+F+","+S+","+Su;
+
+                    WEEKDAY = Week;
+                    VENDING_SITE = mEditVendingSite.getText().toString().trim();
+                    VENDING_FROM = mEditFromTime.getText().toString().trim();
+                    VENDING_TO = mEditToTime.getText().toString().trim();
+                    VENDING_LFROM = mEditLFromTime.getText().toString().trim();
+                    VENDING_LTO = mEditLToTime.getText().toString().trim();
+                    VENDING_EFROM = mEditEFromTime.getText().toString().trim();
+                    VENDING_ETO = mEditEToTime.getText().toString().trim();
+                    YRS_OF_VENDING = mEditAge.getText().toString().trim();
+                    ANNUAL_INCOME = mEditAnnualIncome.getText().toString().trim();
+
                     VENDING_SITE=mEditVendingSite.getText().toString().trim();
                     VENDING_FROM=mEditFromTime.getText().toString().trim();
                     VENDING_TO=mEditToTime.getText().toString().trim();
@@ -359,6 +534,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
             ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
+        } else if (mEditDob.getText().toString().trim().isEmpty()) {
+            mEditDob.setError("Enter Date");
+            mEditDob.requestFocus();
+            return false;
         } else if (mSpinnerChoice.getSelectedItem().toString().isEmpty()) {
             mSpinnerChoice.requestFocus();
             return false;
@@ -371,6 +550,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
             ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
+            return false;
+        } else if (mEditAge.getText().toString().trim().isEmpty()) {
+            mEditAge.setError("Enter Age");
+            mEditAge.requestFocus();
             return false;
         } else if (mEditAnnualIncome.getText().toString().trim().isEmpty()) {
             mEditAnnualIncome.setError("Enter Vending Site");
@@ -431,6 +614,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mEditVendingSite = (EditText) findViewById(R.id.EditVendingSite);
         mEditFromTime = (EditText) findViewById(R.id.EditFromTime);
         mEditToTime = (EditText) findViewById(R.id.EditToTime);
+        mEditLFromTime = (EditText) findViewById(R.id.EditLFromTime);
+        mEditLToTime = (EditText) findViewById(R.id.EditLToTime);
+        mEditEFromTime = (EditText) findViewById(R.id.EditEFromTime);
+        mEditEToTime = (EditText) findViewById(R.id.EditEToTime);
         mEditAge = (EditText) findViewById(R.id.EditAge);
         mLinearTwo = (LinearLayout) findViewById(R.id.LinearTwo);
         mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
@@ -446,6 +633,14 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mSpinnerChoice = (Spinner) findViewById(R.id.SpinnerChoice);
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
+
+        mCheckM = (CheckBox) findViewById(R.id.CheckM);
+        mCheckT = (CheckBox) findViewById(R.id.CheckT);
+        mCheckW = (CheckBox) findViewById(R.id.CheckW);
+        mCheckTh = (CheckBox) findViewById(R.id.CheckTh);
+        mCheckF = (CheckBox) findViewById(R.id.CheckF);
+        mCheckS = (CheckBox) findViewById(R.id.CheckS);
+        mCheckSu = (CheckBox) findViewById(R.id.CheckSu);
 
     }
 
@@ -530,5 +725,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
 }

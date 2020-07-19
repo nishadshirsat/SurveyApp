@@ -31,6 +31,26 @@
         <item>Fifth Choice (5+km)</item>
     </string-array>
 
+
+    <string-array name="corporatation">
+        <item>East Delhi Municipal Corporation</item>
+        <item>South Delhi Municipal Corporation</item>
+        <item>North Delhi Municipal Corporation</item>
+        <item>New Delhi Municipal Council</item>
+        <item>Delhi Cantonment Board</item>
+    </string-array>
+
+    <string-array name="zones">
+        <item>West Zone</item>
+        <item>Nalafgarh Zone</item>
+        <item>City-SP Zone</item>
+        <item>Karol Bagh Zone</item>
+        <item>Keshav Puram</item>
+        <item>Narela</item>
+        <item>Rohini</item>
+        <item>Civil Lines</item>
+    </string-array>
+
     <string-array name="items">
         <item>a. Food/ Snack with gas cylinder/ fire </item>
         <item>b. Food/ Snack without gas cylinder/ fire</item>

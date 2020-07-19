@@ -33,6 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.DashboardActivity;
 import com.example.streethawkerssurveyapp.activities.LoginActivity;
 import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
@@ -240,7 +241,7 @@ public class LoginFragment extends Fragment {
                         PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserPassword, mEditPassword.getText().toString().trim());
                         PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.API_KEY, response.body().getData().getApiKey());
 
-                        mContext.startActivity(new Intent(mContext, PersonalDetailsActivity.class));
+                        mContext.startActivity(new Intent(mContext, DashboardActivity.class));
 
                     }else {
 

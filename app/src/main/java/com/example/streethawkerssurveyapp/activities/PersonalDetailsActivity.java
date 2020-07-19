@@ -192,6 +192,10 @@ public class PersonalDetailsActivity extends MainActivity {
         setContentView(R.layout.activity_main);
         bindView();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle("Personal Details");
+
         if (getLocation == null) {
             getLocation = new GetLocation(PersonalDetailsActivity.this);
         }
@@ -1143,6 +1147,12 @@ public class PersonalDetailsActivity extends MainActivity {
                 cursor.close();
             }
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }
