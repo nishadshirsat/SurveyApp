@@ -58,6 +58,7 @@ import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.GetLocation;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
+import com.google.ads.afma.nano.Google3NanoAdshieldEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -447,8 +448,8 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                EDUCATION_STATUS = parent.getItemAtPosition(position).toString().trim();
-//                        .split(".")[1].toString().trim();
+                EDUCATION_STATUS = parent.getItemAtPosition(position).toString().trim()
+                        .split("\\.")[1].trim();
 
             }
 
@@ -621,6 +622,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
                         } else {
                             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Unable to get Location please check GPS enabled and permissions check");
+                            EnableGPSAutoMatically();
+
                         }
                     }
 //                    startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));

@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
 
-    private void EnableGPSAutoMatically() {
+    public void EnableGPSAutoMatically() {
         GoogleApiClient googleApiClient = null;
         if (googleApiClient == null) {
             googleApiClient = (new com.google.android.gms.common.api.GoogleApiClient.Builder(this)).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();

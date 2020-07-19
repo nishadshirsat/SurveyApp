@@ -155,7 +155,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 }, hour, minute, false);
 
                 picker.show();
-
             }
         });
 
@@ -189,7 +188,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 if (IS_RECOGNIZED_STREET_VENDOR.contains("Yes")) {
                     TextYes.setVisibility(View.VISIBLE);
                     LinearVehical.setVisibility(View.VISIBLE);
-                    IS_RECOGNIZED_STREET_VENDOR ="1";
 
                 } else {
                     TextYes.setVisibility(View.GONE);
@@ -206,7 +204,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 TEHABZARI_AVAILABLE = radioSexButton.getText().toString().trim();
 
                 if (TEHABZARI_AVAILABLE.contains("Yes")) {
-                    TEHABZARI_AVAILABLE ="1";
 
                 } else {
 
@@ -247,7 +244,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                TYPE_OF_VENDING = parent.getItemAtPosition(position).toString();
+                TYPE_OF_VENDING = parent.getItemAtPosition(position).toString()
+                        .split("\\.")[0].toUpperCase().trim();
 
             }
 
@@ -344,30 +342,16 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     VENDING_TO=mEditToTime.getText().toString().trim();
                     YRS_OF_VENDING=mEditAge.getText().toString().trim();
                     ANNUAL_INCOME=mEditAnnualIncome.getText().toString().trim();
-                    IS_RECOGNIZED_STREET_VENDOR = String.valueOf(RGVendor.getCheckedRadioButtonId());
-
 
                     STARTING_DATE_VENDING=mEditDob.getText().toString().trim();
-
-
 
                     if (validate3()) {
                         UpdateSurvey();
                     }
-
-
                 }
-
-
             }
         });
     }
-
-
-
-
-
-
 
     private boolean validate3() {
         if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {

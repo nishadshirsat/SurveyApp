@@ -122,7 +122,6 @@ public class DocumentScanActivity extends AppCompatActivity {
     android.app.AlertDialog alertDialog;
     private int READ_PHONE_REQUEST = 20;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -468,7 +467,6 @@ public class DocumentScanActivity extends AppCompatActivity {
 
             if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Aadhar")) {
 
-
                 File photoFile = null;
                 try {
                     String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Aadhar.png", "Documents", DocumentScanActivity.this);
@@ -665,6 +663,12 @@ public class DocumentScanActivity extends AppCompatActivity {
 
     public void setBitmap(ImageView imageDisplay, Uri uri, File photoFile) {
         Bitmap bitmap = null;
+
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+        System.gc();
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
             getContentResolver().delete(uri, null, null);

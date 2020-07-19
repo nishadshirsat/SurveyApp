@@ -75,7 +75,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-
         <provider
             android:name=".utils.SurveyAppFileProvider"
             android:authorities="${applicationId}.android.fileprovider"
