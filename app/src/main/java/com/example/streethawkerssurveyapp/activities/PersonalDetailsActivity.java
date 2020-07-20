@@ -50,6 +50,7 @@ import com.example.streethawkerssurveyapp.adapter.LandAssetsAdpater;
 import com.example.streethawkerssurveyapp.pojo_class.CriminalCases;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
+import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
@@ -62,7 +63,10 @@ import com.google.ads.afma.nano.Google3NanoAdshieldEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -135,7 +139,6 @@ public class PersonalDetailsActivity extends MainActivity {
     RadioGroup RGWidow;
     RadioGroup RGCriminal;
     int radioId;
-    boolean doubleBackToExitPressedOnce = false;
 
 
     Uri photoURI;
@@ -167,11 +170,11 @@ public class PersonalDetailsActivity extends MainActivity {
             BRANCH_NAME = "",
             IFSC = "",
             IS_CRIMINALCASE = "",
-            CRIMINALCASE_NO = "",
-            CRIMINALCASE_DATE = "",
-            CRIMINALCASE_FIRNO = "",
-            CRIMINALCASE_POLICA_NAME = "",
-            CRIMINALCASE_STATUS = "";
+            CRIMINALCASE_NO = "";
+//            CRIMINALCASE_DATE = "",
+//            CRIMINALCASE_FIRNO = "",
+//            CRIMINALCASE_POLICA_NAME = "",
+//            CRIMINALCASE_STATUS = "";
 
 
     private Calendar myCalendar;
@@ -207,18 +210,16 @@ public class PersonalDetailsActivity extends MainActivity {
 
         ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
 
-        if (ApplicationConstant.SurveyId.trim().isEmpty()) {
-            ApplicationConstant.SurveyId = "1.0";
-            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "1.0");
-        } else {
-            double count = Double.parseDouble(ApplicationConstant.SurveyId);
-            count = count + 1.0;
-            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "" + count);
-        }
+//        if (ApplicationConstant.SurveyId.trim().isEmpty()) {
+//            ApplicationConstant.SurveyId = "1.0";
+//            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "1.0");
+//        } else {
+//            double count = Double.parseDouble(ApplicationConstant.SurveyId);
+//            count = count + 1.0;
+//            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "" + count);
+//        }
 
-        Intent intent = new Intent(PersonalDetailsActivity.this, AudioRecordService.class);
-        intent.putExtra("FILE", ApplicationConstant.SurveyId);
-        startService(intent);
+
 
         onCLickListners();
 
@@ -953,6 +954,13 @@ public class PersonalDetailsActivity extends MainActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
 
+//                Bitmap bitmap = BitmapFactory.decodeFile (photoPath);
+//                try {
+//                    bitmap.compress (Bitmap.CompressFormat.JPEG, 20, new FileOutputStream(new File(photoPath)));
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+
 //                try {
 //
 //                    Bitmap bitmap = ApplicationConstant.handleSamplingAndRotationBitmap(PersonalDetailsActivity.this,photouri);
@@ -960,11 +968,7 @@ public class PersonalDetailsActivity extends MainActivity {
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
-
-                Glide.with(PersonalDetailsActivity.this).load(photoURI)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .into(mImgVendorPhoto);
+                UploadVendorPhoto();
 
             }
         }
@@ -990,17 +994,27 @@ public class PersonalDetailsActivity extends MainActivity {
 
         String UNiq_Id = "";
 
-        if (ApplicationConstant.SurveyId.trim().isEmpty()) {
-            UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
+//        if (ApplicationConstant.SurveyId.trim().isEmpty()) {
+//            UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
+//
+//        } else {
+//            UNiq_Id = ApplicationConstant.SurveyId;
+//        }
 
-        } else {
-            UNiq_Id = ApplicationConstant.SurveyId;
-        }
+        UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
+     String CORPORATION =   PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.WARD,"");
+
+        RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
+        RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
+        RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
 // MultipartBody.Part is used to send also the actual file name
         MultipartBody.Part body_fhoto =
                 MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
+
 
         RequestBody NAME_VENDOR_ = RequestBody.create(MediaType.parse("multipart/form-data"), NAME_VENDOR);
         RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
@@ -1024,10 +1038,11 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody IFSC_ = RequestBody.create(MediaType.parse("multipart/form-data"), IFSC);
         RequestBody IS_CRIMINALCASE_ = RequestBody.create(MediaType.parse("multipart/form-data"), IS_CRIMINALCASE);
         RequestBody CRIMINALCASE_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_NO);
-        RequestBody CRIMINALCASE_DATE_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_DATE);
-        RequestBody CRIMINALCASE_FIRNO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_FIRNO);
-        RequestBody CRIMINALCASE_POLICA_NAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_POLICA_NAME);
-        RequestBody CRIMINALCASE_STATUS_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_STATUS);
+
+//        RequestBody CRIMINALCASE_DATE_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_DATE);
+//        RequestBody CRIMINALCASE_FIRNO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_FIRNO);
+//        RequestBody CRIMINALCASE_POLICA_NAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_POLICA_NAME);
+//        RequestBody CRIMINALCASE_STATUS_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_STATUS);
 
         RequestBody LATITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + getLocation.getLatitude());
         RequestBody LONGITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + getLocation.getLongitude());
@@ -1037,21 +1052,36 @@ public class PersonalDetailsActivity extends MainActivity {
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
-        Call<SurveyResponse> call = apiservice.getAddSurvey(headers,
-                body_fhoto, SURVEY_ID_
-                , NAME_VENDOR_, SEX_, AGE_
-                , DOB_, CONTACT_NO_, LANDLINE_NO_, EDUCATION_STATUS_,
-                NAME_OFFATHER_HUSBAND_, NAME_MOTHER_,
-                NAME_SPOUSE_, WHETHER_WIDOWED_, CATEGORY_,
-                RESIDENTIAL_ADDRESS_, PERMENENT_ADDRESS_, AADHAR_NO_,
-                BANKACC_NO_, BANKNAME_, BRANCH_NAME_,
-                IFSC_, IS_CRIMINALCASE_, CRIMINALCASE_NO_, CRIMINALCASE_DATE_,
-                CRIMINALCASE_FIRNO_, CRIMINALCASE_POLICA_NAME_, LATITUDE, LONGITUDE, CRIMINALCASE_STATUS_
+        Call<UpdateSurveyResponse> call = apiservice.getAddSurvey(headers,
+                SURVEY_ID_,
+                CORPORATION_,
+                ZONE_,
+                WARD_,
+                NAME_VENDOR_, SEX_, AGE_,
+                DOB_,
+                CONTACT_NO_,
+                LANDLINE_NO_,
+                EDUCATION_STATUS_,
+                NAME_OFFATHER_HUSBAND_,
+                NAME_MOTHER_,
+                NAME_SPOUSE_,
+                WHETHER_WIDOWED_, CATEGORY_,
+                RESIDENTIAL_ADDRESS_,
+                PERMENENT_ADDRESS_, AADHAR_NO_,
+                BANKACC_NO_,
+                BANKNAME_,
+                BRANCH_NAME_,
+                IFSC_,
+                IS_CRIMINALCASE_,
+                CRIMINALCASE_NO_,
+                LATITUDE,
+                LONGITUDE
+//                CRIMINALCASE_STATUS_
         );
 
-        call.enqueue(new Callback<SurveyResponse>() {
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
             @Override
-            public void onResponse(Call<SurveyResponse> call, Response<SurveyResponse> response) {
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
@@ -1060,7 +1090,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     if (response.body().isStatus()) {
 
-                        PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, response.body().getUriNumber());
+                        PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.CONTACT, CONTACT_NO);
 
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
                         builder.setTitle("Personal Details");
@@ -1088,7 +1118,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
                                 "Response",
-                                String.valueOf(response.body().isStatus()));
+                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
                     }
 
                 } else {
@@ -1105,7 +1135,7 @@ public class PersonalDetailsActivity extends MainActivity {
             }
 
             @Override
-            public void onFailure(Call<SurveyResponse> call, Throwable t) {
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
@@ -1115,24 +1145,106 @@ public class PersonalDetailsActivity extends MainActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
 
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+    private void UploadVendorPhoto() {
 
-        new Handler().postDelayed(new Runnable() {
+        progressDialog = CustomProgressDialog.getDialogue(PersonalDetailsActivity.this);
+        progressDialog.show();
+
+        File file1 = new File(photoPath);
+
+        RequestBody request_photo =
+                RequestBody.create(MediaType.parse("image/png"), file1);
+
+        String UNiq_Id = "";
+
+
+        UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
+
+        String CORPORATION =   PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.WARD,"");
+
+        RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
+        RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
+        RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
+
+// MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body_fhoto =
+                MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
+
+        RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.UploadVendorPhoto(headers,
+                SURVEY_ID_,
+                CORPORATION_,
+                ZONE_,
+                WARD_,
+                body_fhoto
+        );
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        Glide.with(PersonalDetailsActivity.this).load(photoURI)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
+                                .into(mImgVendorPhoto);
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
+                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
+                                "Photo saved successfully");
+
+
+                    } else {
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
+                    }
+
+                } else {
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
 
             @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", t.getMessage().toString());
+
             }
-        }, 2000);
+        });
     }
+
+
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;

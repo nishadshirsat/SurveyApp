@@ -1,7 +1,11 @@
 package com.example.streethawkerssurveyapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +17,17 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
+import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
+import com.example.streethawkerssurveyapp.services.AudioRecordService;
+import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
+import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+import com.example.streethawkerssurveyapp.utils.PrefUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CorporationZoneActivity extends AppCompatActivity {
 
@@ -31,6 +45,9 @@ public class CorporationZoneActivity extends AppCompatActivity {
             WARD = "",
             AREA = "";
 
+    private String SCANRESULT="";
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +58,16 @@ public class CorporationZoneActivity extends AppCompatActivity {
         setTitle("Zone Details");
 
         bindView();
+
+        try {
+            SCANRESULT =  getIntent().getExtras().getString("SCANRESULT");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(CorporationZoneActivity.this, AudioRecordService.class);
+        intent.putExtra("FILE", ApplicationConstant.SurveyId);
+        startService(intent);
 
         mSpinnerCorporations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -60,7 +87,7 @@ public class CorporationZoneActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                ZONE = parent.getItemAtPosition(position).toString();
+                ZONE = parent.getItemAtPosition(position).toString().trim().split("-")[0].trim();
 
             }
 
@@ -77,15 +104,15 @@ public class CorporationZoneActivity extends AppCompatActivity {
 
                 try {
 
-                    if (CORPORATION.contains("East Delhi Municipal Corporation")) {
+                    if (CORPORATION.trim().contains("ED-East Delhi Municipal Corporation")) {
                         CORPORATION = "ED";
-                    } else if (CORPORATION.contains("South Delhi Municipal Corporation")) {
+                    } else if (CORPORATION.trim().contains("SD-South Delhi Municipal Corporation")) {
                         CORPORATION = "SD";
-                    }
-                    if (CORPORATION.contains("North Delhi Municipal Corporation")) {
+                    }else
+                    if (CORPORATION.trim().contains("ND-North Delhi Municipal Corporation")) {
                         CORPORATION = "ND";
-                    }
-                    if (CORPORATION.contains("New Delhi Municipal Council")) {
+                    }else
+                    if (CORPORATION.trim().contains("NC-New Delhi Municipal Council")) {
                         CORPORATION = "NC";
                     } else {
                         CORPORATION = "CN";
@@ -100,7 +127,7 @@ public class CorporationZoneActivity extends AppCompatActivity {
 
                 if (validate()) {
 
-                    startActivity(new Intent(CorporationZoneActivity.this,PersonalDetailsActivity.class));
+                    SendCorporationDetails();
 
                 }
 
@@ -128,9 +155,13 @@ public class CorporationZoneActivity extends AppCompatActivity {
         } else if (mEditWard.getText().toString().trim().isEmpty()) {
             mEditWard.setError("Enter Ward Name");
             mEditWard.requestFocus();
+            return false;
+
         } else if (mEditArea.getText().toString().trim().isEmpty()) {
             mEditArea.setError("Enter Area Name");
             mEditArea.requestFocus();
+            return false;
+
         }
 
         return true;
@@ -151,5 +182,74 @@ public class CorporationZoneActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+
+    private void SendCorporationDetails() {
+
+        progressDialog = CustomProgressDialog.getDialogue(CorporationZoneActivity.this);
+        progressDialog.show();
+
+        String UNiq_Id =  PrefUtils.getFromPrefs(CorporationZoneActivity.this, ApplicationConstant.URI_NO_,"");
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(CorporationZoneActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.SendCorporationDetails(headers,UNiq_Id,CORPORATION,ZONE,WARD,AREA,SCANRESULT);
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        PrefUtils.saveToPrefs(CorporationZoneActivity.this,ApplicationConstant.CORPORATION,CORPORATION);
+                        PrefUtils.saveToPrefs(CorporationZoneActivity.this,ApplicationConstant.ZONE,ZONE);
+                        PrefUtils.saveToPrefs(CorporationZoneActivity.this,ApplicationConstant.WARD,WARD);
+
+                        startActivity(new Intent(CorporationZoneActivity.this,PersonalDetailsActivity.class));
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(CorporationZoneActivity.this,
+                                "Response",
+                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(CorporationZoneActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(CorporationZoneActivity.this, "Response", t.getMessage().toString());
+
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopService(new Intent(CorporationZoneActivity.this, AudioRecordService.class));
+
     }
 }

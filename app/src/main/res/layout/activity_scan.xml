@@ -6,17 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center"
-    tools:context=".activities.ScanActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="START NEW SURVEY"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+    tools:context=".activities.StartSurveyModeActivity">
 
 
     <LinearLayout

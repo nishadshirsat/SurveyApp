@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:padding="3dp"
-                android:text="Version 6.0"
+                android:text="Version 7.0"
                 android:textColor="@color/black"
                 android:layout_marginLeft="15dp"
                 android:textSize="18sp"

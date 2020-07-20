@@ -31,24 +31,48 @@
         <item>Fifth Choice (5+km)</item>
     </string-array>
 
+    <string-array name="identity_proof_type">
+        <item>Select</item>
+        <item>Aadhar Card-AC</item>
+        <item>Driving Licence-DL</item>
+        <item>Voter-ID-Card-VI</item>
+        <item>Bank Passbook-BP</item>
+    </string-array>
+
+    <string-array name="vending_history_proof_type">
+        <item>Select</item>
+        <item>Festival Receipts-FR</item>
+        <item>Tokens-TK</item>
+        <item>Challan(s)-LC</item>
+        <item>Traffic Police Challan(s)-PC</item>
+        <item>Police Challan-PC</item>
+        <item>Receipt of Fine or Fees-FR</item>
+        <item>Certificates issued by Local Authorities-CL</item>
+        <item>Document attested by the relevant RWA or Market Association as conferring such rights 26-CL</item>
+    </string-array>
+
 
     <string-array name="corporatation">
-        <item>East Delhi Municipal Corporation</item>
-        <item>South Delhi Municipal Corporation</item>
-        <item>North Delhi Municipal Corporation</item>
-        <item>New Delhi Municipal Council</item>
-        <item>Delhi Cantonment Board</item>
+        <item>ED-East Delhi Municipal Corporation</item>
+        <item>SD-South Delhi Municipal Corporation</item>
+        <item>ND-North Delhi Municipal Corporation</item>
+        <item>NC-New Delhi Municipal Council</item>
+        <item>CN-Delhi Cantonment Board</item>
     </string-array>
 
     <string-array name="zones">
-        <item>West Zone</item>
-        <item>Nalafgarh Zone</item>
-        <item>City-SP Zone</item>
-        <item>Karol Bagh Zone</item>
-        <item>Keshav Puram</item>
-        <item>Narela</item>
-        <item>Rohini</item>
-        <item>Civil Lines</item>
+        <item>01-Shahdara South Zone</item>
+        <item>02-Shahdara North Zone</item>
+        <item>03-Central Zone</item>
+        <item>04-South Zone</item>
+        <item>05-West Zone</item>
+        <item>06-Nalafgarh Zone</item>
+        <item>07-City-SP Zone</item>
+        <item>08-Karol Bagh Zone</item>
+        <item>09-Keshav Puram</item>
+        <item>10-Narela</item>
+        <item>11-Rohini</item>
+        <item>12-Civil Lines</item>
     </string-array>
 
     <string-array name="items">

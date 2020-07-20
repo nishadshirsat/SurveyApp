@@ -11,18 +11,17 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
-import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
-import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
@@ -31,12 +30,8 @@ import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.scanlibrary.ScanActivity;
 import com.scanlibrary.ScanConstants;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,7 +42,6 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -57,76 +51,58 @@ import retrofit2.Response;
 
 public class DocumentScanActivity extends AppCompatActivity {
 
-    private LinearLayout mLinearMain;
-    private LinearLayout mLinearOne;
-    private TextView mTextAddhar;
-    private ImageView mImgAadharScan;
-    private TextView mTextDL;
-    private ImageView mImgDLScan;
-    private TextView mTextVoterId;
-    private ImageView mImgVoterID;
-    private TextView mTextBankPassbook;
-    private ImageView mImgBankPassbook;
-    private LinearLayout mLinearTwo;
-    private TextView mTextFestivalReceipts;
-    private ImageView mImgFestivalReceipts;
-    private TextView mTextTokens;
-    private ImageView mImgTokens;
-    private TextView mTextChallan;
-    private ImageView mImgChallan;
-    private TextView mTextTRChallan;
-    private ImageView mImgTRChallan;
-    private LinearLayout mLinearThree;
-    private TextView mTextPoliceChalan;
-    private ImageView mImgPoliceChalan;
-    private TextView mTextReceipt;
-    private ImageView mImgReceipt;
-    private TextView mTextCertificate;
-    private ImageView mImgCertificate;
-    private TextView mTextAttestedDoc;
-    private ImageView mAttestedDoc;
-    private LinearLayout mLinearFour;
-    private ImageView mImgTehbaziDoc;
-    private ImageView mImgSignature;
+    private LinearLayout LinearMain;
+    private LinearLayout LinearOne;
+    private Spinner SpinnerIdentityProof;
+    private ImageView ImgIdentityProofFront;
+    private ImageView ImgIdentityProofBack;
+    private LinearLayout LinearTwo;
+    private Spinner SpinnerVendingHistoryProof;
+    private ImageView ImgVendingHistoryFront;
+    private ImageView ImgVendingHistoryBack;
+    private LinearLayout LinearFour;
+    private ImageView ImgTehbaziDoc;
+    private ImageView ImgSignature;
     private ImageView ImgAckReceipt;
     private EditText EditComments;
-    private Button mBtnNext;
-    private Button mBtnPrevious;
+    private RelativeLayout relativeButtons;
+    private Button BtnNext;
+    private Button BtnPrevious;
 
     private String CONTROL = "";
 
     private static final int REQUEST_CODE = 99;
-    private String AADHAR_PATH = "";
-    private String DRIVING_LICENCE_PATH = "";
-    private String VOTER_ID_PATH = "";
-    private String BANK_PASSBOOK_PATH = "";
+
+    private String IDENTITY_PROOF_FRONT_PATH = "";
+    private String IDENTITY_PROOF_BACK_PATH = "";
+    private String VENDING_HISTORY_FRONT_PROOF_PATH = "";
+    private String VENDING_HISTORY_BACK_PROOF_PATH = "";
+
+
     private String Undertaking_PATH = "";
     private String Acknowledge_PATH = "";
-    private String Tokens_PATH = "";
-    private String Challan_PATH = "";
-    private String Traffic_Challan_PATH = "";
-    private String Police_Challan_PATH = "";
-    private String Certificate_PATH = "";
     private String TehBazari_Doc_PATH = "";
-    private String Attested_Doc_PATH = "";
-    private String FestivalReciept_PATH = "";
-    private String Fine_Reciept_PATH = "";
     private String Comments = "";
 
     private ProgressDialog progressDialog;
 
 
-    File file1 = null;
-    private File file2 = null;
-    private File file3 = null;
-    private File file4 = null;
-    private File file5 = null;
-    private File file6 = null;
+    private File file_identity_front = null;
+    private File file_identity_back = null;
+    private File file_vending_history_front = null;
+    private File file_vending_history_back = null;
+    private File file_undertaking = null;
+    private File file_recording = null;
+    private File file_acknowlegement = null;
+    private File file_tehjabari = null;
 
     private String Flag_Remember = "", userName, passWord;
 
     android.app.AlertDialog alertDialog;
     private int READ_PHONE_REQUEST = 20;
+
+    private String IDENTITY_PROOF_TYPE = "";
+    private String VENDING_HISTORY_PROOF_TYPE = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,30 +111,69 @@ public class DocumentScanActivity extends AppCompatActivity {
 
         bindView();
 
-        mBtnPrevious.setOnClickListener(new View.OnClickListener() {
+        SpinnerIdentityProof.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                try {
+                    IDENTITY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    IDENTITY_PROOF_TYPE = "Select";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        SpinnerVendingHistoryProof.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                try {
+                    VENDING_HISTORY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    VENDING_HISTORY_PROOF_TYPE = "Select";
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        BtnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (mLinearFour.getVisibility() == View.VISIBLE) {
+                if (LinearFour.getVisibility() == View.VISIBLE) {
 
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.VISIBLE);
-                    mLinearTwo.setVisibility(View.GONE);
+                    LinearFour.setVisibility(View.GONE);
+                    LinearOne.setVisibility(View.GONE);
+//                    mLinearThree.setVisibility(View.VISIBLE);
+                    LinearTwo.setVisibility(View.VISIBLE);
 
-                } else if (mLinearThree.getVisibility() == View.VISIBLE) {
+                }
+//                else if (mLinearThree.getVisibility() == View.VISIBLE) {
+//
+//                    LinearFour.setVisibility(View.GONE);
+//                    LinearOne.setVisibility(View.GONE);
+//                    mLinearThree.setVisibility(View.GONE);
+//                    LinearTwo.setVisibility(View.VISIBLE);
+//
+//                }
+                else if (LinearTwo.getVisibility() == View.VISIBLE) {
 
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.VISIBLE);
-
-                } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.VISIBLE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
+                    LinearFour.setVisibility(View.GONE);
+                    LinearOne.setVisibility(View.VISIBLE);
+//                    mLinearThree.setVisibility(View.GONE);
+                    LinearTwo.setVisibility(View.GONE);
 
                 } else {
 
@@ -169,106 +184,8 @@ public class DocumentScanActivity extends AppCompatActivity {
             }
         });
 
-        mImgAadharScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "Aadhar";
-                startScan();
-            }
-        });
 
-
-        mImgDLScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "DrivingLicence";
-                startScan();
-            }
-        });
-
-        mImgVoterID.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "VoterId";
-                startScan();
-            }
-        });
-
-        mImgBankPassbook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "BankPassbook";
-                startScan();
-            }
-        });
-
-
-        mImgFestivalReceipts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "FestivalReciept";
-                startScan();
-            }
-        });
-
-        mImgTokens.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "Tokens";
-                startScan();
-            }
-        });
-
-        mImgChallan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "Challan";
-                startScan();
-            }
-        });
-
-        mImgPoliceChalan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "Police_Challan";
-                startScan();
-            }
-        });
-
-        mImgTRChallan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "Traffic_Challan";
-                startScan();
-            }
-        });
-
-
-        mImgReceipt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "Fine_Reciept";
-                startScan();
-            }
-        });
-
-        mImgCertificate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "Certificate";
-                startScan();
-            }
-        });
-
-        mAttestedDoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CONTROL = ApplicationConstant.SurveyId + "_" + "Attested_Doc";
-                startScan();
-            }
-        });
-
-        mImgTehbaziDoc.setOnClickListener(new View.OnClickListener() {
+        ImgTehbaziDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CONTROL = ApplicationConstant.SurveyId + "_" + "TehBazari_Doc";
@@ -276,7 +193,39 @@ public class DocumentScanActivity extends AppCompatActivity {
             }
         });
 
-        mImgSignature.setOnClickListener(new View.OnClickListener() {
+        ImgIdentityProofFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CONTROL = ApplicationConstant.SurveyId + "_" + "IdentityProof_Front";
+                startScan();
+            }
+        });
+
+        ImgIdentityProofBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CONTROL = ApplicationConstant.SurveyId + "_" + "IdentityProof_Back";
+                startScan();
+            }
+        });
+
+        ImgVendingHistoryFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CONTROL = ApplicationConstant.SurveyId + "_" + "VendingHistory_Front";
+                startScan();
+            }
+        });
+
+        ImgVendingHistoryBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CONTROL = ApplicationConstant.SurveyId + "_" + "VendingHistory_Back";
+                startScan();
+            }
+        });
+
+        ImgSignature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CONTROL = ApplicationConstant.SurveyId + "_" + "Undertaking";
@@ -293,7 +242,7 @@ public class DocumentScanActivity extends AppCompatActivity {
         });
 
 
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
+        BtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -304,38 +253,37 @@ public class DocumentScanActivity extends AppCompatActivity {
                 stopService(new Intent(DocumentScanActivity.this, AudioRecordService.class));
 
 
-                if (mLinearOne.getVisibility() == View.VISIBLE) {
+                if (LinearOne.getVisibility() == View.VISIBLE) {
 
                     if (validate1()) {
-                        mLinearOne.setVisibility(View.GONE);
-                        mLinearTwo.setVisibility(View.VISIBLE);
-                        mLinearThree.setVisibility(View.GONE);
-                        mLinearFour.setVisibility(View.GONE);
+                        LinearOne.setVisibility(View.GONE);
+                        LinearTwo.setVisibility(View.VISIBLE);
+                        LinearFour.setVisibility(View.GONE);
                     }
 
 
-                } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
+                } else if (LinearTwo.getVisibility() == View.VISIBLE) {
 
                     if (validate2()) {
-                        mLinearTwo.setVisibility(View.GONE);
-                        mLinearOne.setVisibility(View.GONE);
-                        mLinearThree.setVisibility(View.VISIBLE);
-                        mLinearFour.setVisibility(View.GONE);
-                    }
-
-                } else if (mLinearThree.getVisibility() == View.VISIBLE) {
-
-                    if (validate3()) {
-                        mLinearThree.setVisibility(View.GONE);
-                        mLinearOne.setVisibility(View.GONE);
-                        mLinearTwo.setVisibility(View.GONE);
-                        mLinearFour.setVisibility(View.VISIBLE);
-
-                        mBtnNext.setText("Submit");
-
+                        LinearTwo.setVisibility(View.GONE);
+                        LinearOne.setVisibility(View.GONE);
+                        LinearFour.setVisibility(View.VISIBLE);
                     }
 
                 }
+//                else if (mLinearThree.getVisibility() == View.VISIBLE) {
+//
+//                    if (validate3()) {
+//                        mLinearThree.setVisibility(View.GONE);
+//                        LinearOne.setVisibility(View.GONE);
+//                        LinearTwo.setVisibility(View.GONE);
+//                        LinearFour.setVisibility(View.VISIBLE);
+//
+//                        BtnNext.setText("Submit");
+//
+//                    }
+//
+//                }
 //                else  if (TehBazari_Doc_PATH.trim().isEmpty()){
 //                    ApplicationConstant.displayMessageDialog(DocumentScanActivity.this,"","Tehbazari Doc is missing");
 //
@@ -343,14 +291,20 @@ public class DocumentScanActivity extends AppCompatActivity {
                 else if (Undertaking_PATH.trim().isEmpty()) {
                     ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Undertaking Doc is missing");
 
+                } else if (Acknowledge_PATH.trim().isEmpty()) {
+                    ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Acknowledge Doc is missing");
+
                 } else if (Comments.trim().isEmpty()) {
                     ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Please Enter Comment");
 
-                }else {
+                } else {
 
-                    file4 = new File(TehBazari_Doc_PATH);
+                    file_tehjabari = new File(TehBazari_Doc_PATH);
+                    file_identity_back = new File(IDENTITY_PROOF_BACK_PATH);
+                    file_vending_history_back = new File(VENDING_HISTORY_BACK_PROOF_PATH);
 
-                    file5 = new File(Undertaking_PATH);
+                    file_undertaking = new File(Undertaking_PATH);
+                    file_acknowlegement = new File(Acknowledge_PATH);
 
 
                     Upload_Recordings();
@@ -366,17 +320,15 @@ public class DocumentScanActivity extends AppCompatActivity {
 
     private boolean validate1() {
 
-        if (!AADHAR_PATH.trim().isEmpty()) {
-            file1 = new File(AADHAR_PATH);
+        if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
+            ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Select Identity Proof Type");
+            return false;
+        } else if (IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
+            ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Capture Identity Proof ");
+            return false;
 
-        } else if (!DRIVING_LICENCE_PATH.trim().isEmpty()) {
-            file1 = new File(DRIVING_LICENCE_PATH);
-
-        } else if (!VOTER_ID_PATH.trim().isEmpty()) {
-            file1 = new File(VOTER_ID_PATH);
-
-        } else if (!BANK_PASSBOOK_PATH.trim().isEmpty()) {
-            file1 = new File(BANK_PASSBOOK_PATH);
+        } else if (!IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
+            file_identity_front = new File(IDENTITY_PROOF_FRONT_PATH);
 
         } else {
             ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Identity Proof Doc is missing");
@@ -389,17 +341,16 @@ public class DocumentScanActivity extends AppCompatActivity {
 
     private boolean validate2() {
 
-        if (!FestivalReciept_PATH.trim().isEmpty()) {
-            file2 = new File(FestivalReciept_PATH);
+        if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
+            ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Select Vending History Proof Type");
+            return false;
 
-        } else if (!Tokens_PATH.trim().isEmpty()) {
-            file2 = new File(Tokens_PATH);
+        } else if (VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
+            ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Capture Vending History Proof ");
+            return false;
 
-        } else if (!Challan_PATH.trim().isEmpty()) {
-            file2 = new File(Challan_PATH);
-
-        } else if (!Traffic_Challan_PATH.trim().isEmpty()) {
-            file2 = new File(Traffic_Challan_PATH);
+        } else if (!VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
+            file_vending_history_front = new File(VENDING_HISTORY_FRONT_PROOF_PATH);
 
         } else {
             ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Vending History Proof Doc is missing");
@@ -409,65 +360,47 @@ public class DocumentScanActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean validate3() {
-
-        if (!Police_Challan_PATH.trim().isEmpty()) {
-            file3 = new File(Police_Challan_PATH);
-
-        } else if (!Fine_Reciept_PATH.trim().isEmpty()) {
-            file3 = new File(Fine_Reciept_PATH);
-
-        } else if (!Certificate_PATH.trim().isEmpty()) {
-            file3 = new File(Certificate_PATH);
-
-        } else if (!Attested_Doc_PATH.trim().isEmpty()) {
-            file3 = new File(Attested_Doc_PATH);
-
-        } else {
-            ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Market Association Attested Doc or Certificate is missing");
-            return false;
-        }
-
-        return true;
-    }
+//    private boolean validate3() {
+//
+//        if (!Police_Challan_PATH.trim().isEmpty()) {
+//            file3 = new File(Police_Challan_PATH);
+//
+//        } else if (!Fine_Reciept_PATH.trim().isEmpty()) {
+//            file3 = new File(Fine_Reciept_PATH);
+//
+//        } else if (!Certificate_PATH.trim().isEmpty()) {
+//            file3 = new File(Certificate_PATH);
+//
+//        } else if (!Attested_Doc_PATH.trim().isEmpty()) {
+//            file3 = new File(Attested_Doc_PATH);
+//
+//        } else {
+//            ApplicationConstant.displayMessageDialog(DocumentScanActivity.this, "", "Market Association Attested Doc or Certificate is missing");
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
     private void bindView() {
 
-        mLinearMain = (LinearLayout) findViewById(R.id.LinearMain);
-        mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
-        mTextAddhar = (TextView) findViewById(R.id.TextAddhar);
-        mImgAadharScan = (ImageView) findViewById(R.id.ImgAadharScan);
-        mTextDL = (TextView) findViewById(R.id.TextDL);
-        mImgDLScan = (ImageView) findViewById(R.id.ImgDLScan);
-        mTextVoterId = (TextView) findViewById(R.id.TextVoterId);
-        mImgVoterID = (ImageView) findViewById(R.id.ImgVoterID);
-        mTextBankPassbook = (TextView) findViewById(R.id.TextBankPassbook);
-        mImgBankPassbook = (ImageView) findViewById(R.id.ImgBankPassbook);
-        mLinearTwo = (LinearLayout) findViewById(R.id.LinearTwo);
-        mTextFestivalReceipts = (TextView) findViewById(R.id.TextFestivalReceipts);
-        mImgFestivalReceipts = (ImageView) findViewById(R.id.ImgFestivalReceipts);
-        mTextTokens = (TextView) findViewById(R.id.TextTokens);
-        mImgTokens = (ImageView) findViewById(R.id.ImgTokens);
-        mTextChallan = (TextView) findViewById(R.id.TextChallan);
-        mImgChallan = (ImageView) findViewById(R.id.ImgChallan);
-        mTextTRChallan = (TextView) findViewById(R.id.TextTRChallan);
-        mImgTRChallan = (ImageView) findViewById(R.id.ImgTRChallan);
-        mLinearThree = (LinearLayout) findViewById(R.id.LinearThree);
-        mTextPoliceChalan = (TextView) findViewById(R.id.TextPoliceChalan);
-        mImgPoliceChalan = (ImageView) findViewById(R.id.ImgPoliceChalan);
-        mTextReceipt = (TextView) findViewById(R.id.TextReceipt);
-        mImgReceipt = (ImageView) findViewById(R.id.ImgReceipt);
-        mTextCertificate = (TextView) findViewById(R.id.TextCertificate);
-        mImgCertificate = (ImageView) findViewById(R.id.ImgCertificate);
-        mTextAttestedDoc = (TextView) findViewById(R.id.TextAttestedDoc);
-        mAttestedDoc = (ImageView) findViewById(R.id.AttestedDoc);
-        mLinearFour = (LinearLayout) findViewById(R.id.LinearFour);
-        mImgTehbaziDoc = (ImageView) findViewById(R.id.ImgTehbaziDoc);
-        mImgSignature = (ImageView) findViewById(R.id.ImgSignature);
+        LinearMain = (LinearLayout) findViewById(R.id.LinearMain);
+        LinearOne = (LinearLayout) findViewById(R.id.LinearOne);
+        SpinnerIdentityProof = (Spinner) findViewById(R.id.SpinnerIdentityProof);
+        ImgIdentityProofFront = (ImageView) findViewById(R.id.ImgIdentityProofFront);
+        ImgIdentityProofBack = (ImageView) findViewById(R.id.ImgIdentityProofBack);
+        LinearTwo = (LinearLayout) findViewById(R.id.LinearTwo);
+        SpinnerVendingHistoryProof = (Spinner) findViewById(R.id.SpinnerVendingHistoryProof);
+        ImgVendingHistoryFront = (ImageView) findViewById(R.id.ImgVendingHistoryFront);
+        ImgVendingHistoryBack = (ImageView) findViewById(R.id.ImgVendingHistoryBack);
+        LinearFour = (LinearLayout) findViewById(R.id.LinearFour);
+        ImgTehbaziDoc = (ImageView) findViewById(R.id.ImgTehbaziDoc);
+        ImgSignature = (ImageView) findViewById(R.id.ImgSignature);
         ImgAckReceipt = (ImageView) findViewById(R.id.ImgAckReceipt);
         EditComments = (EditText) findViewById(R.id.EditComments);
-        mBtnNext = (Button) findViewById(R.id.BtnNext);
-        mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
+        relativeButtons = (RelativeLayout) findViewById(R.id.relative_buttons);
+        BtnNext = (Button) findViewById(R.id.BtnNext);
+        BtnPrevious = (Button) findViewById(R.id.BtnPrevious);
     }
 
     protected void startScan() {
@@ -484,153 +417,51 @@ public class DocumentScanActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri uri_image = data.getExtras().getParcelable(ScanConstants.SCANNED_RESULT);
 
-            if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Aadhar")) {
 
+            if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "IdentityProof_Front")) {
                 File photoFile = null;
                 try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Aadhar.png", "Documents", DocumentScanActivity.this);
+                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "IdentityProof_Front.png", "Documents", DocumentScanActivity.this);
                     photoFile = new File(photoPath);
-                    AADHAR_PATH = photoPath;
+                    IDENTITY_PROOF_FRONT_PATH = photoPath;
 
-                    setBitmap(mImgAadharScan, uri_image, photoFile);
+                    setBitmap(ImgIdentityProofFront, uri_image, photoFile);
 
                 } catch (IOException ex) {
                     // Error occurred while creating the File
                 }
-
-
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "DrivingLicence")) {
-
+            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "IdentityProof_Back")) {
                 File photoFile = null;
                 try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "DrivingLicence.png", "Documents", DocumentScanActivity.this);
+                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "IdentityProof_Back.png", "Documents", DocumentScanActivity.this);
                     photoFile = new File(photoPath);
-                    DRIVING_LICENCE_PATH = photoPath;
+                    IDENTITY_PROOF_BACK_PATH = photoPath;
 
-                    setBitmap(mImgDLScan, uri_image, photoFile);
+                    setBitmap(ImgIdentityProofBack, uri_image, photoFile);
 
                 } catch (IOException ex) {
                     // Error occurred while creating the File
                 }
-
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "VoterId")) {
-
+            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "VendingHistory_Front")) {
                 File photoFile = null;
                 try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "VoterId.png", "Documents", DocumentScanActivity.this);
+                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "VendingHistory_Front.png", "Documents", DocumentScanActivity.this);
                     photoFile = new File(photoPath);
-                    VOTER_ID_PATH = photoPath;
+                    VENDING_HISTORY_FRONT_PROOF_PATH = photoPath;
 
-                    setBitmap(mImgVoterID, uri_image, photoFile);
+                    setBitmap(ImgVendingHistoryFront, uri_image, photoFile);
 
                 } catch (IOException ex) {
                     // Error occurred while creating the File
                 }
-
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "BankPassbook")) {
+            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "VendingHistory_Back")) {
                 File photoFile = null;
                 try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "BankPassbook.png", "Documents", DocumentScanActivity.this);
+                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "VendingHistory_Back.png", "Documents", DocumentScanActivity.this);
                     photoFile = new File(photoPath);
-                    BANK_PASSBOOK_PATH = photoPath;
+                    VENDING_HISTORY_BACK_PROOF_PATH = photoPath;
 
-                    setBitmap(mImgBankPassbook, uri_image, photoFile);
-
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "FestivalReciept")) {
-                File photoFile = null;
-                try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "FestivalReciept.png", "Documents", DocumentScanActivity.this);
-                    photoFile = new File(photoPath);
-                    FestivalReciept_PATH = photoPath;
-
-                    setBitmap(mImgFestivalReceipts, uri_image, photoFile);
-
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Tokens")) {
-                File photoFile = null;
-                try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Tokens.png", "Documents", DocumentScanActivity.this);
-                    photoFile = new File(photoPath);
-                    Tokens_PATH = photoPath;
-
-                    setBitmap(mImgTokens, uri_image, photoFile);
-
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Challan")) {
-                File photoFile = null;
-                try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Challan.png", "Documents", DocumentScanActivity.this);
-                    photoFile = new File(photoPath);
-                    Challan_PATH = photoPath;
-
-                    setBitmap(mImgChallan, uri_image, photoFile);
-
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Police_Challan")) {
-                File photoFile = null;
-                try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Police_Challan.png", "Documents", DocumentScanActivity.this);
-                    photoFile = new File(photoPath);
-                    Police_Challan_PATH = photoPath;
-
-                    setBitmap(mImgPoliceChalan, uri_image, photoFile);
-
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Traffic_Challan")) {
-                File photoFile = null;
-                try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Traffic_Challan.png", "Documents", DocumentScanActivity.this);
-                    photoFile = new File(photoPath);
-                    Traffic_Challan_PATH = photoPath;
-
-                    setBitmap(mImgTRChallan, uri_image, photoFile);
-
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Fine_Reciept")) {
-                File photoFile = null;
-                try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Fine_Reciept.png", "Documents", DocumentScanActivity.this);
-                    photoFile = new File(photoPath);
-                    Fine_Reciept_PATH = photoPath;
-
-                    setBitmap(mImgReceipt, uri_image, photoFile);
-
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Certificate")) {
-                File photoFile = null;
-                try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Certificate.png", "Documents", DocumentScanActivity.this);
-                    photoFile = new File(photoPath);
-                    Certificate_PATH = photoPath;
-
-                    setBitmap(mImgCertificate, uri_image, photoFile);
-
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-            } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Attested_Doc")) {
-                File photoFile = null;
-                try {
-                    String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Attested_Doc.png", "Documents", DocumentScanActivity.this);
-                    photoFile = new File(photoPath);
-                    Attested_Doc_PATH = photoPath;
-
-                    setBitmap(mAttestedDoc, uri_image, photoFile);
+                    setBitmap(ImgVendingHistoryBack, uri_image, photoFile);
 
                 } catch (IOException ex) {
                     // Error occurred while creating the File
@@ -642,7 +473,7 @@ public class DocumentScanActivity extends AppCompatActivity {
                     photoFile = new File(photoPath);
                     TehBazari_Doc_PATH = photoPath;
 
-                    setBitmap(mImgTehbaziDoc, uri_image, photoFile);
+                    setBitmap(ImgTehbaziDoc, uri_image, photoFile);
 
                 } catch (IOException ex) {
                     // Error occurred while creating the File
@@ -654,7 +485,7 @@ public class DocumentScanActivity extends AppCompatActivity {
                     photoFile = new File(photoPath);
                     Undertaking_PATH = photoPath;
 
-                    setBitmap(mImgSignature, uri_image, photoFile);
+                    setBitmap(ImgSignature, uri_image, photoFile);
 
                 } catch (IOException ex) {
                     // Error occurred while creating the File
@@ -709,6 +540,7 @@ public class DocumentScanActivity extends AppCompatActivity {
 
 
         String UNiq_Id = PrefUtils.getFromPrefs(DocumentScanActivity.this, ApplicationConstant.URI_NO_, "");
+        String Contact = PrefUtils.getFromPrefs(DocumentScanActivity.this, ApplicationConstant.CONTACT, "");
 
         progressDialog = CustomProgressDialog.getDialogue(DocumentScanActivity.this);
         progressDialog.show();
@@ -716,45 +548,106 @@ public class DocumentScanActivity extends AppCompatActivity {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(DocumentScanActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
-        RequestBody request_file1 =
-                RequestBody.create(MediaType.parse("image/png"), file1);
+        RequestBody request_identity_front =
+                RequestBody.create(MediaType.parse("image/png"), file_identity_front);
 
-        RequestBody request_file2 =
-                RequestBody.create(MediaType.parse("image/png"), file2);
+        RequestBody request_identity_back =
+                RequestBody.create(MediaType.parse("image/png"), file_identity_back);
 
-        RequestBody request_file3 =
-                RequestBody.create(MediaType.parse("image/png"), file4);
+        RequestBody request_vending_history_front =
+                RequestBody.create(MediaType.parse("image/png"), file_vending_history_front);
 
-        RequestBody request_file4 =
-                RequestBody.create(MediaType.parse("image/png"), file5);
+        RequestBody request_vending_history_back =
+                RequestBody.create(MediaType.parse("image/png"), file_vending_history_back);
+
+        RequestBody request_tehjabari =
+                RequestBody.create(MediaType.parse("image/png"), file_tehjabari);
+
+        RequestBody request_undertaking =
+                RequestBody.create(MediaType.parse("image/png"), file_undertaking);
+
+        RequestBody request_acknowlegement =
+                RequestBody.create(MediaType.parse("image/png"), file_acknowlegement);
 
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_file1 =
-                MultipartBody.Part.createFormData("identity_proof_documents", file1.getName(), request_file1);
+        MultipartBody.Part body_identity_front =
+                MultipartBody.Part.createFormData("identity_proof_documents_front", file_identity_front.getName(), request_identity_front);
 
-        MultipartBody.Part body_file2 =
-                MultipartBody.Part.createFormData("vending_history_proof_documents", file2.getName(), request_file2);
 
-        MultipartBody.Part body_file3 = null;
-        if (TehBazari_Doc_PATH.trim().isEmpty()) {
-            body_file3 = null;
+        MultipartBody.Part body_vending_history_front =
+                MultipartBody.Part.createFormData("vending_history_proof_documents_front", file_vending_history_front.getName(), request_vending_history_front);
+
+
+        MultipartBody.Part body_identity_back = null;
+        if (IDENTITY_PROOF_BACK_PATH.trim().isEmpty()) {
+            body_identity_back = null;
         } else {
 
-            body_file3 = MultipartBody.Part.createFormData("allotment_of_tehbazari_document", file4.getName(), request_file3);
+            body_identity_back = MultipartBody.Part.createFormData("identity_proof_documents_back", file_identity_back.getName(), request_identity_back);
 
         }
 
-        MultipartBody.Part body_file4 =
-                MultipartBody.Part.createFormData("undertaking_by_the_applicant", file5.getName(), request_file4);
+        MultipartBody.Part body_vending_history_back = null;
+        if (VENDING_HISTORY_BACK_PROOF_PATH.trim().isEmpty()) {
+            body_vending_history_back = null;
+        } else {
+
+            body_vending_history_back = MultipartBody.Part.createFormData("vending_history_proof_documents_back", file_vending_history_back.getName(), request_vending_history_back);
+
+        }
+
+        MultipartBody.Part body_tehbazari_document = null;
+        if (TehBazari_Doc_PATH.trim().isEmpty()) {
+            body_tehbazari_document = null;
+        } else {
+
+            body_tehbazari_document = MultipartBody.Part.createFormData("allotment_of_tehbazari_document", file_tehjabari.getName(), request_tehjabari);
+
+        }
+
+        MultipartBody.Part body_undertaking =
+                MultipartBody.Part.createFormData("undertaking_by_the_applicant", file_undertaking.getName(), request_undertaking);
+
+
+        MultipartBody.Part body_acknowlegement =
+                MultipartBody.Part.createFormData("acknowledgement_receipt", file_acknowlegement.getName(), request_acknowlegement);
+
+        String CORPORATION =   PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.WARD,"");
+
+        RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
+        RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
+        RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
 
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
+        RequestBody Contact_ = RequestBody.create(MediaType.parse("multipart/form-data"), Contact);
+        RequestBody COMMENTS_ = RequestBody.create(MediaType.parse("multipart/form-data"), Comments);
+        RequestBody SURVEY_STATUS = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
+        RequestBody IDENTITY_PROOF_TYPE_ = RequestBody.create(MediaType.parse("multipart/form-data"), IDENTITY_PROOF_TYPE);
+        RequestBody VENDING_HISTORY_PROOF_TYPE_ = RequestBody.create(MediaType.parse("multipart/form-data"), VENDING_HISTORY_PROOF_TYPE);
 
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
-        Call<UpdateSurveyResponse> call = apiservice.getUpdateDocuments(headers, URI_NO_, body_file1, body_file2
-                , body_file3, body_file4
+        Call<UpdateSurveyResponse> call = apiservice.getUpdateDocuments(headers,
+                URI_NO_,
+                Contact_,
+                CORPORATION_,
+                ZONE_,
+                WARD_,
+                IDENTITY_PROOF_TYPE_,
+                VENDING_HISTORY_PROOF_TYPE_,
+                SURVEY_STATUS,
+                COMMENTS_,
+                body_identity_front,
+                body_identity_back,
+                body_vending_history_front,
+                body_vending_history_back,
+                body_tehbazari_document,
+                body_acknowlegement,
+                body_undertaking
 
         );
 
@@ -776,7 +669,7 @@ public class DocumentScanActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                startActivity(new Intent(DocumentScanActivity.this, PersonalDetailsActivity.class));
+                                startActivity(new Intent(DocumentScanActivity.this, DashboardActivity.class));
                                 finish();
 
                             }
@@ -795,7 +688,7 @@ public class DocumentScanActivity extends AppCompatActivity {
 
                         ApplicationConstant.displayMessageDialog(DocumentScanActivity.this,
                                 "Response",
-                                String.valueOf(response.body().isStatus()));
+                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
                     }
 
                 } else {
@@ -835,7 +728,7 @@ public class DocumentScanActivity extends AppCompatActivity {
 //        }
 
 
-        file6 = new File(recordingFile);
+        file_recording = new File(recordingFile);
 
         String UNiq_Id = PrefUtils.getFromPrefs(DocumentScanActivity.this, ApplicationConstant.URI_NO_, "");
 
@@ -847,23 +740,36 @@ public class DocumentScanActivity extends AppCompatActivity {
 
         Uri recordUri = SurveyAppFileProvider.getUriForFile(DocumentScanActivity.this,
                 BuildConfig.APPLICATION_ID + ".android.fileprovider",
-                file6);
+                file_recording);
 
-        RequestBody request_file5 =
-                RequestBody.create(MediaType.parse(getContentResolver().getType(recordUri)), file6);
+        RequestBody request_recording =
+                RequestBody.create(MediaType.parse(getContentResolver().getType(recordUri)), file_recording);
 
 
 // MultipartBody.Part is used to send also the actual file name
 
         MultipartBody.Part body_file5 =
-                MultipartBody.Part.createFormData("recording", file6.getName(), request_file5);
+                MultipartBody.Part.createFormData("recording", file_recording.getName(), request_recording);
 
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
+
+        String CORPORATION =   PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(DocumentScanActivity.this,ApplicationConstant.WARD,"");
+
+        RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
+        RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
+        RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
+
 //        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), "2781767");
 
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
-        Call<UpdateSurveyResponse> call = apiservice.getUpdateRecording(headers, URI_NO_, body_file5
+        Call<UpdateSurveyResponse> call = apiservice.getUpdateRecording(headers, URI_NO_,
+                CORPORATION_,
+                ZONE_,
+                WARD_,
+                body_file5
 
         );
 
@@ -887,7 +793,7 @@ public class DocumentScanActivity extends AppCompatActivity {
                     } else {
 
                         ApplicationConstant.displayToastMessage(DocumentScanActivity.this,
-                                String.valueOf(response.body().isStatus()));
+                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
 
                         Upload_Documents();
 

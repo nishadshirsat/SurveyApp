@@ -83,7 +83,6 @@
                             android:layout_height="110dp"
                             android:layout_weight="0.8"
                             android:background="@drawable/edittext_bg"
-                            android:tint="@color/colorAccent"
                             android:src="@drawable/ic_camera_black_24dp" />
 
 

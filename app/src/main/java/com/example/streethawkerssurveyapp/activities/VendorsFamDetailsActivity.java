@@ -482,7 +482,13 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
 
         String UNiq_Id =  PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.URI_NO_,"");
+        String CORPORATION =   PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.WARD,"");
 
+        RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
+        RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
+        RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
         progressDialog = CustomProgressDialog.getDialogue(VendorsFamDetailsActivity.this);
         progressDialog.show();
@@ -508,8 +514,12 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //        );
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
-        Call<UpdateSurveyResponse> call = apiservice.getUpdateFamilySurvey(headers,URI_NO_
-                ,family_members_,json_family_,json_landAssets_,isFamilySurveyed,json_surveyFam_
+        Call<UpdateSurveyResponse> call = apiservice.getUpdateFamilySurvey(headers,
+                URI_NO_,
+                CORPORATION_,
+                ZONE_,
+                WARD_,
+                family_members_,json_family_,json_landAssets_,isFamilySurveyed,json_surveyFam_
 
         );
 
@@ -549,7 +559,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
                         ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this,
                                 "Response",
-                                String.valueOf(response.body().isStatus()));
+                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
                     }
 
                 }else {

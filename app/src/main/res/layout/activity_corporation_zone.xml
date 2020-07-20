@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="Corporation"
+                    android:text="Zone"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -142,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="Ward"
+                    android:text="Ward Number"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_bg"
-                    android:hint="Ward Name"
+                    android:hint="Ward "
                     android:inputType="text"
                     android:padding="10dp"
                     android:textSize="14sp" />

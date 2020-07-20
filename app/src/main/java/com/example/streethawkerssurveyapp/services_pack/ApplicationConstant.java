@@ -39,6 +39,10 @@ public class ApplicationConstant {
 
     public static final String SURVEY_ID = "surveyId";
     public static final String RECORDING = "recording";
+    public static final String CORPORATION = "corporation";
+    public static final String ZONE = "zone";
+    public static final String WARD = "ward";
+    public static final String CONTACT = "contact";
     public static String URI_NO_ = "uri_no";
     public static String SurveyId ="";
 
@@ -50,7 +54,8 @@ public class ApplicationConstant {
         public static final String UserPassword = "password";
         public static final String LoginPassword = "login_password";
         public static final String EncreptedUserPassword = "encript_password";
-        public static final String OwnerName = "OwnerName";
+        public static final String Name = "name";
+        public static final String Email = "mail";
         public static final String MainBalance = "MainBalance";
         public static final String LastSeen = "LastSeen";
         public static final String FlagRemember = "remember";

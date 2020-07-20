@@ -74,12 +74,35 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Spinner
+                            android:id="@+id/SpinnerIdentityProof"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:background="@drawable/edittext_bg"
+                            android:dropDownSelector="@drawable/downarrow"
+                            android:entries="@array/identity_proof_type"
+                            android:inputType="text"
+                            android:padding="10dp"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <TextView
-                            android:id="@+id/TextAddhar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -87,13 +110,13 @@
                             android:gravity="center"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:text="Aadhar Card"
+                            android:text="Front Page"
                             android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
                         <ImageView
-                            android:id="@+id/ImgAadharScan"
+                            android:id="@+id/ImgIdentityProofFront"
                             android:layout_width="0dp"
                             android:layout_height="100dp"
                             android:layout_weight="1"
@@ -112,7 +135,6 @@
                         android:weightSum="2">
 
                         <TextView
-                            android:id="@+id/TextDL"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -120,13 +142,13 @@
                             android:gravity="center"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:text=" Driving Licence"
+                            android:text="Back Page"
                             android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
                         <ImageView
-                            android:id="@+id/ImgDLScan"
+                            android:id="@+id/ImgIdentityProofBack"
                             android:layout_width="0dp"
                             android:layout_height="100dp"
                             android:layout_weight="1"
@@ -137,71 +159,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/TextVoterId"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:text="Voter-ID-Card "
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-
-                        <ImageView
-                            android:id="@+id/ImgVoterID"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/scanner"/>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/TextBankPassbook"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:text=" Bank Passbook"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-
-                        <ImageView
-                            android:id="@+id/ImgBankPassbook"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/scanner" />
-
-
-                    </LinearLayout>
 
 
                     <View
@@ -251,176 +208,52 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/TextFestivalReceipts"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:text="Festival Receipts"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-
-                        <ImageView
-                            android:id="@+id/ImgFestivalReceipts"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/scanner"/>
-
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/TextTokens"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:text="Tokens"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-
-                        <ImageView
-                            android:id="@+id/ImgTokens"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/scanner"/>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/TextChallan"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:text="Challan (s)"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-
-                        <ImageView
-                            android:id="@+id/ImgChallan"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/scanner" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/TextTRChallan"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:text="Traffic Police Challan(s)"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-
-                        <ImageView
-                            android:id="@+id/ImgTRChallan"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/scanner" />
-
-
-                    </LinearLayout>
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
                         android:layout_marginTop="20dp"
-                        android:background="@color/dark_gray" />
-                </LinearLayout>
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                <LinearLayout
-                    android:id="@+id/LinearThree"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                        <Spinner
+                            android:id="@+id/SpinnerVendingHistoryProof"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:background="@drawable/edittext_bg"
+                            android:dropDownSelector="@drawable/downarrow"
+                            android:entries="@array/vending_history_proof_type"
+                            android:inputType="text"
+                            android:padding="10dp"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="20dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <TextView
-                            android:id="@+id/TextPoliceChalan"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:gravity="center"
-                            android:text="Police Challan"
+                            android:text="Front Page"
                             android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
                         <ImageView
-                            android:id="@+id/ImgPoliceChalan"
+                            android:id="@+id/ImgVendingHistoryFront"
                             android:layout_width="0dp"
                             android:layout_height="100dp"
                             android:layout_weight="1"
@@ -439,40 +272,6 @@
                         android:weightSum="2">
 
                         <TextView
-                            android:id="@+id/TextReceipt"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="Receipt of Fine or Fees"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-
-                        <ImageView
-                            android:id="@+id/ImgReceipt"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/scanner" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/TextCertificate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -480,46 +279,13 @@
                             android:gravity="center"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:text="Certificates issued by Local Authorities"
+                            android:text="Back Page"
                             android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
 
                         <ImageView
-                            android:id="@+id/ImgCertificate"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/scanner" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/TextAttestedDoc"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:inputType="textMultiLine"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:text="Document attested by the relevant RWA or Market Association as conferring such rights 26"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
-
-
-                        <ImageView
-                            android:id="@+id/AttestedDoc"
+                            android:id="@+id/ImgVendingHistoryBack"
                             android:layout_width="0dp"
                             android:layout_height="100dp"
                             android:layout_weight="1"
@@ -529,7 +295,6 @@
 
 
                     </LinearLayout>
-
 
                     <View
                         android:layout_width="match_parent"
@@ -732,11 +497,11 @@
                         <EditText
                             android:id="@+id/EditComments"
                             android:layout_width="match_parent"
-                            android:layout_height="70dp"
+                            android:layout_height="80dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Comments"
-                            android:inputType="textMultiLine"
+                            android:inputType="text"
                             android:layout_gravity="start"
                             android:gravity="start"
                             android:padding="10dp"
@@ -793,7 +558,7 @@
             android:drawableTint="@color/white"
             android:padding="10dp"
             android:text="PREVIOUS"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />

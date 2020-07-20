@@ -8,8 +8,10 @@ import androidx.viewpager.widget.ViewPager;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.example.streethawkerssurveyapp.R;
@@ -24,6 +26,9 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
     AlertDialog alertDialog;
     private String Flag_Remember = "", userName, passWord;
     private int READ_PHONE_REQUEST = 20;
+
+    boolean doubleBackToExitPressedOnce = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,5 +205,27 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
         super.onResume();
         checkForPermissions();
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

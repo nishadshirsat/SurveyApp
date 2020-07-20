@@ -22,21 +22,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.DashboardActivity;
-import com.example.streethawkerssurveyapp.activities.LoginActivity;
-import com.example.streethawkerssurveyapp.activities.MainActivity;
-import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.response_pack.LoginResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
@@ -45,7 +33,14 @@ import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
 
@@ -132,9 +127,9 @@ public class LoginFragment extends Fragment {
 //                    mContext.startActivity(intent);
 
 
-                View view1 = inflater.inflate( R.layout.layout_forgot_password, null );
-                Button btn_send_password=view1.findViewById(R.id.btn_send_password);
-                ImageView image_cancel=view1.findViewById(R.id.image_cancel);
+                View view1 = inflater.inflate(R.layout.layout_forgot_password, null);
+                Button btn_send_password = view1.findViewById(R.id.btn_send_password);
+                ImageView image_cancel = view1.findViewById(R.id.image_cancel);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
@@ -172,7 +167,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (validate()){
+                if (validate()) {
 
                     checkForPermissions();
                 }
@@ -208,7 +203,7 @@ public class LoginFragment extends Fragment {
 
     private void bindView(View rootView) {
 
-        mContext=getContext();
+        mContext = getContext();
 
         mEditUsername = (EditText) rootView.findViewById(R.id.EditUsername);
         mEditPassword = (EditText) rootView.findViewById(R.id.EditPassword);
@@ -225,7 +220,7 @@ public class LoginFragment extends Fragment {
         progressDialog.show();
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
-        Call<LoginResponse> call = apiservice.getLoginResponse(username,password);
+        Call<LoginResponse> call = apiservice.getLoginResponse(username, password);
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -236,21 +231,24 @@ public class LoginFragment extends Fragment {
 
                 if (response.body() != null) {
 
-                    if (response.body().isStatus()){
+                    if (response.body().isStatus()) {
                         PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserName, mEditUsername.getText().toString().trim());
                         PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserPassword, mEditPassword.getText().toString().trim());
+                        PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.Name, response.body().getData().getName());
+                        PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.Email, response.body().getData().getEmail());
+                        PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserType, response.body().getData().getRole());
                         PrefUtils.saveToPrefs(getActivity(), ApplicationConstant.USERDETAILS.API_KEY, response.body().getData().getApiKey());
 
                         mContext.startActivity(new Intent(mContext, DashboardActivity.class));
 
-                    }else {
-
+                    } else {
+                        ApplicationConstant.displayMessageDialog(getActivity(), "", "Enter correct credentials");
                     }
 
 
                 } else {
                     try {
-                        ApplicationConstant.DisplayMessageDialog(getActivity(),"",response.errorBody().string());
+                        ApplicationConstant.DisplayMessageDialog(getActivity(), "", response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -269,7 +267,7 @@ public class LoginFragment extends Fragment {
 
     }
 
-    public void checkForPermissions(){
+    public void checkForPermissions() {
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(),
@@ -299,7 +297,7 @@ public class LoginFragment extends Fragment {
                     Manifest.permission.READ_PHONE_STATE) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.READ_CONTACTS) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.ACCESS_COARSE_LOCATION) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION)  && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.RECORD_AUDIO) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.MODIFY_AUDIO_SETTINGS)) {
                 // Show an explanation to the user asynchronously -- don't block

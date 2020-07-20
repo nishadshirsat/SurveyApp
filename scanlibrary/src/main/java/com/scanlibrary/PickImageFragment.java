@@ -152,6 +152,11 @@ public class PickImageFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("", "onActivityResult" + resultCode);
         Bitmap bitmap = null;
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+        System.gc();
         if (resultCode == Activity.RESULT_OK) {
             try {
                 switch (requestCode) {

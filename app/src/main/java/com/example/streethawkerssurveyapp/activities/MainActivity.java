@@ -55,9 +55,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         this.EnableGPSAutoMatically();
 
+//      recordAudio();
 
-
-//        recordAudio();
     }
 
 
