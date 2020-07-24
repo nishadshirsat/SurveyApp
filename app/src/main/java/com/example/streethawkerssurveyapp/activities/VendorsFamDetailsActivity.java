@@ -559,7 +559,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
                         ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this,
                                 "Response",
-                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
+                                response.body().getMessage());
                     }
 
                 }else {

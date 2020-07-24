@@ -80,6 +80,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private LinearLayout mLinearOne;
     private ImageView mImgVendorPhoto;
+    private ImageView mImgVendorSite;
     private EditText mEditFName;
     private EditText mEditMName;
     private EditText mEditLName;
@@ -135,6 +136,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private Button mBtnNext, mBtnPrevious;
     private String photoPath = "";
+    private String VindingPhotoPath = "";
     RadioGroup RGSex;
     RadioGroup RGWidow;
     RadioGroup RGCriminal;
@@ -384,7 +386,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     // Create the File where the photo should go
                     File photoFile = null;
                     try {
-                        photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_profile.png", "Profile", PersonalDetailsActivity.this);
+                        photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_profile.jpeg", "Profile", PersonalDetailsActivity.this);
                         photoFile = new File(photoPath);
                     } catch (IOException ex) {
                         // Error occurred while creating the File
@@ -396,6 +398,35 @@ public class PersonalDetailsActivity extends MainActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, 1);
+
+                    }
+                }
+            }
+        });
+
+        mImgVendorSite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//          startActivityForResult(takePictureIntent, 1);
+
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(PersonalDetailsActivity.this.getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        VindingPhotoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_vendingsite.jpeg", "Profile", PersonalDetailsActivity.this);
+                        photoFile = new File(VindingPhotoPath);
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        photoURI = SurveyAppFileProvider.getUriForFile(PersonalDetailsActivity.this,
+                                BuildConfig.APPLICATION_ID + ".android.fileprovider",
+                                photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        startActivityForResult(takePictureIntent, 2);
 
                     }
                 }
@@ -809,6 +840,10 @@ public class PersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Capture profile photo");
 
             return false;
+        }  else if (VindingPhotoPath.isEmpty()) {
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Capture Vending Place photo");
+
+            return false;
         } else if (mEditFName.getText().toString().trim().isEmpty()) {
             mEditFName.setError("Enter First Name");
             mEditFName.requestFocus();
@@ -884,6 +919,7 @@ public class PersonalDetailsActivity extends MainActivity {
         RGWidow = (RadioGroup) findViewById(R.id.RGWidow);
         RGCriminal = (RadioGroup) findViewById(R.id.RGCriminal);
         mImgVendorPhoto = (ImageView) findViewById(R.id.ImgVendorPhoto);
+        mImgVendorSite = (ImageView) findViewById(R.id.ImgVendorSite);
         mEditFName = (EditText) findViewById(R.id.EditFName);
         mEditMName = (EditText) findViewById(R.id.EditMName);
         mEditLName = (EditText) findViewById(R.id.EditLName);
@@ -954,6 +990,9 @@ public class PersonalDetailsActivity extends MainActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
 
+                Bitmap bitmap = ApplicationConstant.CompressedBitmap(new File(photoPath));
+
+
 //                Bitmap bitmap = BitmapFactory.decodeFile (photoPath);
 //                try {
 //                    bitmap.compress (Bitmap.CompressFormat.JPEG, 20, new FileOutputStream(new File(photoPath)));
@@ -969,6 +1008,12 @@ public class PersonalDetailsActivity extends MainActivity {
 //                    e.printStackTrace();
 //                }
                 UploadVendorPhoto();
+
+            }else   if (requestCode == 2) {
+
+                Bitmap bitmap = ApplicationConstant.CompressedBitmap(new File(VindingPhotoPath));
+
+                UploadVendingSitePhoto();
 
             }
         }
@@ -1118,7 +1163,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
                                 "Response",
-                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
+                                response.body().getMessage());
                     }
 
                 } else {
@@ -1215,7 +1260,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
                                 "Response",
-                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
+                                response.body().getMessage());
                     }
 
                 } else {
@@ -1266,5 +1311,104 @@ public class PersonalDetailsActivity extends MainActivity {
         onBackPressed();
         return true;
     }
+
+    private void UploadVendingSitePhoto() {
+
+        progressDialog = CustomProgressDialog.getDialogue(PersonalDetailsActivity.this);
+        progressDialog.show();
+
+        File file1 = new File(VindingPhotoPath);
+
+        RequestBody request_photo =
+                RequestBody.create(MediaType.parse("image/png"), file1);
+
+        String UNiq_Id = "";
+
+
+        UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
+
+        String CORPORATION =   PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.WARD,"");
+
+        RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
+        RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
+        RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
+
+// MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body_fhoto =
+                MultipartBody.Part.createFormData("photo_of_vendor_site", file1.getName(), request_photo);
+
+        RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.UploadVendorPlacePhoto(headers,
+                SURVEY_ID_,
+                CORPORATION_,
+                ZONE_,
+                WARD_,
+                body_fhoto
+        );
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        Glide.with(PersonalDetailsActivity.this).load(photoURI)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
+                                .into(mImgVendorSite);
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
+                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
+                                "Vending Site Photo saved successfully");
+
+
+                    } else {
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                } else {
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", t.getMessage().toString());
+
+            }
+        });
+    }
+
 
 }

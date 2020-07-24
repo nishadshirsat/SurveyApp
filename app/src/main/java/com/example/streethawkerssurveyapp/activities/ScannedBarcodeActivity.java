@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import androidx.core.app.ActivityCompat;
 public class ScannedBarcodeActivity extends AppCompatActivity {
 
     SurfaceView surfaceView;
-    TextView txtBarcodeValue;
+    EditText txtBarcodeValue;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
@@ -47,17 +48,28 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
         txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
         surfaceView = findViewById(R.id.surfaceView);
         btnAction = findViewById(R.id.btnAction);
-        btnAction.setVisibility(View.GONE);
+//        btnAction.setVisibility(View.GONE);
 
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (intentData.length() > 0) {
+//                if (intentData.length() > 0) {
 
-                        startActivity(new Intent(ScannedBarcodeActivity.this, CorporationZoneActivity.class).putExtra("SCANRESULT", intentData));
+                if (txtBarcodeValue.getText().toString().trim().isEmpty()){
+                    txtBarcodeValue.setError("Application id should not be empty");
+                    txtBarcodeValue.requestFocus();
+                }else  if (txtBarcodeValue.getText().toString().trim().length() < 7){
+                    txtBarcodeValue.setError("Enter correct Application id ");
+                    txtBarcodeValue.requestFocus();
+
+                }else {
+                    startActivity(new Intent(ScannedBarcodeActivity.this, CorporationZoneActivity.class).putExtra("SCANRESULT", txtBarcodeValue.getText().toString().trim()));
 
                 }
+
+
+//                }
 
 
             }

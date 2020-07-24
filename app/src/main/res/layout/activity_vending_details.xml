@@ -368,13 +368,43 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Number of yrs  of Vending/Hawking/Squatting in current location"
+                            android:text="No. of days active per week (tick appropriate)"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"></LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_all_days"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:background="@color/colorAccent"
+                        android:text="All days"
+                        />
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -469,6 +499,11 @@
                         android:layout_weight="1"
                         android:buttonTint="@color/colorAccent"
                         android:backgroundTint="@color/colorPrimaryDark"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"></LinearLayout>
 
 
                 </LinearLayout>

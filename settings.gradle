@@ -1,2 +1,2 @@
 rootProject.name='Street Hawkers Survey App'
-include ':app', ':scanlibrary'
+include ':app', ':documentscanner', ':openCVLibrary'

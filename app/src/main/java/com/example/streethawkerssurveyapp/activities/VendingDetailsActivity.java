@@ -23,6 +23,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
@@ -31,12 +33,14 @@ import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,6 +72,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private Spinner mSpinnerChoice;
     private Button mBtnNext;
     private Button mBtnPrevious;
+    private Button btn_all_days;
     private CheckBox mCheckM;
     private CheckBox mCheckT;
     private CheckBox mCheckW;
@@ -126,6 +131,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
         bindView();
 
+        NO_DAYS_ACTIVE = new StringBuilder();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("Vending Details");
@@ -183,6 +190,21 @@ public class VendingDetailsActivity extends AppCompatActivity {
 //
 //            }
 //        });
+
+
+        btn_all_days.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCheckM.setChecked(true);
+                mCheckT.setChecked(true);
+                mCheckW.setChecked(true);
+                mCheckTh.setChecked(true);
+                mCheckF.setChecked(true);
+                mCheckS.setChecked(true);
+                mCheckSu.setChecked(true);
+
+            }
+        });
 
         mEditLFromTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -466,6 +488,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (mLinearOne.getVisibility() == View.VISIBLE) {
+
+                    setActiveWeeks();
+
                     if (validate1()) {
                     mLinearOne.setVisibility(View.GONE);
                     mLinearTwo.setVisibility(View.VISIBLE);
@@ -486,86 +511,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     TextYes.setVisibility(View.GONE);
                     LinearVehical.setVisibility(View.GONE);
 
-                    if (!M.trim().isEmpty()) {
-                        if (NO_DAYS_ACTIVE.toString().isEmpty()) {
-                            NO_DAYS_ACTIVE.append(M);
 
-                        } else {
-                            NO_DAYS_ACTIVE.append("," + M);
-
-                        }
-                    }
-                    if (!T.trim().isEmpty()) {
-
-                        if (NO_DAYS_ACTIVE.toString().isEmpty()) {
-                            NO_DAYS_ACTIVE.append(T);
-
-                        } else {
-                            NO_DAYS_ACTIVE.append("," + T);
-
-                        }
-                    }
-
-                    if (!W.trim().isEmpty()) {
-
-                        if (NO_DAYS_ACTIVE.toString().isEmpty()) {
-                            NO_DAYS_ACTIVE.append(W);
-
-                        } else {
-                            NO_DAYS_ACTIVE.append("," + W);
-
-                        }
-
-                    }
-
-                    if (!Th.trim().isEmpty()) {
-
-                        if (NO_DAYS_ACTIVE.toString().isEmpty()) {
-                            NO_DAYS_ACTIVE.append(Th);
-
-                        } else {
-                            NO_DAYS_ACTIVE.append("," + Th);
-
-                        }
-
-                    }
-
-                    if (!F.trim().isEmpty()) {
-
-                        if (NO_DAYS_ACTIVE.toString().isEmpty()) {
-                            NO_DAYS_ACTIVE.append(F);
-
-                        } else {
-                            NO_DAYS_ACTIVE.append("," + F);
-
-                        }
-
-                    }
-
-                    if (!S.trim().isEmpty()) {
-
-                        if (NO_DAYS_ACTIVE.toString().isEmpty()) {
-                            NO_DAYS_ACTIVE.append(S);
-
-                        } else {
-                            NO_DAYS_ACTIVE.append("," + S);
-
-                        }
-
-                    }
-
-
-                    if (!Su.trim().isEmpty()) {
-
-                        if (NO_DAYS_ACTIVE.toString().isEmpty()) {
-                            NO_DAYS_ACTIVE.append(Su);
-
-                        } else {
-                            NO_DAYS_ACTIVE.append("," + Su);
-
-                        }
-
-                    }
 
 
 //                    NO_DAYS_ACTIVE=M+","+T+","+W+","+Th+","+F+","+S+","+Su;
@@ -594,6 +540,89 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setActiveWeeks() {
+        if (!M.trim().isEmpty()) {
+            if (NO_DAYS_ACTIVE.toString().isEmpty()) {
+                NO_DAYS_ACTIVE.append(M);
+
+            } else {
+                NO_DAYS_ACTIVE.append("," + M);
+
+            }
+        }
+        if (!T.trim().isEmpty()) {
+
+            if (NO_DAYS_ACTIVE.toString().isEmpty()) {
+                NO_DAYS_ACTIVE.append(T);
+
+            } else {
+                NO_DAYS_ACTIVE.append("," + T);
+
+            }
+        }
+
+        if (!W.trim().isEmpty()) {
+
+            if (NO_DAYS_ACTIVE.toString().isEmpty()) {
+                NO_DAYS_ACTIVE.append(W);
+
+            } else {
+                NO_DAYS_ACTIVE.append("," + W);
+
+            }
+
+        }
+
+        if (!Th.trim().isEmpty()) {
+
+            if (NO_DAYS_ACTIVE.toString().isEmpty()) {
+                NO_DAYS_ACTIVE.append(Th);
+
+            } else {
+                NO_DAYS_ACTIVE.append("," + Th);
+
+            }
+
+        }
+
+        if (!F.trim().isEmpty()) {
+
+            if (NO_DAYS_ACTIVE.toString().isEmpty()) {
+                NO_DAYS_ACTIVE.append(F);
+
+            } else {
+                NO_DAYS_ACTIVE.append("," + F);
+
+            }
+
+        }
+
+        if (!S.trim().isEmpty()) {
+
+            if (NO_DAYS_ACTIVE.toString().isEmpty()) {
+                NO_DAYS_ACTIVE.append(S);
+
+            } else {
+                NO_DAYS_ACTIVE.append("," + S);
+
+            }
+
+        }
+
+
+        if (!Su.trim().isEmpty()) {
+
+            if (NO_DAYS_ACTIVE.toString().isEmpty()) {
+                NO_DAYS_ACTIVE.append(Su);
+
+            } else {
+                NO_DAYS_ACTIVE.append("," + Su);
+
+            }
+
+        }
     }
 
     private boolean validate3() {
@@ -639,11 +668,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             mEditAnnualIncome.setError("Select Vehicals");
             mSpinnerVehical.requestFocus();
             return false;
-        } else if (mEditDob.getText().toString().trim().isEmpty()) {
-            mEditDob.setError("Enter Date");
-            mEditDob.requestFocus();
-            return false;
         }
+
         return true;
     }
 
@@ -681,6 +707,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
     private void bindView() {
 
+        btn_all_days = (Button) findViewById(R.id.btn_all_days);
         mLinearMain = (LinearLayout) findViewById(R.id.LinearMain);
         LinearVehical = (LinearLayout) findViewById(R.id.LinearVehical);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
@@ -778,7 +805,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                startActivity(new Intent(VendingDetailsActivity.this, DocumentScanActivity.class));
+                                startActivity(new Intent(VendingDetailsActivity.this, DocumentsScanActivity.class));
 
                             }
                         });
@@ -796,7 +823,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                         ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this,
                                 "Response",
-                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
+                                response.body().getMessage());
                     }
 
                 } else {
@@ -828,5 +855,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+
+
 
 }

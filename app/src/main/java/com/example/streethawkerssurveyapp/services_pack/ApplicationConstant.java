@@ -14,6 +14,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.LoginActivity;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -45,6 +47,7 @@ public class ApplicationConstant {
     public static final String CONTACT = "contact";
     public static String URI_NO_ = "uri_no";
     public static String SurveyId ="";
+    public static final long IMAGE_SIZE = 800;
 
 
     public class USERDETAILS {
@@ -300,4 +303,30 @@ public class ApplicationConstant {
         return rotatedImg;
     }
 
+
+    public static Bitmap CompressedBitmap(File file){
+        Bitmap compressedbitmap = null;
+        int quantity = 50;
+        long length_check;
+
+        do {
+            length_check = file.length()/ 1024;
+
+            try {
+                compressedbitmap = BitmapFactory.decodeFile (file.getPath ());
+                compressedbitmap.compress (Bitmap.CompressFormat.JPEG, quantity, new FileOutputStream(file));
+            }
+            catch (Throwable t) {
+                Log.e("ERROR", "Error compressing file." + t.toString ());
+                t.printStackTrace ();
+            }
+
+            quantity = quantity - 10;
+
+        }while (length_check > ApplicationConstant.IMAGE_SIZE);
+
+
+        return compressedbitmap;
+
+    }
 }

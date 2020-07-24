@@ -120,6 +120,16 @@ public interface ApiInterface {
             @Field("choice_of_vending_area") String choice_of_vending_area
     );
 
+    @Multipart
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> UploadVendorPlacePhoto(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part("corporation") RequestBody corporation,
+            @Part("zone") RequestBody zone,
+            @Part("ward") RequestBody ward,
+            @Part MultipartBody.Part photo_of_vendor_site);
+
 //    @FormUrlEncoded
 //    @POST("update-survey")
 //    Call<UpdateSurveyResponse> getUpdateFamilySurvey(
@@ -136,7 +146,7 @@ public interface ApiInterface {
     @Multipart
     @POST("update-survey")
     Call<UpdateSurveyResponse> getUpdateFamilySurvey(
-            @HeaderMap Map<String, String> token,
+             @HeaderMap Map<String, String> token,
             @Part("uri_number") RequestBody uri_number,
             @Part("corporation") RequestBody corporation,
             @Part("zone") RequestBody zone,
@@ -151,6 +161,32 @@ public interface ApiInterface {
 
     @Multipart
     @POST("update-survey")
+    Call<UpdateSurveyResponse> UploadIdentityProof(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part("corporation") RequestBody corporation,
+            @Part("zone") RequestBody zone,
+            @Part("ward") RequestBody ward,
+            @Part("identity_proof_documents_type") RequestBody identity_proof_documents_type,
+            @Part MultipartBody.Part identity_proof_documents_front,
+            @Part MultipartBody.Part identity_proof_documents_back
+    );
+
+    @Multipart
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> UploadVendingHistoryProof(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part("corporation") RequestBody corporation,
+            @Part("zone") RequestBody zone,
+            @Part("ward") RequestBody ward,
+            @Part("vending_history_proof_documents_type") RequestBody vending_history_proof_documents_type,
+            @Part MultipartBody.Part vending_history_proof_documents_front,
+            @Part MultipartBody.Part vending_history_proof_documents_back
+    );
+
+    @Multipart
+    @POST("update-survey")
     Call<UpdateSurveyResponse> getUpdateDocuments(
             @HeaderMap Map<String, String> token,
             @Part("uri_number") RequestBody uri_number,
@@ -158,19 +194,36 @@ public interface ApiInterface {
             @Part("corporation") RequestBody corporation,
             @Part("zone") RequestBody zone,
             @Part("ward") RequestBody ward,
-            @Part("identity_proof_documents_type") RequestBody identity_proof_documents_type,
-            @Part("vending_history_proof_documents_type") RequestBody vending_history_proof_documents_type,
             @Part("survey_status") RequestBody survey_status,
             @Part("comments") RequestBody comments,
-            @Part MultipartBody.Part identity_proof_documents_front,
-            @Part MultipartBody.Part identity_proof_documents_back,
-            @Part MultipartBody.Part vending_history_proof_documents_front,
-            @Part MultipartBody.Part vending_history_proof_documents_back,
             @Part MultipartBody.Part allotment_of_tehbazari_document,
             @Part MultipartBody.Part acknowledgement_receipt,
 //            @Part MultipartBody.Part recording,
             @Part MultipartBody.Part undertaking_by_the_applicant
     );
+
+//    @Multipart
+//    @POST("update-survey")
+//    Call<UpdateSurveyResponse> getUpdateDocuments(
+//            @HeaderMap Map<String, String> token,
+//            @Part("uri_number") RequestBody uri_number,
+//            @Part("contact_number") RequestBody contact_number,
+//            @Part("corporation") RequestBody corporation,
+//            @Part("zone") RequestBody zone,
+//            @Part("ward") RequestBody ward,
+//            @Part("identity_proof_documents_type") RequestBody identity_proof_documents_type,
+//            @Part("vending_history_proof_documents_type") RequestBody vending_history_proof_documents_type,
+//            @Part("survey_status") RequestBody survey_status,
+//            @Part("comments") RequestBody comments,
+//            @Part MultipartBody.Part identity_proof_documents_front,
+//            @Part MultipartBody.Part identity_proof_documents_back,
+//            @Part MultipartBody.Part vending_history_proof_documents_front,
+//            @Part MultipartBody.Part vending_history_proof_documents_back,
+//            @Part MultipartBody.Part allotment_of_tehbazari_document,
+//            @Part MultipartBody.Part acknowledgement_receipt,
+////            @Part MultipartBody.Part recording,
+//            @Part MultipartBody.Part undertaking_by_the_applicant
+//    );
 
     @Multipart
     @POST("update-survey")

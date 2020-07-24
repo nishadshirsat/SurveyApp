@@ -219,7 +219,7 @@ public class CorporationZoneActivity extends AppCompatActivity {
 
                         ApplicationConstant.displayMessageDialog(CorporationZoneActivity.this,
                                 "Response",
-                                String.valueOf(response.body().isStatus())+"-"+response.body().getMessage());
+                                response.body().getMessage());
                     }
 
                 }else {
