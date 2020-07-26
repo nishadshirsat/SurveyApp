@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1112,7 +1112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1293,7 +1293,7 @@
                             android:id="@+id/EditAadhar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:background="@drawable/edittext_bg"
                             android:hint="Aadhar No"
                             android:inputType="number"
@@ -1306,16 +1306,32 @@
                             android:id="@+id/BtnAddharCapture"
                             android:layout_width="0dp"
                             android:layout_height="35dp"
-                            android:layout_marginLeft="8dp"
                             android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
+                            android:background="@color/colorPrimary"
                             android:inputType="text"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="10dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="10dp"
-                            android:text="Capture Biometric"
+                            android:textColor="@color/white"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="Verify"
+                            android:textStyle="bold"
                             android:textSize="14sp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/BtnAddharVerified"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/green"
+                            android:paddingTop="5dp"
+                            android:drawableLeft="@drawable/ic_verified_user_black_24dp"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="10dp"
+                            android:drawableTint="@color/green"
+                            android:text="Verified"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="17sp"
                             android:visibility="gone" />
 
                     </LinearLayout>

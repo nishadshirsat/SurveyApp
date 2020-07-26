@@ -17,11 +17,13 @@ import android.text.InputFilter;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.LoginActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,6 +47,7 @@ public class ApplicationConstant {
     public static final String ZONE = "zone";
     public static final String WARD = "ward";
     public static final String CONTACT = "contact";
+    public static final String AADHAR_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTU2ODM5NjAsInVzZXJfY2xhaW1zIjp7InNjb3BlcyI6WyJyZWFkIl19LCJqdGkiOiI5MTI0NGM0ZC0zMTA3LTQ3ZmYtODhkYS0wMjgyYmU1NWE5NGIiLCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MiLCJpZGVudGl0eSI6ImRldi5rYXNoaXRzb2x1dGlvbkBhYWRoYWFyYXBpLmlvIiwibmJmIjoxNTk1NjgzOTYwLCJleHAiOjE5MTEwNDM5NjB9.ok8zT_-ZLNBTwNQHhMyoj8ROswamn-3eZiuRorAWFUQ";
     public static String URI_NO_ = "uri_no";
     public static String SurveyId ="";
     public static final long IMAGE_SIZE = 800;
@@ -278,7 +281,7 @@ public class ApplicationConstant {
         return inSampleSize;
     }
 
-    private static Bitmap rotateImageIfRequired(Bitmap img, Uri selectedImage) throws IOException {
+    public static Bitmap rotateImageIfRequired(Bitmap img, Uri selectedImage) throws IOException {
 
         ExifInterface ei = new ExifInterface(selectedImage.getPath());
         int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
@@ -305,7 +308,13 @@ public class ApplicationConstant {
 
 
     public static Bitmap CompressedBitmap(File file){
+
+        int newWidth = 700;
+        int newHeight = 800;
+        float scaleWidth ;
+        float scaleHeight;
         Bitmap compressedbitmap = null;
+        Bitmap resizedBitmap = null;
         int quantity = 50;
         long length_check;
 
@@ -314,7 +323,14 @@ public class ApplicationConstant {
 
             try {
                 compressedbitmap = BitmapFactory.decodeFile (file.getPath ());
-                compressedbitmap.compress (Bitmap.CompressFormat.JPEG, quantity, new FileOutputStream(file));
+
+               Matrix matrix = new Matrix();
+                scaleWidth = ((float) newWidth) / compressedbitmap.getWidth();
+                scaleHeight = ((float) newHeight) / compressedbitmap.getHeight();
+                matrix.postScale(scaleWidth, scaleHeight);
+
+                resizedBitmap = Bitmap.createBitmap(compressedbitmap, 0, 0, compressedbitmap.getWidth(), compressedbitmap.getHeight(), matrix, true);
+                resizedBitmap.compress (Bitmap.CompressFormat.JPEG, quantity, new FileOutputStream(file));
             }
             catch (Throwable t) {
                 Log.e("ERROR", "Error compressing file." + t.toString ());
@@ -326,7 +342,7 @@ public class ApplicationConstant {
         }while (length_check > ApplicationConstant.IMAGE_SIZE);
 
 
-        return compressedbitmap;
+        return resizedBitmap;
 
     }
 }

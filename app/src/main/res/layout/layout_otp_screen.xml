@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Enter OTP sent on Mobile"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/image_cancel"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_cancel_black_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/EditOtp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_bg"
+            android:hint="enter OTP to verify aadhar"
+            android:inputType="text"
+            android:maxLength="6"
+            android:imeOptions="actionNext"
+            android:padding="10dp"
+            android:textSize="14sp" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Didn't receive the OTP?"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <TextView
+            android:id="@+id/text_resend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RESEND OTP"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/red"
+            />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/TextSubmitOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="SUBMIT TO VERIFY"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/button_bg"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/dp_size_10"
+        android:paddingRight="20dp"
+        android:layout_gravity="right"
+        android:drawableRight="@drawable/ic_forward_black_24dp"
+        android:drawablePadding="05dp"
+        android:drawableTint="@color/white"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>

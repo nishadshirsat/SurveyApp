@@ -23,10 +23,12 @@ public class ApiService {
 
 
   public static Retrofit retrofit = null;
+  public static Retrofit retrofit2 = null;
 
 
   public static OkHttpClient client = getClient();
   public static final String BASE_URL = "http://survey.garud.life/api/";
+  public static final String AADHAR_URL = "https://kyc-api.aadhaarkyc.io/api/v1/aadhaar-v2/";
 
   public static OkHttpClient getClient() {
 
@@ -45,20 +47,34 @@ public class ApiService {
     .setLenient()
     .create();
 
-  public static Retrofit getApiClient(){
+  public static Retrofit getApiClient() {
 
-    if (retrofit == null){
-        retrofit = new Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(client)
+    if (retrofit == null) {
+      retrofit = new Retrofit.Builder()
+              .baseUrl(BASE_URL)
+              .client(client)
 //      .client(getUnsafeOkHttpClient())
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-       
-        .build();
-    }
+              .addConverterFactory(GsonConverterFactory.create(gson))
+              .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 
-    return retrofit;
+              .build();
+    }
+      return  retrofit;
   }
 
+  public static Retrofit getApiClient2(){
+
+    if (retrofit2 == null){
+      retrofit2 = new Retrofit.Builder()
+              .baseUrl(AADHAR_URL)
+              .client(client)
+//      .client(getUnsafeOkHttpClient())
+              .addConverterFactory(GsonConverterFactory.create(gson))
+              .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+
+              .build();
+    }
+
+    return retrofit2;
+  }
 }

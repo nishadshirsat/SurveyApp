@@ -122,6 +122,11 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
         bindView();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+
         SpinnerIdentityProof.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -323,6 +328,13 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
     private boolean validate1() {
 
+        if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
+
+            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        }else
+
         if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
             ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
             return false;
@@ -343,7 +355,12 @@ public class DocumentsScanActivity extends AppCompatActivity {
     }
 
     private boolean validate2() {
+        if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
 
+            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+            return false;
+        }else
         if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
             ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Vending History Proof Type");
             return false;
@@ -853,7 +870,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -967,7 +984,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -1075,7 +1092,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -1185,7 +1202,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayToastMessage(DocumentsScanActivity.this, t.getMessage().toString());
+                ApplicationConstant.displayToastMessage(DocumentsScanActivity.this,  getString(R.string.net_speed_problem));
                 Upload_Documents();
 
             }

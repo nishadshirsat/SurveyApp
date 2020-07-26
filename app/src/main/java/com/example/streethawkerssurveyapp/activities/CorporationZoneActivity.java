@@ -55,7 +55,7 @@ public class CorporationZoneActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Zone Details");
+        setTitle("URI NO: "+ApplicationConstant.SurveyId);
 
         bindView();
 
@@ -240,7 +240,7 @@ public class CorporationZoneActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(CorporationZoneActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(CorporationZoneActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });

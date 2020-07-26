@@ -99,7 +99,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Vendors Family Details");
+        setTitle("URI NO: "+ApplicationConstant.SurveyId);
 
         mBtnNext.setText("Submit");
 
@@ -580,7 +580,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });

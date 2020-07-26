@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.ContextThemeWrapper;
@@ -51,6 +52,10 @@ import com.example.streethawkerssurveyapp.pojo_class.CriminalCases;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
+import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharData;
+import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharOtpData;
+import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharOtpResponse;
+import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharValidResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
@@ -120,6 +125,7 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditPPincode;
     private EditText mEditAadhar;
     private Button mBtnAddharCapture;
+    private TextView BtnAddharVerified;
     private EditText mEditAccNo;
     private EditText mEditBankName;
     private EditText mEditBranchName;
@@ -184,6 +190,9 @@ public class PersonalDetailsActivity extends MainActivity {
 
     public GetLocation getLocation;
 
+    public double Latitude = 0.0;
+    public double Longitude = 0.0;
+
     private LinearLayout linear_cases;
 
     private RecyclerView view_Criminal_Case;
@@ -199,7 +208,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Personal Details");
+        setTitle("URI NO: "+ApplicationConstant.SurveyId);
 
         if (getLocation == null) {
             getLocation = new GetLocation(PersonalDetailsActivity.this);
@@ -228,6 +237,24 @@ public class PersonalDetailsActivity extends MainActivity {
     }
 
     private void onCLickListners() {
+
+        mBtnAddharCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mEditAadhar.getText().toString().trim().isEmpty()){
+                    mEditAadhar.setError("enter aadhar to verify");
+                    mEditAadhar.requestFocus();
+                }else  if (mEditAadhar.getText().toString().trim().length() !=12){
+                    mEditAadhar.setError("enter correct aadhar to verify");
+                    mEditAadhar.requestFocus();
+                }else {
+
+                    AADHAR_NO = mEditAadhar.getText().toString().trim();
+                    SendOtpForAadhar();
+                }
+
+            }
+        });
 
         btn_same_resident.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -372,8 +399,6 @@ public class PersonalDetailsActivity extends MainActivity {
                 }
             }
         });
-
-
 
         mImgVendorPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -653,14 +678,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     if (validate()) {
 
-                        if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
                             AddSurvey();
 
-                        } else {
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Unable to get Location please check GPS enabled and permissions check");
-                            EnableGPSAutoMatically();
-
-                        }
                     }
 //                    startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
 
@@ -873,6 +892,12 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditDob.setError("Enter Date Of Birth");
             mEditDob.requestFocus();
             return false;
+        } else  if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
+            return true;
+
+        } else {
+            EnableGPSAutoMatically();
+
         }
 
         return true;
@@ -959,6 +984,7 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditPPincode = (EditText) findViewById(R.id.EditPPincode);
         mEditAadhar = (EditText) findViewById(R.id.EditAadhar);
         mBtnAddharCapture = (Button) findViewById(R.id.BtnAddharCapture);
+        BtnAddharVerified = (TextView) findViewById(R.id.BtnAddharVerified);
         mEditAccNo = (EditText) findViewById(R.id.EditAccNo);
         mEditBankName = (EditText) findViewById(R.id.EditBankName);
         mEditBranchName = (EditText) findViewById(R.id.EditBranchName);
@@ -990,6 +1016,11 @@ public class PersonalDetailsActivity extends MainActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
 
+                Glide.with(PersonalDetailsActivity.this).load(photoURI)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(mImgVendorPhoto);
+
                 Bitmap bitmap = ApplicationConstant.CompressedBitmap(new File(photoPath));
 
 
@@ -1011,6 +1042,11 @@ public class PersonalDetailsActivity extends MainActivity {
 
             }else   if (requestCode == 2) {
 
+                                        Glide.with(PersonalDetailsActivity.this).load(photoURI)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
+                                .into(mImgVendorSite);
+
                 Bitmap bitmap = ApplicationConstant.CompressedBitmap(new File(VindingPhotoPath));
 
                 UploadVendingSitePhoto();
@@ -1031,6 +1067,10 @@ public class PersonalDetailsActivity extends MainActivity {
 
         String username = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, "");
 
+        if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
+            Latitude = getLocation.getLatitude();
+            Longitude = getLocation.getLongitude();
+        }
 
         File file1 = new File(photoPath);
 
@@ -1089,8 +1129,8 @@ public class PersonalDetailsActivity extends MainActivity {
 //        RequestBody CRIMINALCASE_POLICA_NAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_POLICA_NAME);
 //        RequestBody CRIMINALCASE_STATUS_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_STATUS);
 
-        RequestBody LATITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + getLocation.getLatitude());
-        RequestBody LONGITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + getLocation.getLongitude());
+        RequestBody LATITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + Latitude);
+        RequestBody LONGITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + Longitude);
 
 
         Map<String, String> headers = new HashMap<>();
@@ -1184,7 +1224,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -1237,16 +1277,12 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-
-
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
 
-                        Glide.with(PersonalDetailsActivity.this).load(photoURI)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(true)
-                                .into(mImgVendorPhoto);
+
+
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
@@ -1283,7 +1319,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -1364,10 +1400,10 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     if (response.body().isStatus()) {
 
-                        Glide.with(PersonalDetailsActivity.this).load(photoURI)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(true)
-                                .into(mImgVendorSite);
+
+
+
+
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
@@ -1404,10 +1440,309 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
+    }
+
+    private void SendOtpForAadhar() {
+
+        progressDialog = CustomProgressDialog.getDialogue(PersonalDetailsActivity.this);
+        progressDialog.show();
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + ApplicationConstant.AADHAR_TOKEN);
+
+        HashMap<String,String> body = new HashMap<>();
+        body.put("id_number",AADHAR_NO);
+
+        ApiInterface apiservice = ApiService.getApiClient2().create(ApiInterface.class);
+        Call<AadharOtpResponse> call = apiservice.generateOtpAadhar(headers,body);
+
+        call.enqueue(new Callback<AadharOtpResponse>() {
+            @Override
+            public void onResponse(Call<AadharOtpResponse> call, Response<AadharOtpResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isSuccess()) {
+
+
+                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
+                                ""+response.body().getMessage());
+
+                        AadharOtpData aadhar_data = response.body().getData();
+
+                        if (aadhar_data.isIfNumber()){
+                            if (aadhar_data.isValidAadhaar()){
+
+                                String Client_Id = aadhar_data.getClientId().trim();
+                                View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_otp_screen, null);
+                                ImageView aImage_cancel = (ImageView)viewAdd. findViewById(R.id.image_cancel);
+                                EditText aEditOtp = (EditText)viewAdd. findViewById(R.id.EditOtp);
+                                TextView  aText_resend = (TextView)viewAdd. findViewById(R.id.text_resend);
+                                TextView  aTextSubmitOtp = (TextView)viewAdd. findViewById(R.id.TextSubmitOtp);
+
+                                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
+                                builder.setView(viewAdd);
+                                final android.app.AlertDialog alertDialog = builder.create();
+                                alertDialog.setCanceledOnTouchOutside(false);
+                                alertDialog.setCancelable(false);
+
+                                resendOtpTimer(aText_resend);
+
+                                aImage_cancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+
+                                aText_resend.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (aText_resend.getText().toString().equals("RESEND OTP")) {
+                                            ResendOtpForAadhar();
+                                        }
+                                        }
+                                });
+
+                                aTextSubmitOtp.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (aEditOtp.getText().toString().trim().isEmpty()){
+                                            aEditOtp.setError("enter otp to verify");
+                                            aEditOtp.requestFocus();
+                                        }else   if (aEditOtp.getText().toString().trim().length() != 6){
+                                            aEditOtp.setError("enter correct otp to verify");
+                                            aEditOtp.requestFocus();
+                                        }else {
+                                            SubmitOtpForAadhar(aEditOtp.getText().toString().trim(),Client_Id,alertDialog);
+                                        }
+                                    }
+                                });
+
+
+                                alertDialog.show();
+
+
+
+                            }else {
+                                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct aadhar no");
+
+                            }
+
+                        }else {
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct mobile no");
+                        }
+
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                } else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                "enter correct aadhar no");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AadharOtpResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+    private void SubmitOtpForAadhar(String otp,String clientId,AlertDialog alertDialog) {
+
+        progressDialog = CustomProgressDialog.getDialogue(PersonalDetailsActivity.this);
+        progressDialog.show();
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + ApplicationConstant.AADHAR_TOKEN);
+
+        HashMap<String,String> body = new HashMap<>();
+        body.put("client_id",clientId);
+        body.put("otp",otp);
+
+        ApiInterface apiservice = ApiService.getApiClient2().create(ApiInterface.class);
+        Call<AadharValidResponse> call = apiservice.SubmitOtpForAadhar(headers,body);
+
+        call.enqueue(new Callback<AadharValidResponse>() {
+            @Override
+            public void onResponse(Call<AadharValidResponse> call, Response<AadharValidResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isSuccess()) {
+
+
+                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
+                                ""+response.body().getMessage());
+
+
+                        if (response.body().getData()!=null){
+                            AadharData aadhar_data = response.body().getData();
+                            alertDialog.dismiss();
+
+                            BtnAddharVerified.setVisibility(View.VISIBLE);
+                            mBtnAddharCapture.setVisibility(View.GONE);
+                            mEditAadhar.setFocusableInTouchMode(false);
+
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response",""+aadhar_data.getFullName());
+
+
+                        }else {
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct mobile no");
+                        }
+
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                } else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                "enter correct otp");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AadharValidResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+    private void ResendOtpForAadhar() {
+
+        progressDialog = CustomProgressDialog.getDialogue(PersonalDetailsActivity.this);
+        progressDialog.show();
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + ApplicationConstant.AADHAR_TOKEN);
+
+        HashMap<String,String> body = new HashMap<>();
+        body.put("id_number",AADHAR_NO);
+
+        ApiInterface apiservice = ApiService.getApiClient2().create(ApiInterface.class);
+        Call<AadharOtpResponse> call = apiservice.generateOtpAadhar(headers,body);
+
+        call.enqueue(new Callback<AadharOtpResponse>() {
+            @Override
+            public void onResponse(Call<AadharOtpResponse> call, Response<AadharOtpResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isSuccess()) {
+
+
+                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
+                                ""+response.body().getMessage());
+
+                        AadharOtpData aadhar_data = response.body().getData();
+
+                        if (aadhar_data.isIfNumber()){
+                            if (aadhar_data.isValidAadhaar()){
+
+
+                            }else {
+                                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct aadhar no");
+
+                            }
+
+                        }else {
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct mobile no");
+                        }
+
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                } else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
+                                "Response",
+                                "enter correct aadhar no");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AadharOtpResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+    private void resendOtpTimer(TextView text_resend) {
+
+        new CountDownTimer(60000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                text_resend.setText("seconds: " + millisUntilFinished / 1000);
+                //here you can have your logic to set text to edittext
+            }
+
+            public void onFinish() {
+                text_resend.setText("RESEND OTP");
+            }
+
+        }.start();
     }
 
 

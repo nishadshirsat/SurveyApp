@@ -260,7 +260,8 @@ public class LoginFragment extends Fragment {
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(getActivity(), "Response", t.getMessage());
+//                ApplicationConstant.displayMessageDialog(getActivity(), "Response", t.getMessage());
+                ApplicationConstant.displayMessageDialog(getActivity(), "Response", getString(R.string.net_speed_problem));
 
             }
         });

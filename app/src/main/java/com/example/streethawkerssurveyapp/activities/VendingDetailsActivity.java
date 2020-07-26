@@ -135,7 +135,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Vending Details");
+        setTitle("URI NO: "+ApplicationConstant.SurveyId);
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -844,7 +844,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });

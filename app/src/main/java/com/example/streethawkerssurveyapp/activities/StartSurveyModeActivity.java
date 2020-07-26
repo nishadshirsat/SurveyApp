@@ -44,14 +44,11 @@ public class StartSurveyModeActivity extends AppCompatActivity {
 
         bindViews();
 
-        GetSurveyUri();
-
         mCardStartSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(StartSurveyModeActivity.this,CorporationZoneActivity.class));
-
+                GetSurveyUri("START");
             }
         });
 
@@ -59,8 +56,7 @@ public class StartSurveyModeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(StartSurveyModeActivity.this,ScannedBarcodeActivity.class));
-
+                GetSurveyUri("SCAN");
             }
         });
 
@@ -135,7 +131,7 @@ public class StartSurveyModeActivity extends AppCompatActivity {
 //    }
 
 
-    private void GetSurveyUri() {
+    private void GetSurveyUri(String Control) {
 
         progressDialog = CustomProgressDialog.getDialogue(StartSurveyModeActivity.this);
         progressDialog.show();
@@ -162,6 +158,16 @@ public class StartSurveyModeActivity extends AppCompatActivity {
                         ApplicationConstant.SurveyId = response.body().getUriNumber();
                         PrefUtils.saveToPrefs(StartSurveyModeActivity.this, ApplicationConstant.URI_NO_, response.body().getUriNumber());
 
+                        if (Control.trim().equals("START")){
+                            startActivity(new Intent(StartSurveyModeActivity.this,CorporationZoneActivity.class));
+
+                        }else {
+                            startActivity(new Intent(StartSurveyModeActivity.this,ScannedBarcodeActivity.class));
+
+                        }
+
+
+
                     } else {
 
                         ApplicationConstant.displayMessageDialog(StartSurveyModeActivity.this,
@@ -187,7 +193,7 @@ public class StartSurveyModeActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(StartSurveyModeActivity.this, "Response", t.getMessage().toString());
+                ApplicationConstant.displayMessageDialog(StartSurveyModeActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });

@@ -3,12 +3,15 @@ package com.example.streethawkerssurveyapp.services_pack;
 import com.example.streethawkerssurveyapp.response_pack.LoginResponse;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
+import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharOtpResponse;
+import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharValidResponse;
 
 import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
@@ -236,12 +239,21 @@ public interface ApiInterface {
             @Part MultipartBody.Part recording
     );
 
-//    @GET("get-surveys")
-//    Call<SurveyDetailsResponse> getSurveyDetails(
-//            @HeaderMap Map<String, String> token
-//    );
-//
+// AADHAR APIS
 
+    @POST("generate-otp")
+    Call<AadharOtpResponse> generateOtpAadhar(
+            @HeaderMap Map<String, String> token,
+            @Body Map<String,String> body
+
+    );
+
+    @POST("submit-otp")
+    Call<AadharValidResponse> SubmitOtpForAadhar(
+            @HeaderMap Map<String, String> token,
+            @Body Map<String,String> body
+
+    );
 
 
 

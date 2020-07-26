@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Hawkers Survey App</string>
+    <string name="net_speed_problem">Unable to connect! Please check internet connection speed</string>
 
 
     <string-array name="education">
@@ -61,6 +62,7 @@
     </string-array>
 
     <string-array name="zones">
+        <item>NZ-No Zone</item>
         <item>01-Shahdara South Zone</item>
         <item>02-Shahdara North Zone</item>
         <item>03-Central Zone</item>
@@ -73,7 +75,6 @@
         <item>10-Narela</item>
         <item>11-Rohini</item>
         <item>12-Civil Lines</item>
-        <item>NZ-No Zone</item>
     </string-array>
 
     <string-array name="items">
