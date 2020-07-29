@@ -75,6 +75,7 @@ public interface ApiInterface {
             @Part("residential_correspondence_address") RequestBody residential_correspondence_address,
             @Part("permanent_address") RequestBody permanent_address,
             @Part("aadhar_card_details") RequestBody aadhar_card_details,
+            @Part("aadhaar_number") RequestBody aadhaar_number,
             @Part("bank_account_number") RequestBody bank_account_number,
             @Part("bank_name") RequestBody bank_name,
             @Part("bank_branch_name") RequestBody bank_branch_name,

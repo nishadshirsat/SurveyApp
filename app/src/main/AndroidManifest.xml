@@ -71,6 +71,7 @@
             android:name=".activities.PersonalDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme"

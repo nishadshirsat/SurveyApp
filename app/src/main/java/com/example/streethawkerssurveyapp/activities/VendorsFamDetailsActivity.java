@@ -238,6 +238,9 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                         }else if (fEditFamAadhar.getText().toString().trim().isEmpty()){
                             fEditFamAadhar.setError("enter aadhar");
                             fEditFamAadhar.requestFocus();
+                        }else if (fEditFamAadhar.getText().toString().trim().length()!=12){
+                            fEditFamAadhar.setError("enter correct aadhar");
+                            fEditFamAadhar.requestFocus();
                         }else {
                             FamilyMembers familyMembers = new FamilyMembers(fEditFamName.getText().toString().trim(),
                                     fEditFamRelation.getText().toString().trim(),

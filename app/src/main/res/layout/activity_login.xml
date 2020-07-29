@@ -33,11 +33,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:padding="3dp"
-                android:text="Version 8.0"
+                android:text="Hawkers Survey"
                 android:textColor="@color/black"
                 android:layout_marginLeft="15dp"
                 android:textSize="18sp"
-                android:textStyle="normal" />
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 android:layout_above="@+id/scroll"
                 android:layout_marginLeft="15dp"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="normal" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

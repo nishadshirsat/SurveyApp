@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1112,7 +1112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1437,7 +1437,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="IFSC Code"
-                            android:inputType="text"
+                            android:inputType="textCapCharacters"
                             android:padding="10dp"
                             android:imeOptions="actionNext"
                             android:textAllCaps="true"

@@ -2,6 +2,7 @@ package com.example.streethawkerssurveyapp.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -67,6 +68,9 @@ import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
 import com.google.ads.afma.nano.Google3NanoAdshieldEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -200,6 +204,8 @@ public class PersonalDetailsActivity extends MainActivity {
     private List<CriminalCases> listCriminalCases = new ArrayList<>();
 
     private TextView btn_same_resident;
+    private String AADHAR_DETAILS="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,7 +256,38 @@ public class PersonalDetailsActivity extends MainActivity {
                 }else {
 
                     AADHAR_NO = mEditAadhar.getText().toString().trim();
-                    SendOtpForAadhar();
+
+
+                    View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_select_type, null);
+                    CardView cCardOTP = (androidx.cardview.widget.CardView)viewAdd. findViewById(R.id.CardOTP);
+                    CardView cCardBiometric = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardBiometric);
+
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
+                    builder.setView(viewAdd);
+                    final android.app.AlertDialog alertDialog = builder.create();
+                    alertDialog.setCanceledOnTouchOutside(false);
+                    alertDialog.setCancelable(true);
+
+                    cCardBiometric.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Credentials not found.");
+                        }
+                    });
+
+                    cCardOTP.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                            SendOtpForAadhar();
+                        }
+                    });
+
+                    alertDialog.show();
+
                 }
 
             }
@@ -538,6 +575,14 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
+//                HashMap<String,String> body = new HashMap<>();
+//                body.put("aadhaar_number",AADHAR_NO);
+//
+//                String json_Aadhar = new Gson().toJson(body);
+//
+//                AADHAR_DETAILS = json_Aadhar;
+//
+//                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"",AADHAR_DETAILS);
 
                 try {
                     int selectedId = RGSex.getCheckedRadioButtonId();
@@ -1058,6 +1103,17 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private void AddSurvey() {
 
+//        if (AADHAR_DETAILS.trim().isEmpty()){
+//
+//                HashMap<String,String> body = new HashMap<>();
+//                body.put("aadhaar_number",AADHAR_NO);
+//
+//                String json_Aadhar = new Gson().toJson(body);
+//
+//                AADHAR_DETAILS = json_Aadhar;
+//
+//        }
+
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         CRIMINALCASE_NO = new Gson().toJson(listCriminalCases);
@@ -1116,6 +1172,7 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody CATEGORY_ = RequestBody.create(MediaType.parse("multipart/form-data"), CATEGORY);
         RequestBody RESIDENTIAL_ADDRESS_ = RequestBody.create(MediaType.parse("multipart/form-data"), RESIDENTIAL_ADDRESS);
         RequestBody PERMENENT_ADDRESS_ = RequestBody.create(MediaType.parse("multipart/form-data"), PERMENENT_ADDRESS);
+        RequestBody AADHAR_DETAILS_ = RequestBody.create(MediaType.parse("multipart/form-data"), AADHAR_DETAILS);
         RequestBody AADHAR_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), AADHAR_NO);
         RequestBody BANKACC_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), BANKACC_NO);
         RequestBody BANKNAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), BANKNAME);
@@ -1152,7 +1209,9 @@ public class PersonalDetailsActivity extends MainActivity {
                 NAME_SPOUSE_,
                 WHETHER_WIDOWED_, CATEGORY_,
                 RESIDENTIAL_ADDRESS_,
-                PERMENENT_ADDRESS_, AADHAR_NO_,
+                PERMENENT_ADDRESS_,
+                AADHAR_DETAILS_,
+                AADHAR_NO_,
                 BANKACC_NO_,
                 BANKNAME_,
                 BRANCH_NAME_,
@@ -1538,7 +1597,7 @@ public class PersonalDetailsActivity extends MainActivity {
                             }
 
                         }else {
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct mobile no");
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Mobile no not linked");
                         }
 
 
@@ -1554,7 +1613,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     try {
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
                                 "Response",
-                                "enter correct aadhar no");
+                                "incorrect Aadhar or server problem");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -1601,8 +1660,8 @@ public class PersonalDetailsActivity extends MainActivity {
                     if (response.body().isSuccess()) {
 
 
-                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
-                                ""+response.body().getMessage());
+//                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
+//                                ""+response.body().getMessage());
 
 
                         if (response.body().getData()!=null){
@@ -1611,9 +1670,15 @@ public class PersonalDetailsActivity extends MainActivity {
 
                             BtnAddharVerified.setVisibility(View.VISIBLE);
                             mBtnAddharCapture.setVisibility(View.GONE);
-                            mEditAadhar.setFocusableInTouchMode(false);
+                            mEditAadhar.setEnabled(false);
 
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response",""+aadhar_data.getFullName());
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            Gson gson = gsonBuilder.create();
+                            String json_Aadhar = new Gson().toJson(aadhar_data);
+
+                            AADHAR_DETAILS = json_Aadhar;
+
+//                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response",json_Aadhar);
 
 
                         }else {
@@ -1633,7 +1698,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     try {
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
                                 "Response",
-                                "enter correct otp");
+                                "Server Error Occurred! try again");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -1694,7 +1759,7 @@ public class PersonalDetailsActivity extends MainActivity {
                             }
 
                         }else {
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct mobile no");
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Mobile no not linked");
                         }
 
 
@@ -1710,7 +1775,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     try {
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
                                 "Response",
-                                "enter correct aadhar no");
+                                "incorrect Aadhar or server problem");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

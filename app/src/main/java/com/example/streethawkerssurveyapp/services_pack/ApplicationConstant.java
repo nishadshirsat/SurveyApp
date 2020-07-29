@@ -149,6 +149,7 @@ public class ApplicationConstant {
                     });
 
             AlertDialog alert11 = builder1.create();
+            alert11.setCanceledOnTouchOutside(false);
             alert11.show();
         }
     }

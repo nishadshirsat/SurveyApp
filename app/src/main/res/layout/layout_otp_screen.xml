@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_bg"
             android:hint="enter OTP to verify aadhar"
-            android:inputType="text"
+            android:inputType="number"
             android:maxLength="6"
             android:imeOptions="actionNext"
             android:padding="10dp"

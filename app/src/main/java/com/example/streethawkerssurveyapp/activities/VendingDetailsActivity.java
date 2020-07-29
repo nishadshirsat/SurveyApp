@@ -395,6 +395,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (mCheckM.isChecked()) {
                     M = mCheckM.getText().toString().trim();
+                }else {
+                    M ="";
                 }
             }
         });
@@ -404,6 +406,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (mCheckT.isChecked()) {
                     T = mCheckT.getText().toString().trim();
+                }else {
+                    T ="";
                 }
             }
         });
@@ -413,6 +417,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (mCheckW.isChecked()) {
                     W = mCheckW.getText().toString().trim();
+                }else {
+                    W ="";
                 }
             }
         });
@@ -422,6 +428,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (mCheckTh.isChecked()) {
                     Th = mCheckTh.getText().toString().trim();
+                }else {
+                    Th ="";
                 }
             }
         });
@@ -431,6 +439,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (mCheckF.isChecked()) {
                     F = mCheckF.getText().toString().trim();
+                }else {
+                    F ="";
                 }
             }
         });
@@ -440,6 +450,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (mCheckS.isChecked()) {
                     S = mCheckS.getText().toString().trim();
+                }else {
+                    S ="";
                 }
             }
         });
@@ -449,6 +461,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (mCheckSu.isChecked()) {
                     Su = mCheckSu.getText().toString().trim();
+                }else {
+                    Su ="";
                 }
             }
         });
@@ -855,8 +869,4 @@ public class VendingDetailsActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-
-
-
 }

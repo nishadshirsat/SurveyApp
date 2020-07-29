@@ -15,8 +15,6 @@
         android:orientation="vertical"
         android:gravity="center">
 
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/CardStartSurvey"
             android:layout_width="220dp"

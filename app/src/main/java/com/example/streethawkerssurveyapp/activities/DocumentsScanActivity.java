@@ -476,6 +476,9 @@ public class DocumentsScanActivity extends AppCompatActivity {
         }else
             if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
             if (ScannerConstants.selectedImageBitmap != null) {
+
+                writeBitmap(ScannerConstants.selectedImageBitmap,new File(photoPath));
+
                 if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "IdentityProof_Front")) {
                     IDENTITY_PROOF_FRONT_PATH = photoPath;
                     ImgIdentityProofFront.setImageBitmap(ScannerConstants.selectedImageBitmap);
@@ -553,7 +556,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
     public void writeBitmap(Bitmap bitmap, File filename) {
         try (FileOutputStream out = new FileOutputStream(filename)) {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
 //            out.close();
             // PNG is a lossless format, the compression factor (100) is ignored
         } catch (IOException e) {
