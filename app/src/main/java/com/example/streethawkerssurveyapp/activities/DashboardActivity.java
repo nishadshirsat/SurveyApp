@@ -1,7 +1,6 @@
 package com.example.streethawkerssurveyapp.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.suspended_survey.avtivities.SuspendedSurveyActivity;
 import com.example.streethawkerssurveyapp.utils.GetLocation;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyActivity;
 
 public class DashboardActivity extends MainActivity {
 
@@ -68,7 +70,7 @@ public class DashboardActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
-                ApplicationConstant.DisplayMessageDialog(DashboardActivity.this,"","This Feature Coming Soon...");
+                startActivity(new Intent(DashboardActivity.this, PendingSurveyActivity.class));
 
             }
         });
@@ -77,7 +79,8 @@ public class DashboardActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
-                ApplicationConstant.DisplayMessageDialog(DashboardActivity.this,"","This Feature Coming Soon...");
+//                ApplicationConstant.DisplayMessageDialog(DashboardActivity.this,"","This Feature Coming Soon...");
+                startActivity(new Intent(DashboardActivity.this, SuspendedSurveyActivity.class));
 
             }
         });
@@ -86,7 +89,9 @@ public class DashboardActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
-                ApplicationConstant.DisplayMessageDialog(DashboardActivity.this,"","This Feature Coming Soon...");
+//                ApplicationConstant.DisplayMessageDialog(DashboardActivity.this,"","This Feature Coming Soon...");
+
+                startActivity(new Intent(DashboardActivity.this, ViewSurveyActivity.class));
 
             }
         });

@@ -1,0 +1,2851 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_size_10"
+    tools:context=".view_survey.activities.ViewSurveyDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CardPersonal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_5"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="@dimen/padding_5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_5">
+
+                    <ImageView
+                        android:id="@+id/ImgPersonal"
+                        android:layout_width="@dimen/height_30dp"
+                        android:layout_height="@dimen/height_30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_personal" />
+
+                    <TextView
+                        android:id="@+id/TextPersonal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/padding_5"
+                        android:gravity="center_vertical"
+                        android:text="Personal Details"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CardFamily"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_5"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="@dimen/padding_5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_5">
+
+                    <ImageView
+                        android:id="@+id/ImgFamily"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_family" />
+
+                    <TextView
+                        android:id="@+id/TextFamily"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/padding_5"
+                        android:gravity="center_vertical"
+                        android:text="Family Details"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CardBank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_5"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="@dimen/padding_5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_5">
+
+                    <ImageView
+                        android:id="@+id/ImgBank"
+                        android:layout_width="@dimen/height_30dp"
+                        android:layout_height="@dimen/height_30dp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_bank" />
+
+                    <TextView
+                        android:id="@+id/TextBank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/padding_5"
+                        android:gravity="center_vertical"
+                        android:text="Banking Details"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CardVendor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_5"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="@dimen/padding_5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_5">
+
+                    <ImageView
+                        android:id="@+id/ImgVending"
+                        android:layout_width="@dimen/height_30dp"
+                        android:layout_height="@dimen/height_30dp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_vending" />
+
+                    <TextView
+                        android:id="@+id/TextVending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/padding_5"
+                        android:gravity="center_vertical"
+                        android:text="Vending Details"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CardDocuments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_5"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="@dimen/padding_5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_5">
+
+                    <ImageView
+                        android:id="@+id/ImgDoc"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_document" />
+
+                    <TextView
+                        android:id="@+id/TextDoc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/padding_5"
+                        android:gravity="center_vertical"
+                        android:text="Documents"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CardAadhar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_5"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="@dimen/padding_5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_5">
+
+                    <ImageView
+                        android:id="@+id/ImgAadhar"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_aadhar" />
+
+                    <TextView
+                        android:id="@+id/TextAadhar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/padding_5"
+                        android:gravity="center_vertical"
+                        android:text="Adhaar Details"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dp_size_10"
+            android:background="@color/colorAccent" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_size_10"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/size3dp"
+                    app:cardCornerRadius="@dimen/padding_5"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_size_10">
+
+                        <TextView
+                            android:id="@+id/TextUriNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="URI NUMBER: 4034660"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/CardPersonalDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="@dimen/dp_size_10"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Barcode Application Number :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextBarcodeApplicationNo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Bar Code Not Scanned"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Corporation :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextCorporation"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="ED"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Zone:"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextZone"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="NZ"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Ward :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextWard"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="12"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Area :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextArea"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Katraj"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Vendor Location :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextLocation"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Show Location"
+                                    android:textColor="@color/blue"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Photo of the street vendor / Hawker :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <ImageView
+                                    android:id="@+id/ImgVendorPhoto"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/height_80dp"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:src="@drawable/ic_camera_black_24dp" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Photo of the Vending / Hawking Site :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <ImageView
+                                    android:id="@+id/ImgVendorSite"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/height_80dp"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:src="@drawable/ic_camera_black_24dp" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Name of the Street Vendor/Hawker :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextVendorName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Shashank Patil"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Adhaar Number :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextAadharNo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="540376635387"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Sex :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextGender"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="FEMALE"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Age :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextAge"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="24"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Date Of Birth :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextDOB"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="1996-06-05"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Mobile Number :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextMobile"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="9822748229"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Landline Number :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextLandline"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Education Status :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextEducation"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Diploma/ Graduate/ Postgraduate"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Name of Father/Husband :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextFatherName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Machindra Yoga Sonwane"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Name of Mother :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextMotherName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Chandrakala Machindra Sonwane"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Spouse Name :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextSpouseName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Whether widowed/widower :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextWidowed"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="No"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Category :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextCategory"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="SC"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Residential / Correspondence Address :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextResidentAddress"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="S No-13/2A/1, F No-11, Sukhsagarnagar, Pune, 411046"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Permanent Address :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextPermanantAddress"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="S No-13/2A/1, F No-11, Sukhsagarnagar, Pune, 411046"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Annual Income :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextAnnualImcome"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="500000"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Whether convicted in any case or criminal case pending? :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextCriminal"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="NO"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/LinearCriminalCase"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="S.No :"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextCriminalSNo"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="5421"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Date of case :"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextCriminalDate"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="2010-06-08"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="FIR NO :"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextCriminalFIR"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="74859612"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Name of Police :"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextPoliceName"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="Salman Khan"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Status of case :"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextCaseStatus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="Solved"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/CardFamilyDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="@dimen/dp_size_10"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Details of family members &amp; their occupation :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <LinearLayout
+                                    android:id="@+id/LinearFamMember"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:background="@drawable/edittext_bg"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/dp_size_10">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Name"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextMember1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="Deepti Sonwane"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Relationship"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextMemberRelation"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="Sister"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Age"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextMemberAge"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="22"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Adhaar"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextMemberAdhaar"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="478523654780"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Land/Fixed assets owned by family, if any :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="No Land or Fixed Assets"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <LinearLayout
+                                    android:id="@+id/LinearLandDetails"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:background="@drawable/edittext_bg"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/dp_size_10"
+                                    android:visibility="gone">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Plot"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextLandPlot"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="Plot No-11"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="House Size"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextHouseSize"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="1200 Sq.ft"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Area"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextLandArea"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="Sukhsagarnagar"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Kuccha"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextLandKuccha"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="Kuccha"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="horizontal"
+                                        android:weightSum="2">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="Rental Income"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp" />
+
+                                        <TextView
+                                            android:id="@+id/TextRentalIncome"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/dp_size_10"
+                                            android:layout_weight="1"
+                                            android:text="20000"
+                                            android:textColor="@color/colorAccent"
+                                            android:textSize="@dimen/txt_16sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Have other family members been surveyed :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextFamSurveyed"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="NO"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/LinearFamSurveyed"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:background="@drawable/edittext_bg"
+                                android:orientation="vertical"
+                                android:padding="@dimen/dp_size_10"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Name"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextMember2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="Deepti Sonwane"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Relationship"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextMemberRelation2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="Sister"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Age"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextMemberAge2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="22"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Adhaar"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextMemberAdhaar2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="478523654780"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/CardBankDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="@dimen/dp_size_10"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Bank Account No. :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextBankNo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="30762822409"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Bank name :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextBankName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="State Bank Of India"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Branch name :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextBranch"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Dhankawadi"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="IFSC Code :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextIfsc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="SBIN0000514"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/CardVendingDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="@dimen/dp_size_10"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Type of vending/ Hawking or items sold :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextVendingType"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Electronic items"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Name of Vending/Hawking/Squatting site :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextNameVending"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Harshal Electricals"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Timing of Vending/Hawking/Squatting :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextTime"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="10:00 PM to 9:30 PM"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Number of yrs of Vending/Hawking/Squatting in current location :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextVendingYrs"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="5"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Has the applicant been previously recognized as a street vendor? :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextPreviousRecognized"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="No"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Type of structure / vehicle :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextTypeVehical"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Pucca"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="No of Days Active :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextActiveDays"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Date of start of vending activity in current location :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextStartVendingDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="2008-08-01"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Is document of Tehbazari available? :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextTehrabaziDoc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="No"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Choice of vending area/market allotment :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextVendingChoiceArea"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="First Choice (within 1 km)"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/CardDocumentsDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="@dimen/dp_size_10"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Identity proof documents :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="@dimen/dp_size_10">
+
+                                    <TextView
+                                        android:id="@+id/TextIdFront"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="View Front"
+                                        android:textColor="@color/blue"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/TextIdBack"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="View Back"
+                                        android:layout_marginLeft="@dimen/padding_5"
+                                        android:textColor="@color/blue"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Vending History Proof documents :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="@dimen/dp_size_10">
+
+                                    <TextView
+                                        android:id="@+id/TextHistoryFront"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="View Front"
+                                        android:textColor="@color/blue"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/TextHistoryBack"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="View Back"
+                                        android:layout_marginLeft="@dimen/padding_5"
+                                        android:textColor="@color/blue"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Allotment of Tehbazari document (If available) :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextViewTeharabazi"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="No Document Uploaded"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Undertaking by the Applicant :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextUndertaking"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="View"
+                                    android:textColor="@color/blue"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Acknowledgement Receipt :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextAcknowledge"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="View"
+                                    android:textColor="@color/blue"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"
+                                android:layout_marginTop="@dimen/dp_size_10"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Other Documents :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextOtherDocument"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="No Other Documents Uploaded"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Comments :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextComments"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text="test"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"
+                                android:layout_marginTop="@dimen/dp_size_10"/>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Recording :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextRecording"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/CardAdhaarDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="@dimen/dp_size_10"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_15dp"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Aaadhar Number :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextUidNo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Profile Image :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+
+
+                                <ImageView
+                                    android:id="@+id/ImgProfile"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/height_80dp"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Full Name :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextFullName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Gender :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextSex"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Date of Birth :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextBirthDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="House :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextHouse"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Zip Code :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextZipcode"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Post Office :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextPostOffice"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="State :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextState"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="VTC :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextVTC"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="District :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextDistrict"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Sub District :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextSubDistrict"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Landmark :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextLandmark"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Street :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextStreet"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Location :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextLocationAadhar"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Country :"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/TextCountry"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_size_10"
+                                    android:layout_weight="1"
+                                    android:text=""
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/txt_16sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
+                <Button
+                    android:id="@+id/BtnDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/size_20dp"
+                    android:background="@drawable/button_bg"
+                    android:paddingLeft="@dimen/dp_size_10"
+                    android:paddingRight="@dimen/dp_size_10"
+                    android:text="DONE"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
