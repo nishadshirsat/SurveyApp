@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/LinearCriminalCase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_size_10"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="S.No :"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp" />
+
+            <TextView
+                android:id="@+id/TextCriminalSNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_weight="1"
+                android:text="5421"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_size_10"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date of case :"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp" />
+
+            <TextView
+                android:id="@+id/TextCriminalDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_weight="1"
+                android:text="2010-06-08"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_size_10"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="FIR NO :"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp" />
+
+            <TextView
+                android:id="@+id/TextCriminalFIR"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_weight="1"
+                android:text="74859612"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_size_10"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Name of Police :"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp" />
+
+            <TextView
+                android:id="@+id/TextPoliceName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_weight="1"
+                android:text="Salman Khan"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_size_10"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Status of case :"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp" />
+
+            <TextView
+                android:id="@+id/TextCaseStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_weight="1"
+                android:text="Solved"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/txt_16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

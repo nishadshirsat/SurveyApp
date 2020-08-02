@@ -1025,155 +1025,12 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:id="@+id/LinearCriminalCase"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/Recycler_CriminalCase"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_size_10"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="S.No :"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextCriminalSNo"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="5421"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_size_10"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Date of case :"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextCriminalDate"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="2010-06-08"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_size_10"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="FIR NO :"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextCriminalFIR"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="74859612"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_size_10"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Name of Police :"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextPoliceName"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="Salman Khan"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_size_10"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Status of case :"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextCaseStatus"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="Solved"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-
-                            </LinearLayout>
+                                android:layout_marginTop="@dimen/dp_size_10"
+                                android:orientation="vertical"/>
 
                         </LinearLayout>
 
@@ -1199,128 +1056,13 @@
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
-                                <LinearLayout
-                                    android:id="@+id/LinearFamMember"
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/Recycler_FamMembers"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/dp_size_10"
-                                    android:background="@drawable/edittext_bg"
-                                    android:orientation="vertical"
-                                    android:padding="@dimen/dp_size_10">
+                                    android:orientation="vertical"/>
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="Name"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextMember1"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="Deepti Sonwane"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="Relationship"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextMemberRelation"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="Sister"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="Age"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextMemberAge"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="22"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="Adhaar"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextMemberAdhaar"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="478523654780"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
 
                             </LinearLayout>
 
@@ -1347,156 +1089,13 @@
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
-                                <LinearLayout
-                                    android:id="@+id/LinearLandDetails"
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/Recycler_LandAssets"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/dp_size_10"
-                                    android:background="@drawable/edittext_bg"
-                                    android:orientation="vertical"
-                                    android:padding="@dimen/dp_size_10"
-                                    android:visibility="gone">
+                                    android:orientation="vertical"/>
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="Plot"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextLandPlot"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="Plot No-11"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="House Size"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextHouseSize"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="1200 Sq.ft"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="Area"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextLandArea"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="Sukhsagarnagar"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="Kuccha"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextLandKuccha"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="Kuccha"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:orientation="horizontal"
-                                        android:weightSum="2">
-
-                                        <TextView
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:text="Rental Income"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp" />
-
-                                        <TextView
-                                            android:id="@+id/TextRentalIncome"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="@dimen/dp_size_10"
-                                            android:layout_weight="1"
-                                            android:text="20000"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="@dimen/txt_16sp"
-                                            android:textStyle="bold" />
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
 
                             </LinearLayout>
 
@@ -1528,129 +1127,12 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:id="@+id/LinearFamSurveyed"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/Recycler_FamSurveyed"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_size_10"
-                                android:background="@drawable/edittext_bg"
-                                android:orientation="vertical"
-                                android:padding="@dimen/dp_size_10"
-                                android:visibility="gone">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Name"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextMember2"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="Deepti Sonwane"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Relationship"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextMemberRelation2"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="Sister"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Age"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextMemberAge2"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="22"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <TextView
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:text="Adhaar"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp" />
-
-                                    <TextView
-                                        android:id="@+id/TextMemberAdhaar2"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/dp_size_10"
-                                        android:layout_weight="1"
-                                        android:text="478523654780"
-                                        android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/txt_16sp"
-                                        android:textStyle="bold" />
-
-                                </LinearLayout>
-
-
-                            </LinearLayout>
+                                android:orientation="vertical"/>
 
                         </LinearLayout>
 
@@ -1844,27 +1326,48 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_size_10"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                                android:orientation="vertical"
+                                >
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="Timing of Vending/Hawking/Squatting :"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
-                                <TextView
-                                    android:id="@+id/TextTime"
-                                    android:layout_width="0dp"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dp_size_10"
-                                    android:layout_weight="1"
-                                    android:text="10:00 PM to 9:30 PM"
-                                    android:textColor="@color/colorAccent"
-                                    android:textSize="@dimen/txt_16sp"
-                                    android:textStyle="bold" />
+                                    android:layout_marginTop="@dimen/dp_size_10"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:id="@+id/TextTimeFrom1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="from1"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp" />
+
+                                    <TextView
+                                        android:id="@+id/TextTimeFrom2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/dp_size_10"
+                                        android:layout_weight="1"
+                                        android:text="from2"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/txt_16sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
 
                             </LinearLayout>
 
@@ -1889,7 +1392,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="5"
+                                    android:text=""
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -1917,7 +1420,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="No"
+                                    android:text=""
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -1945,7 +1448,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="Pucca"
+                                    android:text=""
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -1973,7 +1476,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"
+                                    android:text=""
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -2001,7 +1504,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="2008-08-01"
+                                    android:text=""
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -2029,7 +1532,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="No"
+                                    android:text=""
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -2057,7 +1560,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="First Choice (within 1 km)"
+                                    android:text=""
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -2312,7 +1815,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="test"
+                                    android:text=""
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />

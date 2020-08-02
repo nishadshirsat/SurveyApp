@@ -32,8 +32,11 @@
             android:id="@+id/btn_SearchData"
             android:layout_width="0dp"
             android:layout_weight="0.2"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:textSize="12sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/padding_5"
+            android:layout_marginRight="@dimen/padding_5"
             android:textColor="@color/white"
             android:background="@color/colorAccent"
             android:text="search"/>
@@ -182,7 +185,5 @@
         android:layout_marginTop="@dimen/dp_size_10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-
 
 </LinearLayout>

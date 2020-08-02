@@ -1,6 +1,8 @@
 package com.example.streethawkerssurveyapp.view_survey.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -8,13 +10,18 @@ import retrofit2.Response;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
@@ -75,18 +82,8 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
     private TextView mTextPermanantAddress;
     private TextView mTextAnnualImcome;
     private TextView mTextCriminal;
-    private LinearLayout mLinearCriminalCase;
-    private TextView mTextCriminalSNo;
-    private TextView mTextCriminalDate;
-    private TextView mTextCriminalFIR;
-    private TextView mTextPoliceName;
-    private TextView mTextCaseStatus;
     private LinearLayout mCardFamilyDetails;
-    private LinearLayout mLinearFamMember;
-    private TextView mTextMember1;
-    private TextView mTextMemberRelation;
-    private TextView mTextMemberAge;
-    private TextView mTextMemberAdhaar;
+
     private LinearLayout mLinearLandDetails;
     private TextView mTextLandPlot;
     private TextView mTextHouseSize;
@@ -99,6 +96,12 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
     private TextView mTextMemberRelation2;
     private TextView mTextMemberAge2;
     private TextView mTextMemberAdhaar2;
+
+    private RecyclerView Recycler_CriminalCase;
+    private RecyclerView Recycler_FamMembers;
+    private RecyclerView Recycler_LandAssets;
+    private RecyclerView Recycler_FamSurveyed;
+
     private LinearLayout mCardBankDetails;
     private TextView mTextBankNo;
     private TextView mTextBankName;
@@ -107,7 +110,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
     private LinearLayout mCardVendingDetails;
     private TextView mTextVendingType;
     private TextView mTextNameVending;
-    private TextView mTextTime;
+    private TextView TextTimeFrom1,TextTimeFrom2;
     private TextView mTextVendingYrs;
     private TextView mTextPreviousRecognized;
     private TextView mTextTypeVehical;
@@ -237,6 +240,8 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
                     mCardAdhaarDetails.setVisibility(View.GONE);
                 }
 
+                setFamilyData();
+
             }
         });
 
@@ -270,6 +275,8 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
                     mCardDocumentsDetails.setVisibility(View.GONE);
                     mCardAdhaarDetails.setVisibility(View.GONE);
                 }
+
+                setBankData();
 
 
             }
@@ -306,6 +313,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
                     mCardAdhaarDetails.setVisibility(View.GONE);
                 }
 
+                setVendingData();
 
             }
         });
@@ -341,6 +349,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
                     mCardAdhaarDetails.setVisibility(View.GONE);
                 }
 
+                setDocumentsData();
 
             }
         });
@@ -376,6 +385,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
                     mCardDocumentsDetails.setVisibility(View.GONE);
                 }
 
+                setAadharData();
 
             }
         });
@@ -389,10 +399,90 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void setAadharData() {
+
+        mTextUidNo.setText(SingleSurveyData.getAadharCardDetails());
+
+//        Glide.with(this).load(SingleSurveyData.getPhotoOfTheStreetVendor())
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .skipMemoryCache(true)
+//                .into(mImgVendorPhoto);
+
+
+
+    }
+
+    private void setDocumentsData() {
+
+        mTextComments.setText(SingleSurveyData.getComments());
+
+    }
+
+    private void setVendingData() {
+
+        mTextVendingType.setText(SingleSurveyData.getTypeOfVending());
+        mTextNameVending.setText(SingleSurveyData.getNameOfVendingSite());
+        TextTimeFrom1.setText(SingleSurveyData.getTimingOfVendingFrom() +" - "+SingleSurveyData.getTimingOfVendingTo());
+        TextTimeFrom2.setText(SingleSurveyData.getTimingOfVendingFrom1() +" - "+SingleSurveyData.getTimingOfVendingTo1());
+        mTextVendingYrs.setText(SingleSurveyData.getNumberOfYrsOfVending());
+        mTextPreviousRecognized.setText(SingleSurveyData.getApplicantRecognizedAsAStreetVendor());
+        mTextTypeVehical.setText(SingleSurveyData.getTypeOfStructure());
+        mTextActiveDays.setText(SingleSurveyData.getNoOfDaysActive());
+        mTextStartVendingDate.setText(SingleSurveyData.getDateOfStartOfVendingActivity());
+        mTextTehrabaziDoc.setText(SingleSurveyData.getTehbazariAvailable());
+        mTextVendingChoiceArea.setText(SingleSurveyData.getChoiceOfVendingArea());
+
+    }
+
+    private void setBankData() {
+
+        mTextBankNo.setText(SingleSurveyData.getBankAccountNumber());
+        mTextBankName.setText(SingleSurveyData.getBankName());
+        mTextBranch.setText(SingleSurveyData.getBankBranchName());
+        mTextIfsc.setText(SingleSurveyData.getBankIfsc());
+
+    }
+
+
+    private void setFamilyData() {
+    }
+
     private void setPersonalData() {
 
-        mTextUriNo.setText("URI NUMBER: "+SingleSurveyData.getUriNumber());
+        mTextUriNo.setText("URI NUMBER : "+SingleSurveyData.getUriNumber());
         mTextBarcodeApplicationNo.setText(SingleSurveyData.getBarCode());
+        mTextCorporation.setText(SingleSurveyData.getCorporation());
+        mTextZone.setText(SingleSurveyData.getZone());
+        mTextWard.setText(SingleSurveyData.getWard());
+        mTextArea.setText(SingleSurveyData.getArea());
+
+        Glide.with(this).load(SingleSurveyData.getPhotoOfTheStreetVendor())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(mImgVendorPhoto);
+
+        Glide.with(this).load(SingleSurveyData.getPhotoOfVendorSite())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(mImgVendorSite);
+
+        mTextVendorName.setText(SingleSurveyData.getNameOfTheStreetVendor());
+        mTextAadharNo.setText(SingleSurveyData.getAadhaarNumber());
+        mTextGender.setText(SingleSurveyData.getSex());
+        mTextAge.setText(SingleSurveyData.getAge());
+        mTextDOB.setText(SingleSurveyData.getDateOfBirth());
+        mTextMobile.setText(SingleSurveyData.getContactNumber());
+        mTextLandline.setText(SingleSurveyData.getLandlineNumber());
+        mTextEducation.setText(SingleSurveyData.getEducationStatus());
+        mTextFatherName.setText(SingleSurveyData.getNameOfFatherHusband());
+        mTextMotherName.setText(SingleSurveyData.getNameOfMother());
+        mTextSpouseName.setText(SingleSurveyData.getSpouseName());
+        mTextWidowed.setText(SingleSurveyData.getWhetherWidowedWidower());
+        mTextCategory.setText(SingleSurveyData.getCategory());
+        mTextResidentAddress.setText(SingleSurveyData.getResidentialCorrespondenceAddress());
+        mTextPermanantAddress.setText(SingleSurveyData.getPermanentAddress());
+        mTextAnnualImcome.setText(SingleSurveyData.getAnnualIncome());
+        mTextCriminal.setText(SingleSurveyData.getCriminalCasePending());
 
     }
 
@@ -408,6 +498,12 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         mTextBank = (TextView) findViewById(R.id.TextBank);
         mCardVendor = (androidx.cardview.widget.CardView) findViewById(R.id.CardVendor);
         mImgVending = (ImageView) findViewById(R.id.ImgVending);
+
+        Recycler_CriminalCase = (RecyclerView) findViewById(R.id.Recycler_CriminalCase);
+        Recycler_FamMembers = (RecyclerView) findViewById(R.id.Recycler_FamMembers);
+        Recycler_LandAssets = (RecyclerView) findViewById(R.id.Recycler_LandAssets);
+        Recycler_FamSurveyed = (RecyclerView) findViewById(R.id.Recycler_FamSurveyed);
+
         mTextVending = (TextView) findViewById(R.id.TextVending);
         mCardDocuments = (androidx.cardview.widget.CardView) findViewById(R.id.CardDocuments);
         mImgDoc = (ImageView) findViewById(R.id.ImgDoc);
@@ -442,18 +538,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         mTextPermanantAddress = (TextView) findViewById(R.id.TextPermanantAddress);
         mTextAnnualImcome = (TextView) findViewById(R.id.TextAnnualImcome);
         mTextCriminal = (TextView) findViewById(R.id.TextCriminal);
-        mLinearCriminalCase = (LinearLayout) findViewById(R.id.LinearCriminalCase);
-        mTextCriminalSNo = (TextView) findViewById(R.id.TextCriminalSNo);
-        mTextCriminalDate = (TextView) findViewById(R.id.TextCriminalDate);
-        mTextCriminalFIR = (TextView) findViewById(R.id.TextCriminalFIR);
-        mTextPoliceName = (TextView) findViewById(R.id.TextPoliceName);
-        mTextCaseStatus = (TextView) findViewById(R.id.TextCaseStatus);
         mCardFamilyDetails = (LinearLayout) findViewById(R.id.CardFamilyDetails);
-        mLinearFamMember = (LinearLayout) findViewById(R.id.LinearFamMember);
-        mTextMember1 = (TextView) findViewById(R.id.TextMember1);
-        mTextMemberRelation = (TextView) findViewById(R.id.TextMemberRelation);
-        mTextMemberAge = (TextView) findViewById(R.id.TextMemberAge);
-        mTextMemberAdhaar = (TextView) findViewById(R.id.TextMemberAdhaar);
         mLinearLandDetails = (LinearLayout) findViewById(R.id.LinearLandDetails);
         mTextLandPlot = (TextView) findViewById(R.id.TextLandPlot);
         mTextHouseSize = (TextView) findViewById(R.id.TextHouseSize);
@@ -474,7 +559,8 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         mCardVendingDetails = (LinearLayout) findViewById(R.id.CardVendingDetails);
         mTextVendingType = (TextView) findViewById(R.id.TextVendingType);
         mTextNameVending = (TextView) findViewById(R.id.TextNameVending);
-        mTextTime = (TextView) findViewById(R.id.TextTime);
+        TextTimeFrom1 = (TextView) findViewById(R.id.TextTimeFrom1);
+        TextTimeFrom2 = (TextView) findViewById(R.id.TextTimeFrom2);
         mTextVendingYrs = (TextView) findViewById(R.id.TextVendingYrs);
         mTextPreviousRecognized = (TextView) findViewById(R.id.TextPreviousRecognized);
         mTextTypeVehical = (TextView) findViewById(R.id.TextTypeVehical);
