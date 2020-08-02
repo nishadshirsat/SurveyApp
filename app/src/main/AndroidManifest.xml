@@ -8,7 +8,6 @@
         android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -23,19 +22,24 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
+        android:name=".CrashTestApplication"
         android:allowAudioPlaybackCapture="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".CrashTestApplication"
         android:requestLegacyExternalStorage="true"
-        android:supportsRtl="true"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".suspended_survey.avtivities.SuspendedSurveyActivity"></activity>
+        <activity android:name=".view_survey.activities.ViewSurveyDetailsActivity" />
+        <activity android:name=".view_survey.activities.ViewSurveyActivity" />
+        <activity android:name=".pending_survey.activities.PendingSurveyActivity" />
 
-        <meta-data android:name="io.sentry.dsn" android:value="https://41ff2063c719487780362d6d0a9c2997@o423178.ingest.sentry.io/5353064" />
-
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://41ff2063c719487780362d6d0a9c2997@o423178.ingest.sentry.io/5353064" />
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
@@ -51,27 +55,22 @@
             android:name=".activities.ScannedBarcodeActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.CorporationZoneActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.StartSurveyModeActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.DashboardActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.PersonalDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme"
