@@ -60,7 +60,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private EditText mEditEToTime;
     private EditText mEditAge;
     private LinearLayout mLinearTwo;
-    private EditText mEditAnnualIncome;
+//    private EditText mEditAnnualIncome;
     //    private RadioButton mRadioY;
 //    private RadioButton mRadioN;
     private Spinner mSpinnerVehical;
@@ -94,7 +94,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
             VENDING_EFROM = "",
             VENDING_ETO = "",
             YRS_OF_VENDING = "",
-            ANNUAL_INCOME = "",
+
+//            ANNUAL_INCOME = "",
+
             IS_RECOGNIZED_STREET_VENDOR = "",
             TYPE_OF_STRUCTURE = "",
             STARTING_DATE_VENDING = "",
@@ -559,13 +561,11 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     VENDING_EFROM = mEditEFromTime.getText().toString().trim();
                     VENDING_ETO = mEditEToTime.getText().toString().trim();
                     YRS_OF_VENDING = mEditAge.getText().toString().trim();
-                    ANNUAL_INCOME = mEditAnnualIncome.getText().toString().trim();
 
                     VENDING_SITE = mEditVendingSite.getText().toString().trim();
 //                    VENDING_FROM=mEditFromTime.getText().toString().trim();
 //                    VENDING_TO=mEditToTime.getText().toString().trim();
                     YRS_OF_VENDING = mEditAge.getText().toString().trim();
-                    ANNUAL_INCOME = mEditAnnualIncome.getText().toString().trim();
 
                     STARTING_DATE_VENDING = mEditDob.getText().toString().trim();
 
@@ -695,12 +695,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
             mEditAge.requestFocus();
             return false;
         }
-        else if (mEditAnnualIncome.getText().toString().trim().isEmpty()) {
-            mEditAnnualIncome.setError("Enter Vending Site");
-            mEditAnnualIncome.requestFocus();
-            return false;
-        } else if (mSpinnerVehical.getSelectedItem().toString().isEmpty()) {
-            mEditAnnualIncome.setError("Select Vehicals");
+
+        else if (mSpinnerVehical.getSelectedItem().toString().isEmpty()) {
+            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "", "Select Vehicals");
             mSpinnerVehical.requestFocus();
             return false;
         }
@@ -759,7 +756,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
         mEditEToTime = (EditText) findViewById(R.id.EditEToTime);
         mEditAge = (EditText) findViewById(R.id.EditAge);
         mLinearTwo = (LinearLayout) findViewById(R.id.LinearTwo);
-        mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
 //        mRadioY = (RadioButton) findViewById(Integer.parseInt(IS_RECOGNIZED_STREET_VENDOR));
 //        mRadioN = (RadioButton) findViewById(Integer.parseInt(IS_RECOGNIZED_STREET_VENDOR));
         mSpinnerVehical = (Spinner) findViewById(R.id.SpinnerVehical);
@@ -814,7 +810,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 VENDING_ETO,
                 NO_DAYS_ACTIVE.toString().trim(),
                 YRS_OF_VENDING,
-                ANNUAL_INCOME,
                 IS_RECOGNIZED_STREET_VENDOR,
                 TYPE_OF_STRUCTURE,
                 STARTING_DATE_VENDING,
@@ -841,7 +836,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                startActivity(new Intent(VendingDetailsActivity.this, DocumentsScanActivity.class));
+                                startActivity(new Intent(VendingDetailsActivity.this, BankingDetailsActivity.class));
 
                             }
                         });

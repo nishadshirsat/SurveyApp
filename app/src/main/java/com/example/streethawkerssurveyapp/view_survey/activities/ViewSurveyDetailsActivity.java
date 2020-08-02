@@ -1,8 +1,12 @@
 package com.example.streethawkerssurveyapp.view_survey.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.services_pack.ApiService;
+import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyDetails;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyResponse;
+import com.example.streethawkerssurveyapp.view_survey.services.ViewSurveyInterface;
+
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewSurveyDetailsActivity extends AppCompatActivity {
 
@@ -130,6 +145,9 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
     private TextView mTextCountry;
     private Button mBtnDone;
 
+    private ProgressDialog progressDialog;
+    private SingleSurveyDetails SingleSurveyData;
+    private String URI_NO="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +159,16 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         setTitle("Survey Details");
 
         bindView();
+
+        URI_NO  = getIntent().getExtras().getString("URI");
+
+        onClickListners();
+
+        SingleSurveyDetails("survey/"+URI_NO);
+
+    }
+
+    private void onClickListners() {
 
         mCardPersonal.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
@@ -172,6 +200,8 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
                     mCardDocumentsDetails.setVisibility(View.GONE);
                     mCardAdhaarDetails.setVisibility(View.GONE);
                 }
+
+                setPersonalData();
 
             }
         });
@@ -353,14 +383,20 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         mBtnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewSurveyDetailsActivity.this,ViewSurveyActivity.class));
+                startActivity(new Intent(ViewSurveyDetailsActivity.this,ViewSurveyDetailsActivity.class));
             }
         });
 
     }
 
-    private void bindView() {
+    private void setPersonalData() {
 
+        mTextUriNo.setText("URI NUMBER: "+SingleSurveyData.getUriNumber());
+        mTextBarcodeApplicationNo.setText(SingleSurveyData.getBarCode());
+
+    }
+
+    private void bindView() {
         mCardPersonal = (androidx.cardview.widget.CardView) findViewById(R.id.CardPersonal);
         mImgPersonal = (ImageView) findViewById(R.id.ImgPersonal);
         mTextPersonal = (TextView) findViewById(R.id.TextPersonal);
@@ -483,4 +519,61 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    private void SingleSurveyDetails(String CustomUrl) {
+
+        progressDialog = CustomProgressDialog.getDialogue(ViewSurveyDetailsActivity.this);
+        progressDialog.show();
+
+        String UNiq_Id =  PrefUtils.getFromPrefs(ViewSurveyDetailsActivity.this, ApplicationConstant.URI_NO_,"");
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveyDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ViewSurveyInterface apiservice = ApiService.getApiClient().create(ViewSurveyInterface.class);
+        Call<SingleSurveyResponse> call = apiservice.SingleSurveyDetails(headers, CustomUrl);
+
+        call.enqueue(new Callback<SingleSurveyResponse>() {
+            @Override
+            public void onResponse(Call<SingleSurveyResponse> call, Response<SingleSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        SingleSurveyData  = response.body().getResponse();
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,
+                                "Response",
+                                "Failed to get Data");
+                    }
+
+                }else {
+                    try {
+                        ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SingleSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
 }

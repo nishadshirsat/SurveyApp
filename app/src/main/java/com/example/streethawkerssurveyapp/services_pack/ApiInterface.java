@@ -72,14 +72,11 @@ public interface ApiInterface {
             @Part("spouse_name") RequestBody spouse_name,
             @Part("whether_widowed_widower") RequestBody whether_widowed_widower,
             @Part("category") RequestBody category,
+            @Part("annual_income") RequestBody annual_income,
             @Part("residential_correspondence_address") RequestBody residential_correspondence_address,
             @Part("permanent_address") RequestBody permanent_address,
             @Part("aadhar_card_details") RequestBody aadhar_card_details,
             @Part("aadhaar_number") RequestBody aadhaar_number,
-            @Part("bank_account_number") RequestBody bank_account_number,
-            @Part("bank_name") RequestBody bank_name,
-            @Part("bank_branch_name") RequestBody bank_branch_name,
-            @Part("bank_ifsc") RequestBody bank_ifsc,
             @Part("criminal_case_pending") RequestBody criminal_case_pending,
             @Part("criminal_case_details") RequestBody criminal_case_details,
 //            @Part("criminal_case_date") RequestBody criminal_case_date,
@@ -87,7 +84,20 @@ public interface ApiInterface {
 //            @Part("criminal_case_name_of_police") RequestBody criminal_case_name_of_police,
             @Part("latitude") RequestBody latitude,
             @Part("longitude") RequestBody longitude);
-//            @Part("criminal_case_status") RequestBody criminal_case_status);
+
+
+    @Multipart
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> BankDetailsSurvey(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part("corporation") RequestBody corporation,
+            @Part("zone") RequestBody zone,
+            @Part("ward") RequestBody ward,
+            @Part("bank_account_number") RequestBody bank_account_number,
+            @Part("bank_name") RequestBody bank_name,
+            @Part("bank_branch_name") RequestBody bank_branch_name,
+            @Part("bank_ifsc") RequestBody bank_ifsc);
 
     @Multipart
     @POST("update-survey")
@@ -116,7 +126,6 @@ public interface ApiInterface {
             @Field("timing_of_vending_to_1") String timing_of_vending_to_1,
             @Field("no_of_days_active") String no_of_days_active,
             @Field("number_of_yrs_of_vending") String number_of_yrs_of_vending,
-            @Field("annual_income") String annual_income,
             @Field("applicant_recognized_as_a_street_vendor") String applicant_recognized_as_a_street_vendor,
             @Field("type_of_structure") String type_of_structure,
             @Field("date_of_start_of_vending_activity") String date_of_start_of_vending_activity,

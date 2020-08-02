@@ -34,7 +34,6 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".suspended_survey.avtivities.SuspendedSurveyActivity"></activity>
         <activity android:name=".view_survey.activities.ViewSurveyDetailsActivity" />
-        <activity android:name=".view_survey.activities.ViewSurveyActivity" />
         <activity android:name=".pending_survey.activities.PendingSurveyActivity" />
 
         <meta-data
@@ -44,7 +43,7 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".activities.VendorsFamDetailsActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -80,11 +79,21 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.VendorsFamDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.VendingDetailsActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".activities.BankingDetailsActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".view_survey.activities.ViewSurveyActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 

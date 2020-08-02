@@ -128,12 +128,16 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditPCity;
     private EditText mEditPPincode;
     private EditText mEditAadhar;
+    private EditText mEditAnnualIncome;
+
     private Button mBtnAddharCapture;
     private TextView BtnAddharVerified;
-    private EditText mEditAccNo;
-    private EditText mEditBankName;
-    private EditText mEditBranchName;
-    private EditText mEditIfscCode;
+
+//    private EditText mEditAccNo;
+//    private EditText mEditBankName;
+//    private EditText mEditBranchName;
+//    private EditText mEditIfscCode;
+
     private RadioButton mRadioCY;
     private RadioButton mRadioCN;
     private LinearLayout mLinearFive;
@@ -178,10 +182,14 @@ public class PersonalDetailsActivity extends MainActivity {
             RESIDENTIAL_ADDRESS = "",
             PERMENENT_ADDRESS = "",
             AADHAR_NO = "",
-            BANKACC_NO = "",
-            BANKNAME = "",
-            BRANCH_NAME = "",
-            IFSC = "",
+            ANNUAL_INCOME = "",
+
+
+//            BANKACC_NO = "",
+//            BANKNAME = "",
+//            BRANCH_NAME = "",
+//            IFSC = "",
+
             IS_CRIMINALCASE = "",
             CRIMINALCASE_NO = "";
 //            CRIMINALCASE_DATE = "",
@@ -652,6 +660,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 } else if (mLinearThree.getVisibility() == View.VISIBLE) {
 
+                    ANNUAL_INCOME = mEditAnnualIncome.getText().toString().trim();
+
                     if (validate3()) {
                         mLinearThree.setVisibility(View.GONE);
                         mLinearOne.setVisibility(View.GONE);
@@ -690,7 +700,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     DOB = mEditDob.getText().toString().trim();
                     CONTACT_NO = mEditMobile.getText().toString().trim();
                     LANDLINE_NO = mEditLandline.getText().toString().trim();
-                    BRANCH_NAME = mEditBranchName.getText().toString().trim();
+//                    BRANCH_NAME = mEditBranchName.getText().toString().trim();
 
 
 
@@ -720,9 +730,9 @@ public class PersonalDetailsActivity extends MainActivity {
                             + mEditPPincode.getText().toString().trim();
 
                     AADHAR_NO = mEditAadhar.getText().toString().trim();
-                    BANKACC_NO = mEditAccNo.getText().toString().trim();
-                    BANKNAME = mEditBankName.getText().toString().trim();
-                    IFSC = mEditIfscCode.getText().toString().trim();
+//                    BANKACC_NO = mEditAccNo.getText().toString().trim();
+//                    BANKNAME = mEditBankName.getText().toString().trim();
+//                    IFSC = mEditIfscCode.getText().toString().trim();
 
 
 //                    IS_CRIMINALCASE = String.valueOf(RGCriminal.getCheckedRadioButtonId());
@@ -787,23 +797,8 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditAadhar.setError("Enter Correct Aadhar Number");
             mEditAadhar.requestFocus();
             return false;
-        } else if (mEditAccNo.getText().toString().trim().isEmpty()) {
-            mEditAccNo.setError("Enter Account No");
-            mEditAccNo.requestFocus();
-            return false;
-        } else if (mEditBankName.getText().toString().trim().isEmpty()) {
-            mEditBankName.setError("Enter Bank Name");
-            mEditBankName.requestFocus();
-            return false;
-        } else if (mEditBranchName.getText().toString().trim().isEmpty()) {
-            mEditBranchName.setError("Enter Branch Name");
-            mEditBranchName.requestFocus();
-            return false;
-        } else if (mEditIfscCode.getText().toString().trim().isEmpty()) {
-            mEditIfscCode.setError("Enter IFSC Code");
-            mEditIfscCode.requestFocus();
-            return false;
         }
+
 
 
 
@@ -829,7 +824,11 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditArea.setError("Select Category");
             mSpinnerCategory.requestFocus();
             return false;
-        } else if (mEditArea.getText().toString().trim().isEmpty()) {
+        }  else if (mEditAnnualIncome.getText().toString().trim().isEmpty()) {
+            mEditAnnualIncome.setError("Enter Vending Site");
+            mEditAnnualIncome.requestFocus();
+            return false;
+        }  else if (mEditArea.getText().toString().trim().isEmpty()) {
             mEditArea.setError("Enter Area");
             mEditArea.requestFocus();
             return false;
@@ -995,6 +994,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private void bindView() {
 
+        mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
+
         btn_same_resident = (TextView) findViewById(R.id.btn_same_resident);
         linear_cases = (LinearLayout) findViewById(R.id.linear_cases);
         mLinearHead = (LinearLayout) findViewById(R.id.LinearHead);
@@ -1044,10 +1045,7 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditAadhar = (EditText) findViewById(R.id.EditAadhar);
         mBtnAddharCapture = (Button) findViewById(R.id.BtnAddharCapture);
         BtnAddharVerified = (TextView) findViewById(R.id.BtnAddharVerified);
-        mEditAccNo = (EditText) findViewById(R.id.EditAccNo);
-        mEditBankName = (EditText) findViewById(R.id.EditBankName);
-        mEditBranchName = (EditText) findViewById(R.id.EditBranchName);
-        mEditIfscCode = (EditText) findViewById(R.id.EditIfscCode);
+
         mRadioCY = (RadioButton) findViewById(R.id.RadioCY);
         mRadioCN = (RadioButton) findViewById(R.id.RadioCN);
         mLinearFive = (LinearLayout) findViewById(R.id.LinearFive);
@@ -1188,12 +1186,9 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody PERMENENT_ADDRESS_ = RequestBody.create(MediaType.parse("multipart/form-data"), PERMENENT_ADDRESS);
         RequestBody AADHAR_DETAILS_ = RequestBody.create(MediaType.parse("multipart/form-data"), AADHAR_DETAILS);
         RequestBody AADHAR_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), AADHAR_NO);
-        RequestBody BANKACC_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), BANKACC_NO);
-        RequestBody BANKNAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), BANKNAME);
-        RequestBody BRANCH_NAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), BRANCH_NAME);
-        RequestBody IFSC_ = RequestBody.create(MediaType.parse("multipart/form-data"), IFSC);
         RequestBody IS_CRIMINALCASE_ = RequestBody.create(MediaType.parse("multipart/form-data"), IS_CRIMINALCASE);
         RequestBody CRIMINALCASE_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_NO);
+        RequestBody ANNUAL_INCOME_ = RequestBody.create(MediaType.parse("multipart/form-data"), ANNUAL_INCOME);
 
 //        RequestBody CRIMINALCASE_DATE_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_DATE);
 //        RequestBody CRIMINALCASE_FIRNO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_FIRNO);
@@ -1221,15 +1216,13 @@ public class PersonalDetailsActivity extends MainActivity {
                 NAME_OFFATHER_HUSBAND_,
                 NAME_MOTHER_,
                 NAME_SPOUSE_,
-                WHETHER_WIDOWED_, CATEGORY_,
+                WHETHER_WIDOWED_,
+                CATEGORY_,
+                ANNUAL_INCOME_,
                 RESIDENTIAL_ADDRESS_,
                 PERMENENT_ADDRESS_,
                 AADHAR_DETAILS_,
                 AADHAR_NO_,
-                BANKACC_NO_,
-                BANKNAME_,
-                BRANCH_NAME_,
-                IFSC_,
                 IS_CRIMINALCASE_,
                 CRIMINALCASE_NO_,
                 LATITUDE,
