@@ -114,6 +114,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
     Uri photoURI;
     private String photoPath = "";
 
+    private LinearLayout mLinearHead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +192,13 @@ public class DocumentsScanActivity extends AppCompatActivity {
 //                    mLinearThree.setVisibility(View.GONE);
                     LinearTwo.setVisibility(View.GONE);
 
+                }  else if (LinearOne.getVisibility() == View.VISIBLE) {
+
+                    LinearFour.setVisibility(View.GONE);
+                    LinearOne.setVisibility(View.GONE);
+                    mLinearHead.setVisibility(View.VISIBLE);
+                    LinearTwo.setVisibility(View.GONE);
+
                 } else {
 
                     onBackPressed();
@@ -266,7 +274,14 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                 Comments = EditComments.getText().toString().trim();
 
-                if (LinearOne.getVisibility() == View.VISIBLE) {
+                if (mLinearHead.getVisibility() == View.VISIBLE) {
+
+                    mLinearHead.setVisibility(View.GONE);
+                    LinearOne.setVisibility(View.VISIBLE);
+                    LinearTwo.setVisibility(View.GONE);
+                    LinearFour.setVisibility(View.GONE);
+
+                }else   if (LinearOne.getVisibility() == View.VISIBLE) {
 
                     if (validate1()) {
                      UploadIdentityProof();
@@ -405,6 +420,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
     private void bindView() {
 
         LinearMain = (LinearLayout) findViewById(R.id.LinearMain);
+        mLinearHead = (LinearLayout) findViewById(R.id.LinearHead);
         LinearOne = (LinearLayout) findViewById(R.id.LinearOne);
         SpinnerIdentityProof = (Spinner) findViewById(R.id.SpinnerIdentityProof);
         ImgIdentityProofFront = (ImageView) findViewById(R.id.ImgIdentityProofFront);

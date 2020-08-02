@@ -124,6 +124,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
     private String FromVending = "";
     private String ToVending = "";
 
+    private LinearLayout mLinearHead;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -366,6 +369,15 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     mLinearTwo.setVisibility(View.GONE);
 
 
+                }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.GONE);
+
+                    mLinearHead.setVisibility(View.VISIBLE);
+
+
                 } else {
 
                     onBackPressed();
@@ -501,7 +513,16 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (mLinearOne.getVisibility() == View.VISIBLE) {
+                if (mLinearHead.getVisibility() == View.VISIBLE) {
+
+
+                    mLinearHead.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.VISIBLE);
+                    mLinearTwo.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.GONE);
+
+
+                }else   if (mLinearOne.getVisibility() == View.VISIBLE) {
 
                     setActiveWeeks();
 
@@ -724,6 +745,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
         btn_all_days = (Button) findViewById(R.id.btn_all_days);
         mLinearMain = (LinearLayout) findViewById(R.id.LinearMain);
         LinearVehical = (LinearLayout) findViewById(R.id.LinearVehical);
+        mLinearHead = (LinearLayout) findViewById(R.id.LinearHead);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
         RGDocument = (RadioGroup) findViewById(R.id.RGDocument);
         RGVendor = (RadioGroup) findViewById(R.id.RGVendor);

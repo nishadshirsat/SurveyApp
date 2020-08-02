@@ -137,6 +137,7 @@ public class PersonalDetailsActivity extends MainActivity {
     private RadioButton mRadioCY;
     private RadioButton mRadioCN;
     private LinearLayout mLinearFive;
+    private LinearLayout mLinearHead;
 
 //    private EditText mEditSNo;
 //    private EditText mEditDate;
@@ -531,6 +532,17 @@ public class PersonalDetailsActivity extends MainActivity {
                     mLinearTwo.setVisibility(View.GONE);
                     mLinearFive.setVisibility(View.GONE);
 
+//                    mBtnPrevious.setVisibility(View.GONE);
+
+                }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+
+                    mLinearHead.setVisibility(View.VISIBLE);
+                    mLinearFour.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearTwo.setVisibility(View.GONE);
+                    mLinearFive.setVisibility(View.GONE);
+
                     mBtnPrevious.setVisibility(View.GONE);
 
                 } else {
@@ -575,46 +587,47 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
-//                HashMap<String,String> body = new HashMap<>();
-//                body.put("aadhaar_number",AADHAR_NO);
-//
-//                String json_Aadhar = new Gson().toJson(body);
-//
-//                AADHAR_DETAILS = json_Aadhar;
-//
-//                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"",AADHAR_DETAILS);
+                if (mLinearHead.getVisibility() == View.VISIBLE) {
 
-                try {
-                    int selectedId = RGSex.getCheckedRadioButtonId();
-                    RadioButton radioSexButton = (RadioButton) findViewById(selectedId);
+                    mLinearHead.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.VISIBLE);
+                    mLinearTwo.setVisibility(View.GONE);
+                    mLinearThree.setVisibility(View.GONE);
+                    mLinearFour.setVisibility(View.GONE);
+                    mLinearFive.setVisibility(View.GONE);
 
-                    if ( radioSexButton.getText().toString().trim().equals("a. Male")){
-                        SEX = "M";
-                    } else if ( radioSexButton.getText().toString().trim().equals("b. Female")){
-                        SEX = "F";
-                    } else {
-                        SEX = "O";
-                    }
+                    mBtnPrevious.setVisibility(View.VISIBLE);
+
+                }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+
+                    try {
+                        int selectedId = RGSex.getCheckedRadioButtonId();
+                        RadioButton radioSexButton = (RadioButton) findViewById(selectedId);
+
+                        if ( radioSexButton.getText().toString().trim().equals("a. Male")){
+                            SEX = "M";
+                        } else if ( radioSexButton.getText().toString().trim().equals("b. Female")){
+                            SEX = "F";
+                        } else {
+                            SEX = "O";
+                        }
 
 //                    SEX = radioSexButton.getText().toString().trim();
 
 //                  Toast.makeText(PersonalDetailsActivity.this, SEX, Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-                try {
-                    int checkedId = RGWidow.getCheckedRadioButtonId();
-                    RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
-                    WHETHER_WIDOWED = radioSexButton.getText().toString().trim();
+                    try {
+                        int checkedId = RGWidow.getCheckedRadioButtonId();
+                        RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
+                        WHETHER_WIDOWED = radioSexButton.getText().toString().trim();
 //                    Toast.makeText(PersonalDetailsActivity.this, SEX, Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-//                mLinearFive.setVisibility(View.GONE);
-
-                if (mLinearOne.getVisibility() == View.VISIBLE) {
 
                     if (validate1()) {
                         mLinearOne.setVisibility(View.GONE);
@@ -984,6 +997,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
         btn_same_resident = (TextView) findViewById(R.id.btn_same_resident);
         linear_cases = (LinearLayout) findViewById(R.id.linear_cases);
+        mLinearHead = (LinearLayout) findViewById(R.id.LinearHead);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
         RGSex = (RadioGroup) findViewById(R.id.RGSex);
         RGWidow = (RadioGroup) findViewById(R.id.RGWidow);

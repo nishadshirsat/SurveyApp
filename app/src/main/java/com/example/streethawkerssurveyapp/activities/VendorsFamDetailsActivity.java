@@ -90,6 +90,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
+    private LinearLayout mLinearOne,mLinearHead;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("URI NO: "+ApplicationConstant.SurveyId);
 
-        mBtnNext.setText("Submit");
 
         RGFam.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -271,9 +272,19 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if (mLinearHead.getVisibility() == View.VISIBLE) {
 
                     onBackPressed();
+                    mBtnNext.setText("Next");
 
+
+                }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+
+                    mLinearHead.setVisibility(View.VISIBLE);
+                    mLinearOne.setVisibility(View.GONE);
+                    mBtnPrevious.setVisibility(View.VISIBLE);
+
+                }
 
 
             }
@@ -284,15 +295,28 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                Gson gson = gsonBuilder.create();
+                if (mLinearHead.getVisibility() == View.VISIBLE) {
 
-                String JSONObject_Family = gson.toJson(listFamily);
+                    mLinearHead.setVisibility(View.GONE);
+                    mLinearOne.setVisibility(View.VISIBLE);
+                    mBtnPrevious.setVisibility(View.VISIBLE);
+
+                    mBtnNext.setText("Submit");
+
+
+                }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+
+                    String JSONObject_Family = gson.toJson(listFamily);
 
 //                ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"",JSONObject_Family);
 
-                if(validate()){
-                    UpdateFamilySurvey();
+                    if(validate()){
+                        UpdateFamilySurvey();
+
+                    }
 
                 }
 
@@ -405,6 +429,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
     }
 
     private void bindView() {
+        mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
+        mLinearHead = (LinearLayout) findViewById(R.id.LinearHead);
         mLinearMain = (LinearLayout) findViewById(R.id.LinearMain);
 
 //        mEditFamName = (EditText) findViewById(R.id.EditFamName);
