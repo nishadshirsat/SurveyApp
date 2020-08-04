@@ -1965,7 +1965,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 mRadioY.setChecked(true);
             }
         }
-
         if (mSpinnerCategory.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getCategory().trim())){
             mSpinnerCategory.setSelection(0);
         }else if (mSpinnerCategory.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getCategory().trim())){
