@@ -32,9 +32,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".suspended_survey.avtivities.SuspendedSurveyActivity"></activity>
-        <activity android:name=".view_survey.activities.ViewSurveyDetailsActivity" />
-        <activity android:name=".pending_survey.activities.PendingSurveyActivity" />
+
 
         <meta-data
             android:name="io.sentry.dsn"
@@ -70,14 +68,22 @@
             android:name=".activities.PersonalDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".pending_survey.activities.PendingPersonalDetailsActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".activities.DocumentsScanActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".activities.VendorsFamDetailsActivity"
             android:theme="@style/AppTheme"
@@ -94,6 +100,21 @@
 
         <activity
             android:name=".view_survey.activities.ViewSurveyActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".suspended_survey.avtivities.SuspendedSurveyActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".view_survey.activities.ViewSurveyDetailsActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".pending_survey.activities.PendingSurveyActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 

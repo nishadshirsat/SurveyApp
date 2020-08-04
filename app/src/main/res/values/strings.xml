@@ -106,5 +106,7 @@
         <item>MINORITY</item>
         <item>OTHERS</item>
         <item>PERSON WITH DISABILITIES</item>
+        <item>EX-SERVICEMEN</item>
+        <item>OTHERS</item>
     </string-array>
 </resources>

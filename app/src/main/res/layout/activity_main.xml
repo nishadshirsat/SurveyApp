@@ -1020,7 +1020,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="22."
+                                android:text="10."
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1080,7 +1080,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10.a"
+                                android:text="11.a"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1214,7 +1214,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10.b"
+                                android:text="11.b"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1349,7 +1349,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="11."
+                                android:text="12."
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1424,116 +1424,6 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="20dp"
                         android:background="@color/dark_gray" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="2"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="12."
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:text="Bank Account details"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <EditText
-                            android:id="@+id/EditAccNo"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="Account No"
-                            android:inputType="number"
-                            android:imeOptions="actionNext"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:id="@+id/EditBankName"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="Bank Name"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <EditText
-                            android:id="@+id/EditBranchName"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="Branch Name"
-                            android:inputType="text"
-                            android:padding="10dp"
-                            android:imeOptions="actionNext"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:id="@+id/EditIfscCode"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg"
-                            android:hint="IFSC Code"
-                            android:inputType="textCapCharacters"
-                            android:padding="10dp"
-                            android:imeOptions="actionNext"
-                            android:textAllCaps="true"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@color/dark_gray" />
-
 
 
 

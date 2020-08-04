@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Polica name"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="normal" />
@@ -101,7 +101,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Case Status"
-                android:textColor="@color/black"
+                android:layout_gravity="right"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 

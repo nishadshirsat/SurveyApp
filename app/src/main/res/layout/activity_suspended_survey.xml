@@ -6,7 +6,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".suspended_survey.avtivities.SuspendedSurveyActivity">
+    tools:context=".view_survey.activities.ViewSurveyActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_size_10"
+        android:weightSum="1">
+
+
+        <EditText
+            android:id="@+id/EditAdharNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.8"
+            android:background="@drawable/edittext_bg"
+            android:hint="Aadhar Or URI Or Name"
+            android:inputType="text"
+            android:padding="@dimen/dp_size_10"
+            android:paddingLeft="@dimen/padding_5"
+            android:textSize="@dimen/txt_16sp" />
+
+        <Button
+            android:id="@+id/btn_SearchData"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="35dp"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/padding_5"
+            android:layout_marginRight="@dimen/padding_5"
+            android:textColor="@color/white"
+            android:background="@color/colorAccent"
+            android:text="search"/>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,240 +81,110 @@
 
 
         <EditText
-            android:id="@+id/EditAdharNo"
+            android:id="@+id/text_search"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
             android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_marginLeft="5dp"
+            android:visibility="visible"
             android:background="@drawable/edittext_bg"
-            android:hint="Aadhar Or URI Or Name"
-            android:inputType="number"
-            android:padding="@dimen/dp_size_10"
-            android:paddingLeft="@dimen/padding_5"
-            android:textSize="@dimen/txt_16sp" />
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:drawablePadding="@dimen/padding_5"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:hint="search"
+            android:padding="8dp" />
 
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/text_search"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:visibility="gone"
-        android:background="@drawable/edittext_bg"
-        android:drawableLeft="@drawable/ic_search_black_24dp"
-        android:drawablePadding="@dimen/padding_5"
-        android:drawableTint="@color/colorPrimaryDark"
-        android:hint="search"
-        android:padding="@dimen/dp_size_10" />
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_size_10"
+        android:paddingRight="@dimen/dp_size_10"
+        android:weightSum="2">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/CardSurvey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_size_10"
-        app:cardCornerRadius="@dimen/padding_5"
-        app:cardElevation="@dimen/padding_5">
+        <TextView
+            android:id="@+id/TextPageNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="Current Page: 1"
+            android:textColor="@color/black" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <View
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_size_10">
+            android:layout_marginLeft="@dimen/dp_size_10"
+            android:layout_weight="0.01"
+            android:background="@color/colorPrimaryDark" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/TextUriNo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="URI No - 6345723"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/txt_16sp" />
-
-                <TextView
-                    android:id="@+id/TextDate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="Date : 20/07/2020"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/txt_16sp" />
-
-            </LinearLayout>
+        <TextView
+            android:id="@+id/TextTotalPages"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="@dimen/dp_size_10"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:text="Total Pages : 5"
+            android:textColor="@color/black" />
 
 
-            <TextView
-                android:id="@+id/TextName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="05dp"
-                android:text="Surveyor Name : Jhon Doe"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/TextVendorName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="05dp"
-                android:text="Vendor Name : Shashank Patil"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark_gray"
+        android:layout_margin="10dp"/>
 
-            <TextView
-                android:id="@+id/TextCorportaion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="@dimen/padding_5"
-                android:gravity="left"
-                android:textStyle="bold"
-                android:text="Corportation : ED"
-                android:textColor="@color/colorAccent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_size_10"
+        android:visibility="gone"
+        android:paddingRight="@dimen/dp_size_10"
+        android:weightSum="2">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_5"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/TextSex"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    android:text="Sex : Male"
-                    android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/TextPrevPage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:gravity="left|center_vertical"
+            android:textStyle="bold"
+            android:drawableLeft="@drawable/ic_keyboard_arrow_left"
+            android:text="  Prev Page"
+            android:textColor="@color/black" />
 
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/dp_size_10"
-                    android:layout_weight="0.01"
-                    android:background="@color/colorPrimaryDark" />
-
-                <TextView
-                    android:id="@+id/TextWard"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="@dimen/dp_size_10"
-                    android:layout_weight="1.1"
-                    android:gravity="left"
-                    android:text="Ward : 25"
-                    android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/TextNextPage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginLeft="@dimen/dp_size_10"
+            android:layout_weight="1.1"
+            android:textStyle="bold"
+            android:drawableRight="@drawable/ic_keyboard_arrow_right"
+            android:gravity="right|center_vertical"
+            android:text="Next Page "
+            android:textColor="@color/black" />
 
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_5"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/TextAge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_weight="0.9"
-                    android:gravity="left"
-                    android:text="Age : 52"
-                    android:textColor="@color/black" />
+    </LinearLayout>
 
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/dp_size_10"
-                    android:layout_weight="0.01"
-                    android:background="@color/colorPrimaryDark" />
-
-                <TextView
-                    android:id="@+id/TextZone"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="@dimen/dp_size_10"
-                    android:layout_weight="0.9"
-                    android:gravity="left"
-                    android:text="Zone : NZ"
-                    android:textColor="@color/black" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_5"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/TextCategory"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_weight="0.9"
-                    android:gravity="left"
-                    android:text="Category : General"
-                    android:textColor="@color/black" />
-
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/dp_size_10"
-                    android:layout_weight="0.01"
-                    android:background="@color/colorPrimaryDark" />
-
-                <TextView
-                    android:id="@+id/TextArea"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="@dimen/dp_size_10"
-                    android:layout_weight="0.9"
-                    android:gravity="left"
-                    android:text="Area : FC Road"
-                    android:textColor="@color/black" />
-
-
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/TextStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="@dimen/padding_5"
-                android:gravity="left"
-                android:text="Status : Suspended"
-                android:textColor="@color/red"
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

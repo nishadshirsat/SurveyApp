@@ -24,7 +24,7 @@ public class SingleSurveyDetails {
 	private String timingOfVendingTo1;
 
 	@SerializedName("aadhar_card_details")
-	private String aadharCardDetails;
+	private AadharDetails aadharCardDetails;
 
 	@SerializedName("number_of_yrs_of_vending")
 	private String numberOfYrsOfVending;
@@ -257,12 +257,13 @@ public class SingleSurveyDetails {
 		return timingOfVendingTo1;
 	}
 
-	public void setAadharCardDetails(String aadharCardDetails){
-		this.aadharCardDetails = aadharCardDetails;
+
+	public AadharDetails getAadharCardDetails() {
+		return aadharCardDetails;
 	}
 
-	public String getAadharCardDetails(){
-		return aadharCardDetails;
+	public void setAadharCardDetails(AadharDetails aadharCardDetails) {
+		this.aadharCardDetails = aadharCardDetails;
 	}
 
 	public void setNumberOfYrsOfVending(String numberOfYrsOfVending){

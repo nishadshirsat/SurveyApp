@@ -1080,14 +1080,14 @@
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_size_10"
-                                    android:layout_weight="1"
-                                    android:text="No Land or Fixed Assets"
-                                    android:textColor="@color/colorAccent"
-                                    android:textSize="@dimen/txt_16sp" />
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_marginTop="@dimen/dp_size_10"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:text="No Land or Fixed Assets"-->
+<!--                                    android:textColor="@color/colorAccent"-->
+<!--                                    android:textSize="@dimen/txt_16sp" />-->
 
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/Recycler_LandAssets"
@@ -1697,8 +1697,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="No Document Uploaded"
-                                    android:textColor="@color/colorAccent"
+                                    android:text="View"
+                                    android:textColor="@color/blue"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
 
@@ -1850,8 +1850,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text=""
-                                    android:textColor="@color/colorAccent"
+                                    android:text="View Recording"
+                                    android:textColor="@color/blue"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
 
@@ -2337,6 +2337,7 @@
                     android:paddingLeft="@dimen/dp_size_10"
                     android:paddingRight="@dimen/dp_size_10"
                     android:text="DONE"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />

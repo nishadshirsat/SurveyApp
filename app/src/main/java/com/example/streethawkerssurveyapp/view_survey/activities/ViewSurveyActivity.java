@@ -1,12 +1,16 @@
 package com.example.streethawkerssurveyapp.view_survey.activities;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
@@ -90,10 +94,75 @@ public class ViewSurveyActivity extends AppCompatActivity {
 
     private void onClickListners() {
 
+        mText_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.toString().length() == 0){
+                    viewSurveyAdapter.setList(AllSurveyList);
+
+                }else {
+                    filter(s.toString());
+                }
+            }
+        });
+
+        mRecycler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == AllSurveyList.size() - 1) {
+                        //bottom of list!
+                        try {
+                            if (!mTextPageNo.getText().toString().trim().split(":")[1].trim().equals(mTextTotalPages.getText().toString().trim().split(":")[1].trim())){
+                                int PageNo = 1;
+
+                                if (mTextPageNo.getText().toString().trim().contains(":")){
+                                    PageNo = Integer.parseInt(mTextPageNo.getText().toString().trim().split(":")[1].trim()) + 1;
+                                }
+                                ViewPagewiseSurvey(PageNo);
+                            }  else {
+                                mTextNextPage.setVisibility(View.GONE);
+                                mTextPrevPage.setVisibility(View.VISIBLE);
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+            }
+        });
+
+
         mbtn_SearchData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ViewPagewiseSurvey();
+
+//                int PageNo = 1;
+//
+//                if (mTextPageNo.getText().toString().trim().contains(":")){
+//                    PageNo = Integer.parseInt(mTextPageNo.getText().toString().trim().split(":")[1].trim()) + 1;
+//                }
+                ViewSearchSurvey(0);
             }
         });
 
@@ -102,11 +171,20 @@ public class ViewSurveyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (!mTextPageNo.getText().toString().trim().equals(mTextTotalPages.getText().toString().trim())){
-                    ViewPagewiseSurvey();
-                }  else {
-                    mTextNextPage.setVisibility(View.GONE);
-                    mTextPrevPage.setVisibility(View.VISIBLE);
+                try {
+                    if (!mTextPageNo.getText().toString().trim().split(":")[1].trim().equals(mTextTotalPages.getText().toString().trim().split(":")[1].trim())){
+                        int PageNo = 1;
+
+                        if (mTextPageNo.getText().toString().trim().contains(":")){
+                            PageNo = Integer.parseInt(mTextPageNo.getText().toString().trim().split(":")[1].trim()) + 1;
+                        }
+                        ViewPagewiseSurvey(PageNo);
+                    }  else {
+                        mTextNextPage.setVisibility(View.GONE);
+                        mTextPrevPage.setVisibility(View.VISIBLE);
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -115,7 +193,21 @@ public class ViewSurveyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                    ViewPagewiseSurvey();
+                try {
+                    if (Integer.parseInt(mTextPageNo.getText().toString().trim().split(":")[1].trim()) > 1){
+                        int PageNo = 1;
+
+                        if (mTextPageNo.getText().toString().trim().contains(":")){
+                            PageNo = Integer.parseInt(mTextPageNo.getText().toString().trim().split(":")[1].trim()) - 1;
+                        }
+                        ViewPagewiseSurvey(PageNo);
+                    }else {
+                        mTextNextPage.setVisibility(View.VISIBLE);
+                        mTextPrevPage.setVisibility(View.GONE);
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -272,7 +364,8 @@ public class ViewSurveyActivity extends AppCompatActivity {
         });
     }
 
-    private void ViewPagewiseSurvey() {
+    private void ViewPagewiseSurvey(int pageNo) {
+        String NO_PAGE = "";
 
         progressDialog = CustomProgressDialog.getDialogue(ViewSurveyActivity.this);
         progressDialog.show();
@@ -282,9 +375,15 @@ public class ViewSurveyActivity extends AppCompatActivity {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveyActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
+        if (pageNo == 0){
+            NO_PAGE ="";
+        }else {
+            NO_PAGE = ""+pageNo;
+        }
+
         ViewSurveyInterface apiservice = ApiService.getApiClient().create(ViewSurveyInterface.class);
         Call<ViewSurveyResponse> call = apiservice.viewPagewiseSurvey(headers,
-                mTextPageNo.getText().toString().trim(),
+                NO_PAGE,
                 "1",
                 mEditDate.getText().toString().trim(),
                 mEditAdharNo.getText().toString().trim()
@@ -301,18 +400,26 @@ public class ViewSurveyActivity extends AppCompatActivity {
 
                     if (response.body().isStatus()) {
 
-                      AllSurveyList  = response.body().getResponse().getData();
+                        AllSurveyList.addAll(response.body().getResponse().getData());
 
                         mTextPageNo.setText("Current Page : "+response.body().getResponse().getCurrentPage());
                         mTextTotalPages.setText("Total Pages : "+response.body().getResponse().getLastPage());
 
                         if (!mTextPageNo.getText().toString().trim().equals("1")){
 
-                            mTextPrevPage.setVisibility(View.GONE);
-
-                        }else {
-
                             mTextPrevPage.setVisibility(View.VISIBLE);
+                            mTextNextPage.setVisibility(View.VISIBLE);
+
+                        }
+//                        else   if (!mTextPageNo.getText().toString().trim().equals("1")){
+//
+//                            mTextPrevPage.setVisibility(View.VISIBLE);
+//
+//                        }
+                        else {
+
+                            mTextPrevPage.setVisibility(View.GONE);
+                            mTextNextPage.setVisibility(View.VISIBLE);
 
                         }
 
@@ -347,6 +454,125 @@ public class ViewSurveyActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private void ViewSearchSurvey(int pageNo) {
+        String NO_PAGE = "";
+
+        progressDialog = CustomProgressDialog.getDialogue(ViewSurveyActivity.this);
+        progressDialog.show();
+
+        String UNiq_Id =  PrefUtils.getFromPrefs(ViewSurveyActivity.this, ApplicationConstant.URI_NO_,"");
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveyActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        if (pageNo == 0){
+            NO_PAGE ="";
+        }else {
+            NO_PAGE = ""+pageNo;
+        }
+
+        ViewSurveyInterface apiservice = ApiService.getApiClient().create(ViewSurveyInterface.class);
+        Call<ViewSurveyResponse> call = apiservice.viewPagewiseSurvey(headers,
+                NO_PAGE,
+                "1",
+                mEditDate.getText().toString().trim(),
+                mEditAdharNo.getText().toString().trim()
+                );
+
+        call.enqueue(new Callback<ViewSurveyResponse>() {
+            @Override
+            public void onResponse(Call<ViewSurveyResponse> call, Response<ViewSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        AllSurveyList.clear();
+
+                        AllSurveyList.addAll(response.body().getResponse().getData());
+
+                        mTextPageNo.setText("Current Page : "+response.body().getResponse().getCurrentPage());
+                        mTextTotalPages.setText("Total Pages : "+response.body().getResponse().getLastPage());
+
+                        if (!mTextPageNo.getText().toString().trim().equals("1")){
+
+                            mTextPrevPage.setVisibility(View.VISIBLE);
+                            mTextNextPage.setVisibility(View.VISIBLE);
+
+                        }
+//                        else   if (!mTextPageNo.getText().toString().trim().equals("1")){
+//
+//                            mTextPrevPage.setVisibility(View.VISIBLE);
+//
+//                        }
+                        else {
+
+                            mTextPrevPage.setVisibility(View.GONE);
+                            mTextNextPage.setVisibility(View.VISIBLE);
+
+                        }
+
+                       viewSurveyAdapter.setList(AllSurveyList);
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this,
+                                "Response",
+                                "Failed to get Data");
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ViewSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+
+    private void filter(String s) {
+
+        List<ViewSurveyData> listupdated_user = new ArrayList<>();
+
+        for (ViewSurveyData viewSurveyData: AllSurveyList){
+
+            if (viewSurveyData.getUriNumber().toLowerCase().contains(s.toLowerCase())
+                    || viewSurveyData.getNameOfTheStreetVendor().toLowerCase().contains(s.toLowerCase())
+                    || viewSurveyData.getCorporation().toLowerCase().contains(s.toLowerCase())
+                    || viewSurveyData.getCategory().toLowerCase().contains(s.toLowerCase())
+                    || viewSurveyData.getArea().toLowerCase().contains(s.toLowerCase())
+                    || viewSurveyData.getWard().toLowerCase().contains(s.toLowerCase())
+                    || viewSurveyData.getZone().toLowerCase().contains(s.toLowerCase())
+            ){
+                listupdated_user.add(viewSurveyData);
+
+            }
+        }
+
+        viewSurveyAdapter.setList(listupdated_user);
+
     }
 
 }

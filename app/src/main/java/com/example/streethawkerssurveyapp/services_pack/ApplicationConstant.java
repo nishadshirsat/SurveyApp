@@ -52,6 +52,9 @@ public class ApplicationConstant {
     public static String SurveyId ="";
     public static final long IMAGE_SIZE = 800;
 
+    public static int orientation;
+
+
 
     public class USERDETAILS {
 
@@ -223,29 +226,7 @@ public class ApplicationConstant {
     }
 
 
-    public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage)
-            throws IOException {
-        int MAX_HEIGHT = 1024;
-        int MAX_WIDTH = 1024;
 
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        InputStream imageStream = context.getContentResolver().openInputStream(selectedImage);
-        BitmapFactory.decodeStream(imageStream, null, options);
-        imageStream.close();
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, MAX_WIDTH, MAX_HEIGHT);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        imageStream = context.getContentResolver().openInputStream(selectedImage);
-        Bitmap img = BitmapFactory.decodeStream(imageStream, null, options);
-
-        img = rotateImageIfRequired(img, selectedImage);
-        return img;
-    }
 
     private static int calculateInSampleSize(BitmapFactory.Options options,
                                              int reqWidth, int reqHeight) {
@@ -282,30 +263,6 @@ public class ApplicationConstant {
         return inSampleSize;
     }
 
-    public static Bitmap rotateImageIfRequired(Bitmap img, Uri selectedImage) throws IOException {
-
-        ExifInterface ei = new ExifInterface(selectedImage.getPath());
-        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                return rotateImage(img, 90);
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                return rotateImage(img, 180);
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                return rotateImage(img, 270);
-            default:
-                return img;
-        }
-    }
-
-    private static Bitmap rotateImage(Bitmap img, int degree) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
-        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
-        img.recycle();
-        return rotatedImg;
-    }
 
 
     public static Bitmap CompressedBitmap(File file){
@@ -316,6 +273,7 @@ public class ApplicationConstant {
         float scaleHeight;
         Bitmap compressedbitmap = null;
         Bitmap resizedBitmap = null;
+        Bitmap actual_bitmap = null;
         int quantity = 50;
         long length_check;
 
@@ -323,6 +281,9 @@ public class ApplicationConstant {
             length_check = file.length()/ 1024;
 
             try {
+
+                ExifInterface ei = new ExifInterface(file.getPath());
+                orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                 compressedbitmap = BitmapFactory.decodeFile (file.getPath ());
 
                Matrix matrix = new Matrix();
@@ -331,7 +292,12 @@ public class ApplicationConstant {
                 matrix.postScale(scaleWidth, scaleHeight);
 
                 resizedBitmap = Bitmap.createBitmap(compressedbitmap, 0, 0, compressedbitmap.getWidth(), compressedbitmap.getHeight(), matrix, true);
-                resizedBitmap.compress (Bitmap.CompressFormat.JPEG, quantity, new FileOutputStream(file));
+
+                actual_bitmap = rotateImageIfRequired(resizedBitmap);
+
+                actual_bitmap.compress (Bitmap.CompressFormat.JPEG, quantity, new FileOutputStream(file));
+
+
             }
             catch (Throwable t) {
                 Log.e("ERROR", "Error compressing file." + t.toString ());
@@ -343,7 +309,31 @@ public class ApplicationConstant {
         }while (length_check > ApplicationConstant.IMAGE_SIZE);
 
 
-        return resizedBitmap;
+        return actual_bitmap;
 
+    }
+
+    public static Bitmap rotateImageIfRequired(Bitmap img) throws IOException {
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+
+
+    }
+
+    public static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
     }
 }

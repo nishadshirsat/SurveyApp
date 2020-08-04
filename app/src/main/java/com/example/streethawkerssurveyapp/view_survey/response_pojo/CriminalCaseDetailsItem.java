@@ -28,12 +28,25 @@ public class CriminalCaseDetailsItem{
 	@SerializedName("criminal_case_status")
 	private String criminalCaseStatus;
 
+
 	public void setUpdatedAt(String updatedAt){
 		this.updatedAt = updatedAt;
 	}
 
 	public String getUpdatedAt(){
 		return updatedAt;
+	}
+
+	public CriminalCaseDetailsItem(String criminalCaseNumber,
+								   String criminalCaseFirNumber,
+								   String criminalCaseNameOfPolice,
+								   String criminalCaseDate,
+								   String criminalCaseStatus) {
+		this.criminalCaseNumber = criminalCaseNumber;
+		this.criminalCaseFirNumber = criminalCaseFirNumber;
+		this.criminalCaseNameOfPolice = criminalCaseNameOfPolice;
+		this.criminalCaseDate = criminalCaseDate;
+		this.criminalCaseStatus = criminalCaseStatus;
 	}
 
 	public void setCriminalCaseNumber(String criminalCaseNumber){

@@ -1,6 +1,7 @@
 package com.example.streethawkerssurveyapp.view_survey.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import retrofit2.Call;
@@ -8,7 +9,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,16 +26,31 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
+import com.example.streethawkerssurveyapp.activities.VendorsFamDetailsActivity;
+import com.example.streethawkerssurveyapp.adapter.CriminalCasesAdpater;
+import com.example.streethawkerssurveyapp.adapter.FamilyDetailsAdpater;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.example.streethawkerssurveyapp.view_survey.adapters.ViewCriminalCasesAdpater;
+import com.example.streethawkerssurveyapp.view_survey.adapters.ViewFamilyDetailsAdpater;
+import com.example.streethawkerssurveyapp.view_survey.adapters.ViewFamilySurveyedDetailsAdpater;
+import com.example.streethawkerssurveyapp.view_survey.adapters.ViewLandAssetsAdpater;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.AadharDetails;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.CriminalCaseDetailsItem;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.FamilyMembersBeenSurveyedItem;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.FamilyMembersItem;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.LandFixedAssetsItem;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyDetails;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyResponse;
 import com.example.streethawkerssurveyapp.view_survey.services.ViewSurveyInterface;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ViewSurveyDetailsActivity extends AppCompatActivity {
@@ -390,23 +408,51 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
             }
         });
 
-        mBtnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ViewSurveyDetailsActivity.this,ViewSurveyDetailsActivity.class));
-            }
-        });
+//        mBtnDone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(ViewSurveyDetailsActivity.this,ViewSurveyDetailsActivity.class));
+//            }
+//        });
 
     }
 
     private void setAadharData() {
 
-        mTextUidNo.setText(SingleSurveyData.getAadharCardDetails());
+        if (SingleSurveyData.getAadharCardDetails()!=null){
+            AadharDetails AadharData = SingleSurveyData.getAadharCardDetails();
 
-//        Glide.with(this).load(SingleSurveyData.getPhotoOfTheStreetVendor())
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .skipMemoryCache(true)
-//                .into(mImgVendorPhoto);
+            mTextAadharNo.setText(AadharData.getAadhaarNumber());
+
+                Glide.with(this).load(AadharData.getProfileImage())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(mImgProfile);
+
+            mTextFullName.setText(AadharData.getFullName());
+            mTextSex.setText(AadharData.getGender());
+            mTextBirthDate.setText(AadharData.getDob());
+            mTextHouse.setText(AadharData.getHouse());
+            mTextZipcode.setText(AadharData.getZip());
+            mTextPostOffice.setText(AadharData.getPo());
+            mTextState.setText(AadharData.getState());
+            mTextVTC.setText(AadharData.getVtc());
+            mTextDistrict.setText(AadharData.getDist());
+            mTextSubDistrict.setText(AadharData.getSubdist());
+            if (AadharData.getLandmark()!=null){
+                mTextLandmark.setText(AadharData.getLandmark());
+
+            }
+            mTextStreet.setText(AadharData.getStreet());
+            mTextLocationAadhar.setText(AadharData.getLoc());
+            mTextCountry.setText(AadharData.getCountry());
+
+        }
+
+
+
+
+
 
 
 
@@ -415,6 +461,149 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
     private void setDocumentsData() {
 
         mTextComments.setText(SingleSurveyData.getComments());
+
+        mTextIdFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (SingleSurveyData.getIdentityProofDocumentsFront() != null){
+                    ViewImage(SingleSurveyData.getIdentityProofDocumentsFront().trim());
+                }else {
+                    ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Document Found");
+                }
+
+            }
+        });
+
+        mTextIdBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (SingleSurveyData.getIdentityProofDocumentsBack() != null){
+                    ViewImage(SingleSurveyData.getIdentityProofDocumentsBack().trim());
+                }else {
+                    ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Document Found");
+                }
+
+            }
+        });
+
+
+  mTextHistoryFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (SingleSurveyData.getVendingHistoryProofDocumentsFront() != null){
+                    ViewImage(SingleSurveyData.getVendingHistoryProofDocumentsFront().trim());
+                }else {
+                    ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Document Found");
+                }
+
+            }
+        });
+
+
+  mTextHistoryBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (SingleSurveyData.getVendingHistoryProofDocumentsBack() != null){
+                    ViewImage(SingleSurveyData.getVendingHistoryProofDocumentsBack().trim());
+                }else {
+                    ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Document Found");
+                }
+
+            }
+        });
+
+
+        mTextViewTeharabazi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (SingleSurveyData.getAllotmentOfTehbazariDocument() != null){
+                    ViewImage(SingleSurveyData.getAllotmentOfTehbazariDocument().trim());
+                }else {
+                    ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Document Found");
+
+                }
+
+            }
+        });
+
+        mTextUndertaking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (SingleSurveyData.getUndertakingByTheApplicant() != null){
+                    ViewImage(SingleSurveyData.getUndertakingByTheApplicant().trim());
+                }else {
+                    ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Document Found");
+
+                }
+
+            }
+        });
+
+        mTextAcknowledge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (SingleSurveyData.getAcknowledgementReceipt() != null){
+                    ViewImage(SingleSurveyData.getAcknowledgementReceipt().trim());
+                }else {
+                    ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Document Found");
+
+                }
+
+            }
+        });
+
+        mTextRecording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (SingleSurveyData.getRecording() != null){
+                    Intent viewIntent =
+                            new Intent("android.intent.action.VIEW",
+                                    Uri.parse(SingleSurveyData.getRecording().trim()));
+                    startActivity(viewIntent);
+
+                }else {
+                    ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Recording Found");
+
+                }
+
+            }
+        });
+
+    }
+
+    private void ViewImage(String imageUrl) {
+
+        View view = getLayoutInflater().inflate(R.layout.layout_display_image,null);
+
+        ImageView imageView = view.findViewById(R.id.imageDisplay);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ViewSurveyDetailsActivity.this);
+        builder.setView(view);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+//        AlertDialog alertDialog = builder.create();
+
+
+        Glide.with(this).load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(imageView);
+
+        builder.create();
+        builder.show();
 
     }
 
@@ -445,6 +634,58 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
 
 
     private void setFamilyData() {
+
+        try {
+            if (!SingleSurveyData.getFamilyMembers().isEmpty()){
+
+                List<FamilyMembersItem> listFamily = SingleSurveyData.getFamilyMembers();
+
+                ViewFamilyDetailsAdpater familyDetailsAdpater = new ViewFamilyDetailsAdpater(ViewSurveyDetailsActivity.this);
+                familyDetailsAdpater.setDetails(listFamily);
+
+                Recycler_FamMembers.setAdapter(familyDetailsAdpater);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (!SingleSurveyData.getLandFixedAssets().isEmpty()){
+
+                List<LandFixedAssetsItem> listLandAssets = SingleSurveyData.getLandFixedAssets();
+
+                ViewLandAssetsAdpater viewLandAssetsAdpater = new ViewLandAssetsAdpater(ViewSurveyDetailsActivity.this);
+                viewLandAssetsAdpater.setDetails(listLandAssets);
+
+                Recycler_LandAssets.setAdapter(viewLandAssetsAdpater);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (!SingleSurveyData.getFamilyMembersBeenSurveyed().isEmpty()){
+
+                mTextFamSurveyed.setText("Yes");
+
+                List<FamilyMembersBeenSurveyedItem> listFamilySurveyed = SingleSurveyData.getFamilyMembersBeenSurveyed();
+
+                ViewFamilySurveyedDetailsAdpater familyDetailsAdpater = new ViewFamilySurveyedDetailsAdpater(ViewSurveyDetailsActivity.this);
+                familyDetailsAdpater.setDetails(listFamilySurveyed);
+
+                Recycler_FamSurveyed.setAdapter(familyDetailsAdpater);
+
+            }else {
+                mTextFamSurveyed.setText("NO");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            mTextFamSurveyed.setText("NO");
+
+        }
     }
 
     private void setPersonalData() {
@@ -482,7 +723,48 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         mTextResidentAddress.setText(SingleSurveyData.getResidentialCorrespondenceAddress());
         mTextPermanantAddress.setText(SingleSurveyData.getPermanentAddress());
         mTextAnnualImcome.setText(SingleSurveyData.getAnnualIncome());
-        mTextCriminal.setText(SingleSurveyData.getCriminalCasePending());
+
+
+        try {
+            if (SingleSurveyData.getCriminalCasePending().trim().equals("1")){
+                mTextCriminal.setText("Yes");
+
+                List<CriminalCaseDetailsItem> listCriminalCases = SingleSurveyData.getCriminalCaseDetails();
+
+
+                ViewCriminalCasesAdpater criminalCasesAdpater = new ViewCriminalCasesAdpater(ViewSurveyDetailsActivity.this);
+                criminalCasesAdpater.setDetails(listCriminalCases);
+
+                Recycler_CriminalCase.setAdapter(criminalCasesAdpater);
+
+            }else {
+                mTextCriminal.setText("No");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            mTextCriminal.setText("No");
+
+
+        }
+
+        mTextLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+
+//                    String geoUri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng + " (" + mTitle + ")";
+
+
+                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:", SingleSurveyData.getLatitude(),SingleSurveyData.getLongitude());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 
@@ -500,9 +782,17 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         mImgVending = (ImageView) findViewById(R.id.ImgVending);
 
         Recycler_CriminalCase = (RecyclerView) findViewById(R.id.Recycler_CriminalCase);
+        Recycler_CriminalCase.setLayoutManager(new LinearLayoutManager(ViewSurveyDetailsActivity.this));
+
         Recycler_FamMembers = (RecyclerView) findViewById(R.id.Recycler_FamMembers);
+        Recycler_FamMembers.setLayoutManager(new LinearLayoutManager(ViewSurveyDetailsActivity.this));
+
         Recycler_LandAssets = (RecyclerView) findViewById(R.id.Recycler_LandAssets);
+        Recycler_LandAssets.setLayoutManager(new LinearLayoutManager(ViewSurveyDetailsActivity.this));
+
         Recycler_FamSurveyed = (RecyclerView) findViewById(R.id.Recycler_FamSurveyed);
+        Recycler_FamSurveyed.setLayoutManager(new LinearLayoutManager(ViewSurveyDetailsActivity.this));
+
 
         mTextVending = (TextView) findViewById(R.id.TextVending);
         mCardDocuments = (androidx.cardview.widget.CardView) findViewById(R.id.CardDocuments);
@@ -631,6 +921,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
                     if (response.body().isStatus()) {
 
                         SingleSurveyData  = response.body().getResponse();
+                        mCardPersonal.performClick();
 
                     } else {
 
