@@ -1,4 +1,4 @@
-package com.example.streethawkerssurveyapp.activities;
+package com.example.streethawkerssurveyapp.pending_survey.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,8 +16,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
-import com.example.streethawkerssurveyapp.adapter.FamilyDetailsAdpater;
-import com.example.streethawkerssurveyapp.adapter.LandAssetsAdpater;
+import com.example.streethawkerssurveyapp.activities.VendingDetailsActivity;
+import com.example.streethawkerssurveyapp.activities.VendorsFamDetailsActivity;
+import com.example.streethawkerssurveyapp.view_survey.adapters.ViewLandAssetsAdpater;
 import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
@@ -26,6 +27,11 @@ import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.example.streethawkerssurveyapp.view_survey.adapters.ViewFamilyDetailsAdpater;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.FamilyMembersBeenSurveyedItem;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.FamilyMembersItem;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.LandFixedAssetsItem;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyDetails;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,7 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorsFamDetailsActivity extends AppCompatActivity {
+public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
 
     private LinearLayout mLinearMain;
 
@@ -80,8 +86,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
     private RecyclerView view_FamilyMembers;
     private RecyclerView view_LandAssets;
 
-    private List<FamilyMembers> listFamily = new ArrayList<>();
-    private List<LandAssets> listLandAssets = new ArrayList<>();
+    private List<FamilyMembersItem> listFamily = new ArrayList<>();
+    private List<LandFixedAssetsItem> listLandAssets = new ArrayList<>();
     private List<FamilyMembers> listSurveyedFamily = new ArrayList<>();
 
     String IS_Fam = "";
@@ -89,17 +95,24 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     private LinearLayout mLinearOne,mLinearHead;
+    private SingleSurveyDetails SingleSurveyData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendors_fam_details);
 
+         SingleSurveyData = (SingleSurveyDetails) getIntent().getSerializableExtra("SurveyData");
+
         bindView();
+
+        ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PendingVendorsFamDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
 
         RGFam.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -121,7 +134,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                View viewAdd = LayoutInflater.from(VendorsFamDetailsActivity.this).inflate(R.layout.layout_add_land_assets, null);
+                View viewAdd = LayoutInflater.from(PendingVendorsFamDetailsActivity.this).inflate(R.layout.layout_add_land_assets, null);
                 ImageView lImage_cancel = (ImageView) viewAdd.findViewById(R.id.image_cancel);
                 final EditText lEditPlot = (EditText) viewAdd.findViewById(R.id.EditPlot);
                 final EditText lEditHouseSize = (EditText)viewAdd. findViewById(R.id.EditHouseSize);
@@ -131,7 +144,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                 TextView lTextAddLandAssets = (TextView) viewAdd.findViewById(R.id.TextAddLandAssets);
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(VendorsFamDetailsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(PendingVendorsFamDetailsActivity.this);
 
                 builder.setView(viewAdd);
                 final AlertDialog alertDialog = builder.create();
@@ -165,15 +178,16 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                         }else {
 
 
-                            LandAssets landAssets = new LandAssets(lEditPlot.getText().toString().trim(),
-                                    lEditHouseSize.getText().toString().trim(),
+                            LandFixedAssetsItem landAssets = new LandFixedAssetsItem(
                                     lEditArea.getText().toString().trim(),
+                                    lEditHouseSize.getText().toString().trim(),
                                     lEditKuccha.getText().toString().trim(),
+                                    lEditPlot.getText().toString().trim(),
                                     lEditRent.getText().toString().trim()
                             );
                             listLandAssets.add(landAssets);
 
-                            LandAssetsAdpater landAssetsAdpater = new LandAssetsAdpater(VendorsFamDetailsActivity.this);
+                            ViewLandAssetsAdpater landAssetsAdpater = new ViewLandAssetsAdpater(PendingVendorsFamDetailsActivity.this);
                             landAssetsAdpater.setDetails(listLandAssets);
 
                             view_LandAssets.setAdapter(landAssetsAdpater);
@@ -200,7 +214,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //                    ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Added "+FamCount+" Family Members Already");
 //                }
 
-                View viewAdd = LayoutInflater.from(VendorsFamDetailsActivity.this).inflate(R.layout.layout_add_family, null);
+                View viewAdd = LayoutInflater.from(PendingVendorsFamDetailsActivity.this).inflate(R.layout.layout_add_family, null);
                 final EditText fEditFamName = (EditText) viewAdd.findViewById(R.id.EditFamName);
                 final EditText  fEditFamRelation = (EditText) viewAdd.findViewById(R.id.EditFamRelation);
                 final EditText fEditFamAge = (EditText) viewAdd.findViewById(R.id.EditFamAge);
@@ -208,7 +222,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                TextView fTextAddMember = (TextView)viewAdd. findViewById(R.id.TextAddMember);
                 ImageView image_cancel = (ImageView)viewAdd. findViewById(R.id.image_cancel);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(VendorsFamDetailsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(PendingVendorsFamDetailsActivity.this);
 
                 builder.setView(viewAdd);
                 final AlertDialog alertDialog = builder.create();
@@ -240,14 +254,15 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                             fEditFamAadhar.setError("enter correct aadhar");
                             fEditFamAadhar.requestFocus();
                         }else {
-                            FamilyMembers familyMembers = new FamilyMembers(fEditFamName.getText().toString().trim(),
+                            FamilyMembersItem familyMembers = new FamilyMembersItem(
                                     fEditFamRelation.getText().toString().trim(),
-                                    fEditFamAge.getText().toString().trim(),
-                                    fEditFamAadhar.getText().toString().trim());
+                                    fEditFamName.getText().toString().trim(),
+                                    fEditFamAadhar.getText().toString().trim(),
+                                    fEditFamAge.getText().toString().trim());
 
 
                             listFamily.add(familyMembers);
-                            FamilyDetailsAdpater familyDetailsAdpater = new FamilyDetailsAdpater(VendorsFamDetailsActivity.this);
+                            ViewFamilyDetailsAdpater familyDetailsAdpater = new ViewFamilyDetailsAdpater(PendingVendorsFamDetailsActivity.this);
                             familyDetailsAdpater.setDetails(listFamily);
 
                             view_FamilyMembers.setAdapter(familyDetailsAdpater);
@@ -269,7 +284,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-            onBackPressed();
+                    onBackPressed();
 
 
             }
@@ -307,18 +322,62 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
             }
         });
+
+        setFamilyData();
+
+
+    }
+
+    private void setFamilyData() {
+
+        if (SingleSurveyData.getFamilyMembers() != null){
+
+            listFamily.addAll(SingleSurveyData.getFamilyMembers());
+            ViewFamilyDetailsAdpater familyDetailsAdpater = new ViewFamilyDetailsAdpater(PendingVendorsFamDetailsActivity.this);
+            familyDetailsAdpater.setDetails(listFamily);
+
+            view_FamilyMembers.setAdapter(familyDetailsAdpater);
+
+        }
+
+        if (SingleSurveyData.getLandFixedAssets() != null){
+
+            listLandAssets.addAll(SingleSurveyData.getLandFixedAssets());
+
+            ViewLandAssetsAdpater landAssetsAdpater = new ViewLandAssetsAdpater(PendingVendorsFamDetailsActivity.this);
+            landAssetsAdpater.setDetails(listLandAssets);
+
+            view_LandAssets.setAdapter(landAssetsAdpater);
+
+        }
+
+        if (SingleSurveyData.getFamilyMembersBeenSurveyed() != null ){
+
+         mRadioY.setChecked(true);
+         FamilyMembersBeenSurveyedItem beenSurveyedItem =  SingleSurveyData.getFamilyMembersBeenSurveyed().get(0);
+
+         mEditName.setText(beenSurveyedItem.getFamilyMemberName());
+         mEditRelation.setText(beenSurveyedItem.getFamilyMemberRelationship());
+         mEditAge.setText(beenSurveyedItem.getFamilyMemberAge());
+         mEditAadhar.setText(beenSurveyedItem.getFamilyMemberAdhaar());
+
+        }else {
+            mRadioN.setChecked(true);
+
+        }
+
     }
 
     private boolean validate() {
 
-        if (!ApplicationConstant.isNetworkAvailable(VendorsFamDetailsActivity.this)) {
+        if (!ApplicationConstant.isNetworkAvailable(PendingVendorsFamDetailsActivity.this)) {
 
-            ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+            ApplicationConstant.displayMessageDialog(PendingVendorsFamDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
         }
         else if (listFamily.isEmpty()){
-            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add family members");
+            ApplicationConstant.DisplayMessageDialog(PendingVendorsFamDetailsActivity.this,"","Add family members");
             return false;
         }
 
@@ -446,8 +505,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         view_FamilyMembers = (RecyclerView) findViewById(R.id.view_FamilyMembers);
         view_LandAssets = (RecyclerView) findViewById(R.id.view_LandAssets);
 
-        view_FamilyMembers.setLayoutManager(new LinearLayoutManager(VendorsFamDetailsActivity.this));
-        view_LandAssets.setLayoutManager(new LinearLayoutManager(VendorsFamDetailsActivity.this));
+        view_FamilyMembers.setLayoutManager(new LinearLayoutManager(PendingVendorsFamDetailsActivity.this));
+        view_LandAssets.setLayoutManager(new LinearLayoutManager(PendingVendorsFamDetailsActivity.this));
     }
 
 
@@ -495,21 +554,21 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         String json_surveyFam = new Gson().toJson(listSurveyedFamily);
 
 
-        String UNiq_Id =  PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.URI_NO_,"");
-        String CORPORATION =   PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.WARD,"");
+        String UNiq_Id =  PrefUtils.getFromPrefs(PendingVendorsFamDetailsActivity.this,ApplicationConstant.URI_NO_,"");
+        String CORPORATION =   PrefUtils.getFromPrefs(PendingVendorsFamDetailsActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(PendingVendorsFamDetailsActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(PendingVendorsFamDetailsActivity.this,ApplicationConstant.WARD,"");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
         RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
-        progressDialog = CustomProgressDialog.getDialogue(VendorsFamDetailsActivity.this);
+        progressDialog = CustomProgressDialog.getDialogue(PendingVendorsFamDetailsActivity.this);
         progressDialog.show();
 
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PendingVendorsFamDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
 
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
@@ -548,15 +607,16 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
                     if (response.body().isStatus()) {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VendorsFamDetailsActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(PendingVendorsFamDetailsActivity.this);
                         builder.setTitle("Vending Family Details");
                         builder.setMessage("Saved successfully");
                         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                startActivity(new Intent(VendorsFamDetailsActivity.this,VendingDetailsActivity.class));
-
+                                Intent intent = new Intent(PendingVendorsFamDetailsActivity.this, PendingVendingDetailsActivity.class);
+                                intent.putExtra("SurveyData",SingleSurveyData);
+                                startActivity(intent);
                             }
                         });
 
@@ -571,7 +631,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this,
+                        ApplicationConstant.displayMessageDialog(PendingVendorsFamDetailsActivity.this,
                                 "Response",
                                 response.body().getMessage());
                     }
@@ -579,7 +639,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                 }else {
 
                     try {
-                        ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this,
+                        ApplicationConstant.displayMessageDialog(PendingVendorsFamDetailsActivity.this,
                                 "Response",
                                 response.errorBody().string());
                     }catch (Exception e){
@@ -594,7 +654,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingVendorsFamDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -605,7 +665,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
 
     @Override
     public void onBackPressed() {

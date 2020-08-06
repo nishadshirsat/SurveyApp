@@ -15,8 +15,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,10 +24,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
-import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
-import com.example.streethawkerssurveyapp.activities.VendorsFamDetailsActivity;
-import com.example.streethawkerssurveyapp.adapter.CriminalCasesAdpater;
-import com.example.streethawkerssurveyapp.adapter.FamilyDetailsAdpater;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
@@ -38,8 +32,10 @@ import com.example.streethawkerssurveyapp.view_survey.adapters.ViewCriminalCases
 import com.example.streethawkerssurveyapp.view_survey.adapters.ViewFamilyDetailsAdpater;
 import com.example.streethawkerssurveyapp.view_survey.adapters.ViewFamilySurveyedDetailsAdpater;
 import com.example.streethawkerssurveyapp.view_survey.adapters.ViewLandAssetsAdpater;
+import com.example.streethawkerssurveyapp.view_survey.adapters.ViewOtherDocDetailsAdpater;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.AadharDetails;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.CriminalCaseDetailsItem;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.DocumentsData;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.FamilyMembersBeenSurveyedItem;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.FamilyMembersItem;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.LandFixedAssetsItem;
@@ -47,7 +43,6 @@ import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurvey
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyResponse;
 import com.example.streethawkerssurveyapp.view_survey.services.ViewSurveyInterface;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -119,6 +114,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
     private RecyclerView Recycler_FamMembers;
     private RecyclerView Recycler_LandAssets;
     private RecyclerView Recycler_FamSurveyed;
+    private RecyclerView viewOtherDocuments;
 
     private LinearLayout mCardBankDetails;
     private TextView mTextBankNo;
@@ -686,6 +682,29 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
             mTextFamSurveyed.setText("NO");
 
         }
+
+        try {
+            if (!SingleSurveyData.getOther_documents().isEmpty()){
+
+                mTextOtherDocument.setText("Other Documents List");
+
+                List<DocumentsData> documentsDataList = SingleSurveyData.getOther_documents();
+
+                ViewOtherDocDetailsAdpater docDetailsAdpater = new ViewOtherDocDetailsAdpater(ViewSurveyDetailsActivity.this);
+                docDetailsAdpater.setDetails(documentsDataList);
+
+                viewOtherDocuments.setAdapter(docDetailsAdpater);
+
+            }else {
+                mTextOtherDocument.setText("No Other Documents Uploaded");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            mTextOtherDocument.setText("No Other Documents Uploaded");
+
+        }
+
     }
 
     private void setPersonalData() {
@@ -757,7 +776,8 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
 //                    String geoUri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng + " (" + mTitle + ")";
 
 
-                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:", SingleSurveyData.getLatitude(),SingleSurveyData.getLongitude());
+//                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q="+SingleSurveyData.getLatitude()+","+SingleSurveyData.getLongitude());
+                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q="+"18.5204"+","+"73.8567");
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                     startActivity(intent);
                 } catch (Exception e) {
@@ -792,6 +812,9 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
 
         Recycler_FamSurveyed = (RecyclerView) findViewById(R.id.Recycler_FamSurveyed);
         Recycler_FamSurveyed.setLayoutManager(new LinearLayoutManager(ViewSurveyDetailsActivity.this));
+
+        viewOtherDocuments = (RecyclerView) findViewById(R.id.viewOtherDocuments);
+        viewOtherDocuments.setLayoutManager(new LinearLayoutManager(ViewSurveyDetailsActivity.this));
 
 
         mTextVending = (TextView) findViewById(R.id.TextVending);

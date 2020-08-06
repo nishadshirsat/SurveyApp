@@ -1,12 +1,13 @@
 package com.example.streethawkerssurveyapp.view_survey.response_pojo;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class SingleSurveyDetails {
+public class SingleSurveyDetails implements Serializable {
 
 	@SerializedName("other_documents")
-	private String otherDocuments;
+	private List<DocumentsData> other_documents;
 
 	@SerializedName("name_of_the_street_vendor")
 	private String nameOfTheStreetVendor;
@@ -209,12 +210,12 @@ public class SingleSurveyDetails {
 	@SerializedName("tehbazari_available")
 	private String tehbazariAvailable;
 
-	public void setOtherDocuments(String otherDocuments){
-		this.otherDocuments = otherDocuments;
+	public List<DocumentsData> getOther_documents() {
+		return other_documents;
 	}
 
-	public String getOtherDocuments(){
-		return otherDocuments;
+	public void setOther_documents(List<DocumentsData> other_documents) {
+		this.other_documents = other_documents;
 	}
 
 	public void setNameOfTheStreetVendor(String nameOfTheStreetVendor){
@@ -758,8 +759,7 @@ public class SingleSurveyDetails {
  	public String toString(){
 		return 
 			"Response{" + 
-			"other_documents = '" + otherDocuments + '\'' + 
-			",name_of_the_street_vendor = '" + nameOfTheStreetVendor + '\'' + 
+			",name_of_the_street_vendor = '" + nameOfTheStreetVendor + '\'' +
 			",identity_proof_documents_type = '" + identityProofDocumentsType + '\'' + 
 			",name_of_father_husband = '" + nameOfFatherHusband + '\'' + 
 			",permanent_address = '" + permanentAddress + '\'' + 

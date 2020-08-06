@@ -103,6 +103,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_size_10"
+        android:visibility="gone"
         android:paddingRight="@dimen/dp_size_10"
         android:weightSum="2">
 

@@ -1,4 +1,4 @@
-package com.example.streethawkerssurveyapp.activities;
+package com.example.streethawkerssurveyapp.pending_survey.activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -23,30 +23,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.BankingDetailsActivity;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyDetails;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendingDetailsActivity extends AppCompatActivity {
+public class PendingVendingDetailsActivity extends AppCompatActivity {
 
     private LinearLayout mLinearMain;
     private LinearLayout mLinearOne;
@@ -128,6 +124,12 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
     private LinearLayout mLinearHead;
 
+    private SingleSurveyDetails SingleSurveyData;
+    private RadioButton mRadioDY;
+    private RadioButton mRadioDN;
+
+    private RadioButton mRadioY;
+    private RadioButton mRadioN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +137,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vending_details);
 
         bindView();
+
+        SingleSurveyData = (SingleSurveyDetails) getIntent().getSerializableExtra("SurveyData");
+
+        ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
 
         NO_DAYS_ACTIVE = new StringBuilder();
 
@@ -215,7 +221,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                picker = new TimePickerDialog(PendingVendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -237,7 +243,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                picker = new TimePickerDialog(PendingVendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -259,7 +265,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                picker = new TimePickerDialog(PendingVendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -281,7 +287,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                picker = new TimePickerDialog(VendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                picker = new TimePickerDialog(PendingVendingDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -303,7 +309,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(VendingDetailsActivity.this, R.style.DialogTheme),
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(PendingVendingDetailsActivity.this, R.style.DialogTheme),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -358,7 +364,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-             onBackPressed();
+              onBackPressed();
 
             }
         });
@@ -549,7 +555,11 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        setVendingDetails();
     }
+
+
 
     private void setActiveWeeks() {
         if (!M.trim().isEmpty()) {
@@ -635,9 +645,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
     }
 
     private boolean validate3() {
-        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+        if (!ApplicationConstant.isNetworkAvailable(PendingVendingDetailsActivity.this)) {
 
-            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+            ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
         }
@@ -658,9 +668,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
     }
 
     private boolean validate2() {
-        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+        if (!ApplicationConstant.isNetworkAvailable(PendingVendingDetailsActivity.this)) {
 
-            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+            ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
         }
@@ -671,7 +681,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
         }
 
         else if (mSpinnerVehical.getSelectedItem().toString().isEmpty()) {
-            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "", "Select Vehicals");
+            ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "", "Select Vehicals");
             mSpinnerVehical.requestFocus();
             return false;
         }
@@ -681,9 +691,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
     private boolean validate1() {
 
-        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+        if (!ApplicationConstant.isNetworkAvailable(PendingVendingDetailsActivity.this)) {
 
-            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+            ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
         } else if (mSpinnerItems.getSelectedItem().toString().isEmpty()) {
@@ -703,7 +713,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
             mEditLToTime.requestFocus();
             return false;
         }else if (NO_DAYS_ACTIVE.toString().trim().isEmpty()) {
-           ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this,"","Select No of Active Days");
+           ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this,"","Select No of Active Days");
             return false;
         }
 
@@ -737,8 +747,10 @@ public class VendingDetailsActivity extends AppCompatActivity {
         TextYes = (TextView) findViewById(R.id.TextYes);
         mImgCalendar = (ImageView) findViewById(R.id.ImgCalendar);
         mLinearThree = (LinearLayout) findViewById(R.id.LinearThree);
-//        mRadioDY = (RadioButton) findViewById(Integer.parseInt(TEHABZARI_AVAILABLE));
-//        mRadioDN = (RadioButton) findViewById(Integer.parseInt(TEHABZARI_AVAILABLE));
+        mRadioDY = (RadioButton) findViewById(R.id.RadioDY);
+        mRadioDN = (RadioButton) findViewById(R.id.RadioDN);
+        mRadioN = (RadioButton) findViewById(R.id.RadioN);
+        mRadioY= (RadioButton) findViewById(R.id.RadioY);
         mSpinnerChoice = (Spinner) findViewById(R.id.SpinnerChoice);
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
@@ -755,20 +767,20 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
     private void UpdateSurvey() {
 
-        progressDialog = CustomProgressDialog.getDialogue(VendingDetailsActivity.this);
+        progressDialog = CustomProgressDialog.getDialogue(PendingVendingDetailsActivity.this);
         progressDialog.show();
 
-        String UNiq_Id = PrefUtils.getFromPrefs(VendingDetailsActivity.this, ApplicationConstant.URI_NO_, "");
+        String UNiq_Id = PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
-        String CORPORATION =   PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION =   PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this,ApplicationConstant.WARD,"");
 
 
 
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(VendingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
         Call<UpdateSurveyResponse> call = apiservice.getUpdateSurvey(headers,
@@ -803,15 +815,16 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                     if (response.body().isStatus()) {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(VendingDetailsActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(PendingVendingDetailsActivity.this);
                         builder.setTitle("Vending Details");
                         builder.setMessage("Saved successfully");
                         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                startActivity(new Intent(VendingDetailsActivity.this, BankingDetailsActivity.class));
-
+                                Intent intent = new Intent(PendingVendingDetailsActivity.this, PendingBankingDetailsActivity.class);
+                                intent.putExtra("SurveyData",SingleSurveyData);
+                                startActivity(intent);
                             }
                         });
 
@@ -826,7 +839,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this,
+                        ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this,
                                 "Response",
                                 response.body().getMessage());
                     }
@@ -834,7 +847,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
                 } else {
 
                     try {
-                        ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this,
+                        ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this,
                                 "Response",
                                 response.errorBody().string());
                     } catch (Exception e) {
@@ -849,7 +862,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -861,9 +874,178 @@ public class VendingDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+
+    private void setVendingDetails() {
+
+        if (SingleSurveyData.getTypeOfVending()!=null){
+            if (mSpinnerItems.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(0);
+            }else if (mSpinnerItems.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(1);
+            }else if (mSpinnerItems.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(2);
+            }else if (mSpinnerItems.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(3);
+            }else if (mSpinnerItems.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(4);
+            }else if (mSpinnerItems.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(5);
+            }
+            else if (mSpinnerItems.getItemAtPosition(6).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(6);
+            }
+            else if (mSpinnerItems.getItemAtPosition(7).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(7);
+            }
+            else if (mSpinnerItems.getItemAtPosition(8).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(8);
+            }
+            else if (mSpinnerItems.getItemAtPosition(9).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(9);
+            }
+            else if (mSpinnerItems.getItemAtPosition(10).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(10);
+            }
+            else if (mSpinnerItems.getItemAtPosition(11).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(11);
+            }
+            else if (mSpinnerItems.getItemAtPosition(12).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(12);
+            }
+            else if (mSpinnerItems.getItemAtPosition(13).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(13);
+            }
+            else if (mSpinnerItems.getItemAtPosition(14).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+                mSpinnerItems.setSelection(14);
+            }
+
+        }
+
+
+        mEditVendingSite.setText(SingleSurveyData.getNameOfVendingSite());
+
+        mEditAge.setText(SingleSurveyData.getNumberOfYrsOfVending());
+
+        mEditLFromTime.setText(SingleSurveyData.getTimingOfVendingFrom());
+        mEditLToTime.setText(SingleSurveyData.getTimingOfVendingTo());
+
+        if (SingleSurveyData.getTimingOfVendingFrom1()!=null){
+            mEditEFromTime.setText(SingleSurveyData.getTimingOfVendingFrom1());
+
+        }
+
+        if (SingleSurveyData.getTimingOfVendingTo1()!=null){
+            mEditEToTime.setText(SingleSurveyData.getTimingOfVendingTo1());
+
+        }
+
+        if (SingleSurveyData.getNoOfDaysActive() != null ){
+            try {
+                String[] splitedActive = SingleSurveyData.getNoOfDaysActive().split(",");
+
+            for (int i= 0; i< splitedActive.length;i++){
+              setDays(splitedActive[i].trim());
+            }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        mEditDob.setText(SingleSurveyData.getDateOfStartOfVendingActivity());
+
+        if (SingleSurveyData.getTehbazariAvailable() != null ){
+
+            if (SingleSurveyData.getTehbazariAvailable().trim().equals("No")){
+                mRadioDN.setChecked(true);
+            }else {
+                mRadioDY.setChecked(true);
+
+            }
+
+        }else {
+            mRadioDN.setChecked(true);
+
+        }
+
+        if (SingleSurveyData.getChoiceOfVendingArea()!=null){
+
+            if (mSpinnerChoice.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getChoiceOfVendingArea().trim())){
+                mSpinnerChoice.setSelection(0);
+            }else if (mSpinnerChoice.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getChoiceOfVendingArea().toLowerCase().trim())){
+                mSpinnerChoice.setSelection(1);
+            }else if (mSpinnerChoice.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getChoiceOfVendingArea().toLowerCase().trim())){
+                mSpinnerChoice.setSelection(2);
+            }else if (mSpinnerChoice.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getChoiceOfVendingArea().toLowerCase().trim())){
+                mSpinnerChoice.setSelection(3);
+            }else if (mSpinnerChoice.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getChoiceOfVendingArea().toLowerCase().trim())){
+                mSpinnerChoice.setSelection(4);
+            }
+
+        }
+
+        if (SingleSurveyData.getApplicantRecognizedAsAStreetVendor()!=null){
+
+            if (SingleSurveyData.getTehbazariAvailable().trim().equals("No")){
+                mRadioN.setChecked(true);
+            }else {
+                mRadioY.setChecked(true);
+
+            }
+
+        }else {
+            mRadioN.setChecked(true);
+
+        }
+
+
+
+            if (SingleSurveyData.getTypeOfStructure()!=null){
+            if (mSpinnerVehical.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getTypeOfStructure().trim())){
+                mSpinnerVehical.setSelection(0);
+            }else if (mSpinnerVehical.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getTypeOfStructure().toLowerCase().trim())){
+                mSpinnerVehical.setSelection(1);
+            }else if (mSpinnerVehical.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getTypeOfStructure().toLowerCase().trim())){
+                mSpinnerVehical.setSelection(2);
+            }else if (mSpinnerVehical.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getTypeOfStructure().toLowerCase().trim())){
+                mSpinnerVehical.setSelection(3);
+            }
+
+        }
+
+   }
+
+    private void setDays(String days) {
+
+        if (mCheckM.getText().toString().trim().equals(days)){
+            mCheckM.setChecked(true);
+        }
+        else  if (mCheckT.getText().toString().trim().equals(days)){
+            mCheckT.setChecked(true);
+        }
+
+        else  if (mCheckW.getText().toString().trim().equals(days)){
+            mCheckW.setChecked(true);
+        }
+
+        else  if (mCheckTh.getText().toString().trim().equals(days)){
+            mCheckTh.setChecked(true);
+        }
+
+        else  if (mCheckF.getText().toString().trim().equals(days)){
+            mCheckF.setChecked(true);
+        }
+        else  if (mCheckS.getText().toString().trim().equals(days)){
+            mCheckS.setChecked(true);
+        }
+        else  if (mCheckSu.getText().toString().trim().equals(days)){
+            mCheckSu.setChecked(true);
+        }
+
+
+    }
+
     @Override
     public void onBackPressed() {
-
         if (mLinearThree.getVisibility() == View.VISIBLE) {
 
             mLinearOne.setVisibility(View.GONE);
@@ -891,5 +1073,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
             super.onBackPressed();
 
         }
+
     }
 }

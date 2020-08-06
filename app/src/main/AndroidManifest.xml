@@ -48,6 +48,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.ScannedBarcodeActivity"
             android:theme="@style/AppTheme"
@@ -85,11 +86,12 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
-            android:name=".activities.VendorsFamDetailsActivity"
+            android:name=".activities.VendingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
-            android:name=".activities.VendingDetailsActivity"
+            android:name=".activities.VendorsFamDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
@@ -115,6 +117,27 @@
 
         <activity
             android:name=".pending_survey.activities.PendingSurveyActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+
+        <activity
+            android:name=".pending_survey.activities.PendingVendorsFamDetailsActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".pending_survey.activities.PendingVendingDetailsActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".pending_survey.activities.PendingBankingDetailsActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".pending_survey.activities.PendingDocumentsScanActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 

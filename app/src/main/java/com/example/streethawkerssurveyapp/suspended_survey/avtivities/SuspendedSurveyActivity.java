@@ -27,6 +27,7 @@ import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.suspended_survey.adapters.SuspendedSurveyAdapter;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyActivity;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyData;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyResponse;
 import com.example.streethawkerssurveyapp.view_survey.services.ViewSurveyInterface;
@@ -144,9 +145,15 @@ public class SuspendedSurveyActivity extends AppCompatActivity {
                         }  else {
                             mTextNextPage.setVisibility(View.GONE);
                             mTextPrevPage.setVisibility(View.VISIBLE);
+
+                            ApplicationConstant.displayToastMessage(SuspendedSurveyActivity.this,"No more records found");
+
                         }
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
+
+                        ApplicationConstant.displayToastMessage(SuspendedSurveyActivity.this,"No more records found");
+
                     }
                 }
 

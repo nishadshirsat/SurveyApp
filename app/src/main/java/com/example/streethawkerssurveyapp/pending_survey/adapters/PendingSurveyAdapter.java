@@ -59,6 +59,8 @@ public class PendingSurveyAdapter extends RecyclerView.Adapter<PendingSurveyAdap
             public void onClick(View view) {
 
                 PrefUtils.saveToPrefs(context, ApplicationConstant.SURVEY_ID, SurveyData.getUriNumber());
+                PrefUtils.saveToPrefs(context, ApplicationConstant.URI_NO_, SurveyData.getUriNumber());
+
                 Intent intent = new Intent(context, PendingPersonalDetailsActivity.class);
                 context.startActivity(intent);
             }

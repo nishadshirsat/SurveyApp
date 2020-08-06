@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
@@ -143,9 +144,15 @@ public class ViewSurveyActivity extends AppCompatActivity {
                             }  else {
                                 mTextNextPage.setVisibility(View.GONE);
                                 mTextPrevPage.setVisibility(View.VISIBLE);
+
+                                ApplicationConstant.displayToastMessage(ViewSurveyActivity.this,"No more records found");
+
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
+
+                            ApplicationConstant.displayToastMessage(ViewSurveyActivity.this,"No more records found");
+
                         }
                     }
 

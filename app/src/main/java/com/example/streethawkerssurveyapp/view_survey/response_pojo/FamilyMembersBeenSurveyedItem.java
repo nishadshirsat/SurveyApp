@@ -2,7 +2,9 @@ package com.example.streethawkerssurveyapp.view_survey.response_pojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FamilyMembersBeenSurveyedItem{
+import java.io.Serializable;
+
+public class FamilyMembersBeenSurveyedItem implements Serializable {
 
 	@SerializedName("updated_at")
 	private String updatedAt;

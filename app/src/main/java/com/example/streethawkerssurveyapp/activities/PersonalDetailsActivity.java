@@ -512,56 +512,7 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View view) {
 
-                if (mLinearFive.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.VISIBLE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
-
-                } else if (mLinearFour.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.VISIBLE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
-
-                } else if (mLinearThree.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.VISIBLE);
-                    mLinearFive.setVisibility(View.GONE);
-
-                } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.VISIBLE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
-
-//                    mBtnPrevious.setVisibility(View.GONE);
-
-                }else if (mLinearOne.getVisibility() == View.VISIBLE) {
-
-                    mLinearHead.setVisibility(View.VISIBLE);
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
-
-                    mBtnPrevious.setVisibility(View.GONE);
-
-                } else {
-
-                    onBackPressed();
-
-                }
+           onBackPressed();
 
             }
         });
@@ -1834,5 +1785,59 @@ public class PersonalDetailsActivity extends MainActivity {
         return rotatedImg;
     }
 
+    @Override
+    public void onBackPressed() {
 
+        if (mLinearFive.getVisibility() == View.VISIBLE) {
+
+            mLinearFour.setVisibility(View.VISIBLE);
+            mLinearOne.setVisibility(View.GONE);
+            mLinearThree.setVisibility(View.GONE);
+            mLinearTwo.setVisibility(View.GONE);
+            mLinearFive.setVisibility(View.GONE);
+
+        } else if (mLinearFour.getVisibility() == View.VISIBLE) {
+
+            mLinearFour.setVisibility(View.GONE);
+            mLinearOne.setVisibility(View.GONE);
+            mLinearThree.setVisibility(View.VISIBLE);
+            mLinearTwo.setVisibility(View.GONE);
+            mLinearFive.setVisibility(View.GONE);
+
+        } else if (mLinearThree.getVisibility() == View.VISIBLE) {
+
+            mLinearFour.setVisibility(View.GONE);
+            mLinearOne.setVisibility(View.GONE);
+            mLinearThree.setVisibility(View.GONE);
+            mLinearTwo.setVisibility(View.VISIBLE);
+            mLinearFive.setVisibility(View.GONE);
+
+        } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
+
+            mLinearFour.setVisibility(View.GONE);
+            mLinearOne.setVisibility(View.VISIBLE);
+            mLinearThree.setVisibility(View.GONE);
+            mLinearTwo.setVisibility(View.GONE);
+            mLinearFive.setVisibility(View.GONE);
+
+//                    mBtnPrevious.setVisibility(View.GONE);
+
+        }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+
+            mLinearHead.setVisibility(View.VISIBLE);
+            mLinearFour.setVisibility(View.GONE);
+            mLinearOne.setVisibility(View.GONE);
+            mLinearThree.setVisibility(View.GONE);
+            mLinearTwo.setVisibility(View.GONE);
+            mLinearFive.setVisibility(View.GONE);
+
+            mBtnPrevious.setVisibility(View.GONE);
+
+        } else {
+
+            super.onBackPressed();
+
+        }
+
+    }
 }
