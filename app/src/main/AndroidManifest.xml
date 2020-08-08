@@ -80,7 +80,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
-            android:name=".activities.DocumentsScanActivity"
+            android:name=".activities.BankingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
@@ -89,12 +89,12 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activities.VendingDetailsActivity"
+            android:name=".activities.DocumentsScanActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
-            android:name=".activities.BankingDetailsActivity"
+            android:name=".activities.VendingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
