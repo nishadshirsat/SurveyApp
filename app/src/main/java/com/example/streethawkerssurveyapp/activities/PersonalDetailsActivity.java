@@ -220,6 +220,8 @@ public class PersonalDetailsActivity extends MainActivity {
     private TextView btn_same_resident;
     private String AADHAR_DETAILS="";
 
+    Button BtnOpenDevice;
+
     public static int orientation;
 
     private  AadharData aadharData = null;
@@ -261,6 +263,8 @@ public class PersonalDetailsActivity extends MainActivity {
     }
 
     private void onCLickListners() {
+
+
 
         mBtnAddharCapture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -967,6 +971,7 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
 
         btn_same_resident = (TextView) findViewById(R.id.btn_same_resident);
+        BtnOpenDevice = (Button) findViewById(R.id.BtnOpenDevice);
         linear_cases = (LinearLayout) findViewById(R.id.linear_cases);
         mLinearHead = (LinearLayout) findViewById(R.id.LinearHead);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);

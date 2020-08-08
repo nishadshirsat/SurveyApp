@@ -32,7 +32,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".officer.activities.SuspendedSupervisorListActivity"></activity>
+        <activity android:name=".officer.activities.PendingSupervisorListActivity" />
+        <activity android:name=".officer.activities.ViewSupervisorListActivity" />
+        <activity android:name=".supervisor.activities.SuspendedSurveyorListActivity" />
+        <activity android:name=".supervisor.activities.PendingSurveyorListActivity" />
+        <activity android:name=".supervisor.activities.ViewSurveyorListActivity" />
+        <activity android:name=".officer.activities.SupervisorListActivity" />
+        <activity android:name=".supervisor.activities.SurveyorListActivity" />
 
         <meta-data
             android:name="io.sentry.dsn"
@@ -48,12 +55,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.ScanQrForAadharActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.ScannedBarcodeActivity"
             android:theme="@style/AppTheme"
@@ -74,78 +79,62 @@
             android:name=".activities.PersonalDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".pending_survey.activities.PendingPersonalDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.DocumentsScanActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.VendingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.VendorsFamDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".activities.BankingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".view_survey.activities.ViewSurveyActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".suspended_survey.avtivities.SuspendedSurveyActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".view_survey.activities.ViewSurveyDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".pending_survey.activities.PendingSurveyActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
-
         <activity
             android:name=".pending_survey.activities.PendingVendorsFamDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".pending_survey.activities.PendingVendingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".pending_survey.activities.PendingBankingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".pending_survey.activities.PendingDocumentsScanActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
 
         <meta-data
             android:name="preloaded_fonts"

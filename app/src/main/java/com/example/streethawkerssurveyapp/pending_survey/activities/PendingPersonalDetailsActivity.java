@@ -178,6 +178,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
     RadioGroup RGCriminal;
     int radioId;
 
+    CardView BtnOpenDevice;
 
     Uri photoURI;
 
@@ -295,11 +296,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View view) {
 
-                progressDialog = CustomProgressDialog.getDialogue(PendingPersonalDetailsActivity.this);
-                progressDialog.show();
-
-                bsp.OpenDevice();
-
                 new Thread(new Runnable() {
 
                     public void run() {
@@ -308,6 +304,18 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                     }
                 }).start();
+
+            }
+        });
+
+        BtnOpenDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                progressDialog = CustomProgressDialog.getDialogue(PendingPersonalDetailsActivity.this);
+//                progressDialog.show();
+
+                bsp.OpenDevice();
 
             }
         });
@@ -1086,6 +1094,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
+        BtnOpenDevice = (CardView) findViewById(R.id.BtnOpenDevice);
 
         TextAddCases = (TextView) findViewById(R.id.TextAddCases);
 
@@ -2266,10 +2275,16 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
         public void OnConnected() {
 
-
             String message = "Device Open Success : " + bsp.GetErrorCode();
-
             ApplicationConstant.displayToastMessage(PendingPersonalDetailsActivity.this,message);
+
+            if(CaptureBiometric.getVisibility()==View.GONE){
+                BtnOpenDevice.setVisibility(View.GONE);
+                CaptureBiometric.setVisibility(View.VISIBLE);
+            }else{
+                BtnOpenDevice.setVisibility(View.VISIBLE);
+                CaptureBiometric.setVisibility(View.GONE);
+            }
 
 
         }

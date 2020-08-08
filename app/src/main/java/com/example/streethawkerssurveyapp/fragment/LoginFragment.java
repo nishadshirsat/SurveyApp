@@ -242,7 +242,7 @@ public class LoginFragment extends Fragment {
                         mContext.startActivity(new Intent(mContext, DashboardActivity.class));
 
                     } else {
-                        ApplicationConstant.displayMessageDialog(getActivity(), "", "Enter correct credentials");
+                        ApplicationConstant.displayMessageDialog(getActivity(), "", response.body().getMsg());
                     }
 
 

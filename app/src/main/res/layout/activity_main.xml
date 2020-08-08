@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     android:padding="15dp"
-    android:background="@color/white"
     tools:context=".activities.PersonalDetailsActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:layout_above="@+id/relative_buttons"
+        android:fillViewport="true"
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/LinearMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/LinearMain"
             android:orientation="vertical">
 
             <LinearLayout
@@ -32,18 +32,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="15dp"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    android:visibility="visible">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:gravity="center"
                         android:text="A. PERSONAL DETAILS"
                         android:textColor="@color/black"
                         android:textSize="26sp"
-                        android:gravity="center"
                         android:textStyle="bold" />
 
 
@@ -51,10 +51,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:layout_marginTop="@dimen/dp_size_10"
-                        android:src="@drawable/personal_details_big"/>
+                        android:src="@drawable/personal_details_big" />
 
                 </LinearLayout>
-
 
 
                 <LinearLayout
@@ -118,6 +117,7 @@
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -378,8 +378,8 @@
                             android:hint="Yrs"
                             android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:padding="10dp"
                             android:maxLength="3"
+                            android:padding="10dp"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -435,13 +435,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_bg"
+                            android:focusableInTouchMode="false"
                             android:hint="e.g. 1996-05-06"
+                            android:imeOptions="actionNext"
                             android:inputType="date"
                             android:paddingLeft="20dp"
-                            android:imeOptions="actionNext"
                             android:paddingTop="10dp"
                             android:paddingRight="20dp"
-                            android:focusableInTouchMode="false"
                             android:paddingBottom="10dp"
                             android:textSize="14sp" />
 
@@ -519,10 +519,10 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Mobile"
-                            android:inputType="number"
                             android:imeOptions="actionNext"
-                            android:padding="10dp"
+                            android:inputType="number"
                             android:maxLength="10"
+                            android:padding="10dp"
                             android:textSize="16sp" />
 
                         <EditText
@@ -596,8 +596,8 @@
                             android:background="@drawable/edittext_bg"
                             android:dropDownSelector="@drawable/downarrow"
                             android:entries="@array/education"
-                            android:inputType="text"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -657,9 +657,9 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:imeOptions="actionNext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -744,8 +744,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
-                            android:inputType="text"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -757,8 +757,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Middle"
-                            android:inputType="text"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -770,8 +770,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Surname"
-                            android:inputType="text"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -842,9 +842,9 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:imeOptions="actionNext"
                             android:textSize="14sp" />
 
                         <EditText
@@ -997,9 +997,9 @@
                             android:background="@drawable/edittext_bg"
                             android:dropDownSelector="@drawable/downarrow"
                             android:entries="@array/category"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:imeOptions="actionNext"
                             android:textSize="14sp" />
 
 
@@ -1131,8 +1131,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="House No."
-                            android:inputType="text"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1166,8 +1166,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="City"
-                            android:inputType="text"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1181,8 +1181,8 @@
                             android:hint="Pincode No."
                             android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:padding="10dp"
                             android:maxLength="6"
+                            android:padding="10dp"
                             android:textSize="14sp" />
 
 
@@ -1203,7 +1203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1239,12 +1239,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="15dp"
-                                android:text="Same as Residential"
-                                android:textStyle="bold"
-                                android:padding="@dimen/padding_5"
                                 android:background="@color/colorAccent"
+                                android:padding="@dimen/padding_5"
+                                android:text="Same as Residential"
                                 android:textColor="@color/white"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
@@ -1277,8 +1277,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="House No."
-                            android:inputType="text"
                             android:imeOptions="actionNext"
+                            android:inputType="text"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1325,9 +1325,9 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Pincode No."
+                            android:imeOptions="actionNext"
                             android:inputType="number"
                             android:maxLength="6"
-                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1387,9 +1387,9 @@
                             android:layout_weight="2"
                             android:background="@drawable/edittext_bg"
                             android:hint="Aadhar No"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
                             android:maxLength="12"
-                            android:imeOptions="actionNext"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1400,12 +1400,12 @@
                             android:layout_weight="1"
                             android:background="@color/colorPrimary"
                             android:inputType="text"
-                            android:textColor="@color/white"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
                             android:text="Verify"
-                            android:textStyle="bold"
+                            android:textColor="@color/white"
                             android:textSize="14sp"
+                            android:textStyle="bold"
                             android:visibility="visible" />
 
                         <TextView
@@ -1413,16 +1413,16 @@
                             android:layout_width="0dp"
                             android:layout_height="35dp"
                             android:layout_weight="1"
-                            android:textColor="@color/green"
-                            android:paddingTop="5dp"
                             android:drawableLeft="@drawable/ic_verified_user_black_24dp"
-                            android:paddingBottom="5dp"
-                            android:paddingLeft="10dp"
                             android:drawableTint="@color/green"
-                            android:text="Verified"
                             android:gravity="center"
-                            android:textStyle="bold"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="Verified"
+                            android:textColor="@color/green"
                             android:textSize="17sp"
+                            android:textStyle="bold"
                             android:visibility="gone" />
 
                     </LinearLayout>
@@ -1438,8 +1438,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="2"
                         android:layout_marginTop="25dp"
+                        android:layout_weight="2"
                         android:orientation="horizontal">
 
                         <TextView
@@ -1457,49 +1457,97 @@
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
+
                     </LinearLayout>
+
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/CaptureBiometric"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:layout_marginLeft="25dp"
+                        android:layout_marginTop="@dimen/size_20dp"
                         android:layout_marginRight="@dimen/dp_size_10"
                         android:layout_marginBottom="@dimen/dp_size_10"
-                        android:layout_marginTop="@dimen/size_20dp"
                         app:cardCornerRadius="5dp"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
                         app:cardElevation="5dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:gravity="center"
                             android:background="@drawable/edittext_bg"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal"
                             android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
                             android:paddingTop="10dp"
+                            android:paddingRight="15dp"
                             android:paddingBottom="10dp">
 
                             <ImageView
                                 android:id="@+id/image_bio"
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:tint="@color/colorPrimary"
-                                android:src="@drawable/ic_fingerprint_black_24dp"/>
+                                android:src="@drawable/ic_fingerprint_black_24dp" />
 
-                                            <TextView
-                                                android:id="@+id/TextBioCaptured"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="Capture Biometric"
-                                                android:textSize="15sp"
-                                                android:textStyle="bold"
-                                                android:layout_marginLeft="10dp"
-                                                android:layout_gravity="center"
-                                                android:gravity="center"
-                                                android:textColor="@color/colorAccent"
-                                           />
+                            <TextView
+                                android:id="@+id/TextBioCaptured"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:text="Capture Biometric"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/BtnOpenDevice"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="@dimen/size_20dp"
+                        android:layout_marginRight="@dimen/dp_size_10"
+                        android:layout_marginBottom="@dimen/dp_size_10"
+                        app:cardCornerRadius="5dp"
+                        android:layout_gravity="center"
+                        android:visibility="visible"
+                        app:cardElevation="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edittext_bg"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="15dp"
+                            android:layout_gravity="center"
+                            android:paddingBottom="10dp">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_fingerprint_black_24dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:text="Open Device"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
@@ -1636,18 +1684,16 @@
                             android:id="@+id/TextAddCases"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:text="ADD"
-                            android:textColor="@color/colorAccent"
-                            android:textStyle="bold"
-                            android:padding="5dp"
                             android:layout_gravity="right"
+                            android:layout_marginTop="15dp"
                             android:drawableRight="@drawable/ic_add_circle_black_24dp"
                             android:drawablePadding="05dp"
                             android:drawableTint="@color/colorAccent"
-                            android:layout_marginTop="15dp"/>
-
-
+                            android:padding="5dp"
+                            android:text="ADD"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -1657,7 +1703,7 @@
             </LinearLayout>
 
         </LinearLayout>
-        
+
 
     </ScrollView>
 
@@ -1665,8 +1711,8 @@
         android:id="@+id/relative_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
         android:gravity="bottom">
 
         <Button
@@ -1697,10 +1743,10 @@
             android:drawableTint="@color/white"
             android:padding="10dp"
             android:text="PREVIOUS"
-            android:visibility="visible"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="visible" />
 
 
     </RelativeLayout>

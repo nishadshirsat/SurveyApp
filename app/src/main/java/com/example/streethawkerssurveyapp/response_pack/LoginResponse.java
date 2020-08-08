@@ -2,36 +2,48 @@ package com.example.streethawkerssurveyapp.response_pack;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse{
+public class LoginResponse {
 
-	@SerializedName("data")
-	private LoginData data;
+    @SerializedName("data")
+    private LoginData data;
 
-	@SerializedName("status")
-	private boolean status;
+    @SerializedName("status")
+    private boolean status;
 
-	public void setData(LoginData data){
-		this.data = data;
-	}
+    @SerializedName("msg")
+    private String msg;
 
-	public LoginData getData(){
-		return data;
-	}
+    public void setData(LoginData data) {
+        this.data = data;
+    }
 
-	public void setStatus(boolean status){
-		this.status = status;
-	}
+    public LoginData getData() {
+        return data;
+    }
 
-	public boolean isStatus(){
-		return status;
-	}
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
-	@Override
- 	public String toString(){
-		return 
-			"LoginResponse{" + 
-			"data = '" + data + '\'' + 
-			",status = '" + status + '\'' + 
-			"}";
-		}
+    public boolean isStatus() {
+        return status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "LoginResponse{" +
+                        "data = '" + data + '\'' +
+                        "msg = '" + msg + '\'' +
+                        ",status = '" + status + '\'' +
+                        "}";
+    }
 }

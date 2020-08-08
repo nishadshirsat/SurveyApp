@@ -15,8 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.officer.activities.SupervisorListActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.supervisor.activities.SurveyorListActivity;
 import com.example.streethawkerssurveyapp.suspended_survey.avtivities.SuspendedSurveyActivity;
 import com.example.streethawkerssurveyapp.utils.GetLocation;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
@@ -30,6 +32,7 @@ public class DashboardActivity extends MainActivity {
     private RelativeLayout mRelative2;
     private de.hdodenhof.circleimageview.CircleImageView mProfile_image;
     private TextView mProfile_name;
+    private TextView TextSurvey;
     private TextView mProfile_email;
     private TextView mAreaName;
     private TextView mTextUsertype;
@@ -44,6 +47,7 @@ public class DashboardActivity extends MainActivity {
 
     boolean doubleBackToExitPressedOnce = false;
 
+    String USERTYPE = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +58,45 @@ public class DashboardActivity extends MainActivity {
             getLocation = new GetLocation(DashboardActivity.this);
         }
 
-
         bindVieW();
 
         setData();
 
-        mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DashboardActivity.this, StartSurveyModeActivity.class));
-            }
-        });
+        USERTYPE = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.UserType, "");
+
+        if (USERTYPE.equals("Surveyor")) {
+            TextSurvey.setText("New Survey");
+            mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(DashboardActivity.this, StartSurveyModeActivity.class));
+                }
+            });
+        } else if (USERTYPE.equals("Supervisor")) {
+            TextSurvey.setText("Surveyor List");
+            mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(DashboardActivity.this, SurveyorListActivity.class));
+                }
+            });
+        } else {
+            TextSurvey.setText("Supervisor List");
+            mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(DashboardActivity.this, SupervisorListActivity.class));
+                }
+            });
+        }
+
+
+//        mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(DashboardActivity.this, StartSurveyModeActivity.class));
+//            }
+//        });
 
         mLinear_pending.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,9 +133,9 @@ public class DashboardActivity extends MainActivity {
 
     private void setData() {
 
-        String Name = PrefUtils.getFromPrefs(DashboardActivity.this,ApplicationConstant.USERDETAILS.Name,"");
-        String Email = PrefUtils.getFromPrefs(DashboardActivity.this,ApplicationConstant.USERDETAILS.Email,"");
-        String Role = PrefUtils.getFromPrefs(DashboardActivity.this,ApplicationConstant.USERDETAILS.UserType,"");
+        String Name = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.Name, "");
+        String Email = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.Email, "");
+        String Role = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.UserType, "");
 
         mProfile_name.setText(Name);
         mProfile_email.setText(Email);
@@ -122,6 +154,7 @@ public class DashboardActivity extends MainActivity {
         mAreaName = (TextView) findViewById(R.id.AreaName);
         mTextUsertype = (TextView) findViewById(R.id.TextUsertype);
         mTextUsername = (TextView) findViewById(R.id.TextUsername);
+        TextSurvey = (TextView) findViewById(R.id.TextSurvey);
         mLinear_newSurvey = (LinearLayout) findViewById(R.id.linear_newSurvey);
         mLinear_pending = (LinearLayout) findViewById(R.id.linear_pending);
         mImage_dth = (ImageView) findViewById(R.id.image_dth);
@@ -154,7 +187,7 @@ public class DashboardActivity extends MainActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main,menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -163,7 +196,7 @@ public class DashboardActivity extends MainActivity {
 
         switch (item.getItemId()) {
             case R.id.bookmark_menu:
-                startActivity(new Intent(DashboardActivity.this,LoginActivity.class));
+                startActivity(new Intent(DashboardActivity.this, LoginActivity.class));
                 finish();
                 return true;
         }
