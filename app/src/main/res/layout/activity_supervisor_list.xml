@@ -20,6 +20,31 @@
         android:drawableTint="@color/colorPrimaryDark"
         android:hint="search"
         android:padding="8dp" />
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/SpinnerSupervisor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40dp"
+        android:inputType="text"
+        android:visibility="visible"
+        android:layout_marginLeft="@dimen/dp_size_10"
+        android:layout_marginRight="@dimen/dp_size_10"
+        android:layout_marginBottom="@dimen/dp_size_10"
+        android:background="@drawable/edittext_bg"
+        android:padding="8dp" />
+
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/SpinnerSurveyor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40dp"
+        android:inputType="text"
+        android:visibility="visible"
+        android:layout_marginLeft="@dimen/dp_size_10"
+        android:layout_marginRight="@dimen/dp_size_10"
+        android:layout_marginBottom="@dimen/dp_size_10"
+        android:background="@drawable/edittext_bg"
+        android:padding="8dp" />
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecycleSurveyor"

@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.streethawkerssurveyapp.R;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 public class SupervisorListActivity extends AppCompatActivity {
 
-    private EditText mText_search;
+    private SearchableSpinner SpinnerSupervisor,SpinnerSurveyor;
     private androidx.recyclerview.widget.RecyclerView mRecycleSurveyor;
+    private EditText mText_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,8 @@ public class SupervisorListActivity extends AppCompatActivity {
     private void bindView() {
 
         mText_search = (EditText) findViewById(R.id.text_search);
+        SpinnerSupervisor = (SearchableSpinner) findViewById(R.id.SpinnerSupervisor);
+        SpinnerSurveyor = (SearchableSpinner) findViewById(R.id.SpinnerSurveyor);
         mRecycleSurveyor = (androidx.recyclerview.widget.RecyclerView) findViewById(R.id.RecycleSurveyor);
 
     }
