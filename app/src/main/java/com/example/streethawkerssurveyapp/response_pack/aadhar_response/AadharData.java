@@ -4,20 +4,31 @@ import com.google.gson.annotations.SerializedName;
 
 public class AadharData {
 
-	@SerializedName("zip")
-	private String zip;
-
-	@SerializedName("care_of")
-	private String careOf;
-
-	@SerializedName("address")
-	private Address address;
-
 	@SerializedName("gender")
 	private String gender;
 
 	@SerializedName("raw_xml")
 	private String rawXml;
+
+	@SerializedName("address")
+	private Address address;
+
+	@SerializedName("zip")
+	private String zip;
+
+	@SerializedName("full_name")
+	private String fullName;
+
+	@SerializedName("aadhaar_number")
+	private String aadhaarNumber;
+
+	@SerializedName("dob")
+	private String dob;
+
+
+
+	@SerializedName("care_of")
+	private String careOf;
 
 	@SerializedName("face_status")
 	private boolean faceStatus;
@@ -37,17 +48,10 @@ public class AadharData {
 	@SerializedName("profile_image")
 	private String profileImage;
 
-	@SerializedName("full_name")
-	private String fullName;
-
 	@SerializedName("has_image")
 	private boolean hasImage;
 
-	@SerializedName("aadhaar_number")
-	private String aadhaarNumber;
 
-	@SerializedName("dob")
-	private String dob;
 
 	public void setZip(String zip){
 		this.zip = zip;

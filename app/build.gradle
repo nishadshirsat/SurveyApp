@@ -107,5 +107,9 @@ dependencies {
 
     //sentry
     implementation 'io.sentry:sentry-android:2.2.1'
+    implementation 'com.github.smart-fun:XmlToJson:1.4.5'
+
+    implementation files('libs/NBioBSPJNI_v2.0.0.2(10).aar')
+
 
 }

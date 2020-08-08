@@ -26,7 +26,7 @@ public class Address{
 	private String state;
 
 	@SerializedName("landmark")
-	private Object landmark;
+	private String landmark;
 
 	@SerializedName("house")
 	private String house;
@@ -90,11 +90,11 @@ public class Address{
 		return state;
 	}
 
-	public void setLandmark(Object landmark){
+	public void setLandmark(String landmark){
 		this.landmark = landmark;
 	}
 
-	public Object getLandmark(){
+	public String getLandmark(){
 		return landmark;
 	}
 
