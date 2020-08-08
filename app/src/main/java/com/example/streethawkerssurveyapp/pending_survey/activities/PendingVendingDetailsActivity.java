@@ -142,7 +142,6 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
         ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
 
-        NO_DAYS_ACTIVE = new StringBuilder();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -562,6 +561,9 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
 
     private void setActiveWeeks() {
+
+        NO_DAYS_ACTIVE = new StringBuilder();
+
         if (!M.trim().isEmpty()) {
             if (NO_DAYS_ACTIVE.toString().isEmpty()) {
                 NO_DAYS_ACTIVE.append(M);

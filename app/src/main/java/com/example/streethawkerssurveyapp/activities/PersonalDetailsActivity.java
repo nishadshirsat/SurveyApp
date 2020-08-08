@@ -270,10 +270,10 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     AADHAR_NO = mEditAadhar.getText().toString().trim();
 
-
                     View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_select_type, null);
                     CardView cCardOTP = (androidx.cardview.widget.CardView)viewAdd. findViewById(R.id.CardOTP);
                     CardView cCardBiometric = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardBiometric);
+                    CardView cCardScanQR = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardScanQR);
 
 
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
@@ -286,7 +286,6 @@ public class PersonalDetailsActivity extends MainActivity {
                         @Override
                         public void onClick(View view) {
                             alertDialog.dismiss();
-
                             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Credentials not found.");
                         }
                     });
@@ -296,6 +295,14 @@ public class PersonalDetailsActivity extends MainActivity {
                         public void onClick(View view) {
                             alertDialog.dismiss();
                             SendOtpForAadhar();
+                        }
+                    });
+
+                    cCardScanQR.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+//                            ju
                         }
                     });
 

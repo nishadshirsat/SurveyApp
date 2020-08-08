@@ -445,18 +445,32 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
 
         }
 
-
-
-
-
-
-
-
     }
 
     private void setDocumentsData() {
 
         mTextComments.setText(SingleSurveyData.getComments());
+
+        try {
+            if (!SingleSurveyData.getOther_documents().isEmpty()){
+
+                mTextOtherDocument.setText("Other Documents List");
+
+                List<DocumentsData> documentsDataList = SingleSurveyData.getOther_documents();
+
+                ViewOtherDocDetailsAdpater docDetailsAdpater = new ViewOtherDocDetailsAdpater(ViewSurveyDetailsActivity.this);
+                docDetailsAdpater.setDetails(documentsDataList);
+
+                viewOtherDocuments.setAdapter(docDetailsAdpater);
+
+            }else {
+                mTextOtherDocument.setText("No Other Documents Uploaded");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            mTextOtherDocument.setText("No Other Documents Uploaded");
+        }
 
         mTextIdFront.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -485,7 +499,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         });
 
 
-  mTextHistoryFront.setOnClickListener(new View.OnClickListener() {
+        mTextHistoryFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -499,7 +513,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         });
 
 
-  mTextHistoryBack.setOnClickListener(new View.OnClickListener() {
+      mTextHistoryBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -683,27 +697,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
 
         }
 
-        try {
-            if (!SingleSurveyData.getOther_documents().isEmpty()){
 
-                mTextOtherDocument.setText("Other Documents List");
-
-                List<DocumentsData> documentsDataList = SingleSurveyData.getOther_documents();
-
-                ViewOtherDocDetailsAdpater docDetailsAdpater = new ViewOtherDocDetailsAdpater(ViewSurveyDetailsActivity.this);
-                docDetailsAdpater.setDetails(documentsDataList);
-
-                viewOtherDocuments.setAdapter(docDetailsAdpater);
-
-            }else {
-                mTextOtherDocument.setText("No Other Documents Uploaded");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            mTextOtherDocument.setText("No Other Documents Uploaded");
-
-        }
 
     }
 
@@ -776,8 +770,8 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
 //                    String geoUri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng + " (" + mTitle + ")";
 
 
-//                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q="+SingleSurveyData.getLatitude()+","+SingleSurveyData.getLongitude());
-                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q="+"18.5204"+","+"73.8567");
+                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q="+SingleSurveyData.getLatitude()+","+SingleSurveyData.getLongitude());
+//                    String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q="+"18.5204"+","+"73.8567");
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                     startActivity(intent);
                 } catch (Exception e) {

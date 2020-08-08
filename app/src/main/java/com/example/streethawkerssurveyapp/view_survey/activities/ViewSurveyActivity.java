@@ -90,7 +90,6 @@ public class ViewSurveyActivity extends AppCompatActivity {
 
         onClickListners();
 
-
     }
 
     private void onClickListners() {
