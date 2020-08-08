@@ -2,7 +2,9 @@ package com.example.streethawkerssurveyapp.view_survey.response_pojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AadharDetails{
+import java.io.Serializable;
+
+public class AadharDetails implements Serializable {
 
 	@SerializedName("subdist")
 	private String subdist;

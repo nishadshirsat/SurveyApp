@@ -2,7 +2,9 @@ package com.example.streethawkerssurveyapp.view_survey.response_pojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LandFixedAssetsItem{
+import java.io.Serializable;
+
+public class LandFixedAssetsItem implements Serializable {
 
 	@SerializedName("area")
 	private String area;
@@ -15,6 +17,14 @@ public class LandFixedAssetsItem{
 
 	@SerializedName("updated_at")
 	private String updatedAt;
+
+	public LandFixedAssetsItem(String area, String houseSize, String kucchha, String plot, String rentalIncome) {
+		this.area = area;
+		this.houseSize = houseSize;
+		this.kucchha = kucchha;
+		this.plot = plot;
+		this.rentalIncome = rentalIncome;
+	}
 
 	@SerializedName("plot")
 	private String plot;

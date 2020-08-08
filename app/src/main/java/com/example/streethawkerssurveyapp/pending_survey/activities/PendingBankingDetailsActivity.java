@@ -1,4 +1,4 @@
-package com.example.streethawkerssurveyapp.activities;
+package com.example.streethawkerssurveyapp.pending_survey.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -12,29 +12,27 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.DocumentsScanActivity;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyDetails;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BankingDetailsActivity extends AppCompatActivity {
+public class PendingBankingDetailsActivity extends AppCompatActivity {
 
     private LinearLayout mLinearMain;
     private LinearLayout mLinearHead;
@@ -53,12 +51,19 @@ public class BankingDetailsActivity extends AppCompatActivity {
             BRANCH_NAME = "",
             IFSC = "";
 
+    private SingleSurveyDetails SingleSurveyData;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_details);
         bindViews();
+
+        SingleSurveyData = (SingleSurveyDetails) getIntent().getSerializableExtra("SurveyData");
+
+        ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PendingBankingDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -69,7 +74,7 @@ public class BankingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-             onBackPressed();
+           onBackPressed();
 
             }
         });
@@ -99,7 +104,10 @@ public class BankingDetailsActivity extends AppCompatActivity {
             }
         });
 
+        setBankingData();
+
     }
+
 
     private boolean validate() {
 
@@ -142,16 +150,16 @@ public class BankingDetailsActivity extends AppCompatActivity {
 
     private void UploadBankDetailsSurvey() {
 
-      ProgressDialog progressDialog = CustomProgressDialog.getDialogue(BankingDetailsActivity.this);
+      ProgressDialog progressDialog = CustomProgressDialog.getDialogue(PendingBankingDetailsActivity.this);
         progressDialog.show();
 
         String UNiq_Id = "";
 
-        UNiq_Id = PrefUtils.getFromPrefs(BankingDetailsActivity.this, ApplicationConstant.URI_NO_, "");
+        UNiq_Id = PrefUtils.getFromPrefs(PendingBankingDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
-        String CORPORATION =   PrefUtils.getFromPrefs(BankingDetailsActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(BankingDetailsActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(BankingDetailsActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION =   PrefUtils.getFromPrefs(PendingBankingDetailsActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(PendingBankingDetailsActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(PendingBankingDetailsActivity.this,ApplicationConstant.WARD,"");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -168,7 +176,7 @@ public class BankingDetailsActivity extends AppCompatActivity {
         RequestBody IFSC_ = RequestBody.create(MediaType.parse("multipart/form-data"), IFSC);
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(BankingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PendingBankingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
         Call<UpdateSurveyResponse> call = apiservice.BankDetailsSurvey(headers,
@@ -194,15 +202,17 @@ public class BankingDetailsActivity extends AppCompatActivity {
                     if (response.body().isStatus()) {
 
 
-                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(BankingDetailsActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(PendingBankingDetailsActivity.this);
                         builder.setTitle("Banking Details");
                         builder.setMessage("Saved successfully");
                         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                startActivity(new Intent(BankingDetailsActivity.this, DocumentsScanActivity.class));
 
+                                Intent intent = new Intent(PendingBankingDetailsActivity.this, PendingDocumentsScanActivity.class);
+                                intent.putExtra("SurveyData",SingleSurveyData);
+                                startActivity(intent);
                             }
                         });
 
@@ -218,7 +228,7 @@ public class BankingDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(BankingDetailsActivity.this,
+                        ApplicationConstant.displayMessageDialog(PendingBankingDetailsActivity.this,
                                 "Response",
                                 response.body().getMessage());
                     }
@@ -226,7 +236,7 @@ public class BankingDetailsActivity extends AppCompatActivity {
                 } else {
 
                     try {
-                        ApplicationConstant.displayMessageDialog(BankingDetailsActivity.this,
+                        ApplicationConstant.displayMessageDialog(PendingBankingDetailsActivity.this,
                                 "Response",
                                 response.errorBody().string());
                     } catch (Exception e) {
@@ -241,16 +251,18 @@ public class BankingDetailsActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(BankingDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingBankingDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+    private void setBankingData() {
+
+        mEditBankName.setText(SingleSurveyData.getBankName());
+        mEditBranchName.setText(SingleSurveyData.getBankBranchName());
+        mEditAccNo.setText(SingleSurveyData.getBankAccountNumber());
+        mEditIfscCode.setText(SingleSurveyData.getBankIfsc());
     }
 
     @Override
@@ -266,5 +278,12 @@ public class BankingDetailsActivity extends AppCompatActivity {
             super.onBackPressed();
 
         }
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

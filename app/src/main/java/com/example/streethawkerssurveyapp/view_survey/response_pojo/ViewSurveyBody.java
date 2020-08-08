@@ -1,9 +1,10 @@
 package com.example.streethawkerssurveyapp.view_survey.response_pojo;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class ViewSurveyBody {
+public class ViewSurveyBody implements Serializable {
 
 	@SerializedName("first_page_url")
 	private String firstPageUrl;

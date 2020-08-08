@@ -2,7 +2,9 @@ package com.example.streethawkerssurveyapp.view_survey.response_pojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FamilyMembersItem{
+import java.io.Serializable;
+
+public class FamilyMembersItem implements Serializable {
 
 	@SerializedName("updated_at")
 	private String updatedAt;
@@ -21,6 +23,13 @@ public class FamilyMembersItem{
 
 	@SerializedName("family_member_adhaar")
 	private String familyMemberAdhaar;
+
+	public FamilyMembersItem(String familyMemberRelationship, String familyMemberName, String familyMemberAdhaar, String familyMemberAge) {
+		this.familyMemberRelationship = familyMemberRelationship;
+		this.familyMemberName = familyMemberName;
+		this.familyMemberAdhaar = familyMemberAdhaar;
+		this.familyMemberAge = familyMemberAge;
+	}
 
 	@SerializedName("family_member_age")
 	private String familyMemberAge;

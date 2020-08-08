@@ -2,7 +2,9 @@ package com.example.streethawkerssurveyapp.view_survey.response_pojo;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ViewSurveyData {
+import java.io.Serializable;
+
+public class ViewSurveyData implements Serializable {
 
 	@SerializedName("area")
 	private String area;

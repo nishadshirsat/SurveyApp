@@ -8,8 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -32,10 +30,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.CorporationZoneActivity;
 import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.activities.VendorsFamDetailsActivity;
+import com.example.streethawkerssurveyapp.services.AudioRecordService;
 import com.example.streethawkerssurveyapp.view_survey.adapters.ViewCriminalCasesAdpater;
-import com.example.streethawkerssurveyapp.pojo_class.CriminalCases;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharData;
 import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharOtpData;
@@ -48,7 +47,6 @@ import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.GetLocation;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
-import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.CriminalCaseDetailsItem;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyDetails;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyResponse;
@@ -242,6 +240,10 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
 
         onCLickListners();
+
+        Intent intent = new Intent(PendingPersonalDetailsActivity.this, AudioRecordService.class);
+        intent.putExtra("FILE", ApplicationConstant.SurveyId);
+        startService(intent);
 
         SingleSurveyDetails("survey/"+ApplicationConstant.SurveyId);
 
@@ -506,56 +508,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View view) {
 
-                if (mLinearFive.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.VISIBLE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
-
-                } else if (mLinearFour.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.VISIBLE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
-
-                } else if (mLinearThree.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.VISIBLE);
-                    mLinearFive.setVisibility(View.GONE);
-
-                } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
-
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.VISIBLE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
-
-//                    mBtnPrevious.setVisibility(View.GONE);
-
-                }else if (mLinearOne.getVisibility() == View.VISIBLE) {
-
-                    mLinearHead.setVisibility(View.VISIBLE);
-                    mLinearFour.setVisibility(View.GONE);
-                    mLinearOne.setVisibility(View.GONE);
-                    mLinearThree.setVisibility(View.GONE);
-                    mLinearTwo.setVisibility(View.GONE);
-                    mLinearFive.setVisibility(View.GONE);
-
-                    mBtnPrevious.setVisibility(View.GONE);
-
-                } else {
-
-                    onBackPressed();
-
-                }
+           onBackPressed();
 
             }
         });
@@ -593,7 +546,8 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
-                if (mLinearHead.getVisibility() == View.VISIBLE) {
+
+            if (mLinearHead.getVisibility() == View.VISIBLE) {
 
                     mLinearHead.setVisibility(View.GONE);
                     mLinearOne.setVisibility(View.VISIBLE);
@@ -912,11 +866,12 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else if (mImgVendorPhoto.getDrawable() == null) {
+        } else  if (mImgVendorPhoto.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_camera_black_24dp).getConstantState()){
+
             ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Capture profile photo");
 
             return false;
-        }  else if (mImgVendorSite.getDrawable() == null) {
+        }  else if (mImgVendorSite.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_camera_black_24dp).getConstantState()){
             ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Capture Vending Place photo");
 
             return false;
@@ -1237,7 +1192,10 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                startActivity(new Intent(PendingPersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
+
+                                Intent intent = new Intent(PendingPersonalDetailsActivity.this, PendingVendorsFamDetailsActivity.class);
+                                intent.putExtra("SurveyData",SingleSurveyData);
+                                startActivity(intent);
 
                             }
                         });
@@ -1865,35 +1823,45 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
     private void setPersonalData() {
 
-        Glide.with(this).load(SingleSurveyData.getPhotoOfTheStreetVendor())
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .into(mImgVendorPhoto);
+        if (SingleSurveyData.getPhotoOfTheStreetVendor()!=null){
+            Glide.with(this).load(SingleSurveyData.getPhotoOfTheStreetVendor())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(mImgVendorPhoto);
 
-        Glide.with(this).load(SingleSurveyData.getPhotoOfVendorSite())
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .into(mImgVendorSite);
-
-        String[] splited = SingleSurveyData.getNameOfTheStreetVendor().split("\\s+");
-
-        if (splited.length == 3){
-            mEditFName.setText(splited[0]);
-            mEditMName.setText(splited[1]);
-            mEditLName.setText(splited[2]);
-
-        }else {
-            mEditFName.setText(splited[0]);
-            mEditLName.setText(splited[1]);
         }
 
-        if (SingleSurveyData.getSex().trim().equals("M")){
-            mRadioM.setChecked(true);
-        }else if (SingleSurveyData.getSex().trim().equals("F")){
-            mRadioF.setChecked(true);
-        }else {
-            mRadioO.setChecked(true);
+        if (SingleSurveyData.getPhotoOfVendorSite()!=null){
+            Glide.with(this).load(SingleSurveyData.getPhotoOfVendorSite())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(mImgVendorSite);
         }
+
+        if (SingleSurveyData.getNameOfTheStreetVendor()!=null){
+            String[] splited = SingleSurveyData.getNameOfTheStreetVendor().split("\\s+");
+
+            if (splited.length == 3){
+                mEditFName.setText(splited[0]);
+                mEditMName.setText(splited[1]);
+                mEditLName.setText(splited[2]);
+
+            }else {
+                mEditFName.setText(splited[0]);
+                mEditLName.setText(splited[1]);
+            }
+        }
+
+        if (SingleSurveyData.getSex()!=null){
+            if (SingleSurveyData.getSex().trim().equals("M")){
+                mRadioM.setChecked(true);
+            }else if (SingleSurveyData.getSex().trim().equals("F")){
+                mRadioF.setChecked(true);
+            }else {
+                mRadioO.setChecked(true);
+            }
+        }
+
 
         mEditAge.setText(SingleSurveyData.getAge());
         mEditDob.setText(SingleSurveyData.getDateOfBirth());
@@ -1901,44 +1869,54 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         mEditMobile.setText(SingleSurveyData.getContactNumber());
         mEditLandline.setText(SingleSurveyData.getLandlineNumber());
 
-        String[] splitedHus = SingleSurveyData.getNameOfFatherHusband().split("\\s+");
+        if (SingleSurveyData.getNameOfFatherHusband()!=null){
+            String[] splitedHus = SingleSurveyData.getNameOfFatherHusband().split("\\s+");
 
-        if (splitedHus.length == 3){
-            mEditFatherName.setText(splitedHus[0]);
-            mEditFatherMName.setText(splitedHus[1]);
-            mEditFatherLName.setText(splitedHus[2]);
+            if (splitedHus.length == 3){
+                mEditFatherName.setText(splitedHus[0]);
+                mEditFatherMName.setText(splitedHus[1]);
+                mEditFatherLName.setText(splitedHus[2]);
 
-        }else {
-            mEditFatherName.setText(splitedHus[0]);
-            mEditFatherLName.setText(splitedHus[1]);
+            }else {
+                mEditFatherName.setText(splitedHus[0]);
+                mEditFatherLName.setText(splitedHus[1]);
+            }
+        }
+
+        if (SingleSurveyData.getNameOfMother()!=null){
+            String[] splitedMother = SingleSurveyData.getNameOfMother().split("\\s+");
+
+            if (splitedMother.length == 3){
+                mEditMotherFName.setText(splitedMother[0]);
+                mEditMotherMName.setText(splitedMother[1]);
+                mEditMotherLName.setText(splitedMother[2]);
+
+            }else {
+                mEditMotherFName.setText(splitedMother[0]);
+                mEditMotherLName.setText(splitedMother[1]);
+            }
         }
 
 
-        String[] splitedMother = SingleSurveyData.getNameOfMother().split("\\s+");
-
-        if (splitedMother.length == 3){
-            mEditMotherFName.setText(splitedMother[0]);
-            mEditMotherMName.setText(splitedMother[1]);
-            mEditMotherLName.setText(splitedMother[2]);
-
-        }else {
-            mEditMotherFName.setText(splitedMother[0]);
-            mEditMotherLName.setText(splitedMother[1]);
+        if (SingleSurveyData.getEducationStatus()!=null){
+            if (mSpinnerEducation.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
+                mSpinnerEducation.setSelection(0);
+            }else if (mSpinnerEducation.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
+                mSpinnerEducation.setSelection(1);
+            }else if (mSpinnerEducation.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
+                mSpinnerEducation.setSelection(2);
+            }else if (mSpinnerEducation.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
+                mSpinnerEducation.setSelection(3);
+            }else if (mSpinnerEducation.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
+                mSpinnerEducation.setSelection(4);
+            }else if (mSpinnerEducation.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
+                mSpinnerEducation.setSelection(5);
+            }
         }
 
-        if (mSpinnerEducation.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
-            mSpinnerEducation.setSelection(0);
-        }else if (mSpinnerEducation.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
-            mSpinnerEducation.setSelection(1);
-        }else if (mSpinnerEducation.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
-            mSpinnerEducation.setSelection(2);
-        }else if (mSpinnerEducation.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
-            mSpinnerEducation.setSelection(3);
-        }else if (mSpinnerEducation.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
-            mSpinnerEducation.setSelection(4);
-        }else if (mSpinnerEducation.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getEducationStatus().trim())){
-            mSpinnerEducation.setSelection(5);
-        }
+
+
+
 
         if (SingleSurveyData.getSpouseName() != null ){
             try {
@@ -1965,36 +1943,40 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 mRadioY.setChecked(true);
             }
         }
-        if (mSpinnerCategory.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(0);
-        }else if (mSpinnerCategory.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(1);
-        }else if (mSpinnerCategory.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(2);
-        }else if (mSpinnerCategory.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(3);
-        }else if (mSpinnerCategory.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(4);
-        }else if (mSpinnerCategory.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(5);
-        }
-        else if (mSpinnerCategory.getItemAtPosition(6).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(6);
-        }
-        else if (mSpinnerCategory.getItemAtPosition(7).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(7);
-        }
-        else if (mSpinnerCategory.getItemAtPosition(8).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(8);
-        }
-        else if (mSpinnerCategory.getItemAtPosition(9).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(9);
-        }
-        else if (mSpinnerCategory.getItemAtPosition(10).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(10);
-        }
-        else if (mSpinnerCategory.getItemAtPosition(11).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-            mSpinnerCategory.setSelection(11);
+
+        if (SingleSurveyData.getCategory()!=null){
+            if (mSpinnerCategory.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(0);
+            }else if (mSpinnerCategory.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(1);
+            }else if (mSpinnerCategory.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(2);
+            }else if (mSpinnerCategory.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(3);
+            }else if (mSpinnerCategory.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(4);
+            }else if (mSpinnerCategory.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(5);
+            }
+            else if (mSpinnerCategory.getItemAtPosition(6).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(6);
+            }
+            else if (mSpinnerCategory.getItemAtPosition(7).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(7);
+            }
+            else if (mSpinnerCategory.getItemAtPosition(8).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(8);
+            }
+            else if (mSpinnerCategory.getItemAtPosition(9).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(9);
+            }
+            else if (mSpinnerCategory.getItemAtPosition(10).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(10);
+            }
+            else if (mSpinnerCategory.getItemAtPosition(11).toString().trim().contains(SingleSurveyData.getCategory().trim())){
+                mSpinnerCategory.setSelection(11);
+            }
+
         }
 
 
@@ -2044,12 +2026,68 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             }
         }
 
-        if (SingleSurveyData.getCriminalCaseDetails() != null)
+        if (SingleSurveyData.getCriminalCaseDetails() != null){
 
-        listCriminalCases.addAll(SingleSurveyData.getCriminalCaseDetails());
+            listCriminalCases.addAll(SingleSurveyData.getCriminalCaseDetails());
+            ViewCriminalCasesAdpater criminalCasesAdpater = new ViewCriminalCasesAdpater(PendingPersonalDetailsActivity.this);
+            criminalCasesAdpater.setDetails(listCriminalCases);
 
-        ViewCriminalCasesAdpater criminalCasesAdpater = new ViewCriminalCasesAdpater(PendingPersonalDetailsActivity.this);
-        criminalCasesAdpater.setDetails(listCriminalCases);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (mLinearFive.getVisibility() == View.VISIBLE) {
+
+            mLinearFour.setVisibility(View.VISIBLE);
+            mLinearOne.setVisibility(View.GONE);
+            mLinearThree.setVisibility(View.GONE);
+            mLinearTwo.setVisibility(View.GONE);
+            mLinearFive.setVisibility(View.GONE);
+
+        } else if (mLinearFour.getVisibility() == View.VISIBLE) {
+
+            mLinearFour.setVisibility(View.GONE);
+            mLinearOne.setVisibility(View.GONE);
+            mLinearThree.setVisibility(View.VISIBLE);
+            mLinearTwo.setVisibility(View.GONE);
+            mLinearFive.setVisibility(View.GONE);
+
+        } else if (mLinearThree.getVisibility() == View.VISIBLE) {
+
+            mLinearFour.setVisibility(View.GONE);
+            mLinearOne.setVisibility(View.GONE);
+            mLinearThree.setVisibility(View.GONE);
+            mLinearTwo.setVisibility(View.VISIBLE);
+            mLinearFive.setVisibility(View.GONE);
+
+        } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
+
+            mLinearFour.setVisibility(View.GONE);
+            mLinearOne.setVisibility(View.VISIBLE);
+            mLinearThree.setVisibility(View.GONE);
+            mLinearTwo.setVisibility(View.GONE);
+            mLinearFive.setVisibility(View.GONE);
+
+//                    mBtnPrevious.setVisibility(View.GONE);
+
+        }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+
+            mLinearHead.setVisibility(View.VISIBLE);
+            mLinearFour.setVisibility(View.GONE);
+            mLinearOne.setVisibility(View.GONE);
+            mLinearThree.setVisibility(View.GONE);
+            mLinearTwo.setVisibility(View.GONE);
+            mLinearFive.setVisibility(View.GONE);
+
+            mBtnPrevious.setVisibility(View.GONE);
+
+        } else {
+
+            super.onBackPressed();
+
+        }
 
     }
 }

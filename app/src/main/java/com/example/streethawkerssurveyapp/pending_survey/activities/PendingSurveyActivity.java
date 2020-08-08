@@ -144,9 +144,13 @@ public class PendingSurveyActivity extends AppCompatActivity {
                         }  else {
                             mTextNextPage.setVisibility(View.GONE);
                             mTextPrevPage.setVisibility(View.VISIBLE);
+
+                            ApplicationConstant.displayToastMessage(PendingSurveyActivity.this,"No more records found");
                         }
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
+                        ApplicationConstant.displayToastMessage(PendingSurveyActivity.this,"No more records found");
+
                     }
                 }
 

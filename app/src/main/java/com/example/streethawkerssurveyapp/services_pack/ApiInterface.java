@@ -187,6 +187,18 @@ public interface ApiInterface {
 
     @Multipart
     @POST("update-survey")
+    Call<UpdateSurveyResponse> UploadOtherDocument(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part("corporation") RequestBody corporation,
+            @Part("zone") RequestBody zone,
+            @Part("ward") RequestBody ward,
+            @Part("document_type") RequestBody document_type,
+            @Part MultipartBody.Part document
+    );
+
+    @Multipart
+    @POST("update-survey")
     Call<UpdateSurveyResponse> UploadVendingHistoryProof(
             @HeaderMap Map<String, String> token,
             @Part("uri_number") RequestBody uri_number,
