@@ -7,6 +7,7 @@ import androidx.core.content.FileProvider;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -51,6 +52,7 @@ import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.adapter.CriminalCasesAdpater;
 import com.example.streethawkerssurveyapp.adapter.LandAssetsAdpater;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.pojo_class.CriminalCases;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
@@ -59,6 +61,7 @@ import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharDa
 import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharOtpData;
 import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharOtpResponse;
 import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharValidResponse;
+import com.example.streethawkerssurveyapp.response_pack.aadhar_response.Address;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
@@ -219,6 +222,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
     public static int orientation;
 
+    private  AadharData aadharData = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -302,7 +307,8 @@ public class PersonalDetailsActivity extends MainActivity {
                         @Override
                         public void onClick(View view) {
                             alertDialog.dismiss();
-//                            ju
+                            Intent intent = new Intent(PersonalDetailsActivity.this,ScanQrForAadharActivity.class);
+                            startActivityForResult(intent,12345);
                         }
                     });
 
@@ -1035,6 +1041,61 @@ public class PersonalDetailsActivity extends MainActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
+
+            if (requestCode == 12345){
+
+                if (data!=null){
+                    String xmlData = data.getExtras().getString("SCANDATA");
+
+                    XmlToJson xmlToJson = new XmlToJson.Builder(xmlData).build();
+
+                    JSONObject jsonObject = xmlToJson.toJson();
+
+                    String Name = "";
+
+                    Address address = new Address();
+
+                    try {
+
+                        JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
+                        address.setLoc(jsonAadhar.getString("loc"));
+                        address.setLandmark(jsonAadhar.getString("lm"));
+                        address.setSubdist(jsonAadhar.getString("subdist"));
+                        address.setVtc(jsonAadhar.getString("vtc"));
+                        address.setDist(jsonAadhar.getString("dist"));
+                        address.setHouse(jsonAadhar.getString("house"));
+                        address.setPo(jsonAadhar.getString("po"));
+                        address.setState(jsonAadhar.getString("state"));
+                        address.setStreet(jsonAadhar.getString("street"));
+                        address.setCountry("India");
+
+                        aadharData = new AadharData();
+                        aadharData.setAddress(address);
+                        aadharData.setGender(jsonAadhar.getString("gender"));
+                        aadharData.setDob(jsonAadhar.getString("dob"));
+                        aadharData.setFullName(jsonAadhar.getString("name"));
+                        aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
+                        aadharData.setRawXml(xmlData);
+                        aadharData.setZip(jsonAadhar.getString("pc"));
+                        aadharData.setCareOf("");
+                        aadharData.setFaceStatus(false);
+                        aadharData.setFaceScore(0);
+                        aadharData.setHasImage(false);
+
+                        String json_Aadhar = new Gson().toJson(aadharData);
+
+                        AADHAR_DETAILS = json_Aadhar;
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"",Name);
+                }
+
+
+            }else
             if (requestCode == 1) {
 
                 Bitmap bitmap = ApplicationConstant.CompressedBitmap(new File(photoPath));
@@ -1847,4 +1908,5 @@ public class PersonalDetailsActivity extends MainActivity {
         }
 
     }
+
 }
