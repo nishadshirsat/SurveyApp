@@ -1139,8 +1139,18 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         aadharData = new AadharData();
                         aadharData.setAddress(address);
                         aadharData.setGender(jsonAadhar.getString("gender"));
+
+                        try {
+                            String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+                            aadharData.setDob(datearray[2]+"-"+datearray[1]+"-"+datearray[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            aadharData.setDob("1995-05-30");
+
+                        }
+
+
 //                        aadharData.setDob(jsonAadhar.getString("dob"));
-                        aadharData.setDob("1995-05-30");
                         aadharData.setFullName(jsonAadhar.getString("name"));
                         aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
                         aadharData.setRawXml(xmlData);
@@ -1164,7 +1174,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         e.printStackTrace();
                     }
 
-                    ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"",AADHAR_DETAILS);
+                    ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
                 }
 
             }else

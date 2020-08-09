@@ -52,6 +52,7 @@ import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.adapter.CriminalCasesAdpater;
 import com.example.streethawkerssurveyapp.adapter.LandAssetsAdpater;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.pojo_class.CriminalCases;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
@@ -1119,10 +1120,10 @@ public class PersonalDetailsActivity extends MainActivity {
                     Address address = new Address();
 
                     try {
-
                         JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
                         address.setLoc(jsonAadhar.getString("loc"));
-                        address.setLandmark(jsonAadhar.getString("lm"));
+//                        address.setLandmark(jsonAadhar.getString("lm"));
+                        address.setLandmark(null);
                         address.setSubdist(jsonAadhar.getString("subdist"));
                         address.setVtc(jsonAadhar.getString("vtc"));
                         address.setDist(jsonAadhar.getString("dist"));
@@ -1135,26 +1136,42 @@ public class PersonalDetailsActivity extends MainActivity {
                         aadharData = new AadharData();
                         aadharData.setAddress(address);
                         aadharData.setGender(jsonAadhar.getString("gender"));
-                        aadharData.setDob(jsonAadhar.getString("dob"));
+
+                        try {
+                            String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+                            aadharData.setDob(datearray[2]+"-"+datearray[1]+"-"+datearray[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            aadharData.setDob("1995-05-30");
+
+                        }
+
+
+//                        aadharData.setDob(jsonAadhar.getString("dob"));
                         aadharData.setFullName(jsonAadhar.getString("name"));
                         aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
                         aadharData.setRawXml(xmlData);
                         aadharData.setZip(jsonAadhar.getString("pc"));
-                        aadharData.setCareOf("");
+                        aadharData.setZipData("zipdata");
+                        aadharData.setCareOf("careoff");
                         aadharData.setFaceStatus(false);
-                        aadharData.setFaceScore(0);
+                        aadharData.setFaceScore(-1);
                         aadharData.setHasImage(false);
+                        aadharData.setClientId("clientid123");
+                        aadharData.setShareCode("0");
+                        aadharData.setProfileImage("sgdvsgsd");
 
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        Gson gson = gsonBuilder.create();
                         String json_Aadhar = new Gson().toJson(aadharData);
 
                         AADHAR_DETAILS = json_Aadhar;
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"",Name);
+                    ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
                 }
 
 
