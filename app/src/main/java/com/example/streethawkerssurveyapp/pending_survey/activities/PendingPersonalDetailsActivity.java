@@ -1125,7 +1125,8 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                     try {
                         JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
                         address.setLoc(jsonAadhar.getString("loc"));
-                        address.setLandmark(jsonAadhar.getString("lm"));
+//                        address.setLandmark(jsonAadhar.getString("lm"));
+                        address.setLandmark(null);
                         address.setSubdist(jsonAadhar.getString("subdist"));
                         address.setVtc(jsonAadhar.getString("vtc"));
                         address.setDist(jsonAadhar.getString("dist"));
@@ -1138,15 +1139,30 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         aadharData = new AadharData();
                         aadharData.setAddress(address);
                         aadharData.setGender(jsonAadhar.getString("gender"));
-                        aadharData.setDob(jsonAadhar.getString("dob"));
+
+                        try {
+                            String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+                            aadharData.setDob(datearray[2]+"-"+datearray[1]+"-"+datearray[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            aadharData.setDob("1995-05-30");
+
+                        }
+
+
+//                        aadharData.setDob(jsonAadhar.getString("dob"));
                         aadharData.setFullName(jsonAadhar.getString("name"));
                         aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
                         aadharData.setRawXml(xmlData);
                         aadharData.setZip(jsonAadhar.getString("pc"));
-                        aadharData.setCareOf("");
+                        aadharData.setZipData("zipdata");
+                        aadharData.setCareOf("careoff");
                         aadharData.setFaceStatus(false);
-                        aadharData.setFaceScore(0);
+                        aadharData.setFaceScore(-1);
                         aadharData.setHasImage(false);
+                        aadharData.setClientId("clientid123");
+                        aadharData.setShareCode("0");
+                        aadharData.setProfileImage("sgdvsgsd");
 
                         GsonBuilder gsonBuilder = new GsonBuilder();
                         Gson gson = gsonBuilder.create();
@@ -1158,7 +1174,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         e.printStackTrace();
                     }
 
-                    ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"",AADHAR_DETAILS);
+                    ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
                 }
 
             }else
