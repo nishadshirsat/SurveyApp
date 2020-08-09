@@ -12,8 +12,8 @@ import io.sentry.core.protocol.User;
 @Dao
 public interface SurveyDao {
 
-   @Insert(onConflict = OnConflictStrategy.REPLACE)
-   void insert(User user);
+//   @Insert(onConflict = OnConflictStrategy.REPLACE)
+//   void insert(User user);
 
 //   @Insert(onConflict = OnConflictStrategy.REPLACE)
 //   void insertPageDetails(PageDetail pageDetail);
