@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".supervisor.activities.SurveyorListActivity">
+
+    <EditText
+        android:id="@+id/text_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:visibility="visible"
+        android:layout_margin="@dimen/dp_size_10"
+        android:background="@drawable/edittext_bg"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:drawablePadding="@dimen/padding_5"
+        android:drawableTint="@color/colorPrimaryDark"
+        android:hint="search"
+        android:padding="8dp" />
+
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/SpinnerType"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size40dp"
+        android:inputType="text"
+        android:visibility="visible"
+        android:layout_marginLeft="@dimen/dp_size_10"
+        android:layout_marginRight="@dimen/dp_size_10"
+        android:layout_marginBottom="@dimen/dp_size_10"
+        android:background="@drawable/edittext_bg"
+        android:padding="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecycleSurveyor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:orientation="vertical" />
+
+</LinearLayout>

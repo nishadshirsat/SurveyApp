@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.VendorsFamDetailsActivity">
 
     <ScrollView
@@ -35,9 +36,15 @@
                     android:layout_gravity="center"
                     android:text="B. VENDOR's FAMILY DETAILS"
                     android:textColor="@color/black"
-                    android:textSize="22sp"
+                    android:textSize="26sp"
+                    android:gravity="center"
                     android:textStyle="bold" />
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:src="@drawable/fam_details_img"/>
 
             </LinearLayout>
 

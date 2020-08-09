@@ -53,7 +53,7 @@
         <LinearLayout
             android:id="@+id/LinearDate"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size40dp"
             android:layout_weight="1.5"
             android:orientation="horizontal">
 
@@ -84,7 +84,7 @@
             android:id="@+id/text_search"
             android:layout_width="0dp"
             android:layout_weight="1.5"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size40dp"
             android:inputType="text"
             android:layout_marginLeft="5dp"
             android:visibility="visible"

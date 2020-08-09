@@ -38,8 +38,15 @@
                     android:layout_gravity="center"
                     android:text="D. BANKING DETAILS"
                     android:textColor="@color/black"
-                    android:textSize="22sp"
+                    android:textSize="26sp"
+                    android:gravity="center"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:src="@drawable/bank_details_img"/>
 
 
             </LinearLayout>
