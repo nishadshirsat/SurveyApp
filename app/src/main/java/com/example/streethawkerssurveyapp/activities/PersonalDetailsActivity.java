@@ -52,7 +52,6 @@ import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.adapter.CriminalCasesAdpater;
 import com.example.streethawkerssurveyapp.adapter.LandAssetsAdpater;
-import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.pojo_class.CriminalCases;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
@@ -73,6 +72,7 @@ import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
 import com.google.ads.afma.nano.Google3NanoAdshieldEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nitgen.SDK.AndroidBSP.NBioBSPJNI;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,6 +91,25 @@ import java.util.List;
 import java.util.Map;
 
 public class PersonalDetailsActivity extends MainActivity {
+
+
+    //Biometric init
+    private NBioBSPJNI bsp;
+    private NBioBSPJNI.Export       exportEngine;
+    private NBioBSPJNI.IndexSearch  indexSearch;
+    public static final int QUALITY_LIMIT = 60;
+    private byte[]					byTemplate1;
+    private byte[]					byTemplate2;
+
+    private byte[]					byCapturedRaw1;
+    private int						nCapturedRawWidth1;
+    private int						nCapturedRawHeight1;
+
+    private byte[]					byCapturedRaw2;
+    private int						nCapturedRawWidth2;
+    private int						nCapturedRawHeight2;
+
+
 
     private LinearLayout mLinearOne;
     private ImageView mImgVendorPhoto;
@@ -220,17 +239,23 @@ public class PersonalDetailsActivity extends MainActivity {
     private TextView btn_same_resident;
     private String AADHAR_DETAILS="";
 
-    Button BtnOpenDevice;
+    CardView BtnOpenDevice;
 
     public static int orientation;
 
     private  AadharData aadharData = null;
+
+    private CardView CaptureBiometric;
+    private TextView TextBioCaptured;
+    private ImageView image_bio;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindView();
+        initData();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -264,6 +289,33 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private void onCLickListners() {
 
+        CaptureBiometric.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new Thread(new Runnable() {
+
+                    public void run() {
+
+                        OnCapture1(10000);
+
+                    }
+                }).start();
+
+            }
+        });
+
+        BtnOpenDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                progressDialog = CustomProgressDialog.getDialogue(PersonalDetailsActivity.this);
+//                progressDialog.show();
+
+                bsp.OpenDevice();
+
+            }
+        });
 
 
         mBtnAddharCapture.setOnClickListener(new View.OnClickListener() {
@@ -968,10 +1020,14 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private void bindView() {
 
+        image_bio = (ImageView) findViewById(R.id.image_bio);
+        CaptureBiometric = (CardView) findViewById(R.id.CaptureBiometric);
+        TextBioCaptured = (TextView) findViewById(R.id.TextBioCaptured);
+        mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
+
         mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
 
         btn_same_resident = (TextView) findViewById(R.id.btn_same_resident);
-        BtnOpenDevice = (Button) findViewById(R.id.BtnOpenDevice);
         linear_cases = (LinearLayout) findViewById(R.id.linear_cases);
         mLinearHead = (LinearLayout) findViewById(R.id.LinearHead);
         mLinearOne = (LinearLayout) findViewById(R.id.LinearOne);
@@ -1033,6 +1089,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
         mBtnNext = (Button) findViewById(R.id.BtnNext);
         mBtnPrevious = (Button) findViewById(R.id.BtnPrevious);
+        BtnOpenDevice = (CardView) findViewById(R.id.BtnOpenDevice);
+
 
         TextAddCases = (TextView) findViewById(R.id.TextAddCases);
 
@@ -1913,5 +1971,332 @@ public class PersonalDetailsActivity extends MainActivity {
         }
 
     }
+
+
+    public void initData(){
+
+        NBioBSPJNI.CURRENT_PRODUCT_ID = 0;
+        if(bsp==null){
+            bsp = new NBioBSPJNI("010701-613E5C7F4CC7C4B0-72E340B47E034015", this,  mCallback);
+//    		bsp = new NBioBSPJNI("010101-B4AB5DD87959F205-5515E7924B626FE0", this,  mCallback);
+            String msg = null;
+            if (bsp.IsErrorOccured())
+                msg = "NBioBSP Error: " + bsp.GetErrorCode();
+            else  {
+                msg = "SDK Version: " + bsp.GetVersion();
+                exportEngine = bsp.new Export();
+                indexSearch = bsp.new IndexSearch();
+            }
+            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,msg);
+        }
+
+//        userDialog = new UserDialog();
+
+    }
+
+
+    @Override
+    public void onDestroy(){
+
+        if (bsp != null) {
+            bsp.dispose();
+            bsp = null;
+        }
+        super.onDestroy();
+    }
+
+    NBioBSPJNI.CAPTURE_CALLBACK mCallback = new NBioBSPJNI.CAPTURE_CALLBACK() {
+
+        public void OnDisConnected() {
+            NBioBSPJNI.CURRENT_PRODUCT_ID = 0;
+
+
+            String message = "NBioBSP Disconnected: " + bsp.GetErrorCode();
+
+            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,message);
+
+
+
+        }
+
+        public void OnConnected() {
+
+            String message = "Device Open Success : " + bsp.GetErrorCode();
+            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,message);
+
+            if(CaptureBiometric.getVisibility()==View.GONE){
+                BtnOpenDevice.setVisibility(View.GONE);
+                CaptureBiometric.setVisibility(View.VISIBLE);
+            }else{
+                BtnOpenDevice.setVisibility(View.VISIBLE);
+                CaptureBiometric.setVisibility(View.GONE);
+            }
+
+
+        }
+
+
+        public int OnCaptured(NBioBSPJNI.CAPTURED_DATA capturedData) {
+            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,"IMAGE Quality: "+capturedData.getImageQuality());
+
+
+            if( capturedData.getImage()!=null){
+                image_bio.setImageBitmap( capturedData.getImage());
+            }
+
+            // quality : 40~100
+            if(capturedData.getImageQuality()>=QUALITY_LIMIT){
+//                hideLoading();
+                return NBioBSPJNI.ERROR.NBioAPIERROR_USER_CANCEL;
+            }else if(capturedData.getDeviceError()!=NBioBSPJNI.ERROR.NBioAPIERROR_NONE){
+//                hideLoading();
+                return capturedData.getDeviceError();
+            }else{
+                return NBioBSPJNI.ERROR.NBioAPIERROR_NONE;
+            }
+        }
+
+    };
+
+    int nFIQ = 0;
+    String msg = "";
+    public synchronized void OnCapture1(int timeout){
+
+        NBioBSPJNI.FIR_HANDLE hCapturedFIR, hAuditFIR;
+        NBioBSPJNI.CAPTURED_DATA capturedData;
+
+        hCapturedFIR = bsp.new FIR_HANDLE();
+        hAuditFIR = bsp.new FIR_HANDLE();
+        capturedData = bsp.new CAPTURED_DATA();
+
+//        bCapturedFirst = true;
+
+//		bsp.Capture(NBioBSPJNI.FIR_PURPOSE.ENROLL,hCapturedFIR,timeout, hAuditFIR, capturedData,  mCallback,0, null);
+        bsp.Capture(NBioBSPJNI.FIR_PURPOSE.ENROLL, hCapturedFIR, timeout, hAuditFIR, capturedData);
+
+//        if(sampleDialogFragment!=null && "DIALOG_TYPE_PROGRESS".equals(sampleDialogFragment.getTag()))
+//            sampleDialogFragment.dismiss();
+        if (progressDialog != null && progressDialog.isShowing())
+            progressDialog.dismiss();
+
+
+        if (bsp.IsErrorOccured())  {
+            msg = "NBioBSP Capture Error: " + bsp.GetErrorCode();
+        }
+        else  {
+            NBioBSPJNI.INPUT_FIR inputFIR;
+
+            inputFIR = bsp.new INPUT_FIR();
+
+            // Make ISO 19794-2 data
+            {
+                NBioBSPJNI.Export.DATA exportData;
+
+                inputFIR.SetFIRHandle(hCapturedFIR);
+
+                exportData = exportEngine.new DATA();
+
+                exportEngine.ExportFIR(inputFIR, exportData, NBioBSPJNI.EXPORT_MINCONV_TYPE.OLD_FDA);
+
+                if (bsp.IsErrorOccured())  {
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            msg = "NBioBSP ExportFIR Error: " + bsp.GetErrorCode();
+                            Toast.makeText(PersonalDetailsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return ;
+                }
+
+                if (byTemplate1 != null)
+                    byTemplate1 = null;
+
+                byTemplate1 = new byte[exportData.FingerData[0].Template[0].Data.length];
+                byTemplate1 = exportData.FingerData[0].Template[0].Data;
+            }
+
+            // Make Raw Image data
+            {
+                NBioBSPJNI.Export.AUDIT exportAudit;
+
+                inputFIR.SetFIRHandle(hAuditFIR);
+
+                exportAudit = exportEngine.new AUDIT();
+
+                exportEngine.ExportAudit(inputFIR, exportAudit);
+
+                if (bsp.IsErrorOccured())  {
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            msg = "NBioBSP ExportAudit Error: " + bsp.GetErrorCode();
+//                            tvInfo.setText(msg);
+                            Toast.makeText(PersonalDetailsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    return ;
+                }
+
+                if (byCapturedRaw1 != null)
+                    byCapturedRaw1 = null;
+
+                byCapturedRaw1 = new byte[exportAudit.FingerData[0].Template[0].Data.length];
+                byCapturedRaw1 = exportAudit.FingerData[0].Template[0].Data;
+
+                nCapturedRawWidth1 = exportAudit.ImageWidth;
+                nCapturedRawHeight1 = exportAudit.ImageHeight;
+
+                msg = "First Capture Success";
+
+                NBioBSPJNI.NFIQInfo info = bsp.new NFIQInfo();
+                info.pRawImage = byCapturedRaw1;
+                info.nImgWidth = nCapturedRawWidth1;
+                info.nImgHeight = nCapturedRawHeight1;
+
+                bsp.getNFIQInfoFromRaw(info);
+
+                if (bsp.IsErrorOccured())  {
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            msg = "NBioBSP getNFIQInfoFromRaw Error: " + bsp.GetErrorCode();
+                            Toast.makeText(PersonalDetailsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    return ;
+                }
+
+                nFIQ = info.pNFIQ;
+
+
+
+                // ISO 19794-4
+                {
+                    NBioBSPJNI.ISOBUFFER ISOBuffer = bsp.new ISOBUFFER();
+                    bsp.ExportRawToISOV1(exportAudit, ISOBuffer, false, NBioBSPJNI.COMPRESS_MODE.NONE);
+//					bsp.ExportRawToISOV1(exportAudit, ISOBuffer, false, NBioBSPJNI.COMPRESS_MODE.WSQ);
+
+                    if (bsp.IsErrorOccured()) {
+                        runOnUiThread(new Runnable() {
+
+                            public void run() {
+                                msg = "NBioBSP ExportRawToISOV1 Error: " + bsp.GetErrorCode();
+                                Toast.makeText(PersonalDetailsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        return;
+                    }
+
+                    NBioBSPJNI.NIMPORTRAWSET rawSet = bsp.new NIMPORTRAWSET();
+                    bsp.ImportISOToRaw(ISOBuffer, rawSet);
+
+                    if (bsp.IsErrorOccured()) {
+                        runOnUiThread(new Runnable() {
+
+                            public void run() {
+                                msg = "NBioBSP ImportISOToRaw Error: " + bsp.GetErrorCode();
+                                Toast.makeText(PersonalDetailsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        return;
+                    }
+
+                    for (int i = 0; i < rawSet.Count; i++) {
+                        msg += "  DataLen: " + rawSet.RawData[i].Data.length + "  " +
+                                "FingerID: " + rawSet.RawData[i].FingerID + "  " +
+                                "Width: " + rawSet.RawData[i].ImgWidth + "  " +
+                                "Height: " + rawSet.RawData[i].ImgHeight + "  ";
+                    }
+
+                    if (byCapturedRaw1 != null)
+                        byCapturedRaw1 = null;
+
+                    byCapturedRaw1 = new byte[rawSet.RawData[0].Data.length];
+                    byCapturedRaw1 = rawSet.RawData[0].Data;
+
+                    nCapturedRawWidth1 = rawSet.RawData[0].ImgWidth;
+                    nCapturedRawHeight1 = rawSet.RawData[0].ImgHeight;
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            Toast.makeText(PersonalDetailsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+
+            }
+
+
+
+//			// wsq convert example
+//			{
+//                NBioBSPJNI.Export.TEMPLATE_DATA data = exportEngine.new TEMPLATE_DATA();
+//                exportEngine.ConvertRawToWsq(byCapturedRaw1, nCapturedRawWidth1, nCapturedRawHeight1, data, 4);
+//
+//                if (bsp.IsErrorOccured())  {
+//                    runOnUiThread(new Runnable() {
+//
+//                        public void run() {
+//                            msg = "NBioBSP ConvertRawToWsq Error: " + bsp.GetErrorCode();
+//                            tvInfo.setText(msg);
+//                        }
+//                    });
+//
+//                    return ;
+//                }
+//
+//                NBioBSPJNI.Export.AUDIT exportAudit = exportEngine.new AUDIT();
+//                exportEngine.ConvertWsqToRaw(data.Data, data.Data.length, exportAudit);
+//
+//                if (bsp.IsErrorOccured())  {
+//                    runOnUiThread(new Runnable() {
+//
+//                        public void run() {
+//                            msg = "NBioBSP ConvertWsqToRaw Error: " + bsp.GetErrorCode();
+//                            tvInfo.setText(msg);
+//                        }
+//                    });
+//
+//                    return ;
+//                }
+//
+//                byCapturedRaw1 = exportAudit.FingerData[0].Template[0].Data;
+//			}
+        }
+
+        runOnUiThread(new Runnable() {
+
+            public void run() {
+//                tvInfo.setText(msg+",NFIQ:"+nFIQ);
+
+                Toast.makeText(PersonalDetailsActivity.this, msg+",NFIQ:"+nFIQ, Toast.LENGTH_SHORT).show();
+
+
+//                if (byTemplate1 != null && byTemplate2 != null)  {
+//                    btnVerifyTemplate.setEnabled(true);
+//                }else{
+//                    btnVerifyTemplate.setEnabled(false);
+//                }
+//
+//                if (byCapturedRaw1 != null && byCapturedRaw2 != null)  {
+//                    btnVerifyRaw.setEnabled(true);
+//                }else{
+//                    btnVerifyRaw.setEnabled(false);
+//                }
+
+            }
+        });
+
+    }
+
+
 
 }

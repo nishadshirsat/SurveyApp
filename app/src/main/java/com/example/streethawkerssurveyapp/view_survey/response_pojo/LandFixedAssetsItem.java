@@ -18,13 +18,6 @@ public class LandFixedAssetsItem implements Serializable {
 	@SerializedName("updated_at")
 	private String updatedAt;
 
-	public LandFixedAssetsItem(String area, String houseSize, String kucchha, String plot, String rentalIncome) {
-		this.area = area;
-		this.houseSize = houseSize;
-		this.kucchha = kucchha;
-		this.plot = plot;
-		this.rentalIncome = rentalIncome;
-	}
 
 	@SerializedName("plot")
 	private String plot;
@@ -37,6 +30,14 @@ public class LandFixedAssetsItem implements Serializable {
 
 	@SerializedName("id")
 	private String id;
+
+	public LandFixedAssetsItem(String area, String houseSize, String kucchha, String plot, String rentalIncome) {
+		this.area = area;
+		this.houseSize = houseSize;
+		this.kucchha = kucchha;
+		this.plot = plot;
+		this.rentalIncome = rentalIncome;
+	}
 
 	public void setArea(String area){
 		this.area = area;
