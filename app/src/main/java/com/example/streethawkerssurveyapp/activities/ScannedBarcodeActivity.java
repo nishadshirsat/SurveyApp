@@ -64,7 +64,7 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
                     txtBarcodeValue.requestFocus();
 
                 }else {
-                    startActivity(new Intent(ScannedBarcodeActivity.this, CorporationZoneActivity.class).putExtra("SCANRESULT", txtBarcodeValue.getText().toString().trim()));
+                    startActivity(new Intent(ScannedBarcodeActivity.this, PersonalDetailsActivity.class).putExtra("SCANRESULT", txtBarcodeValue.getText().toString().trim()));
 
                 }
 

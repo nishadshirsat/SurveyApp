@@ -8,6 +8,7 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
+import io.sentry.core.protocol.User;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -27,6 +28,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -52,6 +54,9 @@ import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.adapter.CriminalCasesAdpater;
 import com.example.streethawkerssurveyapp.adapter.LandAssetsAdpater;
+import com.example.streethawkerssurveyapp.database_pack.PersonalDetails;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.pojo_class.CriminalCases;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
@@ -85,31 +90,34 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class PersonalDetailsActivity extends MainActivity {
 
 
     //Biometric init
     private NBioBSPJNI bsp;
-    private NBioBSPJNI.Export       exportEngine;
-    private NBioBSPJNI.IndexSearch  indexSearch;
+    private NBioBSPJNI.Export exportEngine;
+    private NBioBSPJNI.IndexSearch indexSearch;
     public static final int QUALITY_LIMIT = 60;
-    private byte[]					byTemplate1;
-    private byte[]					byTemplate2;
+    private byte[] byTemplate1;
+    private byte[] byTemplate2;
 
-    private byte[]					byCapturedRaw1;
-    private int						nCapturedRawWidth1;
-    private int						nCapturedRawHeight1;
+    private byte[] byCapturedRaw1;
+    private int nCapturedRawWidth1;
+    private int nCapturedRawHeight1;
 
-    private byte[]					byCapturedRaw2;
-    private int						nCapturedRawWidth2;
-    private int						nCapturedRawHeight2;
-
+    private byte[] byCapturedRaw2;
+    private int nCapturedRawWidth2;
+    private int nCapturedRawHeight2;
 
 
     private LinearLayout mLinearOne;
@@ -215,7 +223,7 @@ public class PersonalDetailsActivity extends MainActivity {
 //            BRANCH_NAME = "",
 //            IFSC = "",
 
-            IS_CRIMINALCASE = "",
+    IS_CRIMINALCASE = "",
             CRIMINALCASE_NO = "";
 //            CRIMINALCASE_DATE = "",
 //            CRIMINALCASE_FIRNO = "",
@@ -238,18 +246,22 @@ public class PersonalDetailsActivity extends MainActivity {
     private List<CriminalCases> listCriminalCases = new ArrayList<>();
 
     private TextView btn_same_resident;
-    private String AADHAR_DETAILS="";
+    private String AADHAR_DETAILS = "";
 
     CardView BtnOpenDevice;
 
     public static int orientation;
 
-    private  AadharData aadharData = null;
+    private AadharData aadharData = null;
 
     private CardView CaptureBiometric;
     private TextView TextBioCaptured;
     private ImageView image_bio;
 
+    private String SCANRESULT = "";
+
+    private SurveyDatabase surveyDatabase;
+    private SurveyDao surveyDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,11 +272,25 @@ public class PersonalDetailsActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+        setTitle("URI NO: " + ApplicationConstant.SurveyId);
+
+        try {
+            SCANRESULT = getIntent().getExtras().getString("SCANRESULT");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(PersonalDetailsActivity.this, AudioRecordService.class);
+        intent.putExtra("FILE", ApplicationConstant.SurveyId);
+        startService(intent);
 
         if (getLocation == null) {
             getLocation = new GetLocation(PersonalDetailsActivity.this);
         }
+
+        surveyDatabase = SurveyDatabase.getDatabase(PersonalDetailsActivity.this);
+        surveyDao = surveyDatabase.surveyDao();
+
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -281,7 +307,6 @@ public class PersonalDetailsActivity extends MainActivity {
 //            count = count + 1.0;
 //            PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "" + count);
 //        }
-
 
 
         onCLickListners();
@@ -322,18 +347,18 @@ public class PersonalDetailsActivity extends MainActivity {
         mBtnAddharCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mEditAadhar.getText().toString().trim().isEmpty()){
+                if (mEditAadhar.getText().toString().trim().isEmpty()) {
                     mEditAadhar.setError("enter aadhar to verify");
                     mEditAadhar.requestFocus();
-                }else  if (mEditAadhar.getText().toString().trim().length() !=12){
+                } else if (mEditAadhar.getText().toString().trim().length() != 12) {
                     mEditAadhar.setError("enter correct aadhar to verify");
                     mEditAadhar.requestFocus();
-                }else {
+                } else {
 
                     AADHAR_NO = mEditAadhar.getText().toString().trim();
 
                     View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_select_type, null);
-                    CardView cCardOTP = (androidx.cardview.widget.CardView)viewAdd. findViewById(R.id.CardOTP);
+                    CardView cCardOTP = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardOTP);
                     CardView cCardBiometric = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardBiometric);
                     CardView cCardScanQR = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardScanQR);
 
@@ -348,7 +373,7 @@ public class PersonalDetailsActivity extends MainActivity {
                         @Override
                         public void onClick(View view) {
                             alertDialog.dismiss();
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Credentials not found.");
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Credentials not found.");
                         }
                     });
 
@@ -364,8 +389,8 @@ public class PersonalDetailsActivity extends MainActivity {
                         @Override
                         public void onClick(View view) {
                             alertDialog.dismiss();
-                            Intent intent = new Intent(PersonalDetailsActivity.this,ScanQrForAadharActivity.class);
-                            startActivityForResult(intent,12345);
+                            Intent intent = new Intent(PersonalDetailsActivity.this, ScanQrForAadharActivity.class);
+                            startActivityForResult(intent, 12345);
                         }
                     });
 
@@ -380,7 +405,7 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View view) {
 
-               mEditPArea.setText(mEditArea.getText().toString().trim());
+                mEditPArea.setText(mEditArea.getText().toString().trim());
                 mEditPHouseNo.setText(mEditHouseNo.getText().toString().trim());
                 mEditPRoad.setText(mEditRoad.getText().toString().trim());
                 mEditPCity.setText(mEditCity.getText().toString().trim());
@@ -396,10 +421,10 @@ public class PersonalDetailsActivity extends MainActivity {
                 View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_add_criminal_cases, null);
                 ImageView cImage_cancel = (ImageView) viewAdd.findViewById(R.id.image_cancel);
                 final EditText cEditSNo = (EditText) viewAdd.findViewById(R.id.EditSNo);
-                final EditText cEditDate = (EditText)viewAdd. findViewById(R.id.EditDate);
+                final EditText cEditDate = (EditText) viewAdd.findViewById(R.id.EditDate);
                 final EditText cEditFir = (EditText) viewAdd.findViewById(R.id.EditFir);
                 final EditText cEditNamePolice = (EditText) viewAdd.findViewById(R.id.EditNamePolice);
-                final EditText cEditStatusCase = (EditText)viewAdd. findViewById(R.id.EditStatusCase);
+                final EditText cEditStatusCase = (EditText) viewAdd.findViewById(R.id.EditStatusCase);
                 TextView cTextAddCases = (TextView) viewAdd.findViewById(R.id.TextAddCases);
 
 
@@ -440,22 +465,22 @@ public class PersonalDetailsActivity extends MainActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if (cEditSNo.getText().toString().trim().isEmpty()){
+                        if (cEditSNo.getText().toString().trim().isEmpty()) {
                             cEditSNo.setError("enter case no");
                             cEditSNo.requestFocus();
-                        }else  if (cEditDate.getText().toString().trim().isEmpty()){
+                        } else if (cEditDate.getText().toString().trim().isEmpty()) {
                             cEditDate.setError("enter case date");
                             cEditDate.requestFocus();
-                        }else if (cEditFir.getText().toString().trim().isEmpty()){
+                        } else if (cEditFir.getText().toString().trim().isEmpty()) {
                             cEditFir.setError("enter fir no");
                             cEditFir.requestFocus();
-                        }else if (cEditNamePolice.getText().toString().trim().isEmpty()){
+                        } else if (cEditNamePolice.getText().toString().trim().isEmpty()) {
                             cEditNamePolice.setError("enter police name");
                             cEditNamePolice.requestFocus();
-                        }else if (cEditStatusCase.getText().toString().trim().isEmpty()){
+                        } else if (cEditStatusCase.getText().toString().trim().isEmpty()) {
                             cEditStatusCase.setError("enter case status");
                             cEditStatusCase.requestFocus();
-                        }else {
+                        } else {
 
 
                             CriminalCases criminalCases = new CriminalCases(cEditSNo.getText().toString().trim(),
@@ -512,7 +537,7 @@ public class PersonalDetailsActivity extends MainActivity {
                 IS_CRIMINALCASE = radioSexButton.getText().toString().trim();
                 if (IS_CRIMINALCASE.contains("Yes")) {
                     linear_cases.setVisibility(View.VISIBLE);
-                    IS_CRIMINALCASE ="1";
+                    IS_CRIMINALCASE = "1";
 
                 } else {
                     linear_cases.setVisibility(View.GONE);
@@ -582,7 +607,7 @@ public class PersonalDetailsActivity extends MainActivity {
             @Override
             public void onClick(View view) {
 
-           onBackPressed();
+                onBackPressed();
 
             }
         });
@@ -631,15 +656,15 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     mBtnPrevious.setVisibility(View.VISIBLE);
 
-                }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+                } else if (mLinearOne.getVisibility() == View.VISIBLE) {
 
                     try {
                         int selectedId = RGSex.getCheckedRadioButtonId();
                         RadioButton radioSexButton = (RadioButton) findViewById(selectedId);
 
-                        if ( radioSexButton.getText().toString().trim().equals("a. Male")){
+                        if (radioSexButton.getText().toString().trim().equals("a. Male")) {
                             SEX = "M";
-                        } else if ( radioSexButton.getText().toString().trim().equals("b. Female")){
+                        } else if (radioSexButton.getText().toString().trim().equals("b. Female")) {
                             SEX = "F";
                         } else {
                             SEX = "O";
@@ -651,7 +676,6 @@ public class PersonalDetailsActivity extends MainActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
 
 
                     if (validate1()) {
@@ -697,8 +721,7 @@ public class PersonalDetailsActivity extends MainActivity {
                         mLinearFive.setVisibility(View.GONE);
                     }
 
-                }
-                else if (mLinearFour.getVisibility() == View.VISIBLE) {
+                } else if (mLinearFour.getVisibility() == View.VISIBLE) {
 
                     if (validate4()) {
                         mLinearFour.setVisibility(View.GONE);
@@ -709,8 +732,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
 //                        mBtnNext.setText("Submit");
                     }
-                }
-                else {
+                } else {
 
 //                    mLinearFive.setVisibility(View.VISIBLE);
 //                    mLinearOne.setVisibility(View.GONE);
@@ -730,7 +752,6 @@ public class PersonalDetailsActivity extends MainActivity {
 //                    BRANCH_NAME = mEditBranchName.getText().toString().trim();
 
 
-
                     NAME_OFFATHER_HUSBAND = mEditFatherName.getText().toString().trim() + " "
                             + mEditFatherMName.getText().toString().trim() + " "
                             + mEditFatherLName.getText().toString().trim();
@@ -746,14 +767,14 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     RESIDENTIAL_ADDRESS = mEditArea.getText().toString().trim() + ", "
                             + mEditHouseNo.getText().toString().trim() + ", "
-                            + mEditRoad.getText().toString().trim()+ ", "
-                            + mEditCity.getText().toString().trim()+ ", "
+                            + mEditRoad.getText().toString().trim() + ", "
+                            + mEditCity.getText().toString().trim() + ", "
                             + mEditPincode.getText().toString().trim();
 
                     PERMENENT_ADDRESS = mEditPArea.getText().toString().trim() + ", "
                             + mEditPHouseNo.getText().toString().trim() + ", "
-                            + mEditPRoad.getText().toString().trim()+ ", "
-                            + mEditPCity.getText().toString().trim()+ ", "
+                            + mEditPRoad.getText().toString().trim() + ", "
+                            + mEditPCity.getText().toString().trim() + ", "
                             + mEditPPincode.getText().toString().trim();
 
                     AADHAR_NO = mEditAadhar.getText().toString().trim();
@@ -773,7 +794,19 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     if (validate()) {
 
+                        if (ApplicationConstant.ISLOCALDB) {
+
+
+                            insertPersonalDetails();
+
+                        } else if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                        } else {
                             AddSurvey();
+
+                        }
 
                     }
 //                    startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
@@ -788,12 +821,12 @@ public class PersonalDetailsActivity extends MainActivity {
     }
 
     private boolean validate4() {
-        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
-
-            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        }
+//        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        }
 
 //        else if (mEditPArea.getText().toString().trim().isEmpty()) {
 //            mEditPArea.setError("Enter Permanant Area");
@@ -816,17 +849,16 @@ public class PersonalDetailsActivity extends MainActivity {
 //            mEditPPincode.requestFocus();
 //            return false;
 //        }
-        else if (mEditAadhar.getText().toString().trim().isEmpty()) {
+//        else
+            if (mEditAadhar.getText().toString().trim().isEmpty()) {
             mEditAadhar.setError("Enter Aadhar Number");
             mEditAadhar.requestFocus();
             return false;
-        } else if (mEditAadhar.getText().toString().trim().length()<12) {
+        } else if (mEditAadhar.getText().toString().trim().length() < 12) {
             mEditAadhar.setError("Enter Correct Aadhar Number");
             mEditAadhar.requestFocus();
             return false;
         }
-
-
 
 
 //        else if (!getLocation.isGPSEnabled) {
@@ -838,12 +870,14 @@ public class PersonalDetailsActivity extends MainActivity {
     }
 
     private boolean validate3() {
-        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+//        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        } else
 
-            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        } else if (WHETHER_WIDOWED.trim().isEmpty()) {
+            if (WHETHER_WIDOWED.trim().isEmpty()) {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Select Options");
 //            mEditAge.requestFocus();
             return false;
@@ -851,11 +885,11 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditArea.setError("Select Category");
             mSpinnerCategory.requestFocus();
             return false;
-        }  else if (mEditAnnualIncome.getText().toString().trim().isEmpty()) {
+        } else if (mEditAnnualIncome.getText().toString().trim().isEmpty()) {
             mEditAnnualIncome.setError("Enter Vending Site");
             mEditAnnualIncome.requestFocus();
             return false;
-        }  else if (mEditArea.getText().toString().trim().isEmpty()) {
+        } else if (mEditArea.getText().toString().trim().isEmpty()) {
             mEditArea.setError("Enter Area");
             mEditArea.requestFocus();
             return false;
@@ -882,12 +916,14 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private boolean validate2() {
 
-        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+//        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        } else
 
-            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        } else if (mEditMobile.getText().toString().trim().isEmpty()) {
+            if (mEditMobile.getText().toString().trim().isEmpty()) {
             mEditMobile.setError("Enter Mobile Number");
             mEditMobile.requestFocus();
             return false;
@@ -934,16 +970,18 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private boolean validate1() {
 
-        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+//        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        } else
 
-            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        } else if (photoPath.isEmpty()) {
+            if (photoPath.isEmpty()) {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Capture profile photo");
 
             return false;
-        }  else if (VindingPhotoPath.isEmpty()) {
+        } else if (VindingPhotoPath.isEmpty()) {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Capture Vending Place photo");
 
             return false;
@@ -976,7 +1014,7 @@ public class PersonalDetailsActivity extends MainActivity {
             mEditDob.setError("Enter Date Of Birth");
             mEditDob.requestFocus();
             return false;
-        } else  if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
+        } else if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
             return true;
 
         } else {
@@ -988,21 +1026,21 @@ public class PersonalDetailsActivity extends MainActivity {
     }
 
     private boolean validate() {
-        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
-
-            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        } else
+//        if (!ApplicationConstant.isNetworkAvailable(PersonalDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        } else
 
         if (IS_CRIMINALCASE.trim().isEmpty()) {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Select Options");
 //            mEditAge.requestFocus();
             return false;
-        }else if (linear_cases.getVisibility() == View.VISIBLE) {
+        } else if (linear_cases.getVisibility() == View.VISIBLE) {
 
-            if (listCriminalCases.isEmpty()){
-                ApplicationConstant.DisplayMessageDialog(PersonalDetailsActivity.this,"","Add Criminal Cases");
+            if (listCriminalCases.isEmpty()) {
+                ApplicationConstant.DisplayMessageDialog(PersonalDetailsActivity.this, "", "Add Criminal Cases");
                 return false;
             }
 
@@ -1106,9 +1144,9 @@ public class PersonalDetailsActivity extends MainActivity {
 
         if (resultCode == RESULT_OK) {
 
-            if (requestCode == 12345){
+            if (requestCode == 12345) {
 
-                if (data!=null){
+                if (data != null) {
                     String xmlData = data.getExtras().getString("SCANDATA");
 
                     XmlToJson xmlToJson = new XmlToJson.Builder(xmlData).build();
@@ -1119,8 +1157,15 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     Address address = new Address();
 
+                    Iterator<String> keys=jsonObject.keys();
+
+                    while (keys.hasNext())
+                    {
+                        String keyValue = (String)keys.next();
+
                     try {
-                        JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
+//                        JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
+                        JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
                         address.setLoc(jsonAadhar.getString("loc"));
 //                        address.setLandmark(jsonAadhar.getString("lm"));
                         address.setLandmark(null);
@@ -1139,7 +1184,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                         try {
                             String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
-                            aadharData.setDob(datearray[2]+"-"+datearray[1]+"-"+datearray[0]);
+                            aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             aadharData.setDob("1995-05-30");
@@ -1161,6 +1206,9 @@ public class PersonalDetailsActivity extends MainActivity {
                         aadharData.setShareCode("0");
                         aadharData.setProfileImage("sgdvsgsd");
 
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Aadhar Details Scanned Successfully", aadharData.getAadhaarNumber() + "\n" + aadharData.getFullName());
+
+
                         GsonBuilder gsonBuilder = new GsonBuilder();
                         Gson gson = gsonBuilder.create();
                         String json_Aadhar = new Gson().toJson(aadharData);
@@ -1169,14 +1217,17 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Invalid QR");
+
                     }
 
-                    ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
+                    }
+
                 }
 
 
-            }else
-            if (requestCode == 1) {
+            } else if (requestCode == 1) {
 
                 Bitmap bitmap = ApplicationConstant.CompressedBitmap(new File(photoPath));
 
@@ -1186,19 +1237,28 @@ public class PersonalDetailsActivity extends MainActivity {
                         .skipMemoryCache(true)
                         .into(mImgVendorPhoto);
 
+                if (ApplicationConstant.ISLOCALDB) {
 
-                UploadVendorPhoto();
+                } else {
+                    UploadVendorPhoto();
 
-            }else   if (requestCode == 2) {
+                }
 
-                                        Glide.with(PersonalDetailsActivity.this).load(photoURI)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(true)
-                                .into(mImgVendorSite);
+            } else if (requestCode == 2) {
+
+                Glide.with(PersonalDetailsActivity.this).load(photoURI)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(mImgVendorSite);
 
                 Bitmap bitmap = ApplicationConstant.CompressedBitmap(new File(VindingPhotoPath));
 
-                UploadVendingSitePhoto();
+                if (ApplicationConstant.ISLOCALDB) {
+
+                } else {
+                    UploadVendingSitePhoto();
+
+                }
 
             }
         }
@@ -1207,16 +1267,6 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private void AddSurvey() {
 
-//        if (AADHAR_DETAILS.trim().isEmpty()){
-//
-//                HashMap<String,String> body = new HashMap<>();
-//                body.put("aadhaar_number",AADHAR_NO);
-//
-//                String json_Aadhar = new Gson().toJson(body);
-//
-//                AADHAR_DETAILS = json_Aadhar;
-//
-//        }
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
@@ -1248,9 +1298,9 @@ public class PersonalDetailsActivity extends MainActivity {
 
         UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
-     String CORPORATION =   PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.WARD, "");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -1282,13 +1332,9 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody CRIMINALCASE_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_NO);
         RequestBody ANNUAL_INCOME_ = RequestBody.create(MediaType.parse("multipart/form-data"), ANNUAL_INCOME);
 
-//        RequestBody CRIMINALCASE_DATE_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_DATE);
-//        RequestBody CRIMINALCASE_FIRNO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_FIRNO);
-//        RequestBody CRIMINALCASE_POLICA_NAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_POLICA_NAME);
-//        RequestBody CRIMINALCASE_STATUS_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_STATUS);
-
         RequestBody LATITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + Latitude);
         RequestBody LONGITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + Longitude);
+        RequestBody SCANRESULT_ = RequestBody.create(MediaType.parse("multipart/form-data"), "" + SCANRESULT);
 
 
         Map<String, String> headers = new HashMap<>();
@@ -1300,6 +1346,7 @@ public class PersonalDetailsActivity extends MainActivity {
                 CORPORATION_,
                 ZONE_,
                 WARD_,
+                SCANRESULT_,
                 NAME_VENDOR_, SEX_, AGE_,
                 DOB_,
                 CONTACT_NO_,
@@ -1404,9 +1451,9 @@ public class PersonalDetailsActivity extends MainActivity {
 
         UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
-        String CORPORATION =   PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.WARD, "");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -1438,7 +1485,6 @@ public class PersonalDetailsActivity extends MainActivity {
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
-
 
 
                         if (progressDialog != null && progressDialog.isShowing())
@@ -1484,11 +1530,10 @@ public class PersonalDetailsActivity extends MainActivity {
     }
 
 
-
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
-            String[] proj = { MediaStore.Images.Media.DATA };
+            String[] proj = {MediaStore.Images.Media.DATA};
             cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
@@ -1521,9 +1566,9 @@ public class PersonalDetailsActivity extends MainActivity {
 
         UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
-        String CORPORATION =   PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(PersonalDetailsActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.WARD, "");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -1553,13 +1598,9 @@ public class PersonalDetailsActivity extends MainActivity {
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
 
-
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
-
-
-
 
 
                         if (progressDialog != null && progressDialog.isShowing())
@@ -1613,11 +1654,11 @@ public class PersonalDetailsActivity extends MainActivity {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + ApplicationConstant.AADHAR_TOKEN);
 
-        HashMap<String,String> body = new HashMap<>();
-        body.put("id_number",AADHAR_NO);
+        HashMap<String, String> body = new HashMap<>();
+        body.put("id_number", AADHAR_NO);
 
         ApiInterface apiservice = ApiService.getApiClient2().create(ApiInterface.class);
-        Call<AadharOtpResponse> call = apiservice.generateOtpAadhar(headers,body);
+        Call<AadharOtpResponse> call = apiservice.generateOtpAadhar(headers, body);
 
         call.enqueue(new Callback<AadharOtpResponse>() {
             @Override
@@ -1632,19 +1673,19 @@ public class PersonalDetailsActivity extends MainActivity {
 
 
                         ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
-                                ""+response.body().getMessage());
+                                "" + response.body().getMessage());
 
                         AadharOtpData aadhar_data = response.body().getData();
 
-                        if (aadhar_data.isIfNumber()){
-                            if (aadhar_data.isValidAadhaar()){
+                        if (aadhar_data.isIfNumber()) {
+                            if (aadhar_data.isValidAadhaar()) {
 
                                 String Client_Id = aadhar_data.getClientId().trim();
                                 View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_otp_screen, null);
-                                ImageView aImage_cancel = (ImageView)viewAdd. findViewById(R.id.image_cancel);
-                                EditText aEditOtp = (EditText)viewAdd. findViewById(R.id.EditOtp);
-                                TextView  aText_resend = (TextView)viewAdd. findViewById(R.id.text_resend);
-                                TextView  aTextSubmitOtp = (TextView)viewAdd. findViewById(R.id.TextSubmitOtp);
+                                ImageView aImage_cancel = (ImageView) viewAdd.findViewById(R.id.image_cancel);
+                                EditText aEditOtp = (EditText) viewAdd.findViewById(R.id.EditOtp);
+                                TextView aText_resend = (TextView) viewAdd.findViewById(R.id.text_resend);
+                                TextView aTextSubmitOtp = (TextView) viewAdd.findViewById(R.id.TextSubmitOtp);
 
                                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
                                 builder.setView(viewAdd);
@@ -1667,20 +1708,20 @@ public class PersonalDetailsActivity extends MainActivity {
                                         if (aText_resend.getText().toString().equals("RESEND OTP")) {
                                             ResendOtpForAadhar();
                                         }
-                                        }
+                                    }
                                 });
 
                                 aTextSubmitOtp.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        if (aEditOtp.getText().toString().trim().isEmpty()){
+                                        if (aEditOtp.getText().toString().trim().isEmpty()) {
                                             aEditOtp.setError("enter otp to verify");
                                             aEditOtp.requestFocus();
-                                        }else   if (aEditOtp.getText().toString().trim().length() != 6){
+                                        } else if (aEditOtp.getText().toString().trim().length() != 6) {
                                             aEditOtp.setError("enter correct otp to verify");
                                             aEditOtp.requestFocus();
-                                        }else {
-                                            SubmitOtpForAadhar(aEditOtp.getText().toString().trim(),Client_Id,alertDialog);
+                                        } else {
+                                            SubmitOtpForAadhar(aEditOtp.getText().toString().trim(), Client_Id, alertDialog);
                                         }
                                     }
                                 });
@@ -1689,14 +1730,13 @@ public class PersonalDetailsActivity extends MainActivity {
                                 alertDialog.show();
 
 
-
-                            }else {
-                                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct aadhar no");
+                            } else {
+                                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", "Enter correct aadhar no");
 
                             }
 
-                        }else {
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Mobile no not linked");
+                        } else {
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", "Mobile no not linked");
                         }
 
 
@@ -1731,7 +1771,7 @@ public class PersonalDetailsActivity extends MainActivity {
         });
     }
 
-    private void SubmitOtpForAadhar(String otp,String clientId,AlertDialog alertDialog) {
+    private void SubmitOtpForAadhar(String otp, String clientId, AlertDialog alertDialog) {
 
         progressDialog = CustomProgressDialog.getDialogue(PersonalDetailsActivity.this);
         progressDialog.show();
@@ -1740,12 +1780,12 @@ public class PersonalDetailsActivity extends MainActivity {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + ApplicationConstant.AADHAR_TOKEN);
 
-        HashMap<String,String> body = new HashMap<>();
-        body.put("client_id",clientId);
-        body.put("otp",otp);
+        HashMap<String, String> body = new HashMap<>();
+        body.put("client_id", clientId);
+        body.put("otp", otp);
 
         ApiInterface apiservice = ApiService.getApiClient2().create(ApiInterface.class);
-        Call<AadharValidResponse> call = apiservice.SubmitOtpForAadhar(headers,body);
+        Call<AadharValidResponse> call = apiservice.SubmitOtpForAadhar(headers, body);
 
         call.enqueue(new Callback<AadharValidResponse>() {
             @Override
@@ -1763,7 +1803,7 @@ public class PersonalDetailsActivity extends MainActivity {
 //                                ""+response.body().getMessage());
 
 
-                        if (response.body().getData()!=null){
+                        if (response.body().getData() != null) {
                             AadharData aadhar_data = response.body().getData();
                             alertDialog.dismiss();
 
@@ -1780,8 +1820,8 @@ public class PersonalDetailsActivity extends MainActivity {
 //                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response",json_Aadhar);
 
 
-                        }else {
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct mobile no");
+                        } else {
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", "Enter correct mobile no");
                         }
 
 
@@ -1825,11 +1865,11 @@ public class PersonalDetailsActivity extends MainActivity {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + ApplicationConstant.AADHAR_TOKEN);
 
-        HashMap<String,String> body = new HashMap<>();
-        body.put("id_number",AADHAR_NO);
+        HashMap<String, String> body = new HashMap<>();
+        body.put("id_number", AADHAR_NO);
 
         ApiInterface apiservice = ApiService.getApiClient2().create(ApiInterface.class);
-        Call<AadharOtpResponse> call = apiservice.generateOtpAadhar(headers,body);
+        Call<AadharOtpResponse> call = apiservice.generateOtpAadhar(headers, body);
 
         call.enqueue(new Callback<AadharOtpResponse>() {
             @Override
@@ -1844,21 +1884,21 @@ public class PersonalDetailsActivity extends MainActivity {
 
 
                         ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
-                                ""+response.body().getMessage());
+                                "" + response.body().getMessage());
 
                         AadharOtpData aadhar_data = response.body().getData();
 
-                        if (aadhar_data.isIfNumber()){
-                            if (aadhar_data.isValidAadhaar()){
+                        if (aadhar_data.isIfNumber()) {
+                            if (aadhar_data.isValidAadhaar()) {
 
 
-                            }else {
-                                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Enter correct aadhar no");
+                            } else {
+                                ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", "Enter correct aadhar no");
 
                             }
 
-                        }else {
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Response","Mobile no not linked");
+                        } else {
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Response", "Mobile no not linked");
                         }
 
 
@@ -1970,7 +2010,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
 //                    mBtnPrevious.setVisibility(View.GONE);
 
-        }else if (mLinearOne.getVisibility() == View.VISIBLE) {
+        } else if (mLinearOne.getVisibility() == View.VISIBLE) {
 
             mLinearHead.setVisibility(View.VISIBLE);
             mLinearFour.setVisibility(View.GONE);
@@ -1990,21 +2030,21 @@ public class PersonalDetailsActivity extends MainActivity {
     }
 
 
-    public void initData(){
+    public void initData() {
 
         NBioBSPJNI.CURRENT_PRODUCT_ID = 0;
-        if(bsp==null){
-            bsp = new NBioBSPJNI("010701-613E5C7F4CC7C4B0-72E340B47E034015", this,  mCallback);
+        if (bsp == null) {
+            bsp = new NBioBSPJNI("010701-613E5C7F4CC7C4B0-72E340B47E034015", this, mCallback);
 //    		bsp = new NBioBSPJNI("010101-B4AB5DD87959F205-5515E7924B626FE0", this,  mCallback);
             String msg = null;
             if (bsp.IsErrorOccured())
                 msg = "NBioBSP Error: " + bsp.GetErrorCode();
-            else  {
+            else {
                 msg = "SDK Version: " + bsp.GetVersion();
                 exportEngine = bsp.new Export();
                 indexSearch = bsp.new IndexSearch();
             }
-            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,msg);
+            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this, msg);
         }
 
 //        userDialog = new UserDialog();
@@ -2013,7 +2053,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
 
         if (bsp != null) {
             bsp.dispose();
@@ -2030,8 +2070,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
             String message = "NBioBSP Disconnected: " + bsp.GetErrorCode();
 
-            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,message);
-
+            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this, message);
 
 
         }
@@ -2039,12 +2078,12 @@ public class PersonalDetailsActivity extends MainActivity {
         public void OnConnected() {
 
             String message = "Device Open Success : " + bsp.GetErrorCode();
-            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,message);
+            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this, message);
 
-            if(CaptureBiometric.getVisibility()==View.GONE){
+            if (CaptureBiometric.getVisibility() == View.GONE) {
                 BtnOpenDevice.setVisibility(View.GONE);
                 CaptureBiometric.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 BtnOpenDevice.setVisibility(View.VISIBLE);
                 CaptureBiometric.setVisibility(View.GONE);
             }
@@ -2054,21 +2093,21 @@ public class PersonalDetailsActivity extends MainActivity {
 
 
         public int OnCaptured(NBioBSPJNI.CAPTURED_DATA capturedData) {
-            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,"IMAGE Quality: "+capturedData.getImageQuality());
+            ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this, "IMAGE Quality: " + capturedData.getImageQuality());
 
 
-            if( capturedData.getImage()!=null){
-                image_bio.setImageBitmap( capturedData.getImage());
+            if (capturedData.getImage() != null) {
+                image_bio.setImageBitmap(capturedData.getImage());
             }
 
             // quality : 40~100
-            if(capturedData.getImageQuality()>=QUALITY_LIMIT){
+            if (capturedData.getImageQuality() >= QUALITY_LIMIT) {
 //                hideLoading();
                 return NBioBSPJNI.ERROR.NBioAPIERROR_USER_CANCEL;
-            }else if(capturedData.getDeviceError()!=NBioBSPJNI.ERROR.NBioAPIERROR_NONE){
+            } else if (capturedData.getDeviceError() != NBioBSPJNI.ERROR.NBioAPIERROR_NONE) {
 //                hideLoading();
                 return capturedData.getDeviceError();
-            }else{
+            } else {
                 return NBioBSPJNI.ERROR.NBioAPIERROR_NONE;
             }
         }
@@ -2077,7 +2116,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
     int nFIQ = 0;
     String msg = "";
-    public synchronized void OnCapture1(int timeout){
+
+    public synchronized void OnCapture1(int timeout) {
 
         NBioBSPJNI.FIR_HANDLE hCapturedFIR, hAuditFIR;
         NBioBSPJNI.CAPTURED_DATA capturedData;
@@ -2097,10 +2137,9 @@ public class PersonalDetailsActivity extends MainActivity {
             progressDialog.dismiss();
 
 
-        if (bsp.IsErrorOccured())  {
+        if (bsp.IsErrorOccured()) {
             msg = "NBioBSP Capture Error: " + bsp.GetErrorCode();
-        }
-        else  {
+        } else {
             NBioBSPJNI.INPUT_FIR inputFIR;
 
             inputFIR = bsp.new INPUT_FIR();
@@ -2115,7 +2154,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 exportEngine.ExportFIR(inputFIR, exportData, NBioBSPJNI.EXPORT_MINCONV_TYPE.OLD_FDA);
 
-                if (bsp.IsErrorOccured())  {
+                if (bsp.IsErrorOccured()) {
                     runOnUiThread(new Runnable() {
 
                         public void run() {
@@ -2123,7 +2162,7 @@ public class PersonalDetailsActivity extends MainActivity {
                             Toast.makeText(PersonalDetailsActivity.this, msg, Toast.LENGTH_SHORT).show();
                         }
                     });
-                    return ;
+                    return;
                 }
 
                 if (byTemplate1 != null)
@@ -2143,7 +2182,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 exportEngine.ExportAudit(inputFIR, exportAudit);
 
-                if (bsp.IsErrorOccured())  {
+                if (bsp.IsErrorOccured()) {
 
                     runOnUiThread(new Runnable() {
 
@@ -2154,7 +2193,7 @@ public class PersonalDetailsActivity extends MainActivity {
                         }
                     });
 
-                    return ;
+                    return;
                 }
 
                 if (byCapturedRaw1 != null)
@@ -2175,7 +2214,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 bsp.getNFIQInfoFromRaw(info);
 
-                if (bsp.IsErrorOccured())  {
+                if (bsp.IsErrorOccured()) {
                     runOnUiThread(new Runnable() {
 
                         public void run() {
@@ -2184,11 +2223,10 @@ public class PersonalDetailsActivity extends MainActivity {
                         }
                     });
 
-                    return ;
+                    return;
                 }
 
                 nFIQ = info.pNFIQ;
-
 
 
                 // ISO 19794-4
@@ -2252,7 +2290,6 @@ public class PersonalDetailsActivity extends MainActivity {
             }
 
 
-
 //			// wsq convert example
 //			{
 //                NBioBSPJNI.Export.TEMPLATE_DATA data = exportEngine.new TEMPLATE_DATA();
@@ -2294,7 +2331,7 @@ public class PersonalDetailsActivity extends MainActivity {
             public void run() {
 //                tvInfo.setText(msg+",NFIQ:"+nFIQ);
 
-                Toast.makeText(PersonalDetailsActivity.this, msg+",NFIQ:"+nFIQ, Toast.LENGTH_SHORT).show();
+                Toast.makeText(PersonalDetailsActivity.this, msg + ",NFIQ:" + nFIQ, Toast.LENGTH_SHORT).show();
 
 
 //                if (byTemplate1 != null && byTemplate2 != null)  {
@@ -2314,6 +2351,102 @@ public class PersonalDetailsActivity extends MainActivity {
 
     }
 
+    public void insertPersonalDetails() {
+
+        CRIMINALCASE_NO = new Gson().toJson(listCriminalCases);
+
+        if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
+            Latitude = getLocation.getLatitude();
+            Longitude = getLocation.getLongitude();
+        }
+
+        String LocalId = generateId();
+
+        PrefUtils.saveToPrefs(PersonalDetailsActivity.this,ApplicationConstant.LOCAL_SURVEYID,LocalId);
+
+        PersonalDetails personalDetails = new PersonalDetails(
+                LocalId,
+                photoPath,
+                VindingPhotoPath,
+                SCANRESULT,
+                "" + Latitude,
+                "" + Longitude,
+                NAME_VENDOR,
+                AADHAR_NO,
+                SEX,
+                AGE,
+                DOB,
+                CONTACT_NO,
+                LANDLINE_NO,
+                EDUCATION_STATUS,
+                NAME_OFFATHER_HUSBAND,
+                NAME_MOTHER,
+                NAME_SPOUSE,
+                WHETHER_WIDOWED,
+                CATEGORY,
+                RESIDENTIAL_ADDRESS,
+                PERMENENT_ADDRESS,
+                ANNUAL_INCOME,
+                AADHAR_DETAILS,
+                IS_CRIMINALCASE,
+                CRIMINALCASE_NO);
+
+        new InsertAsyncTask(surveyDao).execute(personalDetails);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
+        builder.setTitle("Personal Details");
+        builder.setMessage("Saved successfully in local db");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+
+
+                startActivity(new Intent(PersonalDetailsActivity.this, VendorsFamDetailsActivity.class));
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+    }
+
+    private class InsertAsyncTask extends AsyncTask<PersonalDetails, Void, Void> {
+        SurveyDao surveyDao;
+
+        public InsertAsyncTask(SurveyDao surveyDao) {
+            this.surveyDao = surveyDao;
+        }
+
+        @Override
+        protected Void doInBackground(PersonalDetails... personalDetails) {
+            surveyDao.insertPersonalDetails(personalDetails[0]);
+            return null;
+        }
+    }
+
+    private String generateId() {
+
+
+        String SurveyId = "";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmssSS");
+            Date date = new Date();
+            String tranID = sdf.format(date);
+            int n = 6;
+            Random randGen = new Random();
+            int startNum = (int) Math.pow(10, n - 1);
+            int range = (int) (Math.pow(10, n) - startNum);
+            int randomNum = randGen.nextInt(range) + startNum;
+            String ran = String.valueOf(randomNum);
+            SurveyId = tranID + ran;
+        } catch (Throwable e) {
+
+        }
+        return SurveyId;
+    }
 
 
 }

@@ -48,6 +48,10 @@ public class ApplicationConstant {
     public static final String WARD = "ward";
     public static final String CONTACT = "contact";
     public static final String AADHAR_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTU2ODM5NjAsInVzZXJfY2xhaW1zIjp7InNjb3BlcyI6WyJyZWFkIl19LCJqdGkiOiI5MTI0NGM0ZC0zMTA3LTQ3ZmYtODhkYS0wMjgyYmU1NWE5NGIiLCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MiLCJpZGVudGl0eSI6ImRldi5rYXNoaXRzb2x1dGlvbkBhYWRoYWFyYXBpLmlvIiwibmJmIjoxNTk1NjgzOTYwLCJleHAiOjE5MTEwNDM5NjB9.ok8zT_-ZLNBTwNQHhMyoj8ROswamn-3eZiuRorAWFUQ";
+    public static final String TVC = "tvc";
+    public static final String AREA = "survey_area";
+    public static final String LOCAL_SURVEYID = "local_surveyid";
+    public static boolean ISLOCALDB = false;
     public static String URI_NO_ = "uri_no";
     public static String SurveyId ="";
     public static final long IMAGE_SIZE = 800;

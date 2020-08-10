@@ -34,7 +34,7 @@
                     android:layout_marginTop="15dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -54,7 +54,6 @@
                         android:src="@drawable/personal_details_big" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:id="@+id/LinearOne"
@@ -1203,7 +1202,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1703,7 +1702,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
 
     </ScrollView>
 

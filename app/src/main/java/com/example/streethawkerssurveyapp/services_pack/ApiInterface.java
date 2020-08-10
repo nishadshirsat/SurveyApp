@@ -26,11 +26,6 @@ public interface ApiInterface {
     @POST("login-user")
     Call<LoginResponse> getLoginResponse(@Field("email") String email, @Field("password") String password);
 
-
-    @FormUrlEncoded
-    @POST("survey")
-    Call<LoginResponse> getLoginResponse(@Header("Authorization") String value_header, @Field("email") String email, @Field("password") String password);
-
     @FormUrlEncoded
     @POST("survey")
     Call<SurveyResponse> getSurveyUriNumber(
@@ -51,6 +46,26 @@ public interface ApiInterface {
 
     );
 
+    @Multipart
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> UploadVendorPhoto(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part("corporation") RequestBody corporation,
+            @Part("zone") RequestBody zone,
+            @Part("ward") RequestBody ward,
+            @Part MultipartBody.Part photo_of_the_street_vendor);
+
+
+    @Multipart
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> UploadVendorPlacePhoto(
+            @HeaderMap Map<String, String> token,
+            @Part("uri_number") RequestBody uri_number,
+            @Part("corporation") RequestBody corporation,
+            @Part("zone") RequestBody zone,
+            @Part("ward") RequestBody ward,
+            @Part MultipartBody.Part photo_of_vendor_site);
 
     @Multipart
     @POST("update-survey")
@@ -60,6 +75,7 @@ public interface ApiInterface {
             @Part("corporation") RequestBody corporation,
             @Part("zone") RequestBody zone,
             @Part("ward") RequestBody ward,
+            @Part("bar_code") RequestBody bar_code,
             @Part("name_of_the_street_vendor") RequestBody name_of_the_street_vendor,
             @Part("sex") RequestBody sex,
             @Part("age") RequestBody age,
@@ -99,15 +115,6 @@ public interface ApiInterface {
             @Part("bank_branch_name") RequestBody bank_branch_name,
             @Part("bank_ifsc") RequestBody bank_ifsc);
 
-    @Multipart
-    @POST("update-survey")
-    Call<UpdateSurveyResponse> UploadVendorPhoto(
-            @HeaderMap Map<String, String> token,
-            @Part("uri_number") RequestBody uri_number,
-            @Part("corporation") RequestBody corporation,
-            @Part("zone") RequestBody zone,
-            @Part("ward") RequestBody ward,
-            @Part MultipartBody.Part photo_of_the_street_vendor);
 
 
     @FormUrlEncoded
@@ -133,15 +140,7 @@ public interface ApiInterface {
             @Field("choice_of_vending_area") String choice_of_vending_area
     );
 
-    @Multipart
-    @POST("update-survey")
-    Call<UpdateSurveyResponse> UploadVendorPlacePhoto(
-            @HeaderMap Map<String, String> token,
-            @Part("uri_number") RequestBody uri_number,
-            @Part("corporation") RequestBody corporation,
-            @Part("zone") RequestBody zone,
-            @Part("ward") RequestBody ward,
-            @Part MultipartBody.Part photo_of_vendor_site);
+
 
 //    @FormUrlEncoded
 //    @POST("update-survey")

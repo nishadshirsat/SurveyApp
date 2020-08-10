@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.officer.activities.SupervisorListActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
@@ -43,6 +44,7 @@ public class DashboardActivity extends MainActivity {
     private LinearLayout mLinear_view;
     private ImageView mImage_postpaid;
     private LinearLayout mLinear_suspended;
+    private LinearLayout mLinear_local_data;
     public GetLocation getLocation;
 
     boolean doubleBackToExitPressedOnce = false;
@@ -107,6 +109,15 @@ public class DashboardActivity extends MainActivity {
             }
         });
 
+        mLinear_local_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(DashboardActivity.this, LocalSurveyListActivity.class));
+
+            }
+        });
+
         mLinear_suspended.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,10 +146,11 @@ public class DashboardActivity extends MainActivity {
 
         String Name = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.Name, "");
         String Email = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.Email, "");
+        String AREA = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.AREA, "");
         String Role = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.UserType, "");
 
         mProfile_name.setText(Name);
-        mProfile_email.setText(Email);
+        mProfile_email.setText("AREA: "+AREA);
         mTextUsername.setText(Role);
 
 
@@ -146,6 +158,7 @@ public class DashboardActivity extends MainActivity {
 
     private void bindVieW() {
 
+        mLinear_local_data = (LinearLayout) findViewById(R.id.linear_local_data);
         mProfile_layout = (LinearLayout) findViewById(R.id.profile_layout);
         mRelative1 = (RelativeLayout) findViewById(R.id.relative1);
         mCard_profile = (androidx.cardview.widget.CardView) findViewById(R.id.card_profile);
@@ -196,10 +209,32 @@ public class DashboardActivity extends MainActivity {
 
         switch (item.getItemId()) {
             case R.id.bookmark_menu:
+                PrefUtils.saveToPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.FlagRemember, "");
+                PrefUtils.saveToPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.UserName, "");
+                PrefUtils.saveToPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.UserPassword, "");
                 startActivity(new Intent(DashboardActivity.this, LoginActivity.class));
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!ApplicationConstant.isNetworkAvailable(DashboardActivity.this)) {
+
+            ApplicationConstant.ISLOCALDB = true;
+
+            ApplicationConstant.displayToastMessage(DashboardActivity.this,  "No Internet Connection! Storing survey in local Database now.");
+
+
+        }else {
+
+            ApplicationConstant.ISLOCALDB = false;
+
+
+        }
     }
 }

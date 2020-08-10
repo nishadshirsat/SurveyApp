@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements TabLayout.BaseOn
     @Override
     protected void onResume() {
         super.onResume();
-        checkForPermissions();
+//        checkForPermissions();
 
     }
 

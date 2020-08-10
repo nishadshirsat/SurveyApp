@@ -48,7 +48,19 @@ public class StartSurveyModeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                GetSurveyUri("START");
+                if (!ApplicationConstant.isNetworkAvailable(StartSurveyModeActivity.this)) {
+
+                    ApplicationConstant.ISLOCALDB = true;
+
+                    ApplicationConstant.displayToastMessage(StartSurveyModeActivity.this,  "No Internet Connection! Storing survey in local Database now.");
+
+                    startActivity(new Intent(StartSurveyModeActivity.this,PersonalDetailsActivity.class));
+
+
+                }else {
+                    GetSurveyUri("START");
+
+                }
             }
         });
 
@@ -56,7 +68,20 @@ public class StartSurveyModeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                GetSurveyUri("SCAN");
+                if (!ApplicationConstant.isNetworkAvailable(StartSurveyModeActivity.this)) {
+
+                    ApplicationConstant.ISLOCALDB = true;
+
+                    ApplicationConstant.displayToastMessage(StartSurveyModeActivity.this,  "No Internet Connection! Storing survey in local Database now.");
+
+                    startActivity(new Intent(StartSurveyModeActivity.this,ScannedBarcodeActivity.class));
+
+
+                }else {
+                    GetSurveyUri("SCAN");
+
+                }
+
             }
         });
 
@@ -159,7 +184,7 @@ public class StartSurveyModeActivity extends AppCompatActivity {
                         PrefUtils.saveToPrefs(StartSurveyModeActivity.this, ApplicationConstant.URI_NO_, response.body().getUriNumber());
 
                         if (Control.trim().equals("START")){
-                            startActivity(new Intent(StartSurveyModeActivity.this,CorporationZoneActivity.class));
+                            startActivity(new Intent(StartSurveyModeActivity.this,PersonalDetailsActivity.class));
 
                         }else {
                             startActivity(new Intent(StartSurveyModeActivity.this,ScannedBarcodeActivity.class));

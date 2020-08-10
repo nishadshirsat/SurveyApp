@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,10 @@ import android.widget.TextView;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.adapter.FamilyDetailsAdpater;
 import com.example.streethawkerssurveyapp.adapter.LandAssetsAdpater;
+import com.example.streethawkerssurveyapp.database_pack.FamilyDetails;
+import com.example.streethawkerssurveyapp.database_pack.PersonalDetails;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
 import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
 import com.example.streethawkerssurveyapp.pojo_class.LandAssets;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
@@ -90,6 +95,9 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
     private LinearLayout mLinearOne,mLinearHead;
 
+    private SurveyDatabase surveyDatabase;
+    private SurveyDao surveyDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +108,10 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+        surveyDatabase = SurveyDatabase.getDatabase(VendorsFamDetailsActivity.this);
+        surveyDao = surveyDatabase.surveyDao();
+
 
         RGFam.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -299,7 +311,20 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //                ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"",JSONObject_Family);
 
                     if(validate()){
-                        UpdateFamilySurvey();
+
+                        if (ApplicationConstant.ISLOCALDB) {
+
+
+                            insertFamilyDetails();
+
+                        } else if (!ApplicationConstant.isNetworkAvailable(VendorsFamDetailsActivity.this)) {
+
+                            ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                        } else {
+                            UpdateFamilySurvey();
+
+                        }
 
                     }
 
@@ -311,13 +336,15 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
     private boolean validate() {
 
-        if (!ApplicationConstant.isNetworkAvailable(VendorsFamDetailsActivity.this)) {
+//        if (!ApplicationConstant.isNetworkAvailable(VendorsFamDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        }
+//        else
 
-            ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        }
-        else if (listFamily.isEmpty()){
+            if (listFamily.isEmpty()){
             ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add family members");
             return false;
         }
@@ -455,29 +482,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         JSONObject objectFamily = null;
 
-
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
             String json_family = new Gson().toJson(listFamily);
 
-        String JSONObject_Family = gson.toJson(listFamily);
-
-        Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
-//        String json_family = prettyGson.toJson(JSONObject_Family);
-
-
-
-//        try {
-//            JSONArray jsonArray = new JSONArray(jsonArray);
-//
-//            objectFamily = new JSONObject(json_family);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-        String JSONObject_LandAsset = gson.toJson(listLandAssets);
-//        String json_landAssets = prettyGson.toJson(JSONObject_LandAsset);
 
         String json_landAssets = new Gson().toJson(listLandAssets);
 
@@ -489,8 +495,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
         listSurveyedFamily.add(familyMembers);
 
-//        String JSONObject_S_Family = gson.toJson(listSurveyedFamily);
-//        String json_surveyFam = prettyGson.toJson(JSONObject_S_Family);
 
         String json_surveyFam = new Gson().toJson(listSurveyedFamily);
 
@@ -624,4 +628,70 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         }
 
     }
+
+    public void insertFamilyDetails() {
+
+        JSONObject objectFamily = null;
+
+        String json_family = new Gson().toJson(listFamily);
+
+
+        String json_landAssets = new Gson().toJson(listLandAssets);
+
+
+        FamilyMembers familyMembers = new FamilyMembers(mEditName.getText().toString().trim(),
+                mEditRelation.getText().toString().trim(),
+                mEditAge.getText().toString().trim(),
+                mEditAadhar.getText().toString().trim());
+
+        listSurveyedFamily.add(familyMembers);
+
+
+        String json_surveyFam = new Gson().toJson(listSurveyedFamily);
+
+       String LocalId  = PrefUtils.getFromPrefs(VendorsFamDetailsActivity.this,ApplicationConstant.LOCAL_SURVEYID,"");
+
+        FamilyDetails familyDetails = new FamilyDetails(
+                LocalId,
+                json_family,
+                json_landAssets,
+                IS_Fam,
+                json_surveyFam);
+
+        new InsertAsyncTask(surveyDao).execute(familyDetails);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(VendorsFamDetailsActivity.this);
+        builder.setTitle("Family Details");
+        builder.setMessage("Saved successfully in local db");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+
+
+                startActivity(new Intent(VendorsFamDetailsActivity.this,VendingDetailsActivity.class));
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+    }
+
+    private class InsertAsyncTask extends AsyncTask<FamilyDetails, Void, Void> {
+        SurveyDao surveyDao;
+
+        public InsertAsyncTask(SurveyDao surveyDao) {
+            this.surveyDao = surveyDao;
+        }
+
+        @Override
+        protected Void doInBackground(FamilyDetails... familyDetails) {
+            surveyDao.insertFamilyDetails(familyDetails[0]);
+            return null;
+        }
+    }
+
 }

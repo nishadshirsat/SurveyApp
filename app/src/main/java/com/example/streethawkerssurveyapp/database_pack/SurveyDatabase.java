@@ -7,7 +7,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import io.sentry.core.protocol.User;
 
-@Database(entities = {SurveyDetails.class},version = 1)
+@Database(entities = {PersonalDetails.class,
+        FamilyDetails.class,
+        VendingDetails.class,
+        BankingDetails.class,
+        DocumentsData.class},version = 3)
 public abstract class SurveyDatabase extends RoomDatabase {
 
     public abstract SurveyDao surveyDao();

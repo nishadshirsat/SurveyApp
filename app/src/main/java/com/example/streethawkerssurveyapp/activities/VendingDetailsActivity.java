@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -26,12 +27,20 @@ import android.widget.TimePicker;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.database_pack.FamilyDetails;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
+import com.example.streethawkerssurveyapp.database_pack.VendingDetails;
+import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Calendar;
@@ -128,7 +137,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
     private LinearLayout mLinearHead;
 
-
+    private SurveyDatabase surveyDatabase;
+    private SurveyDao surveyDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +151,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+        surveyDatabase = SurveyDatabase.getDatabase(VendingDetailsActivity.this);
+        surveyDao = surveyDatabase.surveyDao();
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -544,7 +557,22 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     STARTING_DATE_VENDING = mEditDob.getText().toString().trim();
 
                     if (validate3()) {
-                        UpdateSurvey();
+
+
+                        if (ApplicationConstant.ISLOCALDB) {
+
+
+//                            insertVendingDetails();
+
+                        } else if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+
+                            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                        } else {
+                            UpdateSurvey();
+
+                        }
+
                     }
                 }
             }
@@ -635,13 +663,15 @@ public class VendingDetailsActivity extends AppCompatActivity {
     }
 
     private boolean validate3() {
-        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+//        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        }
+//        else
 
-            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        }
-        else if (mEditAge.getText().toString().trim().isEmpty()) {
+            if (mEditAge.getText().toString().trim().isEmpty()) {
             mEditAge.setError("Enter No of years");
             mEditAge.requestFocus();
             return false;
@@ -658,13 +688,16 @@ public class VendingDetailsActivity extends AppCompatActivity {
     }
 
     private boolean validate2() {
-        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
 
-            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        }
+//        else
 
-            return false;
-        }
-        else if (mEditAge.getText().toString().trim().isEmpty()) {
+            if (mEditAge.getText().toString().trim().isEmpty()) {
             mEditAge.setError("Enter No of Years");
             mEditAge.requestFocus();
             return false;
@@ -681,12 +714,14 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
     private boolean validate1() {
 
-        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+//        if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        } else
 
-            ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        } else if (mSpinnerItems.getSelectedItem().toString().isEmpty()) {
+            if (mSpinnerItems.getSelectedItem().toString().isEmpty()) {
             mEditVendingSite.setError("Select Items");
             mSpinnerItems.requestFocus();
             return false;
@@ -763,8 +798,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
         String CORPORATION =   PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.CORPORATION,"");
         String ZONE =  PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.ZONE,"");
         String WARD =  PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.WARD,"");
-
-
 
 
         Map<String, String> headers = new HashMap<>();
@@ -892,4 +925,54 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
         }
     }
+
+
+//    public void insertVendingDetails() {
+//
+//
+//        String LocalId  = PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.LOCAL_SURVEYID,"");
+//
+//        VendingDetails vendingDetails = new VendingDetails(
+//                LocalId,
+//                TYPE_OF_VENDING,
+//                VENDI,
+//                IS_Fam,
+//                json_surveyFam);
+//
+//        new VendorsFamDetailsActivity.InsertAsyncTask(surveyDao).execute(familyDetails);
+//
+//        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(VendorsFamDetailsActivity.this);
+//        builder.setTitle("Family Details");
+//        builder.setMessage("Saved successfully in local db");
+//        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//
+//
+//                startActivity(new Intent(VendorsFamDetailsActivity.this,VendingDetailsActivity.class));
+//
+//            }
+//        });
+//
+//        AlertDialog alertDialog = builder.create();
+//        alertDialog.setCancelable(false);
+//        alertDialog.setCanceledOnTouchOutside(false);
+//        alertDialog.show();
+//    }
+
+    private class InsertAsyncTask extends AsyncTask<FamilyDetails, Void, Void> {
+        SurveyDao surveyDao;
+
+        public InsertAsyncTask(SurveyDao surveyDao) {
+            this.surveyDao = surveyDao;
+        }
+
+        @Override
+        protected Void doInBackground(FamilyDetails... familyDetails) {
+            surveyDao.insertFamilyDetails(familyDetails[0]);
+            return null;
+        }
+    }
+
 }
