@@ -561,7 +561,6 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                         if (ApplicationConstant.ISLOCALDB) {
 
-
 //                            insertVendingDetails();
 
                         } else if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
