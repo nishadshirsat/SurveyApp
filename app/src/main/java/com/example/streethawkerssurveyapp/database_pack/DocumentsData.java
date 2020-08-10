@@ -8,10 +8,9 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "documentsdata")
 public class DocumentsData {
 
+
     @PrimaryKey
     @NonNull
-    private String id;
-
     private String survey_id;
 
     //Documents
@@ -33,24 +32,41 @@ public class DocumentsData {
 
     private String acknowledgement_doc;
 
-    private String other_doc_type;
-
-    private String other_document_url;
-
     private String other_document_json;
 
     private String comments;
 
     private String recording;
 
-    @NonNull
-    public String getId() {
-        return id;
+    public DocumentsData(@NonNull String survey_id,
+                         String identity_proof_type,
+                         String identity_proof_front,
+                         String identity_proof_back,
+                         String vending_history_proof_type,
+                         String vending_history_proof_front,
+                         String vending_history_proof_back,
+                         String allotment_tehzabari_document,
+                         String undertaking_doc,
+                         String acknowledgement_doc,
+                         String other_document_json,
+                         String comments,
+                         String recording) {
+        this.survey_id = survey_id;
+        this.identity_proof_type = identity_proof_type;
+        this.identity_proof_front = identity_proof_front;
+        this.identity_proof_back = identity_proof_back;
+        this.vending_history_proof_type = vending_history_proof_type;
+        this.vending_history_proof_front = vending_history_proof_front;
+        this.vending_history_proof_back = vending_history_proof_back;
+        this.allotment_tehzabari_document = allotment_tehzabari_document;
+        this.undertaking_doc = undertaking_doc;
+        this.acknowledgement_doc = acknowledgement_doc;
+        this.other_document_json = other_document_json;
+        this.comments = comments;
+        this.recording = recording;
     }
 
-    public void setId(@NonNull String id) {
-        this.id = id;
-    }
+
 
     public String getSurvey_id() {
         return survey_id;
@@ -63,6 +79,7 @@ public class DocumentsData {
     public String getIdentity_proof_type() {
         return identity_proof_type;
     }
+
 
     public void setIdentity_proof_type(String identity_proof_type) {
         this.identity_proof_type = identity_proof_type;
@@ -138,22 +155,6 @@ public class DocumentsData {
 
     public void setAcknowledgement_doc(String acknowledgement_doc) {
         this.acknowledgement_doc = acknowledgement_doc;
-    }
-
-    public String getOther_doc_type() {
-        return other_doc_type;
-    }
-
-    public void setOther_doc_type(String other_doc_type) {
-        this.other_doc_type = other_doc_type;
-    }
-
-    public String getOther_document_url() {
-        return other_document_url;
-    }
-
-    public void setOther_document_url(String other_document_url) {
-        this.other_document_url = other_document_url;
     }
 
     public String getComments() {

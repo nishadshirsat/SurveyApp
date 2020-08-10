@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -28,7 +29,12 @@ import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.database_pack.BankingDetails;
+import com.example.streethawkerssurveyapp.database_pack.DocumentsData;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingDocumentsScanActivity;
+import com.example.streethawkerssurveyapp.response_pack.OtherDocDetails;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
@@ -37,6 +43,7 @@ import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
+import com.google.gson.Gson;
 import com.labters.documentscanner.ImageCropActivity;
 import com.labters.documentscanner.helpers.ScannerConstants;
 
@@ -45,7 +52,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -130,6 +139,12 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
     private boolean Is_Uploaded = false;
 
+    private List<OtherDocDetails> otherDocList = new ArrayList<>();
+
+
+    private SurveyDatabase surveyDatabase;
+    private SurveyDao surveyDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +155,9 @@ public class DocumentsScanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+        surveyDatabase = SurveyDatabase.getDatabase(DocumentsScanActivity.this);
+        surveyDao = surveyDatabase.surveyDao();
 
         TextAddAnother.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +192,29 @@ public class DocumentsScanActivity extends AppCompatActivity {
                     dBtnUploadDoc.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            UploadOtherDocument();
+
+                            if (ApplicationConstant.ISLOCALDB) {
+
+                                OtherDocDetails otherDocDetails = new OtherDocDetails(OTHER_DOCUMENT,OTHER_DOCUMENT_PATH);
+                                otherDocList.add(otherDocDetails);
+
+                                dTextDocName.setText(OTHER_DOCUMENT+" Stored");
+                                dTextDocName.setTextColor(getResources().getColor(R.color.green));
+                                dBtnUploadDoc.setVisibility(View.GONE);
+                                dEditOtherDocument.setEnabled(false);
+
+                                Is_Uploaded = false;
+
+
+                            } else if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
+
+                                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                            } else {
+                                UploadOtherDocument();
+
+                            }
+
                         }
                     });
 
@@ -314,14 +354,50 @@ public class DocumentsScanActivity extends AppCompatActivity {
                 }else   if (LinearOne.getVisibility() == View.VISIBLE) {
 
                     if (validate1()) {
-                     UploadIdentityProof();
+
+                        if (ApplicationConstant.ISLOCALDB) {
+
+                            LinearOne.setVisibility(View.GONE);
+                            LinearTwo.setVisibility(View.VISIBLE);
+                            LinearFour.setVisibility(View.GONE);
+                            LinearThree.setVisibility(View.GONE);
+
+
+                        } else if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
+
+                            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                        } else {
+                            UploadIdentityProof();
+
+                        }
+
                     }
 
 
                 } else if (LinearTwo.getVisibility() == View.VISIBLE) {
 
                     if (validate2()) {
-                      Upload_VendingHistoryProof();
+
+                        if (ApplicationConstant.ISLOCALDB) {
+
+                            LinearTwo.setVisibility(View.GONE);
+                            LinearOne.setVisibility(View.GONE);
+                            LinearFour.setVisibility(View.GONE);
+                            LinearThree.setVisibility(View.VISIBLE);
+                            BtnNext.setText("Submit");
+                            stopService(new Intent(DocumentsScanActivity.this, AudioRecordService.class));
+
+
+                        } else if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
+
+                            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                        } else {
+                            Upload_VendingHistoryProof();
+
+                        }
+
 
                     }
 
@@ -355,11 +431,18 @@ public class DocumentsScanActivity extends AppCompatActivity {
                     file_undertaking = new File(Undertaking_PATH);
                     file_acknowlegement = new File(Acknowledge_PATH);
 
+                    if (ApplicationConstant.ISLOCALDB) {
 
-                    Upload_Recordings();
+                        insertDocumentsDetails();
 
+                    } else if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
 
-//                    startActivity(new Intent(PersonalDetailsActivity.this, DocumentScanActivity.class));
+                        ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                    } else {
+                        Upload_Recordings();
+
+                    }
 
                 }
             }
@@ -369,12 +452,12 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
     private boolean validate1() {
 
-        if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
-
-            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        }else
+//        if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        }else
 
         if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
             ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
@@ -396,12 +479,12 @@ public class DocumentsScanActivity extends AppCompatActivity {
     }
 
     private boolean validate2() {
-        if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
-
-            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
-
-            return false;
-        }else
+//        if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
+//
+//            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+//
+//            return false;
+//        }else
         if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
             ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Vending History Proof Type");
             return false;
@@ -1677,4 +1760,66 @@ public class DocumentsScanActivity extends AppCompatActivity {
         }
 
     }
+
+    public void insertDocumentsDetails() {
+
+        String recordingFile = PrefUtils.getFromPrefs(DocumentsScanActivity.this, ApplicationConstant.RECORDING, "");
+
+        String LocalId  = PrefUtils.getFromPrefs(DocumentsScanActivity.this,ApplicationConstant.LOCAL_SURVEYID,"");
+
+        String json_otherDoc = new Gson().toJson(otherDocList);
+
+
+
+        DocumentsData documentsData = new DocumentsData(
+                LocalId,
+                IDENTITY_PROOF_TYPE,
+                IDENTITY_PROOF_FRONT_PATH,
+                IDENTITY_PROOF_BACK_PATH,
+                VENDING_HISTORY_PROOF_TYPE,
+                VENDING_HISTORY_FRONT_PROOF_PATH,
+                VENDING_HISTORY_BACK_PROOF_PATH,
+                TehBazari_Doc_PATH,
+                Undertaking_PATH,
+                Acknowledge_PATH,
+                json_otherDoc,
+                Comments,
+                recordingFile
+               );
+
+        new InsertAsyncTask(surveyDao).execute(documentsData);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DocumentsScanActivity.this);
+        builder.setTitle("Document Details");
+        builder.setMessage("Saved successfully in local db");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+
+                startActivity(new Intent(DocumentsScanActivity.this, DashboardActivity.class));
+                finish();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+    }
+
+    private class InsertAsyncTask extends AsyncTask<DocumentsData, Void, Void> {
+        SurveyDao surveyDao;
+
+        public InsertAsyncTask(SurveyDao surveyDao) {
+            this.surveyDao = surveyDao;
+        }
+
+        @Override
+        protected Void doInBackground(DocumentsData... documentsData) {
+            surveyDao.insertDocumentsDetails(documentsData[0]);
+            return null;
+        }
+    }
+
 }

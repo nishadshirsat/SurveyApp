@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.database_pack.BankingDetails;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
+import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
+import com.example.streethawkerssurveyapp.database_pack.VendingDetails;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
@@ -53,7 +58,8 @@ public class BankingDetailsActivity extends AppCompatActivity {
             BRANCH_NAME = "",
             IFSC = "";
 
-
+    private SurveyDatabase surveyDatabase;
+    private SurveyDao surveyDao;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +70,8 @@ public class BankingDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("URI NO: "+ApplicationConstant.SurveyId);
 
+        surveyDatabase = SurveyDatabase.getDatabase(BankingDetailsActivity.this);
+        surveyDao = surveyDatabase.surveyDao();
 
         mBtnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +100,20 @@ public class BankingDetailsActivity extends AppCompatActivity {
                     IFSC = mEditIfscCode.getText().toString().trim();
 
                     if (validate()){
-                        UploadBankDetailsSurvey();
+
+                        if (ApplicationConstant.ISLOCALDB) {
+
+                            insertBankingDetails();
+
+                        } else if (!ApplicationConstant.isNetworkAvailable(BankingDetailsActivity.this)) {
+
+                            ApplicationConstant.displayMessageDialog(BankingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                        } else {
+                            UploadBankDetailsSurvey();
+
+                        }
+
                     }
 
                 }
@@ -267,4 +288,54 @@ public class BankingDetailsActivity extends AppCompatActivity {
 
         }
     }
+
+
+
+    public void insertBankingDetails() {
+
+
+        String LocalId  = PrefUtils.getFromPrefs(BankingDetailsActivity.this,ApplicationConstant.LOCAL_SURVEYID,"");
+
+        BankingDetails bankingDetails = new BankingDetails(
+                LocalId,
+                BANKACC_NO,
+                BANKNAME,
+                BRANCH_NAME,
+                IFSC);
+
+        new InsertAsyncTask(surveyDao).execute(bankingDetails);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(BankingDetailsActivity.this);
+        builder.setTitle("Banking Details");
+        builder.setMessage("Saved successfully in local db");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+
+                startActivity(new Intent(BankingDetailsActivity.this, DocumentsScanActivity.class));
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+    }
+
+    private class InsertAsyncTask extends AsyncTask<BankingDetails, Void, Void> {
+        SurveyDao surveyDao;
+
+        public InsertAsyncTask(SurveyDao surveyDao) {
+            this.surveyDao = surveyDao;
+        }
+
+        @Override
+        protected Void doInBackground(BankingDetails... bankingDetails) {
+            surveyDao.insertBankingDetails(bankingDetails[0]);
+            return null;
+        }
+    }
+
 }

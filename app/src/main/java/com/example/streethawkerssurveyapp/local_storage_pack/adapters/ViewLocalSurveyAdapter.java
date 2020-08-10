@@ -27,6 +27,8 @@ public class ViewLocalSurveyAdapter extends RecyclerView.Adapter<ViewLocalSurvey
         this.context = context;
     }
 
+    private UploadAndRefresh uploadAndRefresh;
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,6 +46,13 @@ public class ViewLocalSurveyAdapter extends RecyclerView.Adapter<ViewLocalSurvey
         holder.lTextVendorName.setText("Vendor Name : "+SurveyData.getName_of_vendor());
         holder.lTextAadhar.setText("Aadhar No : "+SurveyData.getAadhar_number());
 //        holder.mTextName.setText("Surveyor Name : "+SurveyData.getSurveyorName());
+
+        holder.lBtn_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadAndRefresh.uploadData(SurveyData);
+            }
+        });
 
     }
 
@@ -77,4 +86,10 @@ public class ViewLocalSurveyAdapter extends RecyclerView.Adapter<ViewLocalSurvey
 
         }
     }
+
+    public interface UploadAndRefresh{
+
+        void uploadData(PersonalDetails surveyData);
+    }
+
 }

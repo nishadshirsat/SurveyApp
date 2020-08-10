@@ -139,6 +139,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
     private SurveyDatabase surveyDatabase;
     private SurveyDao surveyDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -561,7 +562,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                         if (ApplicationConstant.ISLOCALDB) {
 
-//                            insertVendingDetails();
+                            insertVendingDetails();
 
                         } else if (!ApplicationConstant.isNetworkAvailable(VendingDetailsActivity.this)) {
 
@@ -926,41 +927,49 @@ public class VendingDetailsActivity extends AppCompatActivity {
     }
 
 
-//    public void insertVendingDetails() {
-//
-//
-//        String LocalId  = PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.LOCAL_SURVEYID,"");
-//
-//        VendingDetails vendingDetails = new VendingDetails(
-//                LocalId,
-//                TYPE_OF_VENDING,
-//                VENDI,
-//                IS_Fam,
-//                json_surveyFam);
-//
-//        new VendorsFamDetailsActivity.InsertAsyncTask(surveyDao).execute(familyDetails);
-//
-//        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(VendorsFamDetailsActivity.this);
-//        builder.setTitle("Family Details");
-//        builder.setMessage("Saved successfully in local db");
-//        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                dialogInterface.dismiss();
-//
-//
-//                startActivity(new Intent(VendorsFamDetailsActivity.this,VendingDetailsActivity.class));
-//
-//            }
-//        });
-//
-//        AlertDialog alertDialog = builder.create();
-//        alertDialog.setCancelable(false);
-//        alertDialog.setCanceledOnTouchOutside(false);
-//        alertDialog.show();
-//    }
+    public void insertVendingDetails() {
 
-    private class InsertAsyncTask extends AsyncTask<FamilyDetails, Void, Void> {
+
+        String LocalId  = PrefUtils.getFromPrefs(VendingDetailsActivity.this,ApplicationConstant.LOCAL_SURVEYID,"");
+
+        VendingDetails vendingDetails = new VendingDetails(
+                LocalId,
+                TYPE_OF_VENDING,
+                VENDING_SITE,
+                VENDING_LFROM,
+                VENDING_LTO,
+                VENDING_EFROM,
+                VENDING_ETO,
+                YRS_OF_VENDING,
+                IS_RECOGNIZED_STREET_VENDOR,
+                TYPE_OF_STRUCTURE,
+                NO_DAYS_ACTIVE.toString().trim(),
+                STARTING_DATE_VENDING,
+                TEHABZARI_AVAILABLE,
+                VENDING_AREA_CHOCE);
+
+        new InsertAsyncTask(surveyDao).execute(vendingDetails);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(VendingDetailsActivity.this);
+        builder.setTitle("Vending Details");
+        builder.setMessage("Saved successfully in local db");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+
+                startActivity(new Intent(VendingDetailsActivity.this, BankingDetailsActivity.class));
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+    }
+
+    private class InsertAsyncTask extends AsyncTask<VendingDetails, Void, Void> {
         SurveyDao surveyDao;
 
         public InsertAsyncTask(SurveyDao surveyDao) {
@@ -968,8 +977,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(FamilyDetails... familyDetails) {
-            surveyDao.insertFamilyDetails(familyDetails[0]);
+        protected Void doInBackground(VendingDetails... vendingDetails) {
+            surveyDao.insertVendingDetails(vendingDetails[0]);
             return null;
         }
     }
