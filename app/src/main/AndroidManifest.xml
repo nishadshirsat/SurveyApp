@@ -32,14 +32,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".officer.activities.SuspendedSupervisorListActivity"></activity>
+        <activity android:name=".officer.activities.SuspendedSupervisorListActivity"/>
         <activity android:name=".officer.activities.PendingSupervisorListActivity" />
         <activity android:name=".officer.activities.ViewSupervisorListActivity" />
-        <activity android:name=".supervisor.activities.SuspendedSurveyorListActivity" />
-        <activity android:name=".supervisor.activities.PendingSurveyorListActivity" />
-        <activity android:name=".supervisor.activities.ViewSurveyorListActivity" />
-        <activity android:name=".officer.activities.SupervisorListActivity" />
+        <activity android:name=".supervisor.activities.ViewSurveyListActivity" />
+        <activity android:name=".supervisor.activities.SuspendedSurveyListActivity" />
         <activity android:name=".supervisor.activities.SurveyorListActivity" />
+        <activity android:name=".officer.activities.SupervisorListActivity" />
+        <activity android:name=".supervisor.activities.PendingSurveyListActivity" />
 
         <meta-data
             android:name="io.sentry.dsn"
