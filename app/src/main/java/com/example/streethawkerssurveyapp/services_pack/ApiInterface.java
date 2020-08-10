@@ -1,5 +1,6 @@
 package com.example.streethawkerssurveyapp.services_pack;
 
+import com.example.streethawkerssurveyapp.pojo_class.VendingTypeResponse;
 import com.example.streethawkerssurveyapp.response_pack.LoginResponse;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
@@ -14,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
@@ -274,6 +276,12 @@ public interface ApiInterface {
             @HeaderMap Map<String, String> token,
             @Body Map<String,String> body
 
+    );
+
+//    @FormUrlEncoded
+    @GET("vending-types")
+    Call<VendingTypeResponse> getVendingTypes(
+            @HeaderMap Map<String, String> token
     );
 
 }
