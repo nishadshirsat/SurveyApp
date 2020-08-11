@@ -36,6 +36,7 @@ public class DashboardActivity extends MainActivity {
     private TextView TextSurvey;
     private TextView mProfile_email;
     private TextView mAreaName;
+    private TextView CorporationName,ZoneName,TvcName,WardName;
     private TextView mTextUsertype;
     private TextView mTextUsername;
     private LinearLayout mLinear_newSurvey;
@@ -147,10 +148,18 @@ public class DashboardActivity extends MainActivity {
         String Name = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.Name, "");
         String Email = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.Email, "");
         String AREA = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.AREA, "");
+        String CORP = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.WARD, "");
+        String TVC = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.TVC, "");
         String Role = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.UserType, "");
 
         mProfile_name.setText(Name);
-        mProfile_email.setText("AREA: "+AREA);
+        mAreaName.setText("AREA : "+AREA);
+        CorporationName.setText("Corporation : "+CORP);
+        ZoneName.setText("Zone : "+ZONE);
+        WardName.setText("Ward : "+WARD);
+        TvcName.setText("TVC : "+TVC);
         mTextUsername.setText(Role);
 
 
@@ -168,6 +177,11 @@ public class DashboardActivity extends MainActivity {
         mTextUsertype = (TextView) findViewById(R.id.TextUsertype);
         mTextUsername = (TextView) findViewById(R.id.TextUsername);
         TextSurvey = (TextView) findViewById(R.id.TextSurvey);
+        mAreaName = (TextView) findViewById(R.id.AreaName);
+        CorporationName = (TextView) findViewById(R.id.CorporationName);
+        TvcName = (TextView) findViewById(R.id.TvcName);
+        ZoneName = (TextView) findViewById(R.id.ZoneName);
+        WardName = (TextView) findViewById(R.id.WardName);
         mLinear_newSurvey = (LinearLayout) findViewById(R.id.linear_newSurvey);
         mLinear_pending = (LinearLayout) findViewById(R.id.linear_pending);
         mImage_dth = (ImageView) findViewById(R.id.image_dth);

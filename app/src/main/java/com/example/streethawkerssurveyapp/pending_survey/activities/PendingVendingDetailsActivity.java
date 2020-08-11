@@ -8,8 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,6 +28,11 @@ import android.widget.TimePicker;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.BankingDetailsActivity;
+import com.example.streethawkerssurveyapp.activities.DashboardActivity;
+import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
+import com.example.streethawkerssurveyapp.activities.VendingDetailsActivity;
+import com.example.streethawkerssurveyapp.pojo_class.VendingTypeData;
+import com.example.streethawkerssurveyapp.pojo_class.VendingTypeResponse;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
@@ -33,10 +41,13 @@ import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyDetails;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -131,6 +142,9 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
     private RadioButton mRadioY;
     private RadioButton mRadioN;
 
+    private List<VendingTypeData> listVendingType = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +170,7 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
         minute = myCalendar.get(Calendar.MINUTE);
         sec = myCalendar.get(Calendar.SECOND);
 
+        getVendingType();
 
 //        mEditFromTime.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -372,8 +387,10 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                TYPE_OF_VENDING = parent.getItemAtPosition(position).toString()
-                        .split("\\.")[0].toUpperCase().trim();
+//                TYPE_OF_VENDING = parent.getItemAtPosition(position).toString()
+//                        .split("\\.")[0].toUpperCase().trim();
+
+                TYPE_OF_VENDING = listVendingType.get(position).getId();
 
             }
 
@@ -558,6 +575,47 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
         setVendingDetails();
     }
 
+    private void getVendingType() {
+
+        progressDialog = CustomProgressDialog.getDialogue(PendingVendingDetailsActivity.this);
+        progressDialog.show();
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<VendingTypeResponse> call = apiservice.getVendingTypes(headers);
+
+        call.enqueue(new Callback<VendingTypeResponse>() {
+            @Override
+            public void onResponse(Call<VendingTypeResponse> call, Response<VendingTypeResponse> response) {
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    List<VendingTypeData> vendingTypeData = response.body().getData();
+
+                    if(vendingTypeData!=null){
+
+                        listVendingType=vendingTypeData;
+
+                        ArrayAdapter<VendingTypeData> arrayAdapter = new ArrayAdapter<VendingTypeData>(PendingVendingDetailsActivity.this, android.R.layout.simple_spinner_item, listVendingType);
+                        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mSpinnerItems.setAdapter(arrayAdapter);
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VendingTypeResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
 
 
     private void setActiveWeeks() {
@@ -1076,5 +1134,41 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.second, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home_menu:
+
+                AlertDialog.Builder builder =   builder = new AlertDialog.Builder(this);
+                builder.setMessage("Do you want to exit this survey ?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                finish();
+                                startActivity(new Intent(PendingVendingDetailsActivity.this, DashboardActivity.class));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Action for 'NO' Button
+                                dialog.cancel();
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
