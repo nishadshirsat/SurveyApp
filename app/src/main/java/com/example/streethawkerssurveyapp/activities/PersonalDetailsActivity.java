@@ -850,14 +850,19 @@ public class PersonalDetailsActivity extends MainActivity {
 //            return false;
 //        }
 //        else
-            if (mEditAadhar.getText().toString().trim().isEmpty()) {
-            mEditAadhar.setError("Enter Aadhar Number");
-            mEditAadhar.requestFocus();
-            return false;
-        } else if (mEditAadhar.getText().toString().trim().length() < 12) {
-            mEditAadhar.setError("Enter Correct Aadhar Number");
-            mEditAadhar.requestFocus();
-            return false;
+//       if (mEditAadhar.getText().toString().trim().isEmpty()) {
+//            mEditAadhar.setError("Enter Aadhar Number");
+//            mEditAadhar.requestFocus();
+//            return false;
+//        }
+
+//       else
+           if (!mEditAadhar.getText().toString().trim().isEmpty()) {
+               if (mEditAadhar.getText().toString().trim().length() < 12) {
+                   mEditAadhar.setError("Enter Correct Aadhar Number");
+                   mEditAadhar.requestFocus();
+                   return false;
+               }
         }
 
 
