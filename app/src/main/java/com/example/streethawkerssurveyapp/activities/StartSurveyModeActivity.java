@@ -183,6 +183,9 @@ public class StartSurveyModeActivity extends AppCompatActivity {
                         ApplicationConstant.SurveyId = response.body().getUriNumber();
                         PrefUtils.saveToPrefs(StartSurveyModeActivity.this, ApplicationConstant.URI_NO_, response.body().getUriNumber());
 
+                        ApplicationConstant.ISLOCALDB = false;
+
+
                         if (Control.trim().equals("START")){
                             startActivity(new Intent(StartSurveyModeActivity.this,PersonalDetailsActivity.class));
 

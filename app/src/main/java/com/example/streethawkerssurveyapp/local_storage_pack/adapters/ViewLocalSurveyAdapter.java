@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.database_pack.PersonalDetails;
+import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyDetailsActivity;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyData;
 
@@ -64,6 +65,10 @@ public class ViewLocalSurveyAdapter extends RecyclerView.Adapter<ViewLocalSurvey
     public void setList(List<PersonalDetails> allSurveyList) {
         this.allSurveyList = allSurveyList;
         notifyDataSetChanged();
+    }
+
+    public void setListner(UploadAndRefresh uploadAndRefresh) {
+        this.uploadAndRefresh = uploadAndRefresh;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

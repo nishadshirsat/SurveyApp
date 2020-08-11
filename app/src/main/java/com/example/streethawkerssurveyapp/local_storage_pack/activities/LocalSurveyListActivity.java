@@ -12,6 +12,9 @@ import android.view.View;
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.DashboardActivity;
+import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
+import com.example.streethawkerssurveyapp.activities.StartSurveyModeActivity;
+import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
@@ -31,6 +34,7 @@ import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
 import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
 import com.example.streethawkerssurveyapp.local_storage_pack.adapters.ViewLocalSurveyAdapter;
 import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
+import com.example.streethawkerssurveyapp.response_pack.OtherDocDetails;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
@@ -42,6 +46,8 @@ import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
@@ -54,6 +60,7 @@ import java.util.Map;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import io.sentry.core.protocol.App;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -78,6 +85,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
     private BankingDetails bankingData;
     private DocumentsData documentsDetails;
     private String OtherDocJson = "";
+    private List<OtherDocDetails> listOtherDoc = new ArrayList<>();
+    private int Count = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,6 +106,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         mRecycler_view.setLayoutManager(new LinearLayoutManager(this));
         viewSurveyAdapter = new ViewLocalSurveyAdapter(this);
         mRecycler_view.setAdapter(viewSurveyAdapter);
+        viewSurveyAdapter.setListner(this);
 
         getAllRoomData();
 
@@ -108,8 +118,20 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
     @Override
     public void uploadData(PersonalDetails surveyData) {
 
-        this.surveyData = surveyData;
-        GetSurveyUri();
+        if (!ApplicationConstant.isNetworkAvailable(LocalSurveyListActivity.this)) {
+
+            ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,  "No Internet Connection! Storing survey in local Database now.");
+
+
+        }else {
+
+            this.surveyData = surveyData;
+
+            progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
+            progressDialog.show();
+
+            getFamilyDetails();
+        }
 
 
     }
@@ -137,7 +159,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         protected void onPostExecute(List<PersonalDetails> personalDetails) {
             viewSurveyAdapter.setList(personalDetails);
 
-            getFamilyDetails();
 
         }
     }
@@ -164,7 +185,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         @Override
         protected void onPostExecute(List<FamilyDetails> familyDetails) {
 
-            if (!familyDetails.isEmpty()){
+            if (familyDetails!=null){
                 familyData = familyDetails.get(0);
 
             }
@@ -194,7 +215,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         @Override
         protected void onPostExecute(List<VendingDetails> vendingDetails) {
 
-            if (!vendingDetails.isEmpty()){
+            if (vendingDetails!=null){
                 vendingData = vendingDetails.get(0);
 
             }
@@ -225,7 +246,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         @Override
         protected void onPostExecute(List<BankingDetails> bankingDetails) {
 
-            if (!bankingDetails.isEmpty()){
+            if (bankingDetails!=null){
                 bankingData = bankingDetails.get(0);
 
             }
@@ -256,10 +277,12 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         @Override
         protected void onPostExecute(List<DocumentsData> documentsData) {
 
-            if (!documentsData.isEmpty()){
+            if (documentsData!=null){
                 documentsDetails = documentsData.get(0);
 
             }
+            GetSurveyUri();
+
         }
     }
 
@@ -271,9 +294,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
     }
 
     private void GetSurveyUri() {
-
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
 //        String UNiq_Id =  PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_,"");
 
@@ -287,9 +307,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<SurveyResponse> call, Response<SurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
-
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
@@ -297,10 +314,29 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         ApplicationConstant.SurveyId = response.body().getUriNumber();
                         PrefUtils.saveToPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_, response.body().getUriNumber());
 
-                        UploadVendorPhoto();
+
+                        if (surveyData.getPhoto_of_vendor()!=null){
+                            UploadVendorPhoto();
+
+                        }else  if (surveyData.getPhoto_of_vending_site()!=null){
+                            UploadVendingSitePhoto();
+
+                        }
+                        else {
+                            if (progressDialog != null && progressDialog.isShowing())
+                                progressDialog.dismiss();
+
+                            ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
+
+                                    "Vendor photo or vending site photo not found");
+
+                        }
 
 
                     } else {
+
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
 
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
@@ -308,6 +344,9 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     }
 
                 }else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
 
                     try {
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
@@ -334,8 +373,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
     private void UploadVendorPhoto() {
 
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
         File file1 = new File(surveyData.getPhoto_of_vendor());
 
@@ -383,14 +420,24 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     if (response.body().isStatus()) {
 
 
-                        if (progressDialog != null && progressDialog.isShowing())
-                            progressDialog.dismiss();
-
                         ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
                                 "Photo saved successfully");
 
-                        UploadVendingSitePhoto();
+                        if (surveyData.getPhoto_of_vending_site()!=null){
+                            UploadVendingSitePhoto();
 
+                        }else if (surveyData!=null){
+                            SendPersonalDetails();
+
+                        } else {
+                            if (progressDialog != null && progressDialog.isShowing())
+                                progressDialog.dismiss();
+
+                            ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
+
+                                    "personal details not found");
+
+                        }
 
                     } else {
                         if (progressDialog != null && progressDialog.isShowing())
@@ -429,8 +476,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
     private void UploadVendingSitePhoto() {
 
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
         File file1 = new File(surveyData.getPhoto_of_vending_site());
 
@@ -479,13 +524,22 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     if (response.body().isStatus()) {
 
 
-                        if (progressDialog != null && progressDialog.isShowing())
-                            progressDialog.dismiss();
-
                         ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
                                 "Vending Site Photo saved successfully");
 
-                        SendPersonalDetails();
+                        if (surveyData!=null){
+                            SendPersonalDetails();
+
+                        } else {
+                            if (progressDialog != null && progressDialog.isShowing())
+                                progressDialog.dismiss();
+
+                            ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
+
+                                    "personal details not found");
+
+                        }
+
 
 
                     } else {
@@ -524,9 +578,11 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
     }
 
     private void SendPersonalDetails() {
+        String AadharDetails = "";
 
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
+        if (surveyData.getAadhar_details_json() != null){
+            AadharDetails = surveyData.getAadhar_details_json();
+        }
 
         String UNiq_Id = "";
 
@@ -556,8 +612,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         RequestBody CATEGORY_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getCategory());
         RequestBody RESIDENTIAL_ADDRESS_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getResidential_address());
         RequestBody PERMENENT_ADDRESS_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getPermenent_address());
-        RequestBody AADHAR_DETAILS_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getAadhar_details());
-        RequestBody AADHAR_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getAadhar_number());
+        RequestBody AADHAR_DETAILS_ = RequestBody.create(MediaType.parse("multipart/form-data"),AadharDetails);
+        RequestBody AADHAR_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"),surveyData.getAadhar_number());
         RequestBody IS_CRIMINALCASE_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getIs_criminal_case());
         RequestBody CRIMINALCASE_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getCriminal_details_json());
         RequestBody ANNUAL_INCOME_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getAnnual_income());
@@ -603,8 +659,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
+
 
                 if (response.body() != null) {
 
@@ -616,10 +671,26 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
                                 "Personal Details saved successfully");
 
-                        UpdateFamilySurvey();
+                        if (familyData!=null){
+                            UpdateFamilySurvey();
+
+                        }else {
+
+                            if (progressDialog != null && progressDialog.isShowing())
+                                progressDialog.dismiss();
+
+                            ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                    "Response",
+                                    response.body().getMessage());
+
+                            DeledeEntryDetails();
+                        }
 
 
                     } else {
+
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
 
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
@@ -627,6 +698,9 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     }
 
                 } else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
 
                     try {
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
@@ -660,9 +734,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
         RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
-
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
 
         Map<String, String> headers = new HashMap<>();
@@ -698,8 +769,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
+
 
                 if (response.body() != null) {
 
@@ -709,10 +779,25 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
                                 "family Details saved successfully");
 
-                        UpdateVendingDetails();
+                        if (vendingData!=null){
+                            UpdateVendingDetails();
+
+                        }else {
+                            if (progressDialog != null && progressDialog.isShowing())
+                                progressDialog.dismiss();
+
+                            ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                    "Response",
+                                    response.body().getMessage());
+
+                            DeledeEntryDetails();
+                        }
 
 
                     } else {
+
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
 
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
@@ -720,7 +805,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     }
 
                 }else {
-
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
                     try {
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
@@ -745,8 +831,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
     private void UpdateVendingDetails() {
 
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
         String UNiq_Id = PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_, "");
 
@@ -784,21 +868,37 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
+
 
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
 
-
                         ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
                                 "Vending Details saved successfully");
 
-                        UploadBankDetailsSurvey();
+                        if (bankingData!=null){
+                            UploadBankDetailsSurvey();
+
+                        }else {
+
+                            if (progressDialog != null && progressDialog.isShowing())
+                                progressDialog.dismiss();
+
+                            ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                    "Response",
+                                    response.body().getMessage());
+
+                            DeledeEntryDetails();
+
+
+                        }
 
 
                     } else {
+
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
 
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
@@ -806,6 +906,9 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     }
 
                 } else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
 
                     try {
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
@@ -831,8 +934,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
     private void UploadBankDetailsSurvey() {
 
-        ProgressDialog progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
         String UNiq_Id = "";
 
@@ -875,8 +976,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
 
                 if (response.body() != null) {
 
@@ -888,15 +987,42 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
                        OtherDocJson =  documentsDetails.getOther_document_json();
 
-                       if (OtherDocJson.isEmpty()){
+                        if (documentsDetails!=null){
 
-                           UploadIdentityProof();
+                            if (OtherDocJson == null){
 
-                       }else {
-//                           UploadOtherDocs();
-                       }
+                                UploadIdentityProof();
+
+                            }else {
+
+                                try {
+                                    listOtherDoc  = new Gson().fromJson(OtherDocJson, new TypeToken<List<OtherDocDetails>>(){}.getType());
+
+//                                Count = listOtherDoc.size();
+                                    UploadOtherDocument();
+                                } catch (JsonSyntaxException e) {
+                                    e.printStackTrace();
+                                    ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                            "Response",
+                                            e.getMessage().toString());
+                                }
+                            }
+                        }else {
+
+                            if (progressDialog != null && progressDialog.isShowing())
+                                progressDialog.dismiss();
+
+                            DeledeEntryDetails();
+
+
+                        }
+
+
 
                     } else {
+
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
 
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
@@ -904,6 +1030,9 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     }
 
                 } else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
 
                     try {
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
@@ -933,9 +1062,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         File file_recording = new File(documentsDetails.getRecording());
 
         String UNiq_Id = PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_, "");
-
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
@@ -979,9 +1105,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
-
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
@@ -994,6 +1117,9 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
                     } else {
 
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
                         ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
                                 response.body().getMessage());
 
@@ -1002,6 +1128,9 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     }
 
                 } else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
 
                     try {
                         ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,
@@ -1035,8 +1164,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
         String UNiq_Id = PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_, "");
 
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
@@ -1095,9 +1222,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
-
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
@@ -1109,12 +1233,18 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
                     } else {
 
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
                                 response.body().getMessage());
                     }
 
                 } else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
 
                     try {
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
@@ -1144,9 +1274,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         File file_vending_history_back = new File(documentsDetails.getVending_history_proof_back());
 
         String UNiq_Id = PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_, "");
-
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
@@ -1209,8 +1336,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
 
                 if (response.body() != null) {
 
@@ -1224,12 +1349,18 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
                     } else {
 
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
                                 response.body().getMessage());
                     }
 
                 } else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
 
                     try {
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
@@ -1262,8 +1393,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
         String UNiq_Id = PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_, "");
 
-        progressDialog = CustomProgressDialog.getDialogue(LocalSurveyListActivity.this);
-        progressDialog.show();
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
@@ -1332,30 +1461,15 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             @Override
             public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
 
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
 
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(LocalSurveyListActivity.this);
-                        builder.setTitle("Document Details");
-                        builder.setMessage("Saved successfully");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                                startActivity(new Intent(LocalSurveyListActivity.this, DashboardActivity.class));
-                                finish();
 
-                            }
-                        });
+                        DeledeEntryDetails();
 
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.setCancelable(false);
-                        alertDialog.setCanceledOnTouchOutside(false);
-                        alertDialog.show();
+
 
 //                        ApplicationConstant.displayToastMessage(DocumentScanActivity.this,
 //                                "Vending Details saved successfully");
@@ -1363,12 +1477,18 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
                     } else {
 
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
                                 "Response",
                                 response.body().getMessage());
                     }
 
                 } else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
 
                     try {
                         ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
@@ -1393,4 +1513,168 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
     }
 
 
+    private void UploadOtherDocument() {
+
+        File OtherDocFile = new File(listOtherDoc.get(Count).getDocument());
+
+        String UNiq_Id = PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_, "");
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        RequestBody request_other_document =
+                RequestBody.create(MediaType.parse("image/png"), OtherDocFile);
+
+
+// MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body_other_document =
+                MultipartBody.Part.createFormData("document", OtherDocFile.getName(), request_other_document);
+
+
+
+//        MultipartBody.Part body_identity_back = null;
+//        if (IDENTITY_PROOF_BACK_PATH.trim().isEmpty()) {
+//            body_identity_back = null;
+//        } else {
+//
+//            body_identity_back = MultipartBody.Part.createFormData("identity_proof_documents_back", file_identity_back.getName(), request_identity_back);
+//
+//        }
+
+
+
+        String CORPORATION =   PrefUtils.getFromPrefs(LocalSurveyListActivity.this,ApplicationConstant.CORPORATION,"");
+        String ZONE =  PrefUtils.getFromPrefs(LocalSurveyListActivity.this,ApplicationConstant.ZONE,"");
+        String WARD =  PrefUtils.getFromPrefs(LocalSurveyListActivity.this,ApplicationConstant.WARD,"");
+
+        RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
+        RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
+        RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
+
+
+        RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
+        RequestBody OTHER_DOCUMENT_ = RequestBody.create(MediaType.parse("multipart/form-data"), listOtherDoc.get(Count).getDocument_type());
+
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.UploadOtherDocument(headers,
+                URI_NO_,
+                CORPORATION_,
+                ZONE_,
+                WARD_,
+                OTHER_DOCUMENT_,
+                body_other_document
+
+        );
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        Count++;
+                        if (Count<listOtherDoc.size()){
+                            UploadOtherDocument();
+                        }else {
+                            UploadIdentityProof();
+
+                        }
+
+
+                    } else {
+
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
+
+                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                } else {
+
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+    public void DeledeEntryDetails(){
+
+        new DeledeEntryDetailsTask(surveyDao).execute();
+
+    }
+
+    private class DeledeEntryDetailsTask extends AsyncTask<Void, Void, Boolean> {
+        SurveyDao surveyDao;
+
+        public DeledeEntryDetailsTask(SurveyDao surveyDao) {
+            this.surveyDao = surveyDao;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+
+            try {
+                surveyDao.deletePersonalDetailsRecord(surveyData);
+                surveyDao.deleteFamilyDetailsRecord(familyData);
+                surveyDao.deleteVendingDetailsRecord(vendingData);
+                surveyDao.deleteBankingDetailsRecord(bankingData);
+                surveyDao.deleteDocumentsDetailsRecord(documentsDetails);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isDeleted) {
+
+           if (isDeleted){
+               AlertDialog.Builder builder = new AlertDialog.Builder(LocalSurveyListActivity.this);
+               builder.setTitle("Local Survey");
+               builder.setMessage("Saved successfully to server");
+               builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialogInterface, int i) {
+                       dialogInterface.dismiss();
+
+                       getAllRoomData();
+
+                   }
+               });
+
+               AlertDialog alertDialog = builder.create();
+               alertDialog.setCancelable(false);
+               alertDialog.setCanceledOnTouchOutside(false);
+               alertDialog.show();
+           }
+
+        }
+    }
 }

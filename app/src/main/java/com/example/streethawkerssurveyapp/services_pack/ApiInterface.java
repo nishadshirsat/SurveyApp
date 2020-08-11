@@ -284,4 +284,13 @@ public interface ApiInterface {
             @HeaderMap Map<String, String> token
     );
 
+    @FormUrlEncoded
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> SendSuspendRemark(
+            @HeaderMap Map<String, String> token,
+            @Field("uri_number") String uri_number,
+            @Field("survey_status") String survey_status,
+            @Field("comments") String comments
+    );
+
 }

@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,7 +25,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
+import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
+import com.example.streethawkerssurveyapp.activities.VendorsFamDetailsActivity;
 import com.example.streethawkerssurveyapp.pending_survey.adapters.PendingSurveyAdapter;
+import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
+import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
@@ -37,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PendingSurveyActivity extends AppCompatActivity {
+public class PendingSurveyActivity extends AppCompatActivity implements PendingSurveyAdapter.RefreshlistListner {
 
     private EditText mEditAdharNo;
     private LinearLayout mLinearDate;
@@ -73,6 +81,7 @@ public class PendingSurveyActivity extends AppCompatActivity {
         mRecycler_view.setLayoutManager(new LinearLayoutManager(this));
         viewSurveyAdapter = new PendingSurveyAdapter(this);
         mRecycler_view.setAdapter(viewSurveyAdapter);
+        viewSurveyAdapter.setListner(PendingSurveyActivity.this);
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -579,5 +588,107 @@ public class PendingSurveyActivity extends AppCompatActivity {
         viewSurveyAdapter.setList(listupdated_user);
 
     }
+
+    @Override
+    public void refrehListwithAction(String URI) {
+
+        View viewRemark = getLayoutInflater().inflate(R.layout.layout_suspend_remark,null);
+
+        ImageView sImage_cancel = (ImageView) viewRemark.findViewById(R.id.image_cancel);
+        EditText sEditSuspendRemark = (EditText) viewRemark.findViewById(R.id.EditSuspendRemark);
+        Button  sTextSubmitRemark = (Button)viewRemark.findViewById(R.id.TextSubmitRemark);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(PendingSurveyActivity.this);
+
+        builder.setView(viewRemark);
+        final AlertDialog alertDialog = builder.create();
+
+        sImage_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+
+        sTextSubmitRemark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (sEditSuspendRemark.getText().toString().trim().isEmpty()){
+                    sEditSuspendRemark.setError("enter remark");
+                    sEditSuspendRemark.requestFocus();
+                }else {
+                    alertDialog.dismiss();
+                    SubmitSuspendRemark(sEditSuspendRemark.getText().toString().trim(),URI);
+                }
+            }
+        });
+
+        alertDialog.show();
+
+
+    }
+
+    private void SubmitSuspendRemark(String Remark,String URI) {
+
+        progressDialog = CustomProgressDialog.getDialogue(PendingSurveyActivity.this);
+        progressDialog.show();
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PendingSurveyActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.SendSuspendRemark(headers,URI,"-1",Remark);
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        ApplicationConstant.displayToastMessage(PendingSurveyActivity.this,
+                                response.body().getMessage());
+
+                        ViewAllSurvey();
+
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(PendingSurveyActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(PendingSurveyActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(PendingSurveyActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+
 
 }

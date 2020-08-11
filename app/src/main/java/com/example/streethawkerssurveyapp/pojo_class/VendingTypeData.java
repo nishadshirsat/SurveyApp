@@ -11,6 +11,11 @@ public class VendingTypeData {
     @Expose
     private String vendingType;
 
+    public VendingTypeData(String id, String vendingType) {
+        this.id = id;
+        this.vendingType = vendingType;
+    }
+
     public String getId() {
         return id;
     }

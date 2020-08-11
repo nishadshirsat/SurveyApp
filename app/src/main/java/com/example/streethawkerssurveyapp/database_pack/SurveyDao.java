@@ -50,6 +50,18 @@ public interface SurveyDao {
    @Delete
    void deletePersonalDetailsRecord(PersonalDetails personalDetails);
 
+   @Delete
+   void deleteVendingDetailsRecord(VendingDetails vendingDetails);
+
+   @Delete
+   void deleteFamilyDetailsRecord(FamilyDetails familyDetails);
+
+   @Delete
+   void deleteBankingDetailsRecord(BankingDetails bankingDetails);
+
+   @Delete
+   void deleteDocumentsDetailsRecord(DocumentsData documentsData);
+
 
 //
 //   @Query("SELECT * FROM pageinfo")

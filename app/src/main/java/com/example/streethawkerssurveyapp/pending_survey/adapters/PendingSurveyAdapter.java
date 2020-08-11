@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.StartSurveyModeActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyDetailsActivity;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PendingSurveyAdapter extends RecyclerView.Adapter<PendingSurveyAdapter.MyViewHolder> {
     private Context context;
     private List<ViewSurveyData> allSurveyList = new ArrayList<>();
+    private RefreshlistListner refreshlistListner;
 
     public PendingSurveyAdapter(Context context) {
         this.context = context;
@@ -66,6 +69,13 @@ public class PendingSurveyAdapter extends RecyclerView.Adapter<PendingSurveyAdap
             }
         });
 
+        holder.Btn_Suspend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshlistListner.refrehListwithAction(SurveyData.getUriNumber());
+            }
+        });
+
     }
 
     @Override
@@ -76,6 +86,10 @@ public class PendingSurveyAdapter extends RecyclerView.Adapter<PendingSurveyAdap
     public void setList(List<ViewSurveyData> allSurveyList) {
         this.allSurveyList = allSurveyList;
         notifyDataSetChanged();
+    }
+
+    public void setListner(RefreshlistListner refreshlistListner) {
+        this.refreshlistListner = refreshlistListner;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -92,6 +106,7 @@ public class PendingSurveyAdapter extends RecyclerView.Adapter<PendingSurveyAdap
         private TextView mTextCategory;
         private TextView mTextArea;
         private TextView mTextStatus;
+        private Button Btn_Suspend;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,7 +124,13 @@ public class PendingSurveyAdapter extends RecyclerView.Adapter<PendingSurveyAdap
             mTextCategory = (TextView) itemView.findViewById(R.id.TextCategory);
             mTextArea = (TextView) itemView.findViewById(R.id.TextArea);
             mTextStatus = (TextView) itemView.findViewById(R.id.TextStatus);
+            Btn_Suspend = (Button) itemView.findViewById(R.id.Btn_Suspend);
 
         }
+    }
+
+    public interface RefreshlistListner{
+
+        void refrehListwithAction(String URI);
     }
 }

@@ -612,6 +612,9 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<VendingTypeResponse> call, Throwable t) {
 
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
             }
         });
 

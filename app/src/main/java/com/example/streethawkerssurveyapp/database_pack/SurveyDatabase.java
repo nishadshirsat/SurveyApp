@@ -11,7 +11,7 @@ import io.sentry.core.protocol.User;
         FamilyDetails.class,
         VendingDetails.class,
         BankingDetails.class,
-        DocumentsData.class},version = 3)
+        DocumentsData.class},version = 1)
 public abstract class SurveyDatabase extends RoomDatabase {
 
     public abstract SurveyDao surveyDao();

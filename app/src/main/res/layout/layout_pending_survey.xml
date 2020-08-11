@@ -208,6 +208,16 @@
                 android:textColor="@color/orange"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/Btn_Suspend"
+                android:layout_width="wrap_content"
+                android:layout_gravity="right"
+                android:background="@color/colorPrimary"
+                android:text="Suspend"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_height="35dp"/>
+
 
 
         </LinearLayout>

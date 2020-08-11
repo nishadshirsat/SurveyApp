@@ -275,7 +275,13 @@ public class PersonalDetailsActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: " + ApplicationConstant.SurveyId);
+
+        if (!ApplicationConstant.ISLOCALDB) {
+            setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+        }else {
+            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Survey Status","This survey will save locally");
+        }
 
         try {
             SCANRESULT = getIntent().getExtras().getString("SCANRESULT");
@@ -2403,7 +2409,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
         builder.setTitle("Personal Details");
-        builder.setMessage("Saved successfully in local db");
+        builder.setMessage("Survey saved locally");
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

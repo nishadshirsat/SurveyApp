@@ -163,7 +163,11 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+        if (!ApplicationConstant.ISLOCALDB) {
+            setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+        }
 
         surveyDatabase = SurveyDatabase.getDatabase(VendingDetailsActivity.this);
         surveyDao = surveyDatabase.surveyDao();
@@ -631,6 +635,34 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<VendingTypeResponse> call, Throwable t) {
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+//                ApplicationConstant.displayToastMessage(VendingDetailsActivity.this,t.getMessage().toString());
+
+                List<VendingTypeData> vendingTypeData = new ArrayList<>();
+
+                VendingTypeData  TypeData1 = new VendingTypeData("1","Food/ Snack with gas cylinder/ fire");
+                VendingTypeData  TypeData2 = new VendingTypeData("2","Food/ Snack without gas cylinder/ fire");
+                VendingTypeData  TypeData3 = new VendingTypeData("3","Fresh Fruits/Vegetables/Perishables");
+                VendingTypeData  TypeData4 = new VendingTypeData("4","Electronic Items");
+                VendingTypeData  TypeData5 = new VendingTypeData("5","Others");
+
+                vendingTypeData.add(TypeData1);
+                vendingTypeData.add(TypeData2);
+                vendingTypeData.add(TypeData3);
+                vendingTypeData.add(TypeData4);
+                vendingTypeData.add(TypeData5);
+
+                if(vendingTypeData!=null){
+
+                    listVendingType=vendingTypeData;
+
+                    ArrayAdapter<VendingTypeData> arrayAdapter = new ArrayAdapter<VendingTypeData>(VendingDetailsActivity.this, android.R.layout.simple_spinner_item, listVendingType);
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSpinnerItems.setAdapter(arrayAdapter);
+
+                }
 
             }
         });
@@ -1010,7 +1042,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(VendingDetailsActivity.this);
         builder.setTitle("Vending Details");
-        builder.setMessage("Saved successfully in local db");
+        builder.setMessage("Survey saved locally");
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

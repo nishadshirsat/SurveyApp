@@ -157,7 +157,12 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+        if (!ApplicationConstant.ISLOCALDB) {
+            setTitle("URI NO: "+ApplicationConstant.SurveyId);
+
+        }
+
 
         surveyDatabase = SurveyDatabase.getDatabase(DocumentsScanActivity.this);
         surveyDao = surveyDatabase.surveyDao();
@@ -1794,7 +1799,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DocumentsScanActivity.this);
         builder.setTitle("Document Details");
-        builder.setMessage("Saved successfully in local db");
+        builder.setMessage("Survey saved locally");
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

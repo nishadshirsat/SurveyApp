@@ -47,6 +47,7 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
         holder.mTextZone.setText("Zone : "+SurveyData.getZone());
         holder.mTextCategory.setText("Category : "+SurveyData.getCategory());
         holder.mTextArea.setText("Area : "+SurveyData.getArea());
+//        holder.TextRemark.setText("Remark : "+SurveyData.getS());
 
         holder.mCardSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +84,7 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
         private TextView mTextCategory;
         private TextView mTextArea;
         private TextView mTextStatus;
+        private TextView TextRemark;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +102,7 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
             mTextCategory = (TextView) itemView.findViewById(R.id.TextCategory);
             mTextArea = (TextView) itemView.findViewById(R.id.TextArea);
             mTextStatus = (TextView) itemView.findViewById(R.id.TextStatus);
+            TextRemark = (TextView) itemView.findViewById(R.id.TextRemark);
 
         }
     }
