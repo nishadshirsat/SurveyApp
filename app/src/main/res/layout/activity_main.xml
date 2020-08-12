@@ -90,18 +90,21 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1.a"
+                                android:text="* 1.a"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
+
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="8dp"
-                                android:text="Photo of the street vendor/Hawker"
+                                android:text="Photo of the street vendor/Hawker "
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
+
+
 
                         </LinearLayout>
 
@@ -142,7 +145,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="8dp"
-                                android:text="Photo of Vending Site"
+                                android:text="* Photo of Vending Site"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -183,7 +186,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1.b"
+                                android:text="* 1.b"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -270,7 +273,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="2."
+                                android:text="* 2."
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -563,7 +566,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="6."
+                                android:text="* 6."
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -626,7 +629,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="7.a"
+                                android:text="* 7.a"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -713,7 +716,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="7.b"
+                                android:text="* 7.b"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -964,7 +967,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="9."
+                                android:text="* 9."
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1027,7 +1030,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10."
+                                android:text="* 10."
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1087,7 +1090,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="11.a"
+                                android:text="* 11.a"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1221,7 +1224,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="11.b"
+                                android:text="* 11.b"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1356,7 +1359,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="12."
+                                android:text="* 12."
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1581,7 +1584,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="13.a."
+                                android:text="* 13.a."
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 

@@ -77,10 +77,12 @@ public class LoginFragment extends Fragment {
         if (Flag_Remember.equals("true")) {
             mEditUsername.setText(userName);
             mEditPassword.setText(passWord);
-            mCheck_remember.setChecked(true);
 
-            mContext.startActivity(new Intent(mContext, DashboardActivity.class));
+            if (!userName.trim().isEmpty() && !passWord.trim().isEmpty()){
+                mCheck_remember.setChecked(true);
 
+                mContext.startActivity(new Intent(mContext, DashboardActivity.class));
+            }
 
         } else {
             mCheck_remember.setChecked(false);

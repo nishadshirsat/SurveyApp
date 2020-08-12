@@ -604,6 +604,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSpinnerItems.setAdapter(arrayAdapter);
 
+                        setVendigType();
+
                     }
 
                 }
@@ -617,6 +619,20 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void setVendigType() {
+
+        if (SingleSurveyData.getTypeOfVending()!=null){
+            for (int i=0;i<listVendingType.size();i++){
+
+                if (SingleSurveyData.getTypeOfVending().trim().equals(listVendingType.get(i).getId().trim())){
+                    mSpinnerItems.setSelection(i);
+                }
+
+            }
+        }
 
     }
 
@@ -940,49 +956,49 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
     private void setVendingDetails() {
 
-        if (SingleSurveyData.getTypeOfVending()!=null){
-            if (mSpinnerItems.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(0);
-            }else if (mSpinnerItems.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(1);
-            }else if (mSpinnerItems.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(2);
-            }else if (mSpinnerItems.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(3);
-            }else if (mSpinnerItems.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(4);
-            }else if (mSpinnerItems.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(5);
-            }
-            else if (mSpinnerItems.getItemAtPosition(6).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(6);
-            }
-            else if (mSpinnerItems.getItemAtPosition(7).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(7);
-            }
-            else if (mSpinnerItems.getItemAtPosition(8).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(8);
-            }
-            else if (mSpinnerItems.getItemAtPosition(9).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(9);
-            }
-            else if (mSpinnerItems.getItemAtPosition(10).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(10);
-            }
-            else if (mSpinnerItems.getItemAtPosition(11).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(11);
-            }
-            else if (mSpinnerItems.getItemAtPosition(12).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(12);
-            }
-            else if (mSpinnerItems.getItemAtPosition(13).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(13);
-            }
-            else if (mSpinnerItems.getItemAtPosition(14).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
-                mSpinnerItems.setSelection(14);
-            }
-
-        }
+//        if (SingleSurveyData.getTypeOfVending()!=null){
+//            if (mSpinnerItems.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(0);
+//            }else if (mSpinnerItems.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(1);
+//            }else if (mSpinnerItems.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(2);
+//            }else if (mSpinnerItems.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(3);
+//            }else if (mSpinnerItems.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(4);
+//            }else if (mSpinnerItems.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(5);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(6).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(6);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(7).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(7);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(8).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(8);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(9).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(9);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(10).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(10);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(11).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(11);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(12).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(12);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(13).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(13);
+//            }
+//            else if (mSpinnerItems.getItemAtPosition(14).toString().trim().contains(SingleSurveyData.getTypeOfVending().toLowerCase().trim())){
+//                mSpinnerItems.setSelection(14);
+//            }
+//
+//        }
 
 
         mEditVendingSite.setText(SingleSurveyData.getNameOfVendingSite());
