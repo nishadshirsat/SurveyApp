@@ -71,7 +71,6 @@ public class LoginFragment extends Fragment {
         Flag_Remember = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.FlagRemember, "");
         userName = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserName, "");
         passWord = PrefUtils.getFromPrefs(getActivity(), ApplicationConstant.USERDETAILS.UserPassword, "");
-
         onClickListners();
 
         if (Flag_Remember.equals("true")) {
