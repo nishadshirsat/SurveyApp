@@ -1260,7 +1260,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
             }
 
@@ -1473,6 +1472,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
                     if (response.body().isStatus()) {
 
+                        if (progressDialog != null && progressDialog.isShowing())
+                            progressDialog.dismiss();
 
                         DeledeEntryDetails();
 
