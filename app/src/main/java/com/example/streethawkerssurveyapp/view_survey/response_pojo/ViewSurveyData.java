@@ -45,6 +45,9 @@ public class ViewSurveyData implements Serializable {
 	@SerializedName("suveyor_id")
 	private int suveyorId;
 
+	@SerializedName("comments")
+	private String comments;
+
 	public void setArea(String area){
 		this.area = area;
 	}
@@ -147,6 +150,14 @@ public class ViewSurveyData implements Serializable {
 
 	public int getSuveyorId(){
 		return suveyorId;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 	@Override

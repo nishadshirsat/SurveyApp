@@ -1,15 +1,25 @@
 package com.example.streethawkerssurveyapp.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +34,8 @@ import com.example.streethawkerssurveyapp.suspended_survey.avtivities.SuspendedS
 import com.example.streethawkerssurveyapp.utils.GetLocation;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyActivity;
+
+import java.util.Locale;
 
 public class DashboardActivity extends MainActivity {
 
@@ -143,6 +155,8 @@ public class DashboardActivity extends MainActivity {
 
     }
 
+
+
     private void setData() {
 
         String Name = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.Name, "");
@@ -229,8 +243,60 @@ public class DashboardActivity extends MainActivity {
                 startActivity(new Intent(DashboardActivity.this, LoginActivity.class));
                 finish();
                 return true;
+
+            case R.id.language_menu:
+
+                View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
+                RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
+                RadioButton RadioHindi=view1.findViewById(R.id.RadioHindi);
+                Button BtnDone=view1.findViewById(R.id.BtnDone);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+
+                final AlertDialog alertDialog = builder.create();
+
+                alertDialog.setView(view1);
+                alertDialog.getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+//                boolean checked = ((RadioButton) view1).isChecked();
+
+                BtnDone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+//                        if(RadioHindi.isChecked()){
+//                            setApplicationLocale("hi");
+//                        }else{
+//                            setApplicationLocale("en");
+//                        }
+                        alertDialog.dismiss();
+                    }
+                });
+
+
+                alertDialog.show();
+
+
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setApplicationLocale(String hi) {
+
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(new Locale(hi.toLowerCase()));
+        } else {
+            config.locale = new Locale(hi.toLowerCase());
+        }
+        resources.updateConfiguration(config, dm);
+
     }
 
     @Override

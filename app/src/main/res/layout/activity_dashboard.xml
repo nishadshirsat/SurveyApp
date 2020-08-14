@@ -286,9 +286,9 @@
                                 android:id="@+id/TextSurvey"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="New Survey"
                                 android:layout_marginTop="10dp"
                                 android:textStyle="bold"
+                                android:text="New Survey"
                                 android:textSize="16sp"
                                 android:textColor="@color/colorAccent"/>
 

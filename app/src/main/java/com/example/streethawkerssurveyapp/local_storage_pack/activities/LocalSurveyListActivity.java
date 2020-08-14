@@ -120,7 +120,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
         if (!ApplicationConstant.isNetworkAvailable(LocalSurveyListActivity.this)) {
 
-            ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,  "No Internet Connection! Storing survey in local Database now.");
+            ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,  "Netwrok Issue !","No Internet Connection! Enable internet to upload survey");
 
 
         }else {
