@@ -15,7 +15,7 @@
     <string-array name="vehicals">
         <item>Pucca</item>
         <item>Kuchha</item>
-        <item> Metallic cycle cart</item>
+        <item>Metallic cycle cart</item>
         <item>other</item>
     </string-array>
 
@@ -104,7 +104,6 @@
         <item>WOMEN</item>
         <item>WIDOW</item>
         <item>MINORITY</item>
-        <item>OTHERS</item>
         <item>PERSON WITH DISABILITIES</item>
         <item>EX-SERVICEMEN</item>
         <item>OTHERS</item>

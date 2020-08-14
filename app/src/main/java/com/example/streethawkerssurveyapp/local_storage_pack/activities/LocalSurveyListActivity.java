@@ -393,8 +393,14 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_fhoto =
-                MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
+        MultipartBody.Part body_fhoto = null;
+        if (surveyData.getPhoto_of_vendor().trim().isEmpty()) {
+            body_fhoto = null;
+        } else {
+
+            body_fhoto =
+                    MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
+        }
 
         RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 
@@ -496,8 +502,16 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_fhoto =
-                MultipartBody.Part.createFormData("photo_of_vendor_site", file1.getName(), request_photo);
+
+        MultipartBody.Part body_fhoto = null;
+        if (surveyData.getPhoto_of_vending_site().trim().isEmpty()) {
+            body_fhoto = null;
+        } else {
+
+            body_fhoto =
+                    MultipartBody.Part.createFormData("photo_of_vendor_site", file1.getName(), request_photo);
+        }
+
 
         RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 
@@ -1184,9 +1198,16 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_identity_front =
-                MultipartBody.Part.createFormData("identity_proof_documents_front", file_identity_front.getName(), request_identity_front);
 
+        MultipartBody.Part body_identity_front = null;
+        if (documentsDetails.getIdentity_proof_front().trim().isEmpty()) {
+            body_identity_front = null;
+        } else {
+
+            body_identity_front =
+                    MultipartBody.Part.createFormData("identity_proof_documents_front", file_identity_front.getName(), request_identity_front);
+
+        }
 
 
         MultipartBody.Part body_identity_back = null;
@@ -1536,19 +1557,16 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_other_document =
-                MultipartBody.Part.createFormData("document", OtherDocFile.getName(), request_other_document);
 
+        MultipartBody.Part body_other_document = null;
+        if (listOtherDoc.get(Count).getDocument().trim().isEmpty()) {
+            body_other_document = null;
+        } else {
 
+            body_other_document =
+                    MultipartBody.Part.createFormData("document", OtherDocFile.getName(), request_other_document);
 
-//        MultipartBody.Part body_identity_back = null;
-//        if (IDENTITY_PROOF_BACK_PATH.trim().isEmpty()) {
-//            body_identity_back = null;
-//        } else {
-//
-//            body_identity_back = MultipartBody.Part.createFormData("identity_proof_documents_back", file_identity_back.getName(), request_identity_back);
-//
-//        }
+        }
 
 
 

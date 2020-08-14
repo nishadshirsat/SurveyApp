@@ -1157,12 +1157,19 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_identity_front =
-                MultipartBody.Part.createFormData("identity_proof_documents_front", file_identity_front.getName(), request_identity_front);
+
+        MultipartBody.Part body_identity_front = null;
+        if (IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
+            body_identity_front = null;
+        } else {
+
+            body_identity_front =
+                    MultipartBody.Part.createFormData("identity_proof_documents_front", file_identity_front.getName(), request_identity_front);
+
+        }
 
 
-
-        MultipartBody.Part body_identity_back = null;
+   MultipartBody.Part body_identity_back = null;
         if (IDENTITY_PROOF_BACK_PATH.trim().isEmpty()) {
             body_identity_back = null;
         } else {
@@ -1262,20 +1269,17 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_other_document =
-                MultipartBody.Part.createFormData("document", OtherDocFile.getName(), request_other_document);
 
 
+        MultipartBody.Part body_other_document = null;
+        if (OTHER_DOCUMENT_PATH.trim().isEmpty()) {
+            body_other_document = null;
+        } else {
 
-//        MultipartBody.Part body_identity_back = null;
-//        if (IDENTITY_PROOF_BACK_PATH.trim().isEmpty()) {
-//            body_identity_back = null;
-//        } else {
-//
-//            body_identity_back = MultipartBody.Part.createFormData("identity_proof_documents_back", file_identity_back.getName(), request_identity_back);
-//
-//        }
+            body_other_document =
+                    MultipartBody.Part.createFormData("document", OtherDocFile.getName(), request_other_document);
 
+        }
 
 
         String CORPORATION =   PrefUtils.getFromPrefs(DocumentsScanActivity.this,ApplicationConstant.CORPORATION,"");

@@ -991,7 +991,7 @@ public class PersonalDetailsActivity extends MainActivity {
 //            return false;
 //        } else
 
-            if (photoPath.isEmpty()) {
+        if (photoPath.isEmpty()) {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Capture profile photo");
 
             return false;
@@ -1474,8 +1474,17 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_fhoto =
-                MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
+
+
+        MultipartBody.Part body_fhoto = null;
+        if (photoPath.trim().isEmpty()) {
+            body_fhoto = null;
+        } else {
+
+            body_fhoto =
+                    MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
+        }
+
 
         RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 
@@ -1589,8 +1598,17 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_fhoto =
-                MultipartBody.Part.createFormData("photo_of_vendor_site", file1.getName(), request_photo);
+
+        MultipartBody.Part body_fhoto = null;
+        if (VindingPhotoPath.trim().isEmpty()) {
+            body_fhoto = null;
+        } else {
+
+            body_fhoto =
+                    MultipartBody.Part.createFormData("photo_of_vendor_site", file1.getName(), request_photo);
+        }
+
+
 
         RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 

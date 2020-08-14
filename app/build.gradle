@@ -27,11 +27,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.streethawkerssurveyapp"
+        applicationId "com.streethawkerssurveyapp"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.3"
+        versionCode 1
+        versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
