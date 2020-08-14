@@ -28,7 +28,7 @@ public class ViewSurveyBody implements Serializable {
 	private String lastPageUrl;
 
 	@SerializedName("next_page_url")
-	private Object nextPageUrl;
+	private String nextPageUrl;
 
 	@SerializedName("from")
 	private String from;
@@ -37,10 +37,12 @@ public class ViewSurveyBody implements Serializable {
 	private String to;
 
 	@SerializedName("prev_page_url")
-	private Object prevPageUrl;
+	private String prevPageUrl;
 
 	@SerializedName("current_page")
 	private String currentPage;
+
+
 
 	public void setFirstPageUrl(String firstPageUrl){
 		this.firstPageUrl = firstPageUrl;
@@ -98,11 +100,11 @@ public class ViewSurveyBody implements Serializable {
 		return lastPageUrl;
 	}
 
-	public void setNextPageUrl(Object nextPageUrl){
+	public void setNextPageUrl(String nextPageUrl){
 		this.nextPageUrl = nextPageUrl;
 	}
 
-	public Object getNextPageUrl(){
+	public String getNextPageUrl(){
 		return nextPageUrl;
 	}
 
@@ -122,11 +124,11 @@ public class ViewSurveyBody implements Serializable {
 		return to;
 	}
 
-	public void setPrevPageUrl(Object prevPageUrl){
+	public void setPrevPageUrl(String prevPageUrl){
 		this.prevPageUrl = prevPageUrl;
 	}
 
-	public Object getPrevPageUrl(){
+	public String getPrevPageUrl(){
 		return prevPageUrl;
 	}
 
@@ -137,6 +139,8 @@ public class ViewSurveyBody implements Serializable {
 	public String getCurrentPage(){
 		return currentPage;
 	}
+
+
 
 	@Override
  	public String toString(){

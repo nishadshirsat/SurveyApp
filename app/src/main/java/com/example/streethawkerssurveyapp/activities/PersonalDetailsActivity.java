@@ -2461,7 +2461,6 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private String generateId() {
 
-
         String SurveyId = "";
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmssSS");

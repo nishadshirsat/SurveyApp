@@ -47,7 +47,7 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
         holder.mTextZone.setText("Zone : "+SurveyData.getZone());
         holder.mTextCategory.setText("Category : "+SurveyData.getCategory());
         holder.mTextArea.setText("Area : "+SurveyData.getArea());
-//        holder.TextRemark.setText("Remark : "+SurveyData.getS());
+        holder.TextRemark.setText("Remark : "+SurveyData.getComments());
 
         holder.mCardSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
