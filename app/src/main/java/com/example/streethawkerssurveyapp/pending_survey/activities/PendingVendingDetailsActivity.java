@@ -152,6 +152,9 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
         bindView();
 
+        mBtnNext.setVisibility(View.GONE);
+
+
         SingleSurveyData = (SingleSurveyDetails) getIntent().getSerializableExtra("SurveyData");
 
         ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PendingVendingDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
@@ -244,7 +247,9 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+//                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, 0));
+
                     }
                 }, hour, minute, false);
 
@@ -266,7 +271,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+//                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, 0));
                     }
                 }, hour, minute, false);
 
@@ -288,7 +294,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+//                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, 0));
                     }
                 }, hour, minute, false);
 
@@ -310,7 +317,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+//                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, 0));
                     }
                 }, hour, minute, false);
 
@@ -1065,8 +1073,10 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
         if (SingleSurveyData.getApplicantRecognizedAsAStreetVendor()!=null){
 
-            if (SingleSurveyData.getTehbazariAvailable().trim().equals("No")){
+            if (SingleSurveyData.getApplicantRecognizedAsAStreetVendor().trim().equals("No")){
+
                 mRadioN.setChecked(true);
+
             }else {
                 mRadioY.setChecked(true);
 
@@ -1076,8 +1086,6 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
             mRadioN.setChecked(true);
 
         }
-
-
 
             if (SingleSurveyData.getTypeOfStructure()!=null){
             if (mSpinnerVehical.getItemAtPosition(0).toString().trim().contains(SingleSurveyData.getTypeOfStructure().trim())){
@@ -1092,7 +1100,11 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
         }
 
-   }
+        mBtnNext.setVisibility(View.VISIBLE);
+
+
+
+    }
 
     private void setDays(String days) {
 

@@ -5,6 +5,7 @@ package com.example.streethawkerssurveyapp.activities;
         import android.content.pm.PackageManager;
         import android.net.Uri;
         import android.os.Bundle;
+        import android.os.CountDownTimer;
         import android.util.SparseArray;
         import android.view.SurfaceHolder;
         import android.view.SurfaceView;
@@ -35,7 +36,6 @@ public class ScanQrForAadharActivity extends AppCompatActivity {
     String intentData = "";
     boolean isEmail = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +45,8 @@ public class ScanQrForAadharActivity extends AppCompatActivity {
 
     private void initViews() {
         surfaceView = findViewById(R.id.surfaceView);
+
+        resendOtpTimer();
 
     }
 
@@ -124,4 +126,25 @@ public class ScanQrForAadharActivity extends AppCompatActivity {
         super.onResume();
         initialiseDetectorsAndSources();
     }
+
+    private void resendOtpTimer() {
+
+        new CountDownTimer(15000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                //here you can have your logic to set text to edittext
+            }
+
+            public void onFinish() {
+
+                Intent intent = new Intent();
+                intent.putExtra("SCANDATA","Retry");
+                setResult(RESULT_OK,intent);
+                finish();
+
+            }
+
+        }.start();
+    }
+
 }

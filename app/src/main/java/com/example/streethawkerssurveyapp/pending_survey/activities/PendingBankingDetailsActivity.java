@@ -65,6 +65,9 @@ public class PendingBankingDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_details);
         bindViews();
 
+        mBtnNext.setVisibility(View.GONE);
+
+
         SingleSurveyData = (SingleSurveyDetails) getIntent().getSerializableExtra("SurveyData");
 
         ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PendingBankingDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
@@ -116,23 +119,23 @@ public class PendingBankingDetailsActivity extends AppCompatActivity {
 
     private boolean validate() {
 
-        if (mEditAccNo.getText().toString().trim().isEmpty()) {
-            mEditAccNo.setError("Enter Account No");
-            mEditAccNo.requestFocus();
-            return false;
-        } else if (mEditBankName.getText().toString().trim().isEmpty()) {
-            mEditBankName.setError("Enter Bank Name");
-            mEditBankName.requestFocus();
-            return false;
-        } else if (mEditBranchName.getText().toString().trim().isEmpty()) {
-            mEditBranchName.setError("Enter Branch Name");
-            mEditBranchName.requestFocus();
-            return false;
-        } else if (mEditIfscCode.getText().toString().trim().isEmpty()) {
-            mEditIfscCode.setError("Enter IFSC Code");
-            mEditIfscCode.requestFocus();
-            return false;
-        }
+//        if (mEditAccNo.getText().toString().trim().isEmpty()) {
+//            mEditAccNo.setError("Enter Account No");
+//            mEditAccNo.requestFocus();
+//            return false;
+//        } else if (mEditBankName.getText().toString().trim().isEmpty()) {
+//            mEditBankName.setError("Enter Bank Name");
+//            mEditBankName.requestFocus();
+//            return false;
+//        } else if (mEditBranchName.getText().toString().trim().isEmpty()) {
+//            mEditBranchName.setError("Enter Branch Name");
+//            mEditBranchName.requestFocus();
+//            return false;
+//        } else if (mEditIfscCode.getText().toString().trim().isEmpty()) {
+//            mEditIfscCode.setError("Enter IFSC Code");
+//            mEditIfscCode.requestFocus();
+//            return false;
+//        }
 
         return true;
     }
@@ -268,6 +271,9 @@ public class PendingBankingDetailsActivity extends AppCompatActivity {
         mEditBranchName.setText(SingleSurveyData.getBankBranchName());
         mEditAccNo.setText(SingleSurveyData.getBankAccountNumber());
         mEditIfscCode.setText(SingleSurveyData.getBankIfsc());
+
+        mBtnNext.setVisibility(View.VISIBLE);
+
     }
 
     @Override

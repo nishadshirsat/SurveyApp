@@ -111,6 +111,9 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
 
         bindView();
 
+        mBtnNext.setVisibility(View.GONE);
+
+
         ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PendingVendorsFamDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
 
 
@@ -203,7 +206,6 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
                     }
                 });
 
-
                 alertDialog.show();
 
             }
@@ -291,13 +293,10 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
                             alertDialog.dismiss();
 
                         }
-
                     }
                 });
 
-
                 alertDialog.show();
-
 
             }
         });
@@ -307,7 +306,6 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                     onBackPressed();
-
 
             }
         });
@@ -333,20 +331,16 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
 
                     String JSONObject_Family = gson.toJson(listFamily);
 
-//                ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"",JSONObject_Family);
-
                     if(validate()){
                         UpdateFamilySurvey();
-
                     }
-
                 }
-
             }
         });
 
-        setFamilyData();
 
+
+        setFamilyData();
 
     }
 
@@ -387,6 +381,8 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
             mRadioN.setChecked(true);
 
         }
+
+        mBtnNext.setVisibility(View.VISIBLE);
 
     }
 
@@ -470,6 +466,7 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
 //            mEditRent.requestFocus();
 //            return false;
 //        }
+
         else if (LinearYes.getVisibility() == View.VISIBLE) {
             if (mEditName.getText().toString().trim().isEmpty()) {
                 mEditName.setError("Enter Name");

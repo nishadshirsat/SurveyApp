@@ -30,7 +30,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.DashboardActivity;
-import com.example.streethawkerssurveyapp.activities.DocumentsScanActivity;
 import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
@@ -149,6 +148,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_document_scan);
 
         bindView();
+
+        BtnNext.setVisibility(View.GONE);
+
 
         SingleSurveyData = (SingleSurveyDetails) getIntent().getSerializableExtra("SurveyData");
 
@@ -360,7 +362,6 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                             LinearFour.setVisibility(View.GONE);
                             LinearThree.setVisibility(View.VISIBLE);
 
-                            stopService(new Intent(PendingDocumentsScanActivity.this, AudioRecordService.class));
 
                         }
 
@@ -375,6 +376,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                     LinearTwo.setVisibility(View.GONE);
                     LinearFour.setVisibility(View.VISIBLE);
 
+                    stopService(new Intent(PendingDocumentsScanActivity.this, AudioRecordService.class));
 
                 }
 //                else  if (TehBazari_Doc_PATH.trim().isEmpty()){
@@ -423,15 +425,12 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
             return false;
         }else
-
             if (ImgIdentityProofFront.getDrawable().getConstantState() != getResources().getDrawable( R.drawable.scanner).getConstantState()){
                 if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
                     ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Identity Proof Type");
                     return false;
                 }
         }
-
-
 
 
         return true;
@@ -918,7 +917,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                 CORPORATION_,
                 ZONE_,
                 WARD_,
-                SURVEY_STATUS,
+//                SURVEY_STATUS,
                 COMMENTS_,
                 body_tehbazari_document,
                 body_acknowlegement,
@@ -937,23 +936,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     if (response.body().isStatus()) {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(PendingDocumentsScanActivity.this);
-                        builder.setTitle("Document Details");
-                        builder.setMessage("Saved successfully");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                                startActivity(new Intent(PendingDocumentsScanActivity.this, DashboardActivity.class));
-                                finish();
 
-                            }
-                        });
+                        SubmitSuspendRemark(UNiq_Id);
 
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.setCancelable(false);
-                        alertDialog.setCanceledOnTouchOutside(false);
-                        alertDialog.show();
 
 //                        ApplicationConstant.displayToastMessage(DocumentScanActivity.this,
 //                                "Vending Details saved successfully");
@@ -1465,7 +1450,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 //                startActivityForResult(intent, REQUEST_CODE);
 //            } catch (Exception e) {
 //                e.printStackTrace();
-//                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", e.getMessage().toString().trim());
+//                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", e.getMessage().toString().trim());
 //            }
 
         }
@@ -1712,6 +1697,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         EditComments.setText(SingleSurveyData.getComments());
 
+        BtnNext.setVisibility(View.VISIBLE);
+
     }
 
 
@@ -1909,4 +1896,79 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void SubmitSuspendRemark(String URI) {
+
+        progressDialog = CustomProgressDialog.getDialogue(PendingDocumentsScanActivity.this);
+        progressDialog.show();
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.SendSurveyStatus(headers,URI,"1");
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(PendingDocumentsScanActivity.this);
+                        builder.setTitle("Document Details");
+                        builder.setMessage("Saved successfully");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                startActivity(new Intent(PendingDocumentsScanActivity.this, DashboardActivity.class));
+                                finish();
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.setCancelable(false);
+                        alertDialog.setCanceledOnTouchOutside(false);
+                        alertDialog.show();
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+
 }

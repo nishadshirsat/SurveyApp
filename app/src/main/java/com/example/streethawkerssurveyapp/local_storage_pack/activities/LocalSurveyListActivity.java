@@ -33,6 +33,7 @@ import com.example.streethawkerssurveyapp.database_pack.PersonalDetails;
 import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
 import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
 import com.example.streethawkerssurveyapp.local_storage_pack.adapters.ViewLocalSurveyAdapter;
+import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.pojo_class.FamilyMembers;
 import com.example.streethawkerssurveyapp.response_pack.OtherDocDetails;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
@@ -1498,7 +1499,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                 CORPORATION_,
                 ZONE_,
                 WARD_,
-                SURVEY_STATUS,
+//                SURVEY_STATUS,
                 COMMENTS_,
                 body_tehbazari_document,
                 body_acknowlegement,
@@ -1515,10 +1516,12 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
                     if (response.body().isStatus()) {
 
-                        if (progressDialog != null && progressDialog.isShowing())
-                            progressDialog.dismiss();
+//                        if (progressDialog != null && progressDialog.isShowing())
+//                            progressDialog.dismiss();
 
-                        DeledeEntryDetails();
+
+                        SubmitSuspendRemark(UNiq_Id);
+
 
 
 
@@ -1562,6 +1565,61 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             }
         });
     }
+
+    private void SubmitSuspendRemark(String URI) {
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.SendSurveyStatus(headers,URI,"1");
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        DeledeEntryDetails();
+
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
 
 
     private void UploadOtherDocument() {

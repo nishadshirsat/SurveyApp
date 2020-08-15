@@ -47,6 +47,7 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
+<!--        <activity android:name=".activities.LoginActivity">-->
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,6 +55,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".local_storage_pack.activities.LocalSurveyListActivity"
             android:theme="@style/AppTheme"
@@ -123,18 +125,22 @@
             android:name=".pending_survey.activities.PendingSurveyActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".pending_survey.activities.PendingVendorsFamDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".activities.PersonalDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".pending_survey.activities.PendingBankingDetailsActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".pending_survey.activities.PendingDocumentsScanActivity"
             android:theme="@style/AppTheme"

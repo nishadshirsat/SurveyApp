@@ -290,6 +290,8 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         intent.putExtra("FILE", ApplicationConstant.SurveyId);
         startService(intent);
 
+        mBtnNext.setVisibility(View.GONE);
+
         SingleSurveyDetails("survey/"+ApplicationConstant.SurveyId);
 
 
@@ -832,13 +834,13 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 //            return false;
 //        }
 
-        else if (mEditAadhar.getText().toString().trim().length()<12) {
-            mEditAadhar.setError("Enter Correct Aadhar Number");
-            mEditAadhar.requestFocus();
-            return false;
+        else  if (!mEditAadhar.getText().toString().trim().isEmpty()) {
+            if (mEditAadhar.getText().toString().trim().length() < 12) {
+                mEditAadhar.setError("Enter Correct Aadhar Number");
+                mEditAadhar.requestFocus();
+                return false;
+            }
         }
-
-
 
 
 //        else if (!getLocation.isGPSEnabled) {
@@ -1136,6 +1138,38 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
             if (requestCode == 12345){
 
+                if (data != null && data.getExtras().getString("SCANDATA").trim().equals("Retry")){
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PendingPersonalDetailsActivity.this);
+                    builder.setTitle("QR Code Scan");
+                    builder.setMessage("Do you want to Scan QR again ?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+
+                            Intent intent = new Intent(PendingPersonalDetailsActivity.this, ScanQrForAadharActivity.class);
+                            startActivityForResult(intent, 12345);
+
+                        }
+                    });
+
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.setCancelable(false);
+                    alertDialog.setCanceledOnTouchOutside(false);
+                    alertDialog.show();
+
+
+                }else
+
                 if (data!=null){
                     String xmlData = data.getExtras().getString("SCANDATA");
 
@@ -1207,7 +1241,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
 
-                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Invalid QR");
+                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Invalid QR Data");
 
                         }
 
@@ -2239,6 +2273,10 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             criminalCasesAdpater.setDetails(listCriminalCases);
 
         }
+
+        mBtnNext.setVisibility(View.VISIBLE);
+
+
     }
 
     @Override

@@ -1167,6 +1167,38 @@ public class PersonalDetailsActivity extends MainActivity {
 
             if (requestCode == 12345) {
 
+                if (data != null && data.getExtras().getString("SCANDATA").trim().equals("Retry")){
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
+                    builder.setTitle("QR Code Scan");
+                    builder.setMessage("Do you want to Scan QR again ?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+
+                            Intent intent = new Intent(PersonalDetailsActivity.this, ScanQrForAadharActivity.class);
+                            startActivityForResult(intent, 12345);
+
+                        }
+                    });
+
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.setCancelable(false);
+                    alertDialog.setCanceledOnTouchOutside(false);
+                    alertDialog.show();
+
+
+                }else
+
                 if (data != null) {
                     String xmlData = data.getExtras().getString("SCANDATA");
 
@@ -1209,11 +1241,9 @@ public class PersonalDetailsActivity extends MainActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             aadharData.setDob("1995-05-30");
-
                         }
 
-
-//                        aadharData.setDob(jsonAadhar.getString("dob"));
+//                      aadharData.setDob(jsonAadhar.getString("dob"));
                         aadharData.setFullName(jsonAadhar.getString("name"));
                         aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
                         aadharData.setRawXml(xmlData);
@@ -1229,7 +1259,6 @@ public class PersonalDetailsActivity extends MainActivity {
 
                         ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Aadhar Details Scanned Successfully", aadharData.getAadhaarNumber() + "\n" + aadharData.getFullName());
 
-
                         GsonBuilder gsonBuilder = new GsonBuilder();
                         Gson gson = gsonBuilder.create();
                         String json_Aadhar = new Gson().toJson(aadharData);
@@ -1239,19 +1268,17 @@ public class PersonalDetailsActivity extends MainActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Invalid QR");
-
-                    }
+                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Invalid QR Data");
 
                     }
 
                 }
 
+            }
 
             } else if (requestCode == 1) {
 
                 Bitmap bitmap = ApplicationConstant.CompressedBitmap(new File(photoPath));
-
 
                 Glide.with(PersonalDetailsActivity.this).load(photoURI)
                         .diskCacheStrategy(DiskCacheStrategy.NONE)

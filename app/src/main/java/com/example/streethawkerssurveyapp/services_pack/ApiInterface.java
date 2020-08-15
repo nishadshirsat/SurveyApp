@@ -220,13 +220,24 @@ public interface ApiInterface {
             @Part("corporation") RequestBody corporation,
             @Part("zone") RequestBody zone,
             @Part("ward") RequestBody ward,
-            @Part("survey_status") RequestBody survey_status,
+//            @Part("survey_status") RequestBody survey_status,
             @Part("comments") RequestBody comments,
             @Part MultipartBody.Part allotment_of_tehbazari_document,
             @Part MultipartBody.Part acknowledgement_receipt,
 //            @Part MultipartBody.Part recording,
             @Part MultipartBody.Part undertaking_by_the_applicant
     );
+
+    @FormUrlEncoded
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> SendSurveyStatus(
+            @HeaderMap Map<String, String> token,
+            @Field("uri_number") String uri_number,
+            @Field("survey_status") String survey_status
+    );
+
+
+
 
 //    @Multipart
 //    @POST("update-survey")

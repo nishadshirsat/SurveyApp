@@ -36,6 +36,7 @@ import com.example.streethawkerssurveyapp.database_pack.DocumentsData;
 import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
 import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingDocumentsScanActivity;
+import com.example.streethawkerssurveyapp.activities.DocumentsScanActivity;
 import com.example.streethawkerssurveyapp.response_pack.OtherDocDetails;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
@@ -359,7 +360,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
                     LinearFour.setVisibility(View.GONE);
                     LinearThree.setVisibility(View.GONE);
 
-                }else   if (LinearOne.getVisibility() == View.VISIBLE) {
+                }else if (LinearOne.getVisibility() == View.VISIBLE) {
 
                     if (validate1()) {
 
@@ -394,7 +395,6 @@ public class DocumentsScanActivity extends AppCompatActivity {
                             LinearFour.setVisibility(View.GONE);
                             LinearThree.setVisibility(View.VISIBLE);
                             BtnNext.setText("Submit");
-                            stopService(new Intent(DocumentsScanActivity.this, AudioRecordService.class));
 
 
                         } else if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
@@ -416,6 +416,9 @@ public class DocumentsScanActivity extends AppCompatActivity {
                         LinearOne.setVisibility(View.GONE);
                         LinearTwo.setVisibility(View.GONE);
                         LinearFour.setVisibility(View.VISIBLE);
+
+                    stopService(new Intent(DocumentsScanActivity.this, AudioRecordService.class));
+
 
 
                 }
@@ -477,14 +480,15 @@ public class DocumentsScanActivity extends AppCompatActivity {
 //        }
 //        else
             if (!IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
-            file_identity_front = new File(IDENTITY_PROOF_FRONT_PATH);
 
                 if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
             ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
             return false;
                 }
 
-            } else  if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
+            } else
+
+                if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
                 IDENTITY_PROOF_TYPE="";
 //            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
 //            return true;
@@ -513,7 +517,6 @@ public class DocumentsScanActivity extends AppCompatActivity {
 //        }
 //        else
             if (!VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
-            file_vending_history_front = new File(VENDING_HISTORY_FRONT_PROOF_PATH);
 
             if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
                 ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Vending History Proof Type");
@@ -979,7 +982,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
                 CORPORATION_,
                 ZONE_,
                 WARD_,
-                SURVEY_STATUS,
+//                SURVEY_STATUS,
                 COMMENTS_,
                 body_tehbazari_document,
                 body_acknowlegement,
@@ -998,23 +1001,12 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                     if (response.body().isStatus()) {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(DocumentsScanActivity.this);
-                        builder.setTitle("Document Details");
-                        builder.setMessage("Saved successfully");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                                startActivity(new Intent(DocumentsScanActivity.this, DashboardActivity.class));
-                                finish();
+                        SubmitSuspendRemark(UNiq_Id);
 
-                            }
-                        });
 
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.setCancelable(false);
-                        alertDialog.setCanceledOnTouchOutside(false);
-                        alertDialog.show();
+
+
+
 
 //                        ApplicationConstant.displayToastMessage(DocumentScanActivity.this,
 //                                "Vending Details saved successfully");
@@ -1052,6 +1044,8 @@ public class DocumentsScanActivity extends AppCompatActivity {
     }
 
     private void Upload_VendingHistoryProof() {
+
+        file_vending_history_front = new File(VENDING_HISTORY_FRONT_PROOF_PATH);
 
         file_vending_history_back = new File(VENDING_HISTORY_BACK_PROOF_PATH);
 
@@ -1167,6 +1161,8 @@ public class DocumentsScanActivity extends AppCompatActivity {
     }
 
     private void UploadIdentityProof() {
+
+        file_identity_front = new File(IDENTITY_PROOF_FRONT_PATH);
 
         file_identity_back = new File(IDENTITY_PROOF_BACK_PATH);
 
@@ -1477,7 +1473,6 @@ public class DocumentsScanActivity extends AppCompatActivity {
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
-
 
                         ApplicationConstant.displayToastMessage(DocumentsScanActivity.this,
                                 "Recording saved successfully");
@@ -1908,4 +1903,79 @@ public class DocumentsScanActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void SubmitSuspendRemark(String URI) {
+
+        progressDialog = CustomProgressDialog.getDialogue(DocumentsScanActivity.this);
+        progressDialog.show();
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(DocumentsScanActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.SendSurveyStatus(headers,URI,"1");
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DocumentsScanActivity.this);
+                        builder.setTitle("Document Details");
+                        builder.setMessage("Saved successfully");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                startActivity(new Intent(DocumentsScanActivity.this, DashboardActivity.class));
+                                finish();
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.setCancelable(false);
+                        alertDialog.setCanceledOnTouchOutside(false);
+                        alertDialog.show();
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+
+
 }
