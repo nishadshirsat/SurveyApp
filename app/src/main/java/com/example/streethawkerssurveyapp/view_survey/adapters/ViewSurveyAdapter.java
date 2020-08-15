@@ -2,6 +2,7 @@ package com.example.streethawkerssurveyapp.view_survey.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,13 @@ import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyActiv
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyDetailsActivity;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyData;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +46,7 @@ public class ViewSurveyAdapter extends RecyclerView.Adapter<ViewSurveyAdapter.My
         ViewSurveyData SurveyData = allSurveyList.get(position);
 
         holder.mTextUriNo.setText("URI No -"+SurveyData.getUriNumber());
-        holder.mTextDate.setText("Date : "+SurveyData.getSurveyDate());
+        holder.mTextDate.setText("Date : "+getIndianTIme(SurveyData.getSurveyDate()));
         holder.mTextName.setText("Surveyor Name : "+SurveyData.getSurveyorName());
         holder.mTextVendorName.setText("Vendor Name  : "+SurveyData.getNameOfTheStreetVendor());
         holder.mTextCorportaion.setText("Corportation  : "+SurveyData.getCorporation());
@@ -106,4 +112,46 @@ public class ViewSurveyAdapter extends RecyclerView.Adapter<ViewSurveyAdapter.My
 
         }
     }
+
+    public String getIndianTIme(String utcDate){
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = formatter.parse(utcDate);
+
+//            String indianDate =  formatDateToString(date, "yyyy-MM-dd HH:mm:ss", "IST");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.HOUR, 5);
+            calendar.add(Calendar.MINUTE, 30);
+
+
+//            formatter.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata")); // Or whatever IST is supposed to be
+            String indianDate =  formatter.format(calendar.getTime());
+            return indianDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
+    public static String formatDateToString(Date date, String format,
+                                            String timeZone) {
+        // null check
+        if (date == null) return null;
+        // create SimpleDateFormat object with input format
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        // default system timezone if passed null or empty
+        if (timeZone == null || "".equalsIgnoreCase(timeZone.trim())) {
+            timeZone = Calendar.getInstance().getTimeZone().getID();
+        }
+        // set timezone to SimpleDateFormat
+//        sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
+        // return Date in required format with timezone as String
+        return sdf.format(date);
+    }
+
 }

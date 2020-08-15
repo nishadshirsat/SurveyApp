@@ -17,7 +17,11 @@ import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyDetailsActivity;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyData;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -46,7 +50,7 @@ public class PendingSurveyAdapter extends RecyclerView.Adapter<PendingSurveyAdap
         ViewSurveyData SurveyData = allSurveyList.get(position);
 
         holder.mTextUriNo.setText("URI No -"+SurveyData.getUriNumber());
-        holder.mTextDate.setText("Date : "+SurveyData.getSurveyDate());
+        holder.mTextDate.setText("Date : "+getIndianTIme(SurveyData.getSurveyDate()));
         holder.mTextName.setText("Surveyor Name : "+SurveyData.getSurveyorName());
         holder.mTextVendorName.setText("Vendor Name  : "+SurveyData.getNameOfTheStreetVendor());
         holder.mTextCorportaion.setText("Corportation  : "+SurveyData.getCorporation());
@@ -132,5 +136,31 @@ public class PendingSurveyAdapter extends RecyclerView.Adapter<PendingSurveyAdap
     public interface RefreshlistListner{
 
         void refrehListwithAction(String URI);
+    }
+
+
+    public String getIndianTIme(String utcDate){
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = formatter.parse(utcDate);
+
+//            String indianDate =  formatDateToString(date, "yyyy-MM-dd HH:mm:ss", "IST");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.HOUR, 5);
+            calendar.add(Calendar.MINUTE, 30);
+
+
+//            formatter.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata")); // Or whatever IST is supposed to be
+            String indianDate =  formatter.format(calendar.getTime());
+            return indianDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
     }
 }

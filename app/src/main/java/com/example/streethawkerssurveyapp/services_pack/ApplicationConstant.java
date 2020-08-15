@@ -54,7 +54,7 @@ public class ApplicationConstant {
     public static boolean ISLOCALDB = false;
     public static String URI_NO_ = "uri_no";
     public static String SurveyId ="";
-    public static final long IMAGE_SIZE = 800;
+    public static final long IMAGE_SIZE = 950;
 
     public static int orientation;
 
@@ -311,7 +311,6 @@ public class ApplicationConstant {
             quantity = quantity - 10;
 
         }while (length_check > ApplicationConstant.IMAGE_SIZE);
-
 
         return actual_bitmap;
 

@@ -37,7 +37,6 @@
         <activity android:name=".officer.activities.ViewSupervisorListActivity" />
         <activity android:name=".supervisor.activities.ViewSurveyListActivity" />
         <activity android:name=".supervisor.activities.SuspendedSurveyListActivity" />
-        <activity android:name=".supervisor.activities.SurveyorListActivity" />
         <activity android:name=".officer.activities.SupervisorListActivity" />
         <activity android:name=".supervisor.activities.PendingSurveyListActivity" />
 
@@ -138,6 +137,16 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".pending_survey.activities.PendingDocumentsScanActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".supervisor.activities.ViewSurveySupervisorActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".supervisor.activities.SurveyorListActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 

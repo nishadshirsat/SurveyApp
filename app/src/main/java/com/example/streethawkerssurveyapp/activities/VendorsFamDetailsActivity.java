@@ -183,7 +183,6 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                             lEditRent.requestFocus();
                         }else {
 
-
                             LandAssets landAssets = new LandAssets(lEditPlot.getText().toString().trim(),
                                     lEditHouseSize.getText().toString().trim(),
                                     lEditArea.getText().toString().trim(),
@@ -252,13 +251,28 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                         }else if (fEditFamAge.getText().toString().trim().isEmpty()){
                             fEditFamAge.setError("enter age");
                             fEditFamAge.requestFocus();
-                        }else if (fEditFamAadhar.getText().toString().trim().isEmpty()){
-                            fEditFamAadhar.setError("enter aadhar");
-                            fEditFamAadhar.requestFocus();
-                        }else if (fEditFamAadhar.getText().toString().trim().length()!=12){
-                            fEditFamAadhar.setError("enter correct aadhar");
-                            fEditFamAadhar.requestFocus();
-                        }else {
+                        }
+                        else if (!fEditFamAadhar.getText().toString().trim().isEmpty()){
+                            if (fEditFamAadhar.getText().toString().trim().length()!=12){
+                                fEditFamAadhar.setError("enter correct aadhar");
+                                fEditFamAadhar.requestFocus();
+                            }else {
+
+                                FamilyMembers familyMembers = new FamilyMembers(fEditFamName.getText().toString().trim(),
+                                        fEditFamRelation.getText().toString().trim(),
+                                        fEditFamAge.getText().toString().trim(),
+                                        fEditFamAadhar.getText().toString().trim());
+
+
+                                listFamily.add(familyMembers);
+                                FamilyDetailsAdpater familyDetailsAdpater = new FamilyDetailsAdpater(VendorsFamDetailsActivity.this);
+                                familyDetailsAdpater.setDetails(listFamily);
+
+                                view_FamilyMembers.setAdapter(familyDetailsAdpater);
+                                alertDialog.dismiss();
+
+                            }
+                        }else  {
                             FamilyMembers familyMembers = new FamilyMembers(fEditFamName.getText().toString().trim(),
                                     fEditFamRelation.getText().toString().trim(),
                                     fEditFamAge.getText().toString().trim(),
@@ -351,10 +365,10 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //        }
 //        else
 
-            if (listFamily.isEmpty()){
-            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add family members");
-            return false;
-        }
+//            if (listFamily.isEmpty()){
+//            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add family members");
+//            return false;
+//        }
 
 //        else if (listLandAssets.isEmpty()){
 //            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add Land Assets");
@@ -423,7 +437,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 //            mEditRent.requestFocus();
 //            return false;
 //        }
-        else if (LinearYes.getVisibility() == View.VISIBLE) {
+//        else
+            if (LinearYes.getVisibility() == View.VISIBLE) {
             if (mEditName.getText().toString().trim().isEmpty()) {
                 mEditName.setError("Enter Name");
                 mEditName.requestFocus();

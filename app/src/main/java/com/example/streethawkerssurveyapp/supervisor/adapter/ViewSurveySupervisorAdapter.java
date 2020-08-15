@@ -1,12 +1,15 @@
-package com.example.streethawkerssurveyapp.suspended_survey.adapters;
+package com.example.streethawkerssurveyapp.supervisor.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.supervisor.response_pojo.SupervisorViewSurveyData;
+import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyDetailsActivity;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyData;
 
 import java.text.ParseException;
@@ -19,11 +22,11 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurveyAdapter.MyViewHolder> {
+public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurveySupervisorAdapter.MyViewHolder> {
     private Context context;
-    private List<ViewSurveyData> allSurveyList = new ArrayList<>();
+    private List<SupervisorViewSurveyData> allSurveyList = new ArrayList<>();
 
-    public SuspendedSurveyAdapter(Context context) {
+    public ViewSurveySupervisorAdapter(Context context) {
         this.context = context;
     }
 
@@ -31,14 +34,14 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_suspended_survey,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_view_survey_supervisor,parent,false);
 
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ViewSurveyData SurveyData = allSurveyList.get(position);
+        SupervisorViewSurveyData SurveyData = allSurveyList.get(position);
 
         holder.mTextUriNo.setText("URI No -"+SurveyData.getUriNumber());
         holder.mTextDate.setText("Date : "+getIndianTIme(SurveyData.getSurveyDate()));
@@ -51,14 +54,27 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
         holder.mTextZone.setText("Zone : "+SurveyData.getZone());
         holder.mTextCategory.setText("Category : "+SurveyData.getCategory());
         holder.mTextArea.setText("Area : "+SurveyData.getArea());
-        holder.TextRemark.setText("Remark : "+SurveyData.getComments());
+        holder.mTextComments.setText("Comments : "+SurveyData.getComments());
+        holder.mTextRemarks.setText("Remark : "+SurveyData.getModComment());
+
+        if (SurveyData.getSurveyStatus().trim().equals("-1")){
+            holder.mTextStatus.setText("Status : Suspended");
+            holder.mTextStatus.setTextColor(context.getResources().getColor(R.color.red));
+
+        }else if (SurveyData.getSurveyStatus().trim().equals("0")){
+            holder.mTextStatus.setText("Status : Pending");
+            holder.mTextStatus.setTextColor(context.getResources().getColor(R.color.orange));
+        }else if (SurveyData.getSurveyStatus().trim().equals("1")){
+            holder.mTextStatus.setText("Status : Completed");
+            holder.mTextStatus.setTextColor(context.getResources().getColor(R.color.green));
+        }
 
         holder.mCardSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(context, ViewSurveyDetailsActivity.class);
-//                intent.putExtra("URI",SurveyData.getUriNumber());
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, ViewSurveyDetailsActivity.class);
+                intent.putExtra("URI",SurveyData.getUriNumber());
+                context.startActivity(intent);
             }
         });
 
@@ -69,7 +85,7 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
         return allSurveyList.size();
     }
 
-    public void setList(List<ViewSurveyData> allSurveyList) {
+    public void setList(List<SupervisorViewSurveyData> allSurveyList) {
         this.allSurveyList = allSurveyList;
         notifyDataSetChanged();
     }
@@ -78,8 +94,8 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
         private androidx.cardview.widget.CardView mCardSurvey;
         private TextView mTextUriNo;
         private TextView mTextDate;
-        private TextView mTextName;
         private TextView mTextVendorName;
+        private TextView mTextName;
         private TextView mTextCorportaion;
         private TextView mTextSex;
         private TextView mTextWard;
@@ -88,7 +104,8 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
         private TextView mTextCategory;
         private TextView mTextArea;
         private TextView mTextStatus;
-        private TextView TextRemark;
+        private TextView mTextComments;
+        private TextView mTextRemarks;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,8 +113,8 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
             mCardSurvey = (androidx.cardview.widget.CardView) itemView.findViewById(R.id.CardSurvey);
             mTextUriNo = (TextView) itemView.findViewById(R.id.TextUriNo);
             mTextDate = (TextView) itemView.findViewById(R.id.TextDate);
-            mTextName = (TextView) itemView.findViewById(R.id.TextName);
             mTextVendorName = (TextView) itemView.findViewById(R.id.TextVendorName);
+            mTextName = (TextView) itemView.findViewById(R.id.TextName);
             mTextCorportaion = (TextView) itemView.findViewById(R.id.TextCorportaion);
             mTextSex = (TextView) itemView.findViewById(R.id.TextSex);
             mTextWard = (TextView) itemView.findViewById(R.id.TextWard);
@@ -106,7 +123,9 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
             mTextCategory = (TextView) itemView.findViewById(R.id.TextCategory);
             mTextArea = (TextView) itemView.findViewById(R.id.TextArea);
             mTextStatus = (TextView) itemView.findViewById(R.id.TextStatus);
-            TextRemark = (TextView) itemView.findViewById(R.id.TextRemark);
+            mTextComments = (TextView) itemView.findViewById(R.id.TextComments);
+            mTextRemarks = (TextView) itemView.findViewById(R.id.TextRemarks);
+
 
         }
     }
@@ -134,6 +153,22 @@ public class SuspendedSurveyAdapter extends RecyclerView.Adapter<SuspendedSurvey
 
         return "";
 
+    }
+
+    public static String formatDateToString(Date date, String format,
+                                            String timeZone) {
+        // null check
+        if (date == null) return null;
+        // create SimpleDateFormat object with input format
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        // default system timezone if passed null or empty
+        if (timeZone == null || "".equalsIgnoreCase(timeZone.trim())) {
+            timeZone = Calendar.getInstance().getTimeZone().getID();
+        }
+        // set timezone to SimpleDateFormat
+//        sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
+        // return Date in required format with timezone as String
+        return sdf.format(date);
     }
 
 }

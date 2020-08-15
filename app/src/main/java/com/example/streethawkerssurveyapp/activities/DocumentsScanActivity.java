@@ -423,16 +423,18 @@ public class DocumentsScanActivity extends AppCompatActivity {
 //                    ApplicationConstant.displayMessageDialog(DocumentScanActivity.this,"","Tehbazari Doc is missing");
 //
 //                }
-                else if (Undertaking_PATH.trim().isEmpty()) {
-                    ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Undertaking Doc is missing");
+//                else if (Undertaking_PATH.trim().isEmpty()) {
+//                    ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Undertaking Doc is missing");
+//
+//                } else if (Acknowledge_PATH.trim().isEmpty()) {
+//                    ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Acknowledge Doc is missing");
+//
+//                } else if (Comments.trim().isEmpty()) {
+//                    ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Please Enter Comment");
+//
+//                }
 
-                } else if (Acknowledge_PATH.trim().isEmpty()) {
-                    ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Acknowledge Doc is missing");
-
-                } else if (Comments.trim().isEmpty()) {
-                    ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Please Enter Comment");
-
-                } else {
+                else {
 
                     file_tehjabari = new File(TehBazari_Doc_PATH);
 
@@ -467,21 +469,31 @@ public class DocumentsScanActivity extends AppCompatActivity {
 //            return false;
 //        }else
 
-        if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
-            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
-            return false;
-        } else if (IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
-            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Capture Identity Proof ");
-            return false;
 
-        } else if (!IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
+//        else if (IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
+//            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Capture Identity Proof ");
+//            return false;
+//
+//        }
+//        else
+            if (!IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
             file_identity_front = new File(IDENTITY_PROOF_FRONT_PATH);
 
-        } else {
-            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Identity Proof Doc is missing");
+                if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
+            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
             return false;
+                }
 
-        }
+            } else  if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
+                IDENTITY_PROOF_TYPE="";
+//            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
+//            return true;
+            }
+//            else {
+//            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Identity Proof Doc is missing");
+//            return false;
+//
+//        }
 
         return true;
     }
@@ -493,22 +505,25 @@ public class DocumentsScanActivity extends AppCompatActivity {
 //
 //            return false;
 //        }else
-        if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
-            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Vending History Proof Type");
-            return false;
 
-        } else if (VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
-            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Capture Vending History Proof ");
-            return false;
-
-        } else if (!VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
+//        else if (VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
+//            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Capture Vending History Proof ");
+//            return false;
+//
+//        }
+//        else
+            if (!VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
             file_vending_history_front = new File(VENDING_HISTORY_FRONT_PROOF_PATH);
 
-        } else {
-            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Vending History Proof Doc is missing");
-            return false;
-        }
+            if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Vending History Proof Type");
+                return false;
 
+            }
+
+        } else  if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
+                VENDING_HISTORY_PROOF_TYPE="";
+            }
         return true;
     }
 
@@ -920,12 +935,27 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
         }
 
-        MultipartBody.Part body_undertaking =
-                MultipartBody.Part.createFormData("undertaking_by_the_applicant", file_undertaking.getName(), request_undertaking);
+
+        MultipartBody.Part body_undertaking = null;
+        if (Undertaking_PATH.trim().isEmpty()) {
+            body_undertaking = null;
+        } else {
+
+            body_undertaking =
+                    MultipartBody.Part.createFormData("undertaking_by_the_applicant", file_undertaking.getName(), request_undertaking);
+
+        }
 
 
-        MultipartBody.Part body_acknowlegement =
-                MultipartBody.Part.createFormData("acknowledgement_receipt", file_acknowlegement.getName(), request_acknowlegement);
+   MultipartBody.Part body_acknowlegement = null;
+        if (Acknowledge_PATH.trim().isEmpty()) {
+            body_acknowlegement = null;
+        } else {
+
+            body_acknowlegement =
+                    MultipartBody.Part.createFormData("acknowledgement_receipt", file_acknowlegement.getName(), request_acknowlegement);
+
+        }
 
         String CORPORATION =   PrefUtils.getFromPrefs(DocumentsScanActivity.this,ApplicationConstant.CORPORATION,"");
         String ZONE =  PrefUtils.getFromPrefs(DocumentsScanActivity.this,ApplicationConstant.ZONE,"");
@@ -1402,8 +1432,18 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
 // MultipartBody.Part is used to send also the actual file name
 
-        MultipartBody.Part body_file5 =
-                MultipartBody.Part.createFormData("recording", file_recording.getName(), request_recording);
+
+        MultipartBody.Part body_file5 = null;
+        if (recordingFile.trim().isEmpty()) {
+            body_file5 = null;
+        } else {
+
+            body_file5 =
+                    MultipartBody.Part.createFormData("recording", file_recording.getName(), request_recording);
+
+        }
+
+
 
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 

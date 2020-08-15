@@ -1097,8 +1097,15 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
 // MultipartBody.Part is used to send also the actual file name
 
-        MultipartBody.Part body_file5 =
-                MultipartBody.Part.createFormData("recording", file_recording.getName(), request_recording);
+        MultipartBody.Part body_file5 = null;
+        if (documentsDetails.getRecording().trim().isEmpty()) {
+            body_file5 = null;
+        } else {
+
+            body_file5 =
+                    MultipartBody.Part.createFormData("recording", file_recording.getName(), request_recording);
+
+        }
 
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 
@@ -1447,12 +1454,27 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
         }
 
-        MultipartBody.Part body_undertaking =
-                MultipartBody.Part.createFormData("undertaking_by_the_applicant", file_undertaking.getName(), request_undertaking);
+        MultipartBody.Part body_undertaking = null;
+        if (documentsDetails.getUndertaking_doc().trim().isEmpty()) {
+            body_undertaking = null;
+        } else {
+
+            body_undertaking =
+                    MultipartBody.Part.createFormData("undertaking_by_the_applicant", file_undertaking.getName(), request_undertaking);
+
+        }
 
 
-        MultipartBody.Part body_acknowlegement =
-                MultipartBody.Part.createFormData("acknowledgement_receipt", file_acknowlegement.getName(), request_acknowlegement);
+        MultipartBody.Part body_acknowlegement = null;
+        if (documentsDetails.getAcknowledgement_doc().trim().isEmpty()) {
+            body_acknowlegement = null;
+        } else {
+
+            body_acknowlegement =
+                    MultipartBody.Part.createFormData("acknowledgement_receipt", file_acknowlegement.getName(), request_acknowlegement);
+
+        }
+
 
         String CORPORATION =   PrefUtils.getFromPrefs(LocalSurveyListActivity.this,ApplicationConstant.CORPORATION,"");
         String ZONE =  PrefUtils.getFromPrefs(LocalSurveyListActivity.this,ApplicationConstant.ZONE,"");

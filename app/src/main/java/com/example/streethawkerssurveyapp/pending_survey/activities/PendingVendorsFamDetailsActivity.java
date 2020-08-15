@@ -252,12 +252,29 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
                         }else if (fEditFamAge.getText().toString().trim().isEmpty()){
                             fEditFamAge.setError("enter age");
                             fEditFamAge.requestFocus();
-                        }else if (fEditFamAadhar.getText().toString().trim().isEmpty()){
-                            fEditFamAadhar.setError("enter aadhar");
-                            fEditFamAadhar.requestFocus();
-                        }else if (fEditFamAadhar.getText().toString().trim().length()!=12){
-                            fEditFamAadhar.setError("enter correct aadhar");
-                            fEditFamAadhar.requestFocus();
+                        }
+
+                        else if (!fEditFamAadhar.getText().toString().trim().isEmpty()){
+                            if (fEditFamAadhar.getText().toString().trim().length()!=12){
+                                fEditFamAadhar.setError("enter correct aadhar");
+                                fEditFamAadhar.requestFocus();
+                            }else {
+
+                                FamilyMembersItem familyMembers = new FamilyMembersItem(
+                                        fEditFamRelation.getText().toString().trim(),
+                                        fEditFamName.getText().toString().trim(),
+                                        fEditFamAadhar.getText().toString().trim(),
+                                        fEditFamAge.getText().toString().trim());
+
+
+                                listFamily.add(familyMembers);
+                                ViewFamilyDetailsAdpater familyDetailsAdpater = new ViewFamilyDetailsAdpater(PendingVendorsFamDetailsActivity.this);
+                                familyDetailsAdpater.setDetails(listFamily);
+
+                                view_FamilyMembers.setAdapter(familyDetailsAdpater);
+                                alertDialog.dismiss();
+
+                            }
                         }else {
                             FamilyMembersItem familyMembers = new FamilyMembersItem(
                                     fEditFamRelation.getText().toString().trim(),
@@ -381,10 +398,10 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
 
             return false;
         }
-        else if (listFamily.isEmpty()){
-            ApplicationConstant.DisplayMessageDialog(PendingVendorsFamDetailsActivity.this,"","Add family members");
-            return false;
-        }
+//        else if (listFamily.isEmpty()){
+//            ApplicationConstant.DisplayMessageDialog(PendingVendorsFamDetailsActivity.this,"","Add family members");
+//            return false;
+//        }
 
 //        else if (listLandAssets.isEmpty()){
 //            ApplicationConstant.DisplayMessageDialog(VendorsFamDetailsActivity.this,"","Add Land Assets");

@@ -1,22 +1,26 @@
-package com.example.streethawkerssurveyapp.view_survey.response_pojo;
+package com.example.streethawkerssurveyapp.supervisor.response_pojo;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class ViewSurveyData implements Serializable {
+public class SupervisorViewSurveyData {
 
 	@SerializedName("area")
 	private String area;
 
-	@SerializedName("corporation")
-	private String corporation;
+	@SerializedName("comments")
+	private String comments;
 
 	@SerializedName("sex")
 	private String sex;
 
+	@SerializedName("corporation")
+	private String corporation;
+
 	@SerializedName("name_of_the_street_vendor")
 	private String nameOfTheStreetVendor;
+
+	@SerializedName("mod_comment")
+	private String modComment;
 
 	@SerializedName("ward")
 	private String ward;
@@ -30,6 +34,9 @@ public class ViewSurveyData implements Serializable {
 	@SerializedName("survey_date")
 	private String surveyDate;
 
+	@SerializedName("is_approved")
+	private String isApproved;
+
 	@SerializedName("id")
 	private String id;
 
@@ -39,14 +46,14 @@ public class ViewSurveyData implements Serializable {
 	@SerializedName("category")
 	private String category;
 
+	@SerializedName("survey_status")
+	private String surveyStatus;
+
 	@SerializedName("age")
 	private String age;
 
 	@SerializedName("suveyor_id")
 	private String suveyorId;
-
-	@SerializedName("comments")
-	private String comments;
 
 	public void setArea(String area){
 		this.area = area;
@@ -56,12 +63,12 @@ public class ViewSurveyData implements Serializable {
 		return area;
 	}
 
-	public void setCorporation(String corporation){
-		this.corporation = corporation;
+	public void setComments(String comments){
+		this.comments = comments;
 	}
 
-	public String getCorporation(){
-		return corporation;
+	public String getComments(){
+		return comments;
 	}
 
 	public void setSex(String sex){
@@ -72,12 +79,28 @@ public class ViewSurveyData implements Serializable {
 		return sex;
 	}
 
+	public void setCorporation(String corporation){
+		this.corporation = corporation;
+	}
+
+	public String getCorporation(){
+		return corporation;
+	}
+
 	public void setNameOfTheStreetVendor(String nameOfTheStreetVendor){
 		this.nameOfTheStreetVendor = nameOfTheStreetVendor;
 	}
 
 	public String getNameOfTheStreetVendor(){
 		return nameOfTheStreetVendor;
+	}
+
+	public void setModComment(String modComment){
+		this.modComment = modComment;
+	}
+
+	public String getModComment(){
+		return modComment;
 	}
 
 	public void setWard(String ward){
@@ -112,6 +135,14 @@ public class ViewSurveyData implements Serializable {
 		return surveyDate;
 	}
 
+	public void setIsApproved(String isApproved){
+		this.isApproved = isApproved;
+	}
+
+	public String getIsApproved(){
+		return isApproved;
+	}
+
 	public void setId(String id){
 		this.id = id;
 	}
@@ -136,6 +167,14 @@ public class ViewSurveyData implements Serializable {
 		return category;
 	}
 
+	public void setSurveyStatus(String surveyStatus){
+		this.surveyStatus = surveyStatus;
+	}
+
+	public String getSurveyStatus(){
+		return surveyStatus;
+	}
+
 	public void setAge(String age){
 		this.age = age;
 	}
@@ -152,29 +191,25 @@ public class ViewSurveyData implements Serializable {
 		return suveyorId;
 	}
 
-	public String getComments() {
-		return comments;
-	}
-
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
-
 	@Override
  	public String toString(){
 		return 
 			"DataItem{" + 
 			"area = '" + area + '\'' + 
-			",corporation = '" + corporation + '\'' + 
+			",comments = '" + comments + '\'' + 
 			",sex = '" + sex + '\'' + 
+			",corporation = '" + corporation + '\'' + 
 			",name_of_the_street_vendor = '" + nameOfTheStreetVendor + '\'' + 
+			",mod_comment = '" + modComment + '\'' + 
 			",ward = '" + ward + '\'' + 
 			",uri_number = '" + uriNumber + '\'' + 
 			",zone = '" + zone + '\'' + 
 			",survey_date = '" + surveyDate + '\'' + 
+			",is_approved = '" + isApproved + '\'' + 
 			",id = '" + id + '\'' + 
 			",surveyor_name = '" + surveyorName + '\'' + 
 			",category = '" + category + '\'' + 
+			",survey_status = '" + surveyStatus + '\'' + 
 			",age = '" + age + '\'' + 
 			",suveyor_id = '" + suveyorId + '\'' + 
 			"}";

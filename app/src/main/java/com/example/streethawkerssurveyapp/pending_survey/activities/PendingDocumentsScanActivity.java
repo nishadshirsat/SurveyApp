@@ -381,16 +381,18 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 //                    ApplicationConstant.displayMessageDialog(DocumentScanActivity.this,"","Tehbazari Doc is missing");
 //
 //                }
-                else if (ImgSignature.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.scanner).getConstantState()){
-                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Undertaking Doc is missing");
+//                else if (ImgSignature.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.scanner).getConstantState()){
+//                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Undertaking Doc is missing");
+//
+//                } else if (ImgAckReceipt.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.scanner).getConstantState()){
+//                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Acknowledge Doc is missing");
+//
+//                } else if (Comments.trim().isEmpty()) {
+//                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Please Enter Comment");
+//
+//                }
 
-                } else if (ImgAckReceipt.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.scanner).getConstantState()){
-                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Acknowledge Doc is missing");
-
-                } else if (Comments.trim().isEmpty()) {
-                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Please Enter Comment");
-
-                } else {
+                else {
 
                     file_tehjabari = new File(TehBazari_Doc_PATH);
 
@@ -422,14 +424,15 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
             return false;
         }else
 
-        if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
-            ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Identity Proof Type");
-            return false;
-        } else if (ImgIdentityProofFront.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.scanner).getConstantState()){
-            ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Capture Identity Proof ");
-            return false;
-
+            if (ImgIdentityProofFront.getDrawable().getConstantState() != getResources().getDrawable( R.drawable.scanner).getConstantState()){
+                if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
+                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Identity Proof Type");
+                    return false;
+                }
         }
+
+
+
 
         return true;
     }
@@ -440,14 +443,13 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
             ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        }else
-        if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
-            ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Vending History Proof Type");
-            return false;
+        }
+       else if (ImgVendingHistoryFront.getDrawable().getConstantState() != getResources().getDrawable( R.drawable.scanner).getConstantState()){
+            if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Vending History Proof Type");
+                return false;
 
-        } else if (ImgVendingHistoryFront.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.scanner).getConstantState()){
-            ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Capture Vending History Proof ");
-            return false;
+            }
 
         }
 
@@ -1251,8 +1253,16 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
 // MultipartBody.Part is used to send also the actual file name
 
-        MultipartBody.Part body_file5 =
-                MultipartBody.Part.createFormData("recording", file_recording.getName(), request_recording);
+        MultipartBody.Part body_file5 = null;
+        if (recordingFile.trim().isEmpty()) {
+            body_file5 = null;
+        } else {
+
+            body_file5 =
+                    MultipartBody.Part.createFormData("recording", file_recording.getName(), request_recording);
+
+        }
+
 
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 

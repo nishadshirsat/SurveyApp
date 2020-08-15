@@ -826,11 +826,13 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 //            mEditPPincode.requestFocus();
 //            return false;
 //        }
-        else if (mEditAadhar.getText().toString().trim().isEmpty()) {
-            mEditAadhar.setError("Enter Aadhar Number");
-            mEditAadhar.requestFocus();
-            return false;
-        } else if (mEditAadhar.getText().toString().trim().length()<12) {
+//        else if (mEditAadhar.getText().toString().trim().isEmpty()) {
+//            mEditAadhar.setError("Enter Aadhar Number");
+//            mEditAadhar.requestFocus();
+//            return false;
+//        }
+
+        else if (mEditAadhar.getText().toString().trim().length()<12) {
             mEditAadhar.setError("Enter Correct Aadhar Number");
             mEditAadhar.requestFocus();
             return false;
@@ -853,39 +855,42 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else if (WHETHER_WIDOWED.trim().isEmpty()) {
-            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Options");
-//            mEditAge.requestFocus();
-            return false;
-        } else if (mSpinnerCategory.getSelectedItem().toString().trim().isEmpty()) {
-            mEditArea.setError("Select Category");
-            mSpinnerCategory.requestFocus();
-            return false;
-        }  else if (mEditAnnualIncome.getText().toString().trim().isEmpty()) {
-            mEditAnnualIncome.setError("Enter Vending Site");
-            mEditAnnualIncome.requestFocus();
-            return false;
-        }  else if (mEditArea.getText().toString().trim().isEmpty()) {
-            mEditArea.setError("Enter Area");
-            mEditArea.requestFocus();
-            return false;
-        } else if (mEditHouseNo.getText().toString().trim().isEmpty()) {
-            mEditHouseNo.setError("Enter House No");
-            mEditHouseNo.requestFocus();
-            return false;
-        } else if (mEditRoad.getText().toString().trim().isEmpty()) {
-            mEditRoad.setError("Enter Road");
-            mEditRoad.requestFocus();
-            return false;
-        } else if (mEditCity.getText().toString().trim().isEmpty()) {
-            mEditCity.setError("Enter City");
-            mEditCity.requestFocus();
-            return false;
-        } else if (mEditPincode.getText().toString().trim().isEmpty()) {
-            mEditPincode.setError("Enter Pincode");
-            mEditPincode.requestFocus();
-            return false;
         }
+
+//        else
+//            if (WHETHER_WIDOWED.trim().isEmpty()) {
+//            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Options");
+////            mEditAge.requestFocus();
+//            return false;
+//        } else if (mSpinnerCategory.getSelectedItem().toString().trim().isEmpty()) {
+//            mEditArea.setError("Select Category");
+//            mSpinnerCategory.requestFocus();
+//            return false;
+//        }  else if (mEditAnnualIncome.getText().toString().trim().isEmpty()) {
+//            mEditAnnualIncome.setError("Enter Vending Site");
+//            mEditAnnualIncome.requestFocus();
+//            return false;
+//        }  else if (mEditArea.getText().toString().trim().isEmpty()) {
+//            mEditArea.setError("Enter Area");
+//            mEditArea.requestFocus();
+//            return false;
+//        } else if (mEditHouseNo.getText().toString().trim().isEmpty()) {
+//            mEditHouseNo.setError("Enter House No");
+//            mEditHouseNo.requestFocus();
+//            return false;
+//        } else if (mEditRoad.getText().toString().trim().isEmpty()) {
+//            mEditRoad.setError("Enter Road");
+//            mEditRoad.requestFocus();
+//            return false;
+//        } else if (mEditCity.getText().toString().trim().isEmpty()) {
+//            mEditCity.setError("Enter City");
+//            mEditCity.requestFocus();
+//            return false;
+//        } else if (mEditPincode.getText().toString().trim().isEmpty()) {
+//            mEditPincode.setError("Enter Pincode");
+//            mEditPincode.requestFocus();
+//            return false;
+//        }
 
         return true;
     }
@@ -897,47 +902,54 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else if (mEditMobile.getText().toString().trim().isEmpty()) {
-            mEditMobile.setError("Enter Mobile Number");
-            mEditMobile.requestFocus();
-            return false;
-        } else if (mEditMobile.getText().toString().trim().length() < 10) {
+        } else
+
+//            if (mEditMobile.getText().toString().trim().isEmpty()) {
+//            mEditMobile.setError("Enter Mobile Number");
+//            mEditMobile.requestFocus();
+//            return false;
+//        } else
+
+            if (mEditMobile.getText().toString().trim().length() < 10) {
             mEditMobile.setError("Enter Correct Mobile Number");
             mEditMobile.requestFocus();
             return false;
-        } else if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
-            mEditFatherName.setError("Select Education");
-            mSpinnerEducation.requestFocus();
-            return false;
-        } else if (mEditFatherName.getText().toString().trim().isEmpty()) {
-            mEditFatherName.setError("Enter Father First Name");
-            mEditFatherName.requestFocus();
-            return false;
         }
+//            else
+
+//            if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
+//            mEditFatherName.setError("Select Education");
+//            mSpinnerEducation.requestFocus();
+//            return false;
+//        } else if (mEditFatherName.getText().toString().trim().isEmpty()) {
+//            mEditFatherName.setError("Enter Father First Name");
+//            mEditFatherName.requestFocus();
+//            return false;
+//        }
 //        else if (mEditFatherMName.getText().toString().trim().isEmpty()) {
 //            mEditFatherMName.setError("Enter Father Middle Name");
 //            mEditFatherMName.requestFocus();
 //            return false;
 //        }
-        else if (mEditFatherLName.getText().toString().trim().isEmpty()) {
-            mEditFatherLName.setError("Enter Father Last Name");
-            mEditFatherLName.requestFocus();
-            return false;
-        } else if (mEditMotherFName.getText().toString().trim().isEmpty()) {
-            mEditMotherFName.setError("Enter Mother First Name");
-            mEditMotherFName.requestFocus();
-            return false;
-        }
+//        else if (mEditFatherLName.getText().toString().trim().isEmpty()) {
+//            mEditFatherLName.setError("Enter Father Last Name");
+//            mEditFatherLName.requestFocus();
+//            return false;
+//        } else if (mEditMotherFName.getText().toString().trim().isEmpty()) {
+//            mEditMotherFName.setError("Enter Mother First Name");
+//            mEditMotherFName.requestFocus();
+//            return false;
+//        }
 //        else if (mEditMotherMName.getText().toString().trim().isEmpty()) {
 //            mEditMotherMName.setError("Enter Mother Middle Name");
 //            mEditMotherMName.requestFocus();
 //            return false;
 //        }
-        else if (mEditMotherLName.getText().toString().trim().isEmpty()) {
-            mEditMotherLName.setError("Enter Mother Last Name");
-            mEditMotherLName.requestFocus();
-            return false;
-        }
+//        else if (mEditMotherLName.getText().toString().trim().isEmpty()) {
+//            mEditMotherLName.setError("Enter Mother Last Name");
+//            mEditMotherLName.requestFocus();
+//            return false;
+//        }
         return true;
 
     }
@@ -949,45 +961,52 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else  if (mImgVendorPhoto.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_camera_black_24dp).getConstantState()){
+        } else
 
-            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Capture profile photo");
-
-            return false;
-        }  else if (mImgVendorSite.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_camera_black_24dp).getConstantState()){
-            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Capture Vending Place photo");
-
-            return false;
-        } else if (mEditFName.getText().toString().trim().isEmpty()) {
-            mEditFName.setError("Enter First Name");
-            mEditFName.requestFocus();
-            return false;
-        }
+//            if (mImgVendorPhoto.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_camera_black_24dp).getConstantState()){
+//
+//            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Capture profile photo");
+//
+//            return false;
+//        }  else if (mImgVendorSite.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_camera_black_24dp).getConstantState()){
+//            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Capture Vending Place photo");
+//
+//            return false;
+//        } else if (mEditFName.getText().toString().trim().isEmpty()) {
+//            mEditFName.setError("Enter First Name");
+//            mEditFName.requestFocus();
+//            return false;
+//        }
 //        else if (mEditMName.getText().toString().trim().isEmpty()) {
 //            mEditMName.setError("Enter Middle Name");
 //            mEditMName.requestFocus();
 //            return false;
 //        }
-        else if (mEditLName.getText().toString().trim().isEmpty()) {
-            mEditLName.setError("Enter Last Name");
-            mEditLName.requestFocus();
-            return false;
-        } else if (SEX.trim().isEmpty()) {
-            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Gender");
-            return false;
-        } else if (mEditAge.getText().toString().trim().isEmpty()) {
-            mEditAge.setError("Enter Age");
-            mEditAge.requestFocus();
-            return false;
-        } else if (mEditAge.getText().toString().trim().length() > 3) {
+//        else if (mEditLName.getText().toString().trim().isEmpty()) {
+//            mEditLName.setError("Enter Last Name");
+//            mEditLName.requestFocus();
+//            return false;
+//        } else if (SEX.trim().isEmpty()) {
+//            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Gender");
+//            return false;
+//        } else if (mEditAge.getText().toString().trim().isEmpty()) {
+//            mEditAge.setError("Enter Age");
+//            mEditAge.requestFocus();
+//            return false;
+//        } else
+
+            if (mEditAge.getText().toString().trim().length() > 3) {
             mEditAge.setError("Enter Correct Age");
             mEditAge.requestFocus();
             return false;
-        } else if (mEditDob.getText().toString().trim().isEmpty()) {
-            mEditDob.setError("Enter Date Of Birth");
-            mEditDob.requestFocus();
-            return false;
-        } else  if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
+        }
+//            else
+//            if (mEditDob.getText().toString().trim().isEmpty()) {
+//            mEditDob.setError("Enter Date Of Birth");
+//            mEditDob.requestFocus();
+//            return false;
+//        }
+            else  if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
             return true;
 
         } else {
@@ -1004,20 +1023,21 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else
-
-        if (IS_CRIMINALCASE.trim().isEmpty()) {
-            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Options");
-//            mEditAge.requestFocus();
-            return false;
-        }else if (linear_cases.getVisibility() == View.VISIBLE) {
-
-            if (listCriminalCases.isEmpty()){
-                ApplicationConstant.DisplayMessageDialog(PendingPersonalDetailsActivity.this,"","Add Criminal Cases");
-                return false;
-            }
-
         }
+
+//        else
+//        if (IS_CRIMINALCASE.trim().isEmpty()) {
+//            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Options");
+////            mEditAge.requestFocus();
+//            return false;
+//        }else if (linear_cases.getVisibility() == View.VISIBLE) {
+//
+//            if (listCriminalCases.isEmpty()){
+//                ApplicationConstant.DisplayMessageDialog(PendingPersonalDetailsActivity.this,"","Add Criminal Cases");
+//                return false;
+//            }
+//
+//        }
 
 
 //        else if (!getLocation.isGPSEnabled) {
@@ -2162,9 +2182,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             else if (mSpinnerCategory.getItemAtPosition(10).toString().trim().contains(SingleSurveyData.getCategory().trim())){
                 mSpinnerCategory.setSelection(10);
             }
-            else if (mSpinnerCategory.getItemAtPosition(11).toString().trim().contains(SingleSurveyData.getCategory().trim())){
-                mSpinnerCategory.setSelection(11);
-            }
 
         }
 
@@ -2273,6 +2290,8 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             mBtnPrevious.setVisibility(View.GONE);
 
         } else {
+
+            stopService(new Intent(PendingPersonalDetailsActivity.this, AudioRecordService.class));
 
             super.onBackPressed();
 

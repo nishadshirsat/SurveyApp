@@ -13,10 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.pending_survey.adapters.PendingSurveyAdapter;
+import com.example.streethawkerssurveyapp.supervisor.activities.SurveyorListActivity;
+import com.example.streethawkerssurveyapp.supervisor.response_pojo.SurveyorListData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SurveyorListAdapter extends RecyclerView.Adapter<SurveyorListAdapter.MyViewHolder>{
 
-    Context context;
+    private Context context;
+    private List<SurveyorListData> allSurveyorList = new ArrayList<>();
+
+    public SurveyorListAdapter(Context context) {
+        this.context = context;
+    }
 
 
     @NonNull
@@ -29,6 +39,18 @@ public class SurveyorListAdapter extends RecyclerView.Adapter<SurveyorListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SurveyorListAdapter.MyViewHolder holder, int position) {
+
+        SurveyorListData SurveyorData = allSurveyorList.get(position);
+
+        holder.mTextSurveyorName.setText(SurveyorData.getName());
+        holder.mTextPhone.setText(SurveyorData.getPhone());
+        holder.mTextPhone.setText("Mobile: "+SurveyorData.getPhone());
+        holder.mTextCorporation.setText("Corporation: "+SurveyorData.getAllotment().getCorporationName());
+        holder.mTextZone.setText("Zone: "+SurveyorData.getAllotment().getZoneName());
+        holder.mTextArea.setText("Area: "+SurveyorData.getAllotment().getAreaName());
+        holder.mTextTVC.setText("TVC: "+SurveyorData.getAllotment().getTvcName());
+        holder.mTextWard.setText("Ward: "+SurveyorData.getAllotment().getWardName());
+
 
 //        holder.mImgRight.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -50,7 +72,12 @@ public class SurveyorListAdapter extends RecyclerView.Adapter<SurveyorListAdapte
 
     @Override
     public int getItemCount() {
-        return 0;
+        return allSurveyorList.size();
+    }
+
+    public void setList(List<SurveyorListData> allSurveyorList) {
+        this.allSurveyorList = allSurveyorList;
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -62,6 +89,7 @@ public class SurveyorListAdapter extends RecyclerView.Adapter<SurveyorListAdapte
         private ImageView mImgRight;
         private TextView mTextArea;
         private TextView mTextTVC;
+        private TextView mTextPhone;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +101,7 @@ public class SurveyorListAdapter extends RecyclerView.Adapter<SurveyorListAdapte
             mImgRight = (ImageView) itemView.findViewById(R.id.ImgRight);
             mTextArea = (TextView) itemView.findViewById(R.id.TextArea);
             mTextTVC = (TextView) itemView.findViewById(R.id.TextTVC);
+            mTextPhone = (TextView) itemView.findViewById(R.id.TextPhone);
 
         }
     }

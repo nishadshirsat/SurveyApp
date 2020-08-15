@@ -30,6 +30,7 @@ import com.example.streethawkerssurveyapp.officer.activities.SupervisorListActiv
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.supervisor.activities.SurveyorListActivity;
+import com.example.streethawkerssurveyapp.supervisor.activities.ViewSurveySupervisorActivity;
 import com.example.streethawkerssurveyapp.suspended_survey.avtivities.SuspendedSurveyActivity;
 import com.example.streethawkerssurveyapp.utils.GetLocation;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
@@ -42,22 +43,29 @@ public class DashboardActivity extends MainActivity {
     private LinearLayout mProfile_layout;
     private RelativeLayout mRelative1;
     private androidx.cardview.widget.CardView mCard_profile;
-    private RelativeLayout mRelative2;
-    private de.hdodenhof.circleimageview.CircleImageView mProfile_image;
+    private LinearLayout mRelative2;
     private TextView mProfile_name;
-    private TextView TextSurvey;
     private TextView mProfile_email;
+    private TextView mCorporationName;
+    private TextView mZoneName;
+    private TextView mTvcName;
     private TextView mAreaName;
-    private TextView CorporationName,ZoneName,TvcName,WardName;
+    private TextView mWardName;
     private TextView mTextUsertype;
     private TextView mTextUsername;
+    private LinearLayout mLinear_Surveyor;
     private LinearLayout mLinear_newSurvey;
+    private TextView mTextSurvey;
     private LinearLayout mLinear_pending;
     private ImageView mImage_dth;
     private LinearLayout mLinear_view;
     private ImageView mImage_postpaid;
     private LinearLayout mLinear_suspended;
     private LinearLayout mLinear_local_data;
+    private LinearLayout mLinear_Supervisor;
+    private LinearLayout mLinear_surveyorList;
+    private LinearLayout mLinear_view_Supervisor;
+
     public GetLocation getLocation;
 
     boolean doubleBackToExitPressedOnce = false;
@@ -80,38 +88,37 @@ public class DashboardActivity extends MainActivity {
         USERTYPE = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.UserType, "");
 
         if (USERTYPE.equals("Surveyor")) {
-            TextSurvey.setText("New Survey");
-            mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(DashboardActivity.this, StartSurveyModeActivity.class));
-                }
-            });
+
+            mLinear_Surveyor.setVisibility(View.VISIBLE);
+            mLinear_Supervisor.setVisibility(View.GONE);
+
         } else if (USERTYPE.equals("Supervisor")) {
-            TextSurvey.setText("Surveyor List");
-            mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(DashboardActivity.this, SurveyorListActivity.class));
-                }
-            });
-        } else {
-            TextSurvey.setText("Supervisor List");
-            mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(DashboardActivity.this, SupervisorListActivity.class));
-                }
-            });
+
+            mLinear_Surveyor.setVisibility(View.GONE);
+            mLinear_Supervisor.setVisibility(View.VISIBLE);
         }
 
 
-//        mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(DashboardActivity.this, StartSurveyModeActivity.class));
-//            }
-//        });
+        mLinear_newSurvey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, StartSurveyModeActivity.class));
+            }
+        });
+
+        mLinear_view_Supervisor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, ViewSurveySupervisorActivity.class));
+            }
+        });
+
+        mLinear_surveyorList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, SurveyorListActivity.class));
+            }
+        });
 
         mLinear_pending.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,10 +177,10 @@ public class DashboardActivity extends MainActivity {
 
         mProfile_name.setText(Name);
         mAreaName.setText("AREA : "+AREA);
-        CorporationName.setText("Corporation : "+CORP);
-        ZoneName.setText("Zone : "+ZONE);
-        WardName.setText("Ward : "+WARD);
-        TvcName.setText("TVC : "+TVC);
+        mCorporationName.setText("Corporation : "+CORP);
+        mZoneName.setText("Zone : "+ZONE);
+        mWardName.setText("Ward : "+WARD);
+        mTvcName.setText("TVC : "+TVC);
         mTextUsername.setText(Role);
 
 
@@ -181,27 +188,32 @@ public class DashboardActivity extends MainActivity {
 
     private void bindVieW() {
 
-        mLinear_local_data = (LinearLayout) findViewById(R.id.linear_local_data);
         mProfile_layout = (LinearLayout) findViewById(R.id.profile_layout);
         mRelative1 = (RelativeLayout) findViewById(R.id.relative1);
         mCard_profile = (androidx.cardview.widget.CardView) findViewById(R.id.card_profile);
+        mRelative2 = (LinearLayout) findViewById(R.id.relative2);
         mProfile_name = (TextView) findViewById(R.id.profile_name);
         mProfile_email = (TextView) findViewById(R.id.profile_email);
+        mCorporationName = (TextView) findViewById(R.id.CorporationName);
+        mZoneName = (TextView) findViewById(R.id.ZoneName);
+        mTvcName = (TextView) findViewById(R.id.TvcName);
         mAreaName = (TextView) findViewById(R.id.AreaName);
+        mWardName = (TextView) findViewById(R.id.WardName);
         mTextUsertype = (TextView) findViewById(R.id.TextUsertype);
         mTextUsername = (TextView) findViewById(R.id.TextUsername);
-        TextSurvey = (TextView) findViewById(R.id.TextSurvey);
-        mAreaName = (TextView) findViewById(R.id.AreaName);
-        CorporationName = (TextView) findViewById(R.id.CorporationName);
-        TvcName = (TextView) findViewById(R.id.TvcName);
-        ZoneName = (TextView) findViewById(R.id.ZoneName);
-        WardName = (TextView) findViewById(R.id.WardName);
+        mLinear_Surveyor = (LinearLayout) findViewById(R.id.Linear_Surveyor);
         mLinear_newSurvey = (LinearLayout) findViewById(R.id.linear_newSurvey);
+        mTextSurvey = (TextView) findViewById(R.id.TextSurvey);
         mLinear_pending = (LinearLayout) findViewById(R.id.linear_pending);
         mImage_dth = (ImageView) findViewById(R.id.image_dth);
         mLinear_view = (LinearLayout) findViewById(R.id.linear_view);
         mImage_postpaid = (ImageView) findViewById(R.id.image_postpaid);
         mLinear_suspended = (LinearLayout) findViewById(R.id.linear_suspended);
+        mLinear_local_data = (LinearLayout) findViewById(R.id.linear_local_data);
+        mLinear_Supervisor = (LinearLayout) findViewById(R.id.Linear_Supervisor);
+        mLinear_surveyorList = (LinearLayout) findViewById(R.id.linear_surveyorList);
+        mLinear_view_Supervisor = (LinearLayout) findViewById(R.id.linear_view_Supervisor);
+
 
     }
 

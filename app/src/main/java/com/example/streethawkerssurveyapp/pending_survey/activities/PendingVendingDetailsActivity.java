@@ -730,19 +730,19 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
             return false;
         }
-        else if (mEditAge.getText().toString().trim().isEmpty()) {
-            mEditAge.setError("Enter No of years");
-            mEditAge.requestFocus();
-            return false;
-        }
-        else if (mEditDob.getText().toString().trim().isEmpty()) {
-            mEditDob.setError("Enter Date");
-            mEditDob.requestFocus();
-            return false;
-        } else if (mSpinnerChoice.getSelectedItem().toString().isEmpty()) {
-            mSpinnerChoice.requestFocus();
-            return false;
-        }
+//        else if (mEditAge.getText().toString().trim().isEmpty()) {
+//            mEditAge.setError("Enter No of years");
+//            mEditAge.requestFocus();
+//            return false;
+//        }
+//        else if (mEditDob.getText().toString().trim().isEmpty()) {
+//            mEditDob.setError("Enter Date");
+//            mEditDob.requestFocus();
+//            return false;
+//        } else if (mSpinnerChoice.getSelectedItem().toString().isEmpty()) {
+//            mSpinnerChoice.requestFocus();
+//            return false;
+//        }
         return true;
     }
 
@@ -753,17 +753,17 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
             return false;
         }
-        else if (mEditAge.getText().toString().trim().isEmpty()) {
-            mEditAge.setError("Enter No of Years");
-            mEditAge.requestFocus();
-            return false;
-        }
-
-        else if (mSpinnerVehical.getSelectedItem().toString().isEmpty()) {
-            ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "", "Select Vehicals");
-            mSpinnerVehical.requestFocus();
-            return false;
-        }
+//        else if (mEditAge.getText().toString().trim().isEmpty()) {
+//            mEditAge.setError("Enter No of Years");
+//            mEditAge.requestFocus();
+//            return false;
+//        }
+//
+//        else if (mSpinnerVehical.getSelectedItem().toString().isEmpty()) {
+//            ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "", "Select Vehicals");
+//            mSpinnerVehical.requestFocus();
+//            return false;
+//        }
 
         return true;
     }
@@ -775,26 +775,27 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
             ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
             return false;
-        } else if (mSpinnerItems.getSelectedItem().toString().isEmpty()) {
-            mEditVendingSite.setError("Select Items");
-            mSpinnerItems.requestFocus();
-            return false;
-        } else if (mEditVendingSite.getText().toString().trim().isEmpty()) {
-            mEditVendingSite.setError("Enter Vending Site");
-            mEditVendingSite.requestFocus();
-            return false;
-        } else if (mEditLFromTime.getText().toString().trim().isEmpty()) {
-            mEditLFromTime.setError("Enter From Time");
-            mEditLFromTime.requestFocus();
-            return false;
-        } else if (mEditLToTime.getText().toString().trim().isEmpty()) {
-            mEditLToTime.setError("Enter To Time");
-            mEditLToTime.requestFocus();
-            return false;
-        }else if (NO_DAYS_ACTIVE.toString().trim().isEmpty()) {
-           ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this,"","Select No of Active Days");
-            return false;
         }
+//        else if (mSpinnerItems.getSelectedItem().toString().isEmpty()) {
+//            mEditVendingSite.setError("Select Items");
+//            mSpinnerItems.requestFocus();
+//            return false;
+//        } else if (mEditVendingSite.getText().toString().trim().isEmpty()) {
+//            mEditVendingSite.setError("Enter Vending Site");
+//            mEditVendingSite.requestFocus();
+//            return false;
+//        } else if (mEditLFromTime.getText().toString().trim().isEmpty()) {
+//            mEditLFromTime.setError("Enter From Time");
+//            mEditLFromTime.requestFocus();
+//            return false;
+//        } else if (mEditLToTime.getText().toString().trim().isEmpty()) {
+//            mEditLToTime.setError("Enter To Time");
+//            mEditLToTime.requestFocus();
+//            return false;
+//        }else if (NO_DAYS_ACTIVE.toString().trim().isEmpty()) {
+//           ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this,"","Select No of Active Days");
+//            return false;
+//        }
 
 
         return true;
