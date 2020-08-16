@@ -927,9 +927,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingVendingDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {

@@ -1008,9 +1008,8 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(DocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1130,9 +1129,8 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(DocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1248,9 +1246,8 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(DocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1365,9 +1362,8 @@ public class DocumentsScanActivity extends AppCompatActivity {
                         alertDialog.show();
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(DocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1946,9 +1942,8 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(DocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 }else {

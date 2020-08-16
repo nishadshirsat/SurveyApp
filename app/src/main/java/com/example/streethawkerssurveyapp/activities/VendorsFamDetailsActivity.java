@@ -597,9 +597,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(VendorsFamDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 }else {

@@ -650,9 +650,8 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingVendorsFamDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingVendorsFamDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 }else {

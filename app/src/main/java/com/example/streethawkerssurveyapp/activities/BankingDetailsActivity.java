@@ -246,9 +246,8 @@ public class BankingDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(BankingDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(BankingDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {

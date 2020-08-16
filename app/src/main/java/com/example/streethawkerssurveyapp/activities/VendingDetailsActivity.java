@@ -953,9 +953,8 @@ public class VendingDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(VendingDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(VendingDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {

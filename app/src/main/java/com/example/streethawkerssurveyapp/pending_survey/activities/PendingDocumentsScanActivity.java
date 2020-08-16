@@ -946,9 +946,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1065,9 +1064,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1180,9 +1178,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1837,9 +1834,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                         alertDialog.show();
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1945,9 +1941,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 }else {

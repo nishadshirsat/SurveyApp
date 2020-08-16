@@ -1274,7 +1274,63 @@ public class PersonalDetailsActivity extends MainActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Invalid QR Data");
+
+//                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Invalid QR Data");
+
+                        try {
+                            JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
+
+                            address.setLoc(jsonAadhar.getString("a"));
+//                        address.setLandmark(jsonAadhar.getString("lm"));
+                            address.setLandmark(null);
+                            address.setSubdist("");
+                            address.setVtc("");
+                            address.setDist("");
+                            address.setHouse("");
+                            address.setPo("");
+                            address.setState("");
+                            address.setStreet("");
+                            address.setCountry("India");
+
+                            aadharData = new AadharData();
+                            aadharData.setAddress(address);
+                            aadharData.setGender(jsonAadhar.getString("g"));
+
+                            try {
+                                String[] datearray = jsonAadhar.getString("d").trim().split("-");
+                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                            } catch (JSONException exe) {
+                                exe.printStackTrace();
+                                aadharData.setDob("0000-00-00");
+
+                            }
+
+
+//                        aadharData.setDob(jsonAadhar.getString("dob"));
+                            aadharData.setFullName(jsonAadhar.getString("n"));
+                            aadharData.setAadhaarNumber(jsonAadhar.getString("u"));
+                            aadharData.setRawXml(xmlData);
+                            aadharData.setZip("");
+                            aadharData.setZipData("zipdata");
+                            aadharData.setCareOf("careoff");
+                            aadharData.setFaceStatus(false);
+                            aadharData.setFaceScore(-1);
+                            aadharData.setHasImage(false);
+                            aadharData.setClientId("clientid123");
+                            aadharData.setShareCode("0");
+                            aadharData.setProfileImage("sgdvsgsd");
+
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
+
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            Gson gson = gsonBuilder.create();
+                            String json_Aadhar = new Gson().toJson(aadharData);
+
+                            AADHAR_DETAILS = json_Aadhar;
+                        }catch (Exception e2){
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Invalid QR Data");
+
+                        }
 
                     }
 
@@ -1460,9 +1516,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PersonalDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1561,9 +1616,8 @@ public class PersonalDetailsActivity extends MainActivity {
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PersonalDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1686,9 +1740,8 @@ public class PersonalDetailsActivity extends MainActivity {
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PersonalDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {

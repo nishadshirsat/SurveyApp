@@ -493,9 +493,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -644,9 +643,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -827,9 +825,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -967,9 +964,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 }else {
@@ -1099,9 +1095,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1230,9 +1225,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1455,9 +1449,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1575,9 +1568,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1722,9 +1714,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1779,9 +1770,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 }else {
@@ -1885,9 +1875,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(LocalSurveyListActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
