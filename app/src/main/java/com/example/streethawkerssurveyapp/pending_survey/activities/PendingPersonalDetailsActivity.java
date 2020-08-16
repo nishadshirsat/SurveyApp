@@ -912,11 +912,20 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 //            return false;
 //        } else
 
-            if (mEditMobile.getText().toString().trim().length() < 10) {
-            mEditMobile.setError("Enter Correct Mobile Number");
-            mEditMobile.requestFocus();
-            return false;
-        }
+
+            if (!mEditMobile.getText().toString().trim().isEmpty()) {
+
+
+                if (mEditMobile.getText().toString().trim().length() < 10) {
+                    mEditMobile.setError("Enter Correct Mobile Number");
+                    mEditMobile.requestFocus();
+                    return false;
+                }
+
+
+            }
+
+
 //            else
 
 //            if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
