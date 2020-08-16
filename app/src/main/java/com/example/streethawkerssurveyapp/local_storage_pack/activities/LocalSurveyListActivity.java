@@ -322,6 +322,49 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         }else  if (surveyData.getPhoto_of_vending_site()!=null && !surveyData.getPhoto_of_vending_site().isEmpty()){
                             UploadVendingSitePhoto();
 
+                        }else  if (surveyData!=null){
+                            SendPersonalDetails();
+
+                        }else  if (familyData!=null){
+                            UpdateFamilySurvey();
+
+                        }else if (vendingData!=null){
+                            UpdateVendingDetails();
+
+                        }else  if (bankingData!=null){
+                            UploadBankDetailsSurvey();
+
+                        }else
+
+                        if (documentsDetails!=null){
+
+                            OtherDocJson =  documentsDetails.getOther_document_json();
+
+                            if (OtherDocJson == null || OtherDocJson.trim().isEmpty()){
+
+                                UploadIdentityProof();
+
+                            }else {
+
+                                try {
+                                    listOtherDoc  = new Gson().fromJson(OtherDocJson, new TypeToken<List<OtherDocDetails>>(){}.getType());
+
+                                    if (!listOtherDoc.isEmpty()){
+                                        UploadOtherDocument();
+
+                                    }else {
+
+                                        UploadIdentityProof();
+
+                                    }
+
+                                } catch (JsonSyntaxException e) {
+                                    e.printStackTrace();
+                                    ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                            "Response",
+                                            e.getMessage().toString());
+                                }
+                            }
                         }
                         else {
                             if (progressDialog != null && progressDialog.isShowing())
@@ -545,6 +588,46 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (surveyData!=null){
                             SendPersonalDetails();
 
+                        }else  if (familyData!=null){
+                            UpdateFamilySurvey();
+
+                        }else    if (vendingData!=null){
+                            UpdateVendingDetails();
+
+                        }else    if (bankingData!=null){
+                            UploadBankDetailsSurvey();
+
+                        }else
+
+                        if (documentsDetails!=null){
+
+                            OtherDocJson =  documentsDetails.getOther_document_json();
+
+                            if (OtherDocJson == null || OtherDocJson.trim().isEmpty()){
+
+                                UploadIdentityProof();
+
+                            }else {
+
+                                try {
+                                    listOtherDoc  = new Gson().fromJson(OtherDocJson, new TypeToken<List<OtherDocDetails>>(){}.getType());
+
+                                    if (!listOtherDoc.isEmpty()){
+                                        UploadOtherDocument();
+
+                                    }else {
+
+                                        UploadIdentityProof();
+
+                                    }
+
+                                } catch (JsonSyntaxException e) {
+                                    e.printStackTrace();
+                                    ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                            "Response",
+                                            e.getMessage().toString());
+                                }
+                            }
                         } else {
                             if (progressDialog != null && progressDialog.isShowing())
                                 progressDialog.dismiss();
@@ -689,6 +772,43 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (familyData!=null){
                             UpdateFamilySurvey();
 
+                        }else  if (vendingData!=null){
+                            UpdateVendingDetails();
+
+                        }else    if (bankingData!=null){
+                            UploadBankDetailsSurvey();
+
+                        }else
+
+                        if (documentsDetails!=null){
+
+                            OtherDocJson =  documentsDetails.getOther_document_json();
+
+                            if (OtherDocJson == null || OtherDocJson.trim().isEmpty()){
+
+                                UploadIdentityProof();
+
+                            }else {
+
+                                try {
+                                    listOtherDoc  = new Gson().fromJson(OtherDocJson, new TypeToken<List<OtherDocDetails>>(){}.getType());
+
+                                    if (!listOtherDoc.isEmpty()){
+                                        UploadOtherDocument();
+
+                                    }else {
+
+                                        UploadIdentityProof();
+
+                                    }
+
+                                } catch (JsonSyntaxException e) {
+                                    e.printStackTrace();
+                                    ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                            "Response",
+                                            e.getMessage().toString());
+                                }
+                            }
                         }else {
 
                             if (progressDialog != null && progressDialog.isShowing())
@@ -754,7 +874,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
-
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
         RequestBody family_members_ = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
         RequestBody json_family_ = RequestBody.create(MediaType.parse("multipart/form-data"), familyData.getFamily_details_json());
@@ -797,6 +916,40 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (vendingData!=null){
                             UpdateVendingDetails();
 
+                        }else  if (bankingData!=null){
+                            UploadBankDetailsSurvey();
+
+                        }else
+
+                        if (documentsDetails!=null){
+
+                            OtherDocJson =  documentsDetails.getOther_document_json();
+
+                            if (OtherDocJson == null || OtherDocJson.trim().isEmpty()){
+
+                                UploadIdentityProof();
+
+                            }else {
+
+                                try {
+                                    listOtherDoc  = new Gson().fromJson(OtherDocJson, new TypeToken<List<OtherDocDetails>>(){}.getType());
+
+                                    if (!listOtherDoc.isEmpty()){
+                                        UploadOtherDocument();
+
+                                    }else {
+
+                                        UploadIdentityProof();
+
+                                    }
+
+                                } catch (JsonSyntaxException e) {
+                                    e.printStackTrace();
+                                    ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                            "Response",
+                                            e.getMessage().toString());
+                                }
+                            }
                         }else {
                             if (progressDialog != null && progressDialog.isShowing())
                                 progressDialog.dismiss();
@@ -895,6 +1048,37 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                         if (bankingData!=null){
                             UploadBankDetailsSurvey();
 
+                        }else
+
+                        if (documentsDetails!=null){
+
+                            OtherDocJson =  documentsDetails.getOther_document_json();
+
+                            if (OtherDocJson == null || OtherDocJson.trim().isEmpty()){
+
+                                UploadIdentityProof();
+
+                            }else {
+
+                                try {
+                                    listOtherDoc  = new Gson().fromJson(OtherDocJson, new TypeToken<List<OtherDocDetails>>(){}.getType());
+
+                                    if (!listOtherDoc.isEmpty()){
+                                        UploadOtherDocument();
+
+                                    }else {
+
+                                        UploadIdentityProof();
+
+                                    }
+
+                                } catch (JsonSyntaxException e) {
+                                    e.printStackTrace();
+                                    ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this,
+                                            "Response",
+                                            e.getMessage().toString());
+                                }
+                            }
                         }else {
 
                             if (progressDialog != null && progressDialog.isShowing())
@@ -1226,7 +1410,6 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             body_identity_back = MultipartBody.Part.createFormData("identity_proof_documents_back", file_identity_back.getName(), request_identity_back);
 
         }
-
 
 
         String CORPORATION =   PrefUtils.getFromPrefs(LocalSurveyListActivity.this,ApplicationConstant.CORPORATION,"");
