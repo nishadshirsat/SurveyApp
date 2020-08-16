@@ -293,7 +293,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:textStyle="bold"
-                                    android:text="New Survey"
+                                    android:text="@string/new_survey"
                                     android:textSize="16sp"
                                     android:textColor="@color/colorAccent"/>
 

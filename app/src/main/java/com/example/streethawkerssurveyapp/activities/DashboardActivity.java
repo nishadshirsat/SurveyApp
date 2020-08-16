@@ -76,6 +76,7 @@ public class DashboardActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+//        setApplicationLocale("en");
 
         if (getLocation == null) {
             getLocation = new GetLocation(DashboardActivity.this);
@@ -258,37 +259,39 @@ public class DashboardActivity extends MainActivity {
 
             case R.id.language_menu:
 
-                View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
-                RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
-                RadioButton RadioHindi=view1.findViewById(R.id.RadioHindi);
-                Button BtnDone=view1.findViewById(R.id.BtnDone);
+                setApplicationLocale("hi");
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+//                View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
+//                RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
+//                RadioButton RadioHindi=view1.findViewById(R.id.RadioHindi);
+//                Button BtnDone=view1.findViewById(R.id.BtnDone);
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+//
+//                final AlertDialog alertDialog = builder.create();
+//
+//                alertDialog.setView(view1);
+//                alertDialog.getWindow().setSoftInputMode(
+//                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+////                boolean checked = ((RadioButton) view1).isChecked();
+//
+//                BtnDone.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+////                        if(RadioHindi.isChecked()){
+////                            setApplicationLocale("hi");
+////                        }else{
+////                            setApplicationLocale("en");
+////                        }
+//                        alertDialog.dismiss();
+//                    }
+//                });
 
-                final AlertDialog alertDialog = builder.create();
 
-                alertDialog.setView(view1);
-                alertDialog.getWindow().setSoftInputMode(
-                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-//                boolean checked = ((RadioButton) view1).isChecked();
-
-                BtnDone.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-//                        if(RadioHindi.isChecked()){
-//                            setApplicationLocale("hi");
-//                        }else{
-//                            setApplicationLocale("en");
-//                        }
-                        alertDialog.dismiss();
-                    }
-                });
-
-
-                alertDialog.show();
+//                alertDialog.show();
 
 
                 return true;
@@ -297,18 +300,19 @@ public class DashboardActivity extends MainActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setApplicationLocale(String hi) {
+    private void setApplicationLocale(String localeCode) {
 
         Resources resources = getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            config.setLocale(new Locale(hi.toLowerCase()));
+            config.setLocale(new Locale(localeCode.toLowerCase()));
+            mTextSurvey.setText(resources.getString(R.string.new_survey));
         } else {
-            config.locale = new Locale(hi.toLowerCase());
+            config.locale = new Locale(localeCode.toLowerCase());
+            mTextSurvey.setText(resources.getString(R.string.new_survey));
         }
         resources.updateConfiguration(config, dm);
-
     }
 
     @Override
