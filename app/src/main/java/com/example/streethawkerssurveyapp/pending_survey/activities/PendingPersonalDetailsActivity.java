@@ -2092,7 +2092,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 if (response.body() != null) {
 
                     if (response.body().isStatus()) {
-
                         SingleSurveyData  = response.body().getResponse();
 
                         setPersonalData();
