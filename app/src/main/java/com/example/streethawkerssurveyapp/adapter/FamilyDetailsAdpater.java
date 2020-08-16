@@ -42,9 +42,9 @@ public class FamilyDetailsAdpater extends RecyclerView.Adapter<FamilyDetailsAdpa
     public void onBindViewHolder(@NonNull final MyPassengerHolder holder, int position) {
 
         holder.fText_Name.setText(familyMembersList.get(position).getFamily_member_name());
-        holder.fText_relatonship.setText("Relatio: "+familyMembersList.get(position).getFamily_member_relationship());
-        holder.fText_Age.setText("Age: "+familyMembersList.get(position).getFamily_member_age());
-        holder.fText_aadharno.setText("Aadhar: "+familyMembersList.get(position).getFamily_member_adhaar());
+        holder.fText_relatonship.setText("Relation : "+familyMembersList.get(position).getFamily_member_relationship());
+        holder.fText_Age.setText("Age : "+familyMembersList.get(position).getFamily_member_age());
+        holder.fText_aadharno.setText("Aadhar No : "+familyMembersList.get(position).getFamily_member_adhaar());
 
     }
 

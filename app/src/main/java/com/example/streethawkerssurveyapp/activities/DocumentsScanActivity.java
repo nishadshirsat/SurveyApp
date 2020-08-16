@@ -371,14 +371,12 @@ public class DocumentsScanActivity extends AppCompatActivity {
                             LinearFour.setVisibility(View.GONE);
                             LinearThree.setVisibility(View.GONE);
 
-
                         } else if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
 
                             ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
                         } else {
                             UploadIdentityProof();
-
                         }
 
                     }
@@ -394,7 +392,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
                             LinearOne.setVisibility(View.GONE);
                             LinearFour.setVisibility(View.GONE);
                             LinearThree.setVisibility(View.VISIBLE);
-                            BtnNext.setText("Submit");
+//                            BtnNext.setText("Submit");
 
 
                         } else if (!ApplicationConstant.isNetworkAvailable(DocumentsScanActivity.this)) {
@@ -403,9 +401,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
 
                         } else {
                             Upload_VendingHistoryProof();
-
                         }
-
 
                     }
 
@@ -418,8 +414,6 @@ public class DocumentsScanActivity extends AppCompatActivity {
                         LinearFour.setVisibility(View.VISIBLE);
 
                     stopService(new Intent(DocumentsScanActivity.this, AudioRecordService.class));
-
-
 
                 }
 //                else  if (TehBazari_Doc_PATH.trim().isEmpty()){
@@ -1070,10 +1064,15 @@ public class DocumentsScanActivity extends AppCompatActivity {
 // MultipartBody.Part is used to send also the actual file name
 
 
-        MultipartBody.Part body_vending_history_front =
-                MultipartBody.Part.createFormData("vending_history_proof_documents_front", file_vending_history_front.getName(), request_vending_history_front);
+        MultipartBody.Part body_vending_history_front = null;
+        if (VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
+            body_vending_history_front = null;
+        } else {
 
+            body_vending_history_front =
+                    MultipartBody.Part.createFormData("vending_history_proof_documents_front", file_vending_history_front.getName(), request_vending_history_front);
 
+        }
 
 
         MultipartBody.Part body_vending_history_back = null;
