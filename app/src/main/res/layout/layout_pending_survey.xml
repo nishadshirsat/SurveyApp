@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginLeft="@dimen/dp_size_10"
-                    android:layout_weight="0.9"
+                    android:layout_weight="1.1"
                     android:gravity="left"
                     android:text="Zone : NZ"
                     android:textColor="@color/black" />
@@ -188,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginLeft="@dimen/dp_size_10"
-                    android:layout_weight="0.9"
+                    android:layout_weight="1.1"
                     android:gravity="left"
                     android:text="Area : FC Road"
                     android:textColor="@color/black" />
@@ -208,12 +208,24 @@
                 android:textColor="@color/orange"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/TextComments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="@dimen/padding_5"
+                android:gravity="right"
+                android:text="Comments : Pending"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/Btn_Suspend"
                 android:layout_width="wrap_content"
                 android:layout_gravity="right"
                 android:background="@color/colorPrimary"
                 android:text="Suspend"
+                android:layout_marginTop="@dimen/margin_15dp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:layout_height="35dp"/>
