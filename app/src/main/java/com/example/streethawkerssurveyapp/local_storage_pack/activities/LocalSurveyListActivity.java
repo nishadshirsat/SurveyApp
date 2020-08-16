@@ -1325,10 +1325,15 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
 // MultipartBody.Part is used to send also the actual file name
 
+        MultipartBody.Part body_vending_history_front = null;
+        if (documentsDetails.getVending_history_proof_front().trim().isEmpty()) {
+            body_vending_history_front = null;
+        } else {
 
-        MultipartBody.Part body_vending_history_front =
-                MultipartBody.Part.createFormData("vending_history_proof_documents_front", file_vending_history_front.getName(), request_vending_history_front);
+            body_vending_history_front =
+                    MultipartBody.Part.createFormData("vending_history_proof_documents_front", file_vending_history_front.getName(), request_vending_history_front);
 
+        }
 
 
 
