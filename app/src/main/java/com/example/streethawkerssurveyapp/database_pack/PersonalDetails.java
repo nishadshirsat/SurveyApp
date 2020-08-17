@@ -66,6 +66,8 @@ public class PersonalDetails {
 
     private String criminal_details_json;
 
+    private String biometric_image;
+
     public PersonalDetails(@NonNull String survey_id,
                            String photo_of_vendor,
                            String photo_of_vending_site,
@@ -90,7 +92,8 @@ public class PersonalDetails {
                            String annual_income,
                            String aadhar_details_json,
                            String is_criminal_case,
-                           String criminal_details_json) {
+                           String criminal_details_json,
+                           String biometric_image) {
 
         this.survey_id = survey_id;
         this.photo_of_vendor = photo_of_vendor;
@@ -117,10 +120,18 @@ public class PersonalDetails {
         this.aadhar_details_json = aadhar_details_json;
         this.is_criminal_case = is_criminal_case;
         this.criminal_details_json = criminal_details_json;
+        this.biometric_image = biometric_image;
 
 
     }
 
+    public String getBiometric_image() {
+        return biometric_image;
+    }
+
+    public void setBiometric_image(String biometric_image) {
+        this.biometric_image = biometric_image;
+    }
 
     public String getAadhar_details() {
         return aadhar_details;

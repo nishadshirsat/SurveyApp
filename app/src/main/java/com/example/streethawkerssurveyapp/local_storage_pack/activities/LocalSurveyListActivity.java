@@ -680,6 +680,23 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
             AadharDetails = surveyData.getAadhar_details_json();
         }
 
+        File file_biometric = new File(surveyData.getBiometric_image());
+
+        RequestBody request_biometric =
+                RequestBody.create(MediaType.parse("image/png"), file_biometric);
+
+        MultipartBody.Part body_biometric = null;
+        if (surveyData.getBiometric_image().trim().isEmpty()) {
+            body_biometric = null;
+        } else {
+
+            body_biometric =
+                    MultipartBody.Part.createFormData("aadhaar_fingerprint", file_biometric.getName(), request_biometric);
+
+        }
+
+
+
         String UNiq_Id = "";
 
         UNiq_Id = PrefUtils.getFromPrefs(LocalSurveyListActivity.this, ApplicationConstant.URI_NO_, "");
@@ -747,7 +764,8 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
                 IS_CRIMINALCASE_,
                 CRIMINALCASE_NO_,
                 LATITUDE,
-                LONGITUDE
+                LONGITUDE,
+                body_biometric
 //                CRIMINALCASE_STATUS_
         );
 

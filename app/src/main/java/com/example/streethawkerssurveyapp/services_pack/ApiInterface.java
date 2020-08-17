@@ -69,6 +69,7 @@ public interface ApiInterface {
             @Part("ward") RequestBody ward,
             @Part MultipartBody.Part photo_of_vendor_site);
 
+
     @Multipart
     @POST("update-survey")
     Call<UpdateSurveyResponse> getAddSurvey(
@@ -101,7 +102,8 @@ public interface ApiInterface {
 //            @Part("criminal_case_fir_number") RequestBody criminal_case_fir_number,
 //            @Part("criminal_case_name_of_police") RequestBody criminal_case_name_of_police,
             @Part("latitude") RequestBody latitude,
-            @Part("longitude") RequestBody longitude);
+            @Part("longitude") RequestBody longitude,
+            @Part MultipartBody.Part aadhaar_fingerprint);
 
 
     @Multipart

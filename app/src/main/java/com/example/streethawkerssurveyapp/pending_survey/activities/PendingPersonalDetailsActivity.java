@@ -70,6 +70,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -249,6 +250,9 @@ public class PendingPersonalDetailsActivity extends MainActivity {
     private CardView CaptureBiometric;
     private TextView TextBioCaptured;
     private ImageView image_bio;
+
+    private String BiometricImagePath="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1372,19 +1376,26 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             Longitude = getLocation.getLongitude();
         }
 
-        File file1 = new File(photoPath);
 
-        RequestBody request_photo =
-                RequestBody.create(MediaType.parse("image/png"), file1);
 
         String UNiq_Id = "";
 
-//        if (ApplicationConstant.SurveyId.trim().isEmpty()) {
-//            UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
-//
-//        } else {
-//            UNiq_Id = ApplicationConstant.SurveyId;
-//        }
+        File file_biometric = new File(BiometricImagePath);
+
+        RequestBody request_biometric =
+                RequestBody.create(MediaType.parse("image/png"), file_biometric);
+
+
+        MultipartBody.Part body_biometric = null;
+        if (BiometricImagePath.trim().isEmpty()) {
+            body_biometric = null;
+        } else {
+
+            body_biometric =
+                    MultipartBody.Part.createFormData("aadhaar_fingerprint", file_biometric.getName(), request_biometric);
+
+        }
+
 
         UNiq_Id = PrefUtils.getFromPrefs(PendingPersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
@@ -1397,9 +1408,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_fhoto =
-                MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
-
 
         RequestBody NAME_VENDOR_ = RequestBody.create(MediaType.parse("multipart/form-data"), NAME_VENDOR);
         RequestBody SURVEY_ID_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
@@ -1462,7 +1470,8 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 IS_CRIMINALCASE_,
                 CRIMINALCASE_NO_,
                 LATITUDE,
-                LONGITUDE
+                LONGITUDE,
+                body_biometric
 //                CRIMINALCASE_STATUS_
         );
 
@@ -2468,6 +2477,16 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
             if( capturedData.getImage()!=null){
                 image_bio.setImageBitmap( capturedData.getImage());
+
+                try {
+                    BiometricImagePath = ApplicationConstant.createImageFile(ApplicationConstant.SURVEY_ID+"_BioImage"+".jpeg", "Documents", PendingPersonalDetailsActivity.this);
+
+                    Bitmap bitmap_biometric = ApplicationConstant.CompressedBitmap(new File(BiometricImagePath));
+                    writeBitmap(bitmap_biometric,new File(BiometricImagePath));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             // quality : 40~100
@@ -2756,6 +2775,16 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void writeBitmap(Bitmap bitmap, File filename) {
+        try (FileOutputStream out = new FileOutputStream(filename)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+//            out.close();
+            // PNG is a lossless format, the compression factor (100) is ignored
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
