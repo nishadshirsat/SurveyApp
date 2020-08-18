@@ -97,6 +97,9 @@ public class PendingBankingDetailsActivity extends AppCompatActivity {
                     mLinearHead.setVisibility(View.GONE);
                     mLinearOne.setVisibility(View.VISIBLE);
 
+                    mBtnNext.setText("Submit");
+
+
                 }else   if (mLinearOne.getVisibility() == View.VISIBLE) {
 
                     BRANCH_NAME = mEditBranchName.getText().toString().trim();
@@ -282,6 +285,9 @@ public class PendingBankingDetailsActivity extends AppCompatActivity {
 
             mLinearHead.setVisibility(View.VISIBLE);
             mLinearOne.setVisibility(View.GONE);
+
+            mBtnNext.setText("Next");
+
 
         }else if (mLinearHead.getVisibility() == View.VISIBLE) {
 

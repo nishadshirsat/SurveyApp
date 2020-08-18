@@ -207,8 +207,13 @@ public class SingleSurveyDetails implements Serializable {
 	@SerializedName("age")
 	private String age;
 
+
+
 	@SerializedName("tehbazari_available")
 	private String tehbazariAvailable;
+
+	@SerializedName("aadhaar_fingerprint")
+	private String aadhaar_fingerprint;
 
 	public List<DocumentsData> getOther_documents() {
 		return other_documents;
@@ -754,6 +759,15 @@ public class SingleSurveyDetails implements Serializable {
 	public String getTehbazariAvailable(){
 		return tehbazariAvailable;
 	}
+
+	public String getAadhaar_fingerprint() {
+		return aadhaar_fingerprint;
+	}
+
+	public void setAadhaar_fingerprint(String aadhaar_fingerprint) {
+		this.aadhaar_fingerprint = aadhaar_fingerprint;
+	}
+
 
 	@Override
  	public String toString(){

@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.CorporationZoneActivity;
@@ -250,6 +251,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
     private CardView CaptureBiometric;
     private TextView TextBioCaptured;
     private ImageView image_bio;
+    private ImageView ImgDeviceBio;
 
     private String BiometricImagePath="";
 
@@ -746,7 +748,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 //                    BRANCH_NAME = mEditBranchName.getText().toString().trim();
 
 
-
                     NAME_OFFATHER_HUSBAND = mEditFatherName.getText().toString().trim() + " "
                             + mEditFatherMName.getText().toString().trim() + " "
                             + mEditFatherLName.getText().toString().trim();
@@ -1068,6 +1069,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
     private void bindView() {
 
         image_bio = (ImageView) findViewById(R.id.image_bio);
+        ImgDeviceBio = (ImageView) findViewById(R.id.ImgDeviceBio);
         CaptureBiometric = (CardView) findViewById(R.id.CaptureBiometric);
         TextBioCaptured = (TextView) findViewById(R.id.TextBioCaptured);
         mEditAnnualIncome = (EditText) findViewById(R.id.EditAnnualIncome);
@@ -2133,6 +2135,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
             }
         });
+
     }
 
     private void setPersonalData() {
@@ -2142,6 +2145,20 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(mImgVendorPhoto);
+
+        }
+
+        if (SingleSurveyData.getAadhaar_fingerprint()!=null){
+
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.ic_fingerprint_black_24dp);
+            requestOptions.error(R.drawable.ic_fingerprint_black_24dp);
+
+            Glide.with(this).setDefaultRequestOptions(requestOptions)
+                    .load(SingleSurveyData.getAadhaar_fingerprint())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(ImgDeviceBio);
 
         }
 
@@ -2361,6 +2378,9 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             mLinearTwo.setVisibility(View.GONE);
             mLinearFive.setVisibility(View.GONE);
 
+            mBtnNext.setText("Next");
+
+
         } else if (mLinearFour.getVisibility() == View.VISIBLE) {
 
             mLinearFour.setVisibility(View.GONE);
@@ -2481,8 +2501,9 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 try {
                     BiometricImagePath = ApplicationConstant.createImageFile(ApplicationConstant.SURVEY_ID+"_BioImage"+".jpeg", "Documents", PendingPersonalDetailsActivity.this);
 
+                    writeBitmap(capturedData.getImage(),new File(BiometricImagePath));
+
                     Bitmap bitmap_biometric = ApplicationConstant.CompressedBitmap(new File(BiometricImagePath));
-                    writeBitmap(bitmap_biometric,new File(BiometricImagePath));
 
                 } catch (IOException e) {
                     e.printStackTrace();

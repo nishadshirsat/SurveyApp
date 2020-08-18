@@ -1536,6 +1536,7 @@
                             android:paddingBottom="10dp">
 
                             <ImageView
+                                android:id="@+id/ImgDeviceBio"
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:src="@drawable/ic_fingerprint_black_24dp" />

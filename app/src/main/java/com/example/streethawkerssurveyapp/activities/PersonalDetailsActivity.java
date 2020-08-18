@@ -2114,6 +2114,8 @@ public class PersonalDetailsActivity extends MainActivity {
             mLinearTwo.setVisibility(View.GONE);
             mLinearFive.setVisibility(View.GONE);
 
+            mBtnNext.setText("Next");
+
         } else if (mLinearFour.getVisibility() == View.VISIBLE) {
 
             mLinearFour.setVisibility(View.GONE);
@@ -2230,8 +2232,9 @@ public class PersonalDetailsActivity extends MainActivity {
                 try {
                     BiometricImagePath = ApplicationConstant.createImageFile(ApplicationConstant.SURVEY_ID+"_BioImage"+".jpeg", "Documents", PersonalDetailsActivity.this);
 
-                  Bitmap bitmap_biometric = ApplicationConstant.CompressedBitmap(new File(BiometricImagePath));
-                  writeBitmap(bitmap_biometric,new File(BiometricImagePath));
+                    writeBitmap(capturedData.getImage(),new File(BiometricImagePath));
+
+                    Bitmap bitmap_biometric = ApplicationConstant.CompressedBitmap(new File(BiometricImagePath));
 
                 } catch (IOException e) {
                     e.printStackTrace();

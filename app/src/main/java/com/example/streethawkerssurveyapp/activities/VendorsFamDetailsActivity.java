@@ -178,10 +178,12 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
                         }else if (lEditKuccha.getText().toString().trim().isEmpty()){
                             lEditKuccha.setError("enter kuccha");
                             lEditKuccha.requestFocus();
-                        }else if (lEditRent.getText().toString().trim().isEmpty()){
-                            lEditRent.setError("enter rent");
-                            lEditRent.requestFocus();
-                        }else {
+                        }
+//                        else if (lEditRent.getText().toString().trim().isEmpty()){
+//                            lEditRent.setError("enter rent");
+//                            lEditRent.requestFocus();
+//                        }
+                        else {
 
                             LandAssets landAssets = new LandAssets(lEditPlot.getText().toString().trim(),
                                     lEditHouseSize.getText().toString().trim(),
@@ -645,6 +647,8 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
             mLinearHead.setVisibility(View.VISIBLE);
             mLinearOne.setVisibility(View.GONE);
             mBtnPrevious.setVisibility(View.VISIBLE);
+
+            mBtnNext.setText("NEXT");
 
         }
 

@@ -413,6 +413,9 @@ public class DocumentsScanActivity extends AppCompatActivity {
                         LinearTwo.setVisibility(View.GONE);
                         LinearFour.setVisibility(View.VISIBLE);
 
+                    BtnNext.setText("Submit");
+
+
                     stopService(new Intent(DocumentsScanActivity.this, AudioRecordService.class));
 
                 }
@@ -1124,7 +1127,6 @@ public class DocumentsScanActivity extends AppCompatActivity {
                         LinearOne.setVisibility(View.GONE);
                         LinearFour.setVisibility(View.GONE);
                         LinearThree.setVisibility(View.VISIBLE);
-                        BtnNext.setText("Submit");
                         stopService(new Intent(DocumentsScanActivity.this, AudioRecordService.class));
 
                     } else {
@@ -1770,6 +1772,9 @@ public class DocumentsScanActivity extends AppCompatActivity {
             LinearOne.setVisibility(View.GONE);
             LinearThree.setVisibility(View.VISIBLE);
             LinearTwo.setVisibility(View.GONE);
+
+            BtnNext.setText("Next");
+
 
         }
          else if (LinearThree.getVisibility() == View.VISIBLE) {

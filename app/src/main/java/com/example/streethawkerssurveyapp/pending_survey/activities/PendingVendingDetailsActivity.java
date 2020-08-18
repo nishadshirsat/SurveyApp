@@ -1143,6 +1143,9 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
             mLinearThree.setVisibility(View.GONE);
             mLinearTwo.setVisibility(View.VISIBLE);
 
+            mBtnNext.setText("Next");
+
+
         } else if (mLinearTwo.getVisibility() == View.VISIBLE) {
 
             mLinearOne.setVisibility(View.VISIBLE);

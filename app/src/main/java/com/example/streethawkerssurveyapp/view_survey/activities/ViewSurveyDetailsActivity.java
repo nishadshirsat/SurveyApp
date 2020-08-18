@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharData;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
@@ -146,6 +147,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
     private LinearLayout mCardAdhaarDetails;
     private TextView mTextUidNo;
     private ImageView mImgProfile;
+    private ImageView mImg_Biometric;
     private TextView mTextFullName;
     private TextView mTextSex;
     private TextView mTextBirthDate;
@@ -161,7 +163,6 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
     private TextView mTextLocationAadhar;
     private TextView mTextCountry;
     private Button mBtnDone;
-
     private ProgressDialog progressDialog;
     private SingleSurveyDetails SingleSurveyData;
     private String URI_NO="";
@@ -443,6 +444,15 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
             mTextLocationAadhar.setText(AadharData.getLoc());
             mTextCountry.setText(AadharData.getCountry());
 
+        }
+
+
+        if (SingleSurveyData.getAadhaar_fingerprint()!=null){
+
+            Glide.with(this).load(SingleSurveyData.getAadhaar_fingerprint())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(mImg_Biometric);
         }
 
     }
@@ -889,6 +899,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
         mCardAdhaarDetails = (LinearLayout) findViewById(R.id.CardAdhaarDetails);
         mTextUidNo = (TextView) findViewById(R.id.TextUidNo);
         mImgProfile = (ImageView) findViewById(R.id.ImgProfile);
+        mImg_Biometric = (ImageView) findViewById(R.id.Img_Biometric);
         mTextFullName = (TextView) findViewById(R.id.TextFullName);
         mTextSex = (TextView) findViewById(R.id.TextSex);
         mTextBirthDate = (TextView) findViewById(R.id.TextBirthDate);
