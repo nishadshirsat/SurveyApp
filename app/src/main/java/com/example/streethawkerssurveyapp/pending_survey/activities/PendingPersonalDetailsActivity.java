@@ -2145,7 +2145,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(mImgVendorPhoto);
-
         }
 
         if (SingleSurveyData.getAadhaar_fingerprint()!=null){
