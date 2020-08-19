@@ -162,7 +162,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/edittext_bg"
                     android:hint="Ward "
-                    android:inputType="text"
+                    android:inputType="textCapSentences"
                     android:padding="10dp"
                     android:textSize="14sp" />
 
@@ -212,7 +212,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/edittext_bg"
                     android:hint="Area Name"
-                    android:inputType="text"
+                    android:inputType="textCapSentences"
                     android:padding="10dp"
                     android:textSize="14sp" />
 

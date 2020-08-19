@@ -5,5 +5,5 @@
     <string name="pending_survey">लंबित सर्वेक्षण</string>
     <string name="view_survey">सर्वेक्षण देखें</string>
     <string name="suspended_survey">निलंबित सर्वेक्षण</string>
-    <string name="Local_survey" >स्थानीय सर्वेक्षण सूची</string>
+    <string name="Local_survey" >ऑफलाइन सर्वेक्षण सूची</string>
 </resources>

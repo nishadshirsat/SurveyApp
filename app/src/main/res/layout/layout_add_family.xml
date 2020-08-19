@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_bg"
             android:hint="Name"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:imeOptions="actionNext"
             android:padding="10dp"
             android:textSize="14sp" />
@@ -57,7 +57,7 @@
             android:imeOptions="actionNext"
             android:background="@drawable/edittext_bg"
             android:hint="Relationship"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:padding="10dp"
             android:textSize="14sp" />
 

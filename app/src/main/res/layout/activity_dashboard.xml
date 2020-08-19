@@ -293,7 +293,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:textStyle="bold"
-                                    android:text="New Survey"
+                                    android:text="@string/new_survey"
                                     android:textSize="16sp"
                                     android:textColor="@color/colorAccent"/>
 
@@ -326,9 +326,10 @@
                                     />
 
                                 <TextView
+                                    android:id="@+id/TextPending"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Pending Survey"
+                                    android:text="@string/pending_survey"
                                     android:layout_marginTop="10dp"
                                     android:textStyle="bold"
                                     android:layout_gravity="center"
@@ -378,9 +379,10 @@
                                     />
 
                                 <TextView
+                                    android:id="@+id/TextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="View Survey"
+                                    android:text="@string/view_survey"
                                     android:layout_marginTop="10dp"
                                     android:textStyle="bold"
                                     android:textSize="16sp"
@@ -412,9 +414,10 @@
                                     />
 
                                 <TextView
+                                    android:id="@+id/TextSuspended"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Suspended Survey"
+                                    android:text="@string/suspended_survey"
                                     android:layout_marginTop="10dp"
                                     android:textStyle="bold"
                                     android:layout_gravity="center"
@@ -465,9 +468,10 @@
                                     />
 
                                 <TextView
+                                    android:id="@+id/TextLocal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Offline Survey List"
+                                    android:text="@string/Local_survey"
                                     android:layout_marginTop="10dp"
                                     android:textStyle="bold"
                                     android:textSize="16sp"

@@ -176,7 +176,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/edittext_bg"
                         android:hint="Name"
-                        android:inputType="text"
+                        android:inputType="textCapSentences"
                         android:padding="10dp"
                         android:textSize="14sp" />
 
@@ -415,12 +415,12 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"></LinearLayout>
+                        android:layout_weight="1"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"></LinearLayout>
+                        android:layout_weight="1"/>
 
                     <Button
                         android:id="@+id/btn_all_days"
@@ -532,7 +532,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"></LinearLayout>
+                        android:layout_weight="1"/>
 
 
                 </LinearLayout>

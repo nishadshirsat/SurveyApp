@@ -217,7 +217,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -230,7 +230,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Middle"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -243,7 +243,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Surname"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -660,7 +660,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -673,7 +673,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Middle"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -686,7 +686,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Surname"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -747,7 +747,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -760,7 +760,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Middle"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -773,7 +773,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Surname"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -845,7 +845,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="First"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -858,7 +858,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Middle"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -871,7 +871,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Surname"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1121,7 +1121,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Area"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1134,7 +1134,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="House No."
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1147,7 +1147,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Road"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1169,7 +1169,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="City"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1267,7 +1267,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Area"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1280,7 +1280,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="House No."
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1293,7 +1293,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="Road"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -1315,7 +1315,7 @@
                             android:background="@drawable/edittext_bg"
                             android:hint="City"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 

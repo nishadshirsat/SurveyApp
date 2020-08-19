@@ -128,7 +128,7 @@
                         android:background="@drawable/edittext_bg"
                         android:hint="Bank Name"
                         android:imeOptions="actionNext"
-                        android:inputType="text"
+                        android:inputType="textCapSentences"
                         android:padding="10dp"
                         android:textSize="14sp" />
 
@@ -148,7 +148,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/edittext_bg"
                         android:hint="Branch Name"
-                        android:inputType="text"
+                        android:inputType="textCapSentences"
                         android:padding="10dp"
                         android:imeOptions="actionNext"
                         android:textSize="14sp" />
