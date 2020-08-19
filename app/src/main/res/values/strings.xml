@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Hawkers Survey App</string>
-    <string name="net_speed_problem">Unable to connect! Please check internet connection speed</string>
+    <string name="net_speed_problem" translatable="false">Unable to connect! Please check internet connection speed</string>
 
 
     <string-array name="education">
@@ -110,5 +110,9 @@
     </string-array>
 
     <string name="new_survey">New Survey</string>
+    <string name="pending_survey" translatable="false">Pending Survey</string>
+    <string name="view_survey" translatable="false">View Survey</string>
+    <string name="suspended_survey" translatable="false">Suspended Survey</string>
+    <string name="Local_survey" translatable="false">Local Survey List</string>
 
 </resources>

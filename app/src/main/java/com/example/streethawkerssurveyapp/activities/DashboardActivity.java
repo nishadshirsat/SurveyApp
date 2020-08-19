@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class DashboardActivity extends MainActivity {
     private TextView mTextUsername;
     private LinearLayout mLinear_Surveyor;
     private LinearLayout mLinear_newSurvey;
-    private TextView mTextSurvey;
+    private TextView mTextSurvey,TextPending,TextView,Textsuspended,TextLocal;
     private LinearLayout mLinear_pending;
     private ImageView mImage_dth;
     private LinearLayout mLinear_view;
@@ -205,6 +206,10 @@ public class DashboardActivity extends MainActivity {
         mLinear_Surveyor = (LinearLayout) findViewById(R.id.Linear_Surveyor);
         mLinear_newSurvey = (LinearLayout) findViewById(R.id.linear_newSurvey);
         mTextSurvey = (TextView) findViewById(R.id.TextSurvey);
+        TextPending = (TextView) findViewById(R.id.TextPending);
+        TextView = (TextView) findViewById(R.id.TextView);
+        TextLocal = (TextView) findViewById(R.id.TextLocal);
+        Textsuspended = (TextView) findViewById(R.id.TextSuspended);
         mLinear_pending = (LinearLayout) findViewById(R.id.linear_pending);
         mImage_dth = (ImageView) findViewById(R.id.image_dth);
         mLinear_view = (LinearLayout) findViewById(R.id.linear_view);
@@ -259,39 +264,47 @@ public class DashboardActivity extends MainActivity {
 
             case R.id.language_menu:
 
-                setApplicationLocale("hi");
-
-//                View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
-//                RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
-//                RadioButton RadioHindi=view1.findViewById(R.id.RadioHindi);
-//                Button BtnDone=view1.findViewById(R.id.BtnDone);
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
-//
-//                final AlertDialog alertDialog = builder.create();
-//
-//                alertDialog.setView(view1);
-//                alertDialog.getWindow().setSoftInputMode(
-//                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-//                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-////                boolean checked = ((RadioButton) view1).isChecked();
-//
-//                BtnDone.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-////                        if(RadioHindi.isChecked()){
-////                            setApplicationLocale("hi");
-////                        }else{
-////                            setApplicationLocale("en");
-////                        }
-//                        alertDialog.dismiss();
-//                    }
-//                });
 
 
-//                alertDialog.show();
+                View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
+                RadioGroup RadioLanguages=view1.findViewById(R.id.RadioLanguages);
+                RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
+                RadioButton RadioHindi=view1.findViewById(R.id.RadioHindi);
+                Button BtnDone=view1.findViewById(R.id.BtnDone);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+
+                final AlertDialog alertDialog = builder.create();
+
+                alertDialog.setView(view1);
+                alertDialog.getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+//                boolean checked = ((RadioButton) view1).isChecked();
+
+                RadioLanguages.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        if(checkedId==R.id.RadioEnglish){
+                            setApplicationLocale("hi");
+                            alertDialog.dismiss();
+                        }else{
+                            setApplicationLocale("en");
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+
+                BtnDone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+
+                alertDialog.show();
 
 
                 return true;
@@ -308,9 +321,17 @@ public class DashboardActivity extends MainActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             config.setLocale(new Locale(localeCode.toLowerCase()));
             mTextSurvey.setText(resources.getString(R.string.new_survey));
+            TextPending.setText(resources.getString(R.string.pending_survey));
+            TextLocal.setText(resources.getString(R.string.Local_survey));
+            Textsuspended.setText(resources.getString(R.string.suspended_survey));
+            TextView.setText(resources.getString(R.string.view_survey));
         } else {
             config.locale = new Locale(localeCode.toLowerCase());
             mTextSurvey.setText(resources.getString(R.string.new_survey));
+            TextPending.setText(resources.getString(R.string.pending_survey));
+            TextLocal.setText(resources.getString(R.string.Local_survey));
+            Textsuspended.setText(resources.getString(R.string.suspended_survey));
+            TextView.setText(resources.getString(R.string.view_survey));
         }
         resources.updateConfiguration(config, dm);
     }
