@@ -161,6 +161,63 @@ public class ApplicationConstant {
         }
     }
 
+    public static void displayErrorMessage(Context context, String errorCode) {
+        String message = "";
+
+        if (errorCode.trim().equals("8001")){
+            message = "Authorization Header Empty";
+        } else if (errorCode.trim().equals("8002")){
+            message = "Authorization Token Invalid";
+        }else if (errorCode.trim().equals("8003")){
+            message = "Invalid Credentials";
+        }else if (errorCode.trim().equals("8004")){
+            message = "Undefined Data";
+        }else if (errorCode.trim().equals("8005")){
+            message = "User not authorized for Login";
+        }else if (errorCode.trim().equals("8006")){
+            message = "Invalid Data family Members";
+        }else if (errorCode.trim().equals("8007")){
+            message = "Database Save Error";
+        }
+        else if (errorCode.trim().equals("8008")){
+            message = "Phone Number Required For Sending SMS";
+        } else if (errorCode.trim().equals("8009")){
+            message = "Criminal case Data Invalid";
+        }else if (errorCode.trim().equals("8010")){
+            message = "Land Assets Data Invalid";
+        }else if (errorCode.trim().equals("8011")){
+            message = "Survey with this barcode already present";
+        }else if (errorCode.trim().equals("8012")){
+            message = "Corporation required/ Ward required/Zone required";
+        }else if (errorCode.trim().equals("8013")){
+            message = "Type of Identity Required";
+        }else if (errorCode.trim().equals("8014")){
+            message = "Type of Vending History Proof Required";
+        }
+        else if (errorCode.trim().equals("8015")){
+            message = "Invalid barcode scanned";
+        }
+
+        if (context != null) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+            builder1.setMessage(message);
+            builder1.setCancelable(true);
+            builder1.setTitle("");
+
+            builder1.setPositiveButton(
+                    "Okay",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.setCanceledOnTouchOutside(false);
+            alert11.show();
+        }
+    }
+
 
     public static String getDaysBeetweenTwoDays(String fromDate, String toDate) {
         SimpleDateFormat myFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -339,4 +396,6 @@ public class ApplicationConstant {
         img.recycle();
         return rotatedImg;
     }
+
+
 }

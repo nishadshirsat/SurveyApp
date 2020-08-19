@@ -265,6 +265,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
     private SurveyDatabase surveyDatabase;
     private SurveyDao surveyDao;
+    private String BiometricImagePath="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -945,11 +946,17 @@ public class PersonalDetailsActivity extends MainActivity {
 //            return false;
 //        } else
 
-            if (mEditMobile.getText().toString().trim().length() < 10) {
-            mEditMobile.setError("Enter Correct Mobile Number");
-            mEditMobile.requestFocus();
-            return false;
-        }
+                    if (!mEditMobile.getText().toString().trim().isEmpty()) {
+
+
+                        if (mEditMobile.getText().toString().trim().length() < 10) {
+                            mEditMobile.setError("Enter Correct Mobile Number");
+                            mEditMobile.requestFocus();
+                            return false;
+                        }
+
+
+                    }
 //        else
 //
 //            if (mSpinnerEducation.getSelectedItem().toString().trim().isEmpty()) {
@@ -1268,7 +1275,63 @@ public class PersonalDetailsActivity extends MainActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Invalid QR Data");
+
+//                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Invalid QR Data");
+
+                        try {
+                            JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
+
+                            address.setLoc(jsonAadhar.getString("a"));
+//                        address.setLandmark(jsonAadhar.getString("lm"));
+                            address.setLandmark(null);
+                            address.setSubdist("");
+                            address.setVtc("");
+                            address.setDist("");
+                            address.setHouse("");
+                            address.setPo("");
+                            address.setState("");
+                            address.setStreet("");
+                            address.setCountry("India");
+
+                            aadharData = new AadharData();
+                            aadharData.setAddress(address);
+                            aadharData.setGender(jsonAadhar.getString("g"));
+
+                            try {
+                                String[] datearray = jsonAadhar.getString("d").trim().split("-");
+                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                            } catch (JSONException exe) {
+                                exe.printStackTrace();
+                                aadharData.setDob("0000-00-00");
+
+                            }
+
+
+//                        aadharData.setDob(jsonAadhar.getString("dob"));
+                            aadharData.setFullName(jsonAadhar.getString("n"));
+                            aadharData.setAadhaarNumber(jsonAadhar.getString("u"));
+                            aadharData.setRawXml(xmlData);
+                            aadharData.setZip("");
+                            aadharData.setZipData("zipdata");
+                            aadharData.setCareOf("careoff");
+                            aadharData.setFaceStatus(false);
+                            aadharData.setFaceScore(-1);
+                            aadharData.setHasImage(false);
+                            aadharData.setClientId("clientid123");
+                            aadharData.setShareCode("0");
+                            aadharData.setProfileImage("sgdvsgsd");
+
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
+
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            Gson gson = gsonBuilder.create();
+                            String json_Aadhar = new Gson().toJson(aadharData);
+
+                            AADHAR_DETAILS = json_Aadhar;
+                        }catch (Exception e2){
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"","Invalid QR Data");
+
+                        }
 
                     }
 
@@ -1330,19 +1393,24 @@ public class PersonalDetailsActivity extends MainActivity {
             Longitude = getLocation.getLongitude();
         }
 
-        File file1 = new File(photoPath);
+        File file_biometric = new File(BiometricImagePath);
 
-        RequestBody request_photo =
-                RequestBody.create(MediaType.parse("image/png"), file1);
+        RequestBody request_biometric =
+                RequestBody.create(MediaType.parse("image/png"), file_biometric);
 
         String UNiq_Id = "";
 
-//        if (ApplicationConstant.SurveyId.trim().isEmpty()) {
-//            UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
-//
-//        } else {
-//            UNiq_Id = ApplicationConstant.SurveyId;
-//        }
+
+        MultipartBody.Part body_biometric = null;
+        if (BiometricImagePath.trim().isEmpty()) {
+            body_biometric = null;
+        } else {
+
+            body_biometric =
+                    MultipartBody.Part.createFormData("aadhaar_fingerprint", file_biometric.getName(), request_biometric);
+
+        }
+
 
         UNiq_Id = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.URI_NO_, "");
 
@@ -1355,8 +1423,6 @@ public class PersonalDetailsActivity extends MainActivity {
         RequestBody WARD_ = RequestBody.create(MediaType.parse("multipart/form-data"), WARD);
 
 // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body_fhoto =
-                MultipartBody.Part.createFormData("photo_of_the_street_vendor", file1.getName(), request_photo);
 
 
         RequestBody NAME_VENDOR_ = RequestBody.create(MediaType.parse("multipart/form-data"), NAME_VENDOR);
@@ -1413,7 +1479,8 @@ public class PersonalDetailsActivity extends MainActivity {
                 IS_CRIMINALCASE_,
                 CRIMINALCASE_NO_,
                 LATITUDE,
-                LONGITUDE
+                LONGITUDE,
+                body_biometric
 //                CRIMINALCASE_STATUS_
         );
 
@@ -1454,9 +1521,8 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PersonalDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1555,9 +1621,8 @@ public class PersonalDetailsActivity extends MainActivity {
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PersonalDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1680,9 +1745,8 @@ public class PersonalDetailsActivity extends MainActivity {
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PersonalDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -2050,6 +2114,8 @@ public class PersonalDetailsActivity extends MainActivity {
             mLinearTwo.setVisibility(View.GONE);
             mLinearFive.setVisibility(View.GONE);
 
+            mBtnNext.setText("Next");
+
         } else if (mLinearFour.getVisibility() == View.VISIBLE) {
 
             mLinearFour.setVisibility(View.GONE);
@@ -2154,8 +2220,6 @@ public class PersonalDetailsActivity extends MainActivity {
                 BtnOpenDevice.setVisibility(View.VISIBLE);
                 CaptureBiometric.setVisibility(View.GONE);
             }
-
-
         }
 
 
@@ -2165,6 +2229,17 @@ public class PersonalDetailsActivity extends MainActivity {
 
             if (capturedData.getImage() != null) {
                 image_bio.setImageBitmap(capturedData.getImage());
+                try {
+                    BiometricImagePath = ApplicationConstant.createImageFile(ApplicationConstant.SURVEY_ID+"_BioImage"+".jpeg", "Documents", PersonalDetailsActivity.this);
+
+                    writeBitmap(capturedData.getImage(),new File(BiometricImagePath));
+
+                    Bitmap bitmap_biometric = ApplicationConstant.CompressedBitmap(new File(BiometricImagePath));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             // quality : 40~100
@@ -2456,7 +2531,8 @@ public class PersonalDetailsActivity extends MainActivity {
                 ANNUAL_INCOME,
                 AADHAR_DETAILS,
                 IS_CRIMINALCASE,
-                CRIMINALCASE_NO);
+                CRIMINALCASE_NO,
+                BiometricImagePath);
 
         new InsertAsyncTask(surveyDao).execute(personalDetails);
 
@@ -2548,5 +2624,17 @@ public class PersonalDetailsActivity extends MainActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    public void writeBitmap(Bitmap bitmap, File filename) {
+        try (FileOutputStream out = new FileOutputStream(filename)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+//            out.close();
+            // PNG is a lossless format, the compression factor (100) is ignored
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

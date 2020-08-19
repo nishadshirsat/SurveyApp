@@ -376,6 +376,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                     LinearTwo.setVisibility(View.GONE);
                     LinearFour.setVisibility(View.VISIBLE);
 
+                    BtnNext.setText("Submit");
+
+
                     stopService(new Intent(PendingDocumentsScanActivity.this, AudioRecordService.class));
 
                 }
@@ -946,9 +949,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1065,9 +1067,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1180,9 +1181,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1698,14 +1698,11 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         }
 
 
-
         EditComments.setText(SingleSurveyData.getComments());
 
         BtnNext.setVisibility(View.VISIBLE);
 
     }
-
-
 
 
     @Override
@@ -1717,6 +1714,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
             LinearOne.setVisibility(View.GONE);
             LinearThree.setVisibility(View.VISIBLE);
             LinearTwo.setVisibility(View.GONE);
+
+            BtnNext.setText("Next");
 
         }
         else if (LinearThree.getVisibility() == View.VISIBLE) {
@@ -1837,9 +1836,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                         alertDialog.show();
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 } else {
@@ -1945,9 +1943,8 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingDocumentsScanActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 }else {

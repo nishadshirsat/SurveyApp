@@ -180,10 +180,12 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
                         }else if (lEditKuccha.getText().toString().trim().isEmpty()){
                             lEditKuccha.setError("enter kuccha");
                             lEditKuccha.requestFocus();
-                        }else if (lEditRent.getText().toString().trim().isEmpty()){
-                            lEditRent.setError("enter rent");
-                            lEditRent.requestFocus();
-                        }else {
+                        }
+//                        else if (lEditRent.getText().toString().trim().isEmpty()){
+//                            lEditRent.setError("enter rent");
+//                            lEditRent.requestFocus();
+//                        }
+                        else {
 
 
                             LandFixedAssetsItem landAssets = new LandFixedAssetsItem(
@@ -650,9 +652,8 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(PendingVendorsFamDetailsActivity.this,
-                                "Response",
-                                response.body().getMessage());
+                        ApplicationConstant.displayErrorMessage(PendingVendorsFamDetailsActivity.this,
+                                response.body().getErrorCode().trim());
                     }
 
                 }else {
@@ -698,6 +699,10 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
             mLinearHead.setVisibility(View.VISIBLE);
             mLinearOne.setVisibility(View.GONE);
             mBtnPrevious.setVisibility(View.VISIBLE);
+
+
+            mBtnNext.setText("NEXT");
+
 
         }
 
