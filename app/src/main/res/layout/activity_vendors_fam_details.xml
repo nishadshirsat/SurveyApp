@@ -305,7 +305,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Name"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -317,7 +317,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Relationship"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
 
@@ -349,6 +349,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Aadhar No"
+                            android:maxLength="12"
                             android:inputType="number"
                             android:padding="10dp"
                             android:textSize="14sp" />

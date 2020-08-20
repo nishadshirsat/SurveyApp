@@ -601,7 +601,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:hint="Comments"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:layout_gravity="start"
                             android:gravity="start"
                             android:padding="10dp"

@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_bg"
             android:hint="Plot"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:imeOptions="actionNext"
             android:padding="10dp"
             android:textSize="14sp" />
@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_bg"
             android:hint="House Size"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:imeOptions="actionNext"
             android:padding="10dp"
             android:textSize="14sp" />
@@ -69,7 +69,7 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_bg"
             android:hint="Area"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:padding="10dp"
             android:imeOptions="actionNext"
             android:textSize="14sp" />
@@ -90,7 +90,7 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_bg"
             android:hint="Kuccha"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:padding="10dp"
             android:imeOptions="actionNext"
             android:textSize="14sp" />

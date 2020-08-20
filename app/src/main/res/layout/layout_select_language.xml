@@ -29,6 +29,7 @@
                 android:gravity="center"/>
 
             <RadioGroup
+                android:id="@+id/RadioLanguages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -63,6 +64,7 @@
                 android:layout_height="45dp"
                 android:layout_gravity="right"
                 android:text="DONE"
+                android:visibility="gone"
                 android:textStyle="bold"
                 android:textSize="@dimen/txt_16sp"
                 android:textColor="@color/white"
