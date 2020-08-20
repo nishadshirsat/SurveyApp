@@ -197,6 +197,9 @@ public class ApplicationConstant {
         else if (errorCode.trim().equals("8015")){
             message = "Invalid barcode scanned";
         }
+   else if (errorCode.trim().equals("8016")){
+            message = "Aadhaar Save Error";
+        }
 
         if (context != null) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(context);

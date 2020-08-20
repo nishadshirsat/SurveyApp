@@ -1208,27 +1208,50 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                             address.setLoc(jsonAadhar.getString("loc"));
 //                        address.setLandmark(jsonAadhar.getString("lm"));
                             address.setLandmark(null);
-                            address.setSubdist(jsonAadhar.getString("subdist"));
+                            address.setSubdist("NA");
                             address.setVtc(jsonAadhar.getString("vtc"));
                             address.setDist(jsonAadhar.getString("dist"));
-                            address.setHouse(jsonAadhar.getString("house"));
-                            address.setPo(jsonAadhar.getString("po"));
+                            address.setHouse("NA");
+                            address.setPo(jsonAadhar.getString("pc"));
                             address.setState(jsonAadhar.getString("state"));
-                            address.setStreet(jsonAadhar.getString("street"));
+                            address.setStreet("NA");
                             address.setCountry("India");
 
                             aadharData = new AadharData();
                             aadharData.setAddress(address);
                             aadharData.setGender(jsonAadhar.getString("gender"));
 
-                            try {
-                                String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
-                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                aadharData.setDob("0000-00-00");
 
+                            if (jsonAadhar.has("dob")){
+
+                                if (jsonAadhar.getString("dob").trim().contains("\\/")){
+                                    String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                                }else if (jsonAadhar.getString("dob").trim().contains("-")){
+                                    String[] datearray = jsonAadhar.getString("dob").trim().split("-");
+                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                }else {
+                                    String dob = jsonAadhar.getString("yob");
+                                    aadharData.setDob(dob+"-01-01");
+                                }
+
+                            }else {
+                                String dob = jsonAadhar.getString("yob");
+                                aadharData.setDob(dob+"-01-01");
                             }
+
+
+//                            try {
+//                                String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+//                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//
+//                                String dob = jsonAadhar.getString("yob");
+//                                aadharData.setDob(dob+"-01-01");
+//
+//                            }
 
 
 //                        aadharData.setDob(jsonAadhar.getString("dob"));
@@ -1277,14 +1300,34 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                                 aadharData.setAddress(address);
                                 aadharData.setGender(jsonAadhar.getString("g"));
 
-                                try {
-                                    String[] datearray = jsonAadhar.getString("d").trim().split("-");
-                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-                                } catch (JSONException exe) {
-                                    exe.printStackTrace();
-                                    aadharData.setDob("0000-00-00");
+                                if (jsonAadhar.has("d")){
 
+                                    if (jsonAadhar.getString("d").trim().contains("\\/")){
+                                        String[] datearray = jsonAadhar.getString("d").trim().split("\\/");
+                                        aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                                    }else if (jsonAadhar.getString("d").trim().contains("-")){
+                                        String[] datearray = jsonAadhar.getString("d").trim().split("-");
+                                        aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                    }else {
+                                        aadharData.setDob("6748-01-01");
+
+                                    }
+
+                                }else {
+                                    aadharData.setDob("6748-01-01");
                                 }
+
+
+
+//                                try {
+//                                    String[] datearray = jsonAadhar.getString("d").trim().split("-");
+//                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+//                                } catch (JSONException exe) {
+//                                    exe.printStackTrace();
+//                                    aadharData.setDob("0000-00-00");
+//
+//                                }
 
 
 //                        aadharData.setDob(jsonAadhar.getString("dob"));
