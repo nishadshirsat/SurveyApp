@@ -167,6 +167,7 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditAnnualIncome;
 
     private Button mBtnAddharCapture;
+    private Button mBtnAadharQr;
     private TextView BtnAddharVerified;
 
 //    private EditText mEditAccNo;
@@ -267,6 +268,9 @@ public class PersonalDetailsActivity extends MainActivity {
     private SurveyDao surveyDao;
     private String BiometricImagePath="";
 
+    boolean isAadharSetData = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -338,6 +342,17 @@ public class PersonalDetailsActivity extends MainActivity {
                     }
                 }).start();
 
+            }
+        });
+
+        mBtnAadharQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                isAadharSetData = true;
+
+                Intent intent = new Intent(PersonalDetailsActivity.this, ScanQrForAadharActivity.class);
+                startActivityForResult(intent, 12345);
             }
         });
 
@@ -1142,6 +1157,8 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditPPincode = (EditText) findViewById(R.id.EditPPincode);
         mEditAadhar = (EditText) findViewById(R.id.EditAadhar);
         mBtnAddharCapture = (Button) findViewById(R.id.BtnAddharCapture);
+        mBtnAadharQr = (Button) findViewById(R.id.BtnAadharQr);
+        mBtnAadharQr.setVisibility(View.VISIBLE);
         BtnAddharVerified = (TextView) findViewById(R.id.BtnAddharVerified);
 
         mRadioCY = (RadioButton) findViewById(R.id.RadioCY);
@@ -1371,6 +1388,11 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 }
 
+                    if (isAadharSetData == true){
+
+                        setAadharData(aadharData);
+                    }
+
             }
 
             } else if (requestCode == 1) {
@@ -1409,6 +1431,94 @@ public class PersonalDetailsActivity extends MainActivity {
         }
 
     }
+
+    private void setAadharData(AadharData aadharData) {
+
+        if (aadharData.getFullName()!=null && !aadharData.getFullName().isEmpty()){
+
+            String[] splited = aadharData.getFullName().split("\\s+");
+
+            if (splited.length == 3){
+                mEditFName.setText(splited[0]);
+                mEditMName.setText(splited[1]);
+                mEditLName.setText(splited[2]);
+
+            }else {
+                mEditFName.setText(splited[0]);
+                mEditLName.setText(splited[1]);
+            }
+
+        }
+
+        if (aadharData.getGender()!=null && !aadharData.getGender().isEmpty()){
+            if (aadharData.getGender().trim().equals("M")){
+                mRadioM.setChecked(true);
+            }else if (aadharData.getGender().trim().equals("F")){
+                mRadioF.setChecked(true);
+            }else {
+                mRadioO.setChecked(true);
+            }
+        }
+
+        if (aadharData.getDob() !=null && !aadharData.getDob().isEmpty()){
+
+            if (aadharData.getDob().trim().contains("\\/")){
+//                String[] datearray = aadharData.getDob().trim().split("\\/");
+//                mEditDob.setText(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                mEditDob.setText(aadharData.getDob().trim());
+
+            }else if (aadharData.getDob().trim().contains("-")){
+//                String[] datearray = aadharData.getDob().trim().split("-");
+//                mEditDob.setText(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                mEditDob.setText(aadharData.getDob().trim());
+
+            }else {
+
+                mEditDob.setText(aadharData.getDob().trim());
+
+            }
+
+        }else {
+
+            mEditDob.setText(aadharData.getDob().trim());
+
+        }
+
+        if (aadharData.getZip() !=null && !aadharData.getZip().isEmpty()) {
+
+            mEditPincode.setText(aadharData.getZip());
+
+        }
+
+        if (aadharData.getAddress().getVtc() !=null && !aadharData.getAddress().getVtc().isEmpty()) {
+
+            mEditCity.setText(aadharData.getAddress().getVtc());
+
+        }
+        if (aadharData.getAddress().getLoc() !=null && !aadharData.getAddress().getLoc().isEmpty()) {
+
+            mEditArea.setText(aadharData.getAddress().getLoc());
+
+        }
+
+        if (aadharData.getAddress().getStreet() !=null && !aadharData.getAddress().getStreet().isEmpty()) {
+
+            mEditRoad.setText(aadharData.getAddress().getStreet());
+
+        }
+
+
+   if (aadharData.getAadhaarNumber() !=null && !aadharData.getAadhaarNumber().isEmpty()) {
+
+            mEditAadhar.setText(aadharData.getAadhaarNumber());
+
+        }
+
+        isAadharSetData = false;
+
+        }
 
     private void AddSurvey() {
 
