@@ -1245,13 +1245,25 @@ public class PersonalDetailsActivity extends MainActivity {
 
                             JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
 
-                            address.setLoc(jsonAadhar.getString("loc"));
+                            if (jsonAadhar.has("loc")){
+                                address.setLoc(jsonAadhar.getString("loc"));
+                            }else {
+                                address.setLoc("NA");
+
+                            }
+
+                            if (jsonAadhar.has("house")){
+                                address.setHouse(jsonAadhar.getString("house"));
+                            }else {
+                                address.setHouse("NA");
+
+                            }
+
 //                        address.setLandmark(jsonAadhar.getString("lm"));
                             address.setLandmark(null);
                             address.setSubdist("NA");
                             address.setVtc(jsonAadhar.getString("vtc"));
                             address.setDist(jsonAadhar.getString("dist"));
-                            address.setHouse("NA");
                             address.setPo(jsonAadhar.getString("pc"));
                             address.setState(jsonAadhar.getString("state"));
                             address.setStreet("NA");
@@ -1391,6 +1403,7 @@ public class PersonalDetailsActivity extends MainActivity {
                     if (isAadharSetData == true){
 
                         setAadharData(aadharData);
+
                     }
 
             }
@@ -1423,6 +1436,7 @@ public class PersonalDetailsActivity extends MainActivity {
                 if (ApplicationConstant.ISLOCALDB) {
 
                 } else {
+
                     UploadVendingSitePhoto();
 
                 }
@@ -1439,6 +1453,7 @@ public class PersonalDetailsActivity extends MainActivity {
             String[] splited = aadharData.getFullName().split("\\s+");
 
             if (splited.length == 3){
+
                 mEditFName.setText(splited[0]);
                 mEditMName.setText(splited[1]);
                 mEditLName.setText(splited[2]);
@@ -1447,7 +1462,6 @@ public class PersonalDetailsActivity extends MainActivity {
                 mEditFName.setText(splited[0]);
                 mEditLName.setText(splited[1]);
             }
-
         }
 
         if (aadharData.getGender()!=null && !aadharData.getGender().isEmpty()){
@@ -1500,6 +1514,12 @@ public class PersonalDetailsActivity extends MainActivity {
         if (aadharData.getAddress().getLoc() !=null && !aadharData.getAddress().getLoc().isEmpty()) {
 
             mEditArea.setText(aadharData.getAddress().getLoc());
+
+        }
+
+        if (aadharData.getAddress().getHouse() !=null && !aadharData.getAddress().getHouse().isEmpty()) {
+
+            mEditHouseNo.setText(aadharData.getAddress().getHouse());
 
         }
 

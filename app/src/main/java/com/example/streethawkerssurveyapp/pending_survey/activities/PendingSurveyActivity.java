@@ -626,7 +626,6 @@ public class PendingSurveyActivity extends AppCompatActivity implements PendingS
 
         alertDialog.show();
 
-
     }
 
     private void SubmitSuspendRemark(String Remark,String URI) {

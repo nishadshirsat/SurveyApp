@@ -55,6 +55,9 @@ public class SupervisorViewSurveyData {
 	@SerializedName("suveyor_id")
 	private String suveyorId;
 
+	@SerializedName("supervisor_check")
+	private String supervisor_check;
+
 	public void setArea(String area){
 		this.area = area;
 	}
@@ -73,6 +76,14 @@ public class SupervisorViewSurveyData {
 
 	public void setSex(String sex){
 		this.sex = sex;
+	}
+
+	public String getSupervisor_check() {
+		return supervisor_check;
+	}
+
+	public void setSupervisor_check(String supervisor_check) {
+		this.supervisor_check = supervisor_check;
 	}
 
 	public String getSex(){

@@ -30,7 +30,9 @@ import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSur
 import com.example.streethawkerssurveyapp.officer.activities.SupervisorListActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.supervisor.activities.PendingSupervisorSurveyListActivity;
 import com.example.streethawkerssurveyapp.supervisor.activities.SurveyorListActivity;
+import com.example.streethawkerssurveyapp.supervisor.activities.SuspendedSupervisorSurveyListActivity;
 import com.example.streethawkerssurveyapp.supervisor.activities.ViewSurveySupervisorActivity;
 import com.example.streethawkerssurveyapp.suspended_survey.avtivities.SuspendedSurveyActivity;
 import com.example.streethawkerssurveyapp.utils.GetLocation;
@@ -66,6 +68,8 @@ public class DashboardActivity extends MainActivity {
     private LinearLayout mLinear_Supervisor;
     private LinearLayout mLinear_surveyorList;
     private LinearLayout mLinear_view_Supervisor;
+    private LinearLayout mLinear_supervisor_pending;
+    private LinearLayout mLinear_supervisor_suspended;
 
     public GetLocation getLocation;
 
@@ -131,6 +135,15 @@ public class DashboardActivity extends MainActivity {
             }
         });
 
+        mLinear_supervisor_pending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(DashboardActivity.this, PendingSupervisorSurveyListActivity.class));
+
+            }
+        });
+
         mLinear_local_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,8 +157,16 @@ public class DashboardActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
-//                ApplicationConstant.DisplayMessageDialog(DashboardActivity.this,"","This Feature Coming Soon...");
                 startActivity(new Intent(DashboardActivity.this, SuspendedSurveyActivity.class));
+
+            }
+        });
+
+        mLinear_supervisor_suspended.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(DashboardActivity.this, SuspendedSupervisorSurveyListActivity.class));
 
             }
         });
@@ -160,11 +181,7 @@ public class DashboardActivity extends MainActivity {
 
             }
         });
-
-
     }
-
-
 
     private void setData() {
 
@@ -219,6 +236,8 @@ public class DashboardActivity extends MainActivity {
         mLinear_Supervisor = (LinearLayout) findViewById(R.id.Linear_Supervisor);
         mLinear_surveyorList = (LinearLayout) findViewById(R.id.linear_surveyorList);
         mLinear_view_Supervisor = (LinearLayout) findViewById(R.id.linear_view_Supervisor);
+        mLinear_supervisor_pending = (LinearLayout) findViewById(R.id.linear_supervisor_pending);
+        mLinear_supervisor_suspended = (LinearLayout) findViewById(R.id.linear_supervisor_suspended);
 
 
     }

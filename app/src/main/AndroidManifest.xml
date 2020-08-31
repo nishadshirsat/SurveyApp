@@ -36,9 +36,9 @@
         <activity android:name=".officer.activities.PendingSupervisorListActivity" />
         <activity android:name=".officer.activities.ViewSupervisorListActivity" />
         <activity android:name=".supervisor.activities.ViewSurveyListActivity" />
-        <activity android:name=".supervisor.activities.SuspendedSurveyListActivity" />
+        <activity android:name=".supervisor.activities.SuspendedSupervisorSurveyListActivity" />
         <activity android:name=".officer.activities.SupervisorListActivity" />
-        <activity android:name=".supervisor.activities.PendingSurveyListActivity" />
+        <activity android:name=".supervisor.activities.PendingSupervisorSurveyListActivity" />
 
         <meta-data
             android:name="io.sentry.dsn"

@@ -238,7 +238,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                     VENDING_HISTORY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    VENDING_HISTORY_PROOF_TYPE = "Select";
+                    VENDING_HISTORY_PROOF_TYPE = "None";
 
                 }
             }

@@ -2219,7 +2219,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 mEditMName.setText(splited[1]);
                 mEditLName.setText(splited[2]);
 
-            }else {
+            }else  if (splited.length == 2){
                 mEditFName.setText(splited[0]);
                 mEditLName.setText(splited[1]);
             }
@@ -2250,7 +2250,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 mEditFatherMName.setText(splitedHus[1]);
                 mEditFatherLName.setText(splitedHus[2]);
 
-            }else {
+            }else  if (splitedHus.length == 2){
                 mEditFatherName.setText(splitedHus[0]);
                 mEditFatherLName.setText(splitedHus[1]);
             }
@@ -2264,7 +2264,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 mEditMotherMName.setText(splitedMother[1]);
                 mEditMotherLName.setText(splitedMother[2]);
 
-            }else {
+            } else  if (splitedMother.length == 2){
                 mEditMotherFName.setText(splitedMother[0]);
                 mEditMotherLName.setText(splitedMother[1]);
             }
@@ -2300,7 +2300,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                     mEditSpouceMName.setText(splitedSpouse[1]);
                     mEditSpouceLName.setText(splitedSpouse[2]);
 
-                }else {
+                }else if (splitedSpouse.length == 2){
                     mEditSpouceFName.setText(splitedSpouse[0]);
                     mEditSpouceLName.setText(splitedSpouse[1]);
                 }

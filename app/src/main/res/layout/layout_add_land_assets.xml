@@ -68,7 +68,7 @@
             android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:background="@drawable/edittext_bg"
-            android:hint="Area"
+            android:hint="Location"
             android:inputType="textCapSentences"
             android:padding="10dp"
             android:imeOptions="actionNext"

@@ -245,6 +245,7 @@
                 android:layout_margin="@dimen/padding_5"
                 android:layout_weight="1"
                 app:cardCornerRadius="8dp"
+                android:visibility="gone"
                 app:cardElevation="@dimen/padding_5">
 
                 <LinearLayout
@@ -267,7 +268,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/padding_5"
                         android:gravity="center_vertical"
-                        android:text="Adhaar Details"
+                        android:text="Aadhaar Details"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
                         android:textStyle="bold" />
