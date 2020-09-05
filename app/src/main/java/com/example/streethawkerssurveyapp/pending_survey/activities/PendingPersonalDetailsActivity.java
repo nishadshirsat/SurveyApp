@@ -2212,16 +2212,26 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         }
 
         if (SingleSurveyData.getNameOfTheStreetVendor()!=null){
-            String[] splited = SingleSurveyData.getNameOfTheStreetVendor().split("\\s+");
+            try {
+                String[] splited = SingleSurveyData.getNameOfTheStreetVendor().split("\\s+");
 
-            if (splited.length == 3){
-                mEditFName.setText(splited[0]);
-                mEditMName.setText(splited[1]);
-                mEditLName.setText(splited[2]);
+                if (splited.length == 3){
+                    mEditFName.setText(splited[0]);
+                    mEditMName.setText(splited[1]);
+                    mEditLName.setText(splited[2]);
 
-            }else  if (splited.length == 2){
-                mEditFName.setText(splited[0]);
-                mEditLName.setText(splited[1]);
+                }else  if (splited.length == 2){
+                    mEditFName.setText(splited[0]);
+                    mEditLName.setText(splited[1]);
+                }else {
+                    mEditFName.setText(splited[0]);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                mEditFName.setText(SingleSurveyData.getNameOfTheStreetVendor());
+
             }
         }
 
@@ -2243,30 +2253,51 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         mEditLandline.setText(SingleSurveyData.getLandlineNumber());
 
         if (SingleSurveyData.getNameOfFatherHusband()!=null){
-            String[] splitedHus = SingleSurveyData.getNameOfFatherHusband().split("\\s+");
 
-            if (splitedHus.length == 3){
-                mEditFatherName.setText(splitedHus[0]);
-                mEditFatherMName.setText(splitedHus[1]);
-                mEditFatherLName.setText(splitedHus[2]);
+            try {
+                String[] splitedHus = SingleSurveyData.getNameOfFatherHusband().split("\\s+");
 
-            }else  if (splitedHus.length == 2){
-                mEditFatherName.setText(splitedHus[0]);
-                mEditFatherLName.setText(splitedHus[1]);
+                if (splitedHus.length == 3){
+                    mEditFatherName.setText(splitedHus[0]);
+                    mEditFatherMName.setText(splitedHus[1]);
+                    mEditFatherLName.setText(splitedHus[2]);
+
+                }else  if (splitedHus.length == 2){
+                    mEditFatherName.setText(splitedHus[0]);
+                    mEditFatherLName.setText(splitedHus[1]);
+                }else {
+                    mEditFatherName.setText(splitedHus[0]);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                mEditFatherName.setText(SingleSurveyData.getNameOfFatherHusband());
+
             }
+
         }
 
         if (SingleSurveyData.getNameOfMother()!=null){
-            String[] splitedMother = SingleSurveyData.getNameOfMother().split("\\s+");
+            try {
+                String[] splitedMother = SingleSurveyData.getNameOfMother().split("\\s+");
 
-            if (splitedMother.length == 3){
-                mEditMotherFName.setText(splitedMother[0]);
-                mEditMotherMName.setText(splitedMother[1]);
-                mEditMotherLName.setText(splitedMother[2]);
+                if (splitedMother.length == 3){
+                    mEditMotherFName.setText(splitedMother[0]);
+                    mEditMotherMName.setText(splitedMother[1]);
+                    mEditMotherLName.setText(splitedMother[2]);
 
-            } else  if (splitedMother.length == 2){
-                mEditMotherFName.setText(splitedMother[0]);
-                mEditMotherLName.setText(splitedMother[1]);
+                } else  if (splitedMother.length == 2){
+                    mEditMotherFName.setText(splitedMother[0]);
+                    mEditMotherLName.setText(splitedMother[1]);
+                }else {
+                    mEditMotherFName.setText(splitedMother[0]);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                mEditMotherFName.setText(SingleSurveyData.getNameOfMother());
+
             }
         }
 
@@ -2303,6 +2334,9 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 }else if (splitedSpouse.length == 2){
                     mEditSpouceFName.setText(splitedSpouse[0]);
                     mEditSpouceLName.setText(splitedSpouse[1]);
+                }else {
+                    mEditSpouceFName.setText(splitedSpouse[0]);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();

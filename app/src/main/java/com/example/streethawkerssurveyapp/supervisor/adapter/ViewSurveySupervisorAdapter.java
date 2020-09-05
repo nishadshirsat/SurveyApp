@@ -75,8 +75,12 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
 
         if (SurveyData.getSupervisor_check().trim().equals("1")){
             holder.mBtn_Check.setVisibility(View.GONE);
+            holder.mBtn_Pending.setVisibility(View.GONE);
+            holder.mTextStatus.setText("Status : Completed | CHECKED");
+
         }else {
             holder.mBtn_Check.setVisibility(View.VISIBLE);
+            holder.mBtn_Pending.setVisibility(View.VISIBLE);
 
         }
 
@@ -93,6 +97,13 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
             @Override
             public void onClick(View view) {
                 refreshlistListner.refrehListwithAction(SurveyData.getUriNumber());
+            }
+        });
+
+        holder.mBtn_Pending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshlistListner.refrehListwithPending(SurveyData.getUriNumber());
             }
         });
 
@@ -130,6 +141,7 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
         private TextView mTextComments;
         private TextView mTextRemarks;
         private Button mBtn_Check;
+        private Button mBtn_Pending;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -150,6 +162,7 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
             mTextComments = (TextView) itemView.findViewById(R.id.TextComments);
             mTextRemarks = (TextView) itemView.findViewById(R.id.TextRemarks);
             mBtn_Check = (Button) itemView.findViewById(R.id.Btn_Check);
+            mBtn_Pending = (Button) itemView.findViewById(R.id.Btn_Pending);
 
 
         }
@@ -199,6 +212,8 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
     public interface RefreshlistListner{
 
         void refrehListwithAction(String URI);
+
+        void refrehListwithPending(String URI);
     }
 
 

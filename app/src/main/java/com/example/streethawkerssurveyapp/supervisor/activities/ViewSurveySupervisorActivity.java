@@ -3,6 +3,8 @@ package com.example.streethawkerssurveyapp.supervisor.activities;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.DashboardActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
@@ -34,6 +37,7 @@ import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyData;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyResponse;
 import com.example.streethawkerssurveyapp.view_survey.services.ViewSurveyInterface;
+import com.labters.documentscanner.base.DocumentScanActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
@@ -694,7 +698,36 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
     }
 
+    @Override
+    public void refrehListwithPending(String URI) {
 
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ViewSurveySupervisorActivity.this);
+                        builder.setTitle("Check Pending Survey");
+                        builder.setMessage("Set this survey as pending survey ?");
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+
+                                CheckPendingRemark(URI);
+
+                            }
+                        });
+
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.setCancelable(false);
+                        alertDialog.setCanceledOnTouchOutside(false);
+                        alertDialog.show();
+
+    }
 
 
     private void CheckSurveyRemark(String URI) {
@@ -708,6 +741,67 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
         SupervisorInterface apiservice = ApiService.getApiClient().create(SupervisorInterface.class);
         Call<UpdateSurveyResponse> call = apiservice.SendCheckStatus(headers,URI,"1");
+
+        call.enqueue(new Callback<UpdateSurveyResponse>() {
+            @Override
+            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response.body() != null) {
+
+                    if (response.body().isStatus()) {
+
+                        ApplicationConstant.displayToastMessage(ViewSurveySupervisorActivity.this,
+                                response.body().getMessage());
+
+                        ViewAllSurvey(ID);
+
+
+                    } else {
+
+                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                                "Response",
+                                response.body().getMessage());
+                    }
+
+                }else {
+
+                    try {
+                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                                "Response",
+                                response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
+
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+
+            }
+        });
+    }
+
+
+    private void CheckPendingRemark(String URI) {
+
+        progressDialog = CustomProgressDialog.getDialogue(ViewSurveySupervisorActivity.this);
+        progressDialog.show();
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveySupervisorActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+
+        SupervisorInterface apiservice = ApiService.getApiClient().create(SupervisorInterface.class);
+        Call<UpdateSurveyResponse> call = apiservice.SendPendingStatus(headers,URI,"0");
 
         call.enqueue(new Callback<UpdateSurveyResponse>() {
             @Override

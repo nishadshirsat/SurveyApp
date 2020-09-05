@@ -247,8 +247,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-//                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
-                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, 0));
+                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+//                        mEditLFromTime.setText(String.format("%02d:%02d", hourOfDay, 0));
 
                     }
                 }, hour, minute, false);
@@ -271,8 +271,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-//                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
-                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, 0));
+                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+//                        mEditLToTime.setText(String.format("%02d:%02d", hourOfDay, 0));
                     }
                 }, hour, minute, false);
 
@@ -294,8 +294,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-//                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
-                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, 0));
+                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+//                        mEditEFromTime.setText(String.format("%02d:%02d", hourOfDay, 0));
                     }
                 }, hour, minute, false);
 
@@ -317,8 +317,8 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
                         } else {
                             format = "AM";
                         }
-//                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
-                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, 0));
+                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+//                        mEditEToTime.setText(String.format("%02d:%02d", hourOfDay, 0));
                     }
                 }, hour, minute, false);
 
