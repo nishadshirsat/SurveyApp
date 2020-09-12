@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.streethawkerssurveyapp.Helper.LocaleHelper;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.officer.activities.SupervisorListActivity;
@@ -76,6 +77,9 @@ public class DashboardActivity extends MainActivity {
     boolean doubleBackToExitPressedOnce = false;
 
     String USERTYPE = "";
+
+    private String mLanguageCode = "hi";
+    private String mLanguageCode1 = "en";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
