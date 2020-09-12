@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select App Language"
+                android:text="Select a Language..."
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:textStyle="normal"

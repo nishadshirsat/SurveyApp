@@ -3,6 +3,8 @@ package com.example.streethawkerssurveyapp.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -25,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.streethawkerssurveyapp.Helper.LocaleHelper;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.officer.activities.SupervisorListActivity;
@@ -38,6 +41,8 @@ import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyActivity;
 
 import java.util.Locale;
+
+import io.paperdb.Paper;
 
 public class DashboardActivity extends MainActivity {
 
@@ -66,24 +71,43 @@ public class DashboardActivity extends MainActivity {
     private LinearLayout mLinear_Supervisor;
     private LinearLayout mLinear_surveyorList;
     private LinearLayout mLinear_view_Supervisor;
+    Context context;
 
     public GetLocation getLocation;
 
     boolean doubleBackToExitPressedOnce = false;
 
     String USERTYPE = "";
+    boolean lang_selected;
+    Resources resources;
+    private String mLanguageCode = "hi";
+    private String mLanguageCode1 = "en";
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase,"hi"));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-//        setApplicationLocale("en");
+//        setAppLocale("hi");
 
         if (getLocation == null) {
             getLocation = new GetLocation(DashboardActivity.this);
         }
 
         bindVieW();
+
+//        Paper.init(this);
+//
+//        String language = Paper.book().read("language");
+//        if(language==null)
+//        Paper.book().write("language","en");
+//
+//        updateView((String)Paper.book().read(language));
 
         setData();
 
@@ -164,6 +188,10 @@ public class DashboardActivity extends MainActivity {
 
     }
 
+//    private void updateView(String lang) {
+//        Context context=LocaleHelper.setLocale(this,lang);
+//        Resources resources=context.getResources();
+//    }
 
 
     private void setData() {
@@ -264,6 +292,8 @@ public class DashboardActivity extends MainActivity {
 
             case R.id.language_menu:
 
+//                setAppLocale();
+
 
 
                 View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
@@ -281,16 +311,22 @@ public class DashboardActivity extends MainActivity {
                         WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-//                boolean checked = ((RadioButton) view1).isChecked();
+
 
                 RadioLanguages.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         if(checkedId==R.id.RadioEnglish){
-                            setApplicationLocale("hi");
+                            LocaleHelper.setLocale(DashboardActivity.this, mLanguageCode1);
+
+                            //It is required to recreate the activity to reflect the change in UI.
+                            recreate();
                             alertDialog.dismiss();
                         }else{
-                            setApplicationLocale("en");
+                            LocaleHelper.setLocale(DashboardActivity.this, mLanguageCode);
+
+                            //It is required to recreate the activity to reflect the change in UI.
+                            recreate();
                             alertDialog.dismiss();
                         }
                     }
@@ -308,33 +344,57 @@ public class DashboardActivity extends MainActivity {
 
 
                 return true;
+//
+//                final String[] Language = {"ENGLISH", "हिन्दी"};
+//                final int checkedItem;
+//                if(lang_selected)
+//                {
+//                    checkedItem=1;
+//                }else
+//                {
+//                    checkedItem=0;
+//                }
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+//                builder.setTitle("Select a Language...")
+//                        .setSingleChoiceItems(Language, checkedItem, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                Toast.makeText(DashboardActivity.this,""+which,Toast.LENGTH_SHORT).show();
+////                                language_dialog.setText(Language[which]);
+//                                lang_selected= Language[which].equals("ENGLISH");
+//                                //if user select prefered language as English then
+//                                if(Language[which].equals("ENGLISH"))
+//                                {
+////
+//                                    LocaleHelper.setLocale(DashboardActivity.this, mLanguageCode1);
+//
+//                                    //It is required to recreate the activity to reflect the change in UI.
+//                                    recreate();
+//                                }
+//                                //if user select prefered language as Hindi then
+//                                if(Language[which].equals("हिन्दी"))
+//                                {
+////
+//                                    LocaleHelper.setLocale(DashboardActivity.this, mLanguageCode);
+//
+//                                    //It is required to recreate the activity to reflect the change in UI.
+//                                    recreate();
+//                                }
+//                            }
+//                        })
+//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//                builder.create().show();
 
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void setApplicationLocale(String localeCode) {
 
-        Resources resources = getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            config.setLocale(new Locale(localeCode.toLowerCase()));
-            mTextSurvey.setText(resources.getString(R.string.new_survey));
-            TextPending.setText(resources.getString(R.string.pending_survey));
-            TextLocal.setText(resources.getString(R.string.Local_survey));
-            Textsuspended.setText(resources.getString(R.string.suspended_survey));
-            TextView.setText(resources.getString(R.string.view_survey));
-        } else {
-            config.locale = new Locale(localeCode.toLowerCase());
-            mTextSurvey.setText(resources.getString(R.string.new_survey));
-            TextPending.setText(resources.getString(R.string.pending_survey));
-            TextLocal.setText(resources.getString(R.string.Local_survey));
-            Textsuspended.setText(resources.getString(R.string.suspended_survey));
-            TextView.setText(resources.getString(R.string.view_survey));
-        }
-        resources.updateConfiguration(config, dm);
-    }
 
     @Override
     protected void onResume() {

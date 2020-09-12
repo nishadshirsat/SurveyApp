@@ -37,11 +37,12 @@
                     android:visibility="visible">
 
                     <TextView
+                        android:id="@+id/TextPersonalDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="A. PERSONAL DETAILS"
+                        android:text="@string/Personal"
                         android:textColor="@color/black"
                         android:textSize="26sp"
                         android:textStyle="bold" />
@@ -68,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="15dp"
-                        android:text="A. PERSONAL DETAILS"
+                        android:text="@string/Personal"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -100,7 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:layout_gravity="center_vertical"
-                                android:text="Photo of the street vendor/Hawker "
+                                android:text="@string/VendorPhoto"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -145,7 +146,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="8dp"
-                                android:text="* Photo of Vending Site"
+                                android:text="@string/SitePhoto"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -194,7 +195,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Name of the street vendor/Hawker"
+                                android:text="@string/VendorName"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -215,7 +216,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="First"
+                            android:hint="@string/First"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -228,7 +229,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Middle"
+                            android:hint="@string/Middle"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -241,7 +242,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Surname"
+                            android:hint="@string/Surname"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -281,7 +282,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Sex"
+                                android:text="@string/Sex"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -301,7 +302,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="a. Male"
+                            android:text="@string/Male"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -310,7 +311,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="b. Female"
+                            android:text="@string/Female"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -319,7 +320,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="c. Other"
+                            android:text="@string/Other"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -356,7 +357,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Age"
+                                android:text="@string/Age"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -418,7 +419,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Date of Birth"
+                                android:text="@string/DOB"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -498,7 +499,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Contact Number "
+                                android:text="@string/Phone"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -520,7 +521,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Mobile"
+                            android:hint="@string/Mobile"
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:maxLength="10"
@@ -534,7 +535,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Landline"
+                            android:hint="@string/Landline"
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:padding="10dp"
@@ -574,7 +575,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Education Status"
+                                android:text="@string/Education"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -637,7 +638,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Name of Father/Husband"
+                                android:text="@string/HusbandName"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -658,7 +659,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="First"
+                            android:hint="@string/First"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -671,7 +672,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Middle"
+                            android:hint="@string/Middle"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -684,7 +685,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Surname"
+                            android:hint="@string/Surname"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -724,7 +725,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Name of Mother"
+                                android:text="@string/MotherName"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -745,7 +746,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="First"
+                            android:hint="@string/First"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -758,7 +759,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Middle"
+                            android:hint="@string/Middle"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -771,7 +772,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Surname"
+                            android:hint="@string/Surname"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -822,7 +823,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Spouse Name"
+                                android:text="@string/SpouseName"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -843,7 +844,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="First"
+                            android:hint="@string/First"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -856,7 +857,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Middle"
+                            android:hint="@string/Middle"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -869,7 +870,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Surname"
+                            android:hint="@string/Surname"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -909,7 +910,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Whether widowed/widower"
+                                android:text="@string/widowedName"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -929,7 +930,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Yes"
+                            android:text="@string/Yes"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -938,7 +939,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="No"
+                            android:text="@string/No"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -975,7 +976,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Category"
+                                android:text="@string/Category"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1038,7 +1039,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Annual Income"
+                                android:text="@string/Income"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1098,7 +1099,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Present Residential / Correspondence Address"
+                                android:text="@string/Address"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1119,7 +1120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Area"
+                            android:hint="@string/Area"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -1132,7 +1133,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="House No."
+                            android:hint="@string/HouseNo"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -1145,7 +1146,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Road"
+                            android:hint="@string/Road"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -1167,7 +1168,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="City"
+                            android:hint="@string/City"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -1180,7 +1181,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Pincode No."
+                            android:hint="@string/Pincode"
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:maxLength="6"
@@ -1232,7 +1233,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Permanent Address"
+                                android:text="@string/PAddress"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1243,7 +1244,7 @@
                                 android:layout_marginLeft="15dp"
                                 android:background="@color/colorAccent"
                                 android:padding="@dimen/padding_5"
-                                android:text="Same as Residential"
+                                android:text="@string/same"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -1265,7 +1266,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Area"
+                            android:hint="@string/Area"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -1278,7 +1279,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="House No."
+                            android:hint="@string/HouseNo"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -1291,7 +1292,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Road"
+                            android:hint="@string/Road"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -1313,7 +1314,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="City"
+                            android:hint="@string/City"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
@@ -1326,7 +1327,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Pincode No."
+                            android:hint="@string/Pincode"
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:maxLength="6"
@@ -1367,7 +1368,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Aadhar Card details"
+                                android:text="@string/Aadhar"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -1388,7 +1389,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Aadhar No"
+                            android:hint="@string/AadharNo"
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:maxLength="12"
@@ -1404,7 +1405,7 @@
                             android:inputType="text"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
-                            android:text="Verify"
+                            android:text="@string/Verify"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -1421,7 +1422,7 @@
                             android:paddingLeft="10dp"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
-                            android:text="Verified"
+                            android:text="@string/Verified"
                             android:textColor="@color/green"
                             android:textSize="17sp"
                             android:textStyle="bold"
@@ -1455,7 +1456,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="No Aadhar Card "
+                            android:text="@string/NoAadhar"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -1500,7 +1501,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="10dp"
                                 android:gravity="center"
-                                android:text="Capture Biometric"
+                                android:text="@string/Capture"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
@@ -1547,7 +1548,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="10dp"
                                 android:gravity="center"
-                                android:text="Open Device"
+                                android:text="@string/Open"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
@@ -1614,7 +1615,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Yes"
+                            android:text="@string/Yes"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -1623,7 +1624,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="No"
+                            android:text="@string/No"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -1668,7 +1669,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="8dp"
-                                    android:text="If yes,"
+                                    android:text="@string/Ifyes"
                                     android:textColor="@color/black"
                                     android:textSize="16sp" />
 
@@ -1693,7 +1694,7 @@
                             android:drawablePadding="05dp"
                             android:drawableTint="@color/colorAccent"
                             android:padding="5dp"
-                            android:text="ADD"
+                            android:text="@string/ADD"
                             android:textColor="@color/colorAccent"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -1728,7 +1729,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
-            android:text="NEXT"
+            android:text="@string/NEXT"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1744,7 +1745,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
-            android:text="PREVIOUS"
+            android:text="@string/PREVIOUS"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"

@@ -34,7 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="E. DOCUMENTS (to be scanned)"
+                        android:text="@string/Documents"
                         android:textColor="@color/black"
                         android:textSize="26sp"
                         android:gravity="center"
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="15dp"
-                        android:text="E. DOCUMENTS (to be scanned)"
+                        android:text="@string/Documents"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -91,7 +91,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Identity proof documents"
+                                android:text="@string/ID"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -138,7 +138,7 @@
                             android:gravity="center"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:text="Front Page"
+                            android:text="@string/FP"
                             android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
@@ -170,7 +170,7 @@
                             android:gravity="center"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:text="Back Page"
+                            android:text="@string/BP"
                             android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
@@ -228,7 +228,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Vending History Proof documents"
+                                android:text="@string/VendingHistory"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -275,7 +275,7 @@
                             android:gravity="center"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:text="First Page"
+                            android:text="@string/FP"
                             android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
@@ -307,7 +307,7 @@
                             android:gravity="center"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:text="Second Page"
+                            android:text="@string/SP"
                             android:textColor="@color/colorAccent"
                             android:textSize="14sp" />
 
@@ -369,7 +369,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="8dp"
-                                    android:text="Other Documents"
+                                    android:text="@string/other"
                                     android:textColor="@color/black"
                                     android:textSize="16sp" />
 
@@ -391,7 +391,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
-                        android:text="ADD"
+                        android:text="@string/ADD"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold"
                         android:padding="5dp"
@@ -436,7 +436,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="8dp"
-                                android:text="Allotment of Tehbazari document (If available)"
+                                android:text="@string/allotment"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -487,7 +487,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="8dp"
-                                android:text="Undertaking by the Applicant"
+                                android:text="@string/undertaking"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -538,7 +538,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="8dp"
-                                android:text="Acknowledge receipt"
+                                android:text="@string/receipt"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -581,7 +581,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Comments"
+                            android:text="@string/Comments"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -600,7 +600,7 @@
                             android:layout_height="80dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Comments"
+                            android:hint="@string/Comments"
                             android:inputType="textCapSentences"
                             android:layout_gravity="start"
                             android:gravity="start"
@@ -641,7 +641,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
-            android:text="NEXT"
+            android:text="@string/NEXT"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -657,7 +657,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
-            android:text="PREVIOUS"
+            android:text="@string/PREVIOUS"
             android:visibility="visible"
             android:textColor="@color/white"
             android:textSize="16sp"

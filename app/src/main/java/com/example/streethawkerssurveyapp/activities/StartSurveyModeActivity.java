@@ -1,17 +1,27 @@
 package com.example.streethawkerssurveyapp.activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.example.streethawkerssurveyapp.Helper.LocaleHelper;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.response_pack.SurveyDetailsResponse;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
@@ -32,7 +42,8 @@ public class StartSurveyModeActivity extends AppCompatActivity {
 
 
     private ProgressDialog progressDialog;
-
+    private String mLanguageCode = "hi";
+    private String mLanguageCode1 = "en";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +108,72 @@ public class StartSurveyModeActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.language_menu:
+                View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
+                RadioGroup RadioLanguages=view1.findViewById(R.id.RadioLanguages);
+                RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
+                RadioButton RadioHindi=view1.findViewById(R.id.RadioHindi);
+                Button BtnDone=view1.findViewById(R.id.BtnDone);
+
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(StartSurveyModeActivity.this);
+
+                final AlertDialog alertDialog = builder.create();
+
+                alertDialog.setView(view1);
+                alertDialog.getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+
+                RadioLanguages.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        if(checkedId==R.id.RadioEnglish){
+                            LocaleHelper.setLocale(StartSurveyModeActivity.this, mLanguageCode1);
+
+                            //It is required to recreate the activity to reflect the change in UI.
+                            recreate();
+                            alertDialog.dismiss();
+                        }else{
+                            LocaleHelper.setLocale(StartSurveyModeActivity.this, mLanguageCode);
+
+                            //It is required to recreate the activity to reflect the change in UI.
+                            recreate();
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+
+                BtnDone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+
+                alertDialog.show();
+
+
+                return true;
+
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 //    private void UpdateSurvey() {
