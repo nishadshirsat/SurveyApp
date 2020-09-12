@@ -243,12 +243,19 @@ public class DocumentsScanActivity extends AppCompatActivity {
         SpinnerIdentityProof.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                try {
-                    IDENTITY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    IDENTITY_PROOF_TYPE = "Select";
+
+                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("Other")){
+                    IDENTITY_PROOF_TYPE = "Other";
+                }else {
+                    try {
+                        IDENTITY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        IDENTITY_PROOF_TYPE = "Select";
+                    }
                 }
+
+
             }
 
             @Override
@@ -261,13 +268,20 @@ public class DocumentsScanActivity extends AppCompatActivity {
         SpinnerVendingHistoryProof.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                try {
-                    VENDING_HISTORY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    VENDING_HISTORY_PROOF_TYPE = "Select";
 
+
+                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("None")){
+                    VENDING_HISTORY_PROOF_TYPE = "None";
+                }else {
+                    try {
+                        VENDING_HISTORY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        VENDING_HISTORY_PROOF_TYPE = "";
+
+                    }
                 }
+
             }
 
             @Override

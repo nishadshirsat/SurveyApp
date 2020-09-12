@@ -1208,27 +1208,50 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                             address.setLoc(jsonAadhar.getString("loc"));
 //                        address.setLandmark(jsonAadhar.getString("lm"));
                             address.setLandmark(null);
-                            address.setSubdist(jsonAadhar.getString("subdist"));
+                            address.setSubdist("NA");
                             address.setVtc(jsonAadhar.getString("vtc"));
                             address.setDist(jsonAadhar.getString("dist"));
-                            address.setHouse(jsonAadhar.getString("house"));
-                            address.setPo(jsonAadhar.getString("po"));
+                            address.setHouse("NA");
+                            address.setPo(jsonAadhar.getString("pc"));
                             address.setState(jsonAadhar.getString("state"));
-                            address.setStreet(jsonAadhar.getString("street"));
+                            address.setStreet("NA");
                             address.setCountry("India");
 
                             aadharData = new AadharData();
                             aadharData.setAddress(address);
                             aadharData.setGender(jsonAadhar.getString("gender"));
 
-                            try {
-                                String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
-                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                aadharData.setDob("0000-00-00");
 
+                            if (jsonAadhar.has("dob")){
+
+                                if (jsonAadhar.getString("dob").trim().contains("\\/")){
+                                    String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                                }else if (jsonAadhar.getString("dob").trim().contains("-")){
+                                    String[] datearray = jsonAadhar.getString("dob").trim().split("-");
+                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                }else {
+                                    String dob = jsonAadhar.getString("yob");
+                                    aadharData.setDob(dob+"-01-01");
+                                }
+
+                            }else {
+                                String dob = jsonAadhar.getString("yob");
+                                aadharData.setDob(dob+"-01-01");
                             }
+
+
+//                            try {
+//                                String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+//                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//
+//                                String dob = jsonAadhar.getString("yob");
+//                                aadharData.setDob(dob+"-01-01");
+//
+//                            }
 
 
 //                        aadharData.setDob(jsonAadhar.getString("dob"));
@@ -1277,14 +1300,34 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                                 aadharData.setAddress(address);
                                 aadharData.setGender(jsonAadhar.getString("g"));
 
-                                try {
-                                    String[] datearray = jsonAadhar.getString("d").trim().split("-");
-                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-                                } catch (JSONException exe) {
-                                    exe.printStackTrace();
-                                    aadharData.setDob("0000-00-00");
+                                if (jsonAadhar.has("d")){
 
+                                    if (jsonAadhar.getString("d").trim().contains("\\/")){
+                                        String[] datearray = jsonAadhar.getString("d").trim().split("\\/");
+                                        aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                                    }else if (jsonAadhar.getString("d").trim().contains("-")){
+                                        String[] datearray = jsonAadhar.getString("d").trim().split("-");
+                                        aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                    }else {
+                                        aadharData.setDob("6748-01-01");
+
+                                    }
+
+                                }else {
+                                    aadharData.setDob("6748-01-01");
                                 }
+
+
+
+//                                try {
+//                                    String[] datearray = jsonAadhar.getString("d").trim().split("-");
+//                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+//                                } catch (JSONException exe) {
+//                                    exe.printStackTrace();
+//                                    aadharData.setDob("0000-00-00");
+//
+//                                }
 
 
 //                        aadharData.setDob(jsonAadhar.getString("dob"));
@@ -2169,16 +2212,26 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         }
 
         if (SingleSurveyData.getNameOfTheStreetVendor()!=null){
-            String[] splited = SingleSurveyData.getNameOfTheStreetVendor().split("\\s+");
+            try {
+                String[] splited = SingleSurveyData.getNameOfTheStreetVendor().split("\\s+");
 
-            if (splited.length == 3){
-                mEditFName.setText(splited[0]);
-                mEditMName.setText(splited[1]);
-                mEditLName.setText(splited[2]);
+                if (splited.length == 3){
+                    mEditFName.setText(splited[0]);
+                    mEditMName.setText(splited[1]);
+                    mEditLName.setText(splited[2]);
 
-            }else {
-                mEditFName.setText(splited[0]);
-                mEditLName.setText(splited[1]);
+                }else  if (splited.length == 2){
+                    mEditFName.setText(splited[0]);
+                    mEditLName.setText(splited[1]);
+                }else {
+                    mEditFName.setText(splited[0]);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                mEditFName.setText(SingleSurveyData.getNameOfTheStreetVendor());
+
             }
         }
 
@@ -2200,30 +2253,51 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         mEditLandline.setText(SingleSurveyData.getLandlineNumber());
 
         if (SingleSurveyData.getNameOfFatherHusband()!=null){
-            String[] splitedHus = SingleSurveyData.getNameOfFatherHusband().split("\\s+");
 
-            if (splitedHus.length == 3){
-                mEditFatherName.setText(splitedHus[0]);
-                mEditFatherMName.setText(splitedHus[1]);
-                mEditFatherLName.setText(splitedHus[2]);
+            try {
+                String[] splitedHus = SingleSurveyData.getNameOfFatherHusband().split("\\s+");
 
-            }else {
-                mEditFatherName.setText(splitedHus[0]);
-                mEditFatherLName.setText(splitedHus[1]);
+                if (splitedHus.length == 3){
+                    mEditFatherName.setText(splitedHus[0]);
+                    mEditFatherMName.setText(splitedHus[1]);
+                    mEditFatherLName.setText(splitedHus[2]);
+
+                }else  if (splitedHus.length == 2){
+                    mEditFatherName.setText(splitedHus[0]);
+                    mEditFatherLName.setText(splitedHus[1]);
+                }else {
+                    mEditFatherName.setText(splitedHus[0]);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                mEditFatherName.setText(SingleSurveyData.getNameOfFatherHusband());
+
             }
+
         }
 
         if (SingleSurveyData.getNameOfMother()!=null){
-            String[] splitedMother = SingleSurveyData.getNameOfMother().split("\\s+");
+            try {
+                String[] splitedMother = SingleSurveyData.getNameOfMother().split("\\s+");
 
-            if (splitedMother.length == 3){
-                mEditMotherFName.setText(splitedMother[0]);
-                mEditMotherMName.setText(splitedMother[1]);
-                mEditMotherLName.setText(splitedMother[2]);
+                if (splitedMother.length == 3){
+                    mEditMotherFName.setText(splitedMother[0]);
+                    mEditMotherMName.setText(splitedMother[1]);
+                    mEditMotherLName.setText(splitedMother[2]);
 
-            }else {
-                mEditMotherFName.setText(splitedMother[0]);
-                mEditMotherLName.setText(splitedMother[1]);
+                } else  if (splitedMother.length == 2){
+                    mEditMotherFName.setText(splitedMother[0]);
+                    mEditMotherLName.setText(splitedMother[1]);
+                }else {
+                    mEditMotherFName.setText(splitedMother[0]);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                mEditMotherFName.setText(SingleSurveyData.getNameOfMother());
+
             }
         }
 
@@ -2257,9 +2331,12 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                     mEditSpouceMName.setText(splitedSpouse[1]);
                     mEditSpouceLName.setText(splitedSpouse[2]);
 
-                }else {
+                }else if (splitedSpouse.length == 2){
                     mEditSpouceFName.setText(splitedSpouse[0]);
                     mEditSpouceLName.setText(splitedSpouse[1]);
+                }else {
+                    mEditSpouceFName.setText(splitedSpouse[0]);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -1,10 +1,7 @@
 package com.example.streethawkerssurveyapp.supervisor.activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,24 +17,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
-import com.example.streethawkerssurveyapp.activities.DashboardActivity;
-import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
-import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
-import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
-import com.example.streethawkerssurveyapp.supervisor.adapter.ViewSurveySupervisorAdapter;
+import com.example.streethawkerssurveyapp.supervisor.adapter.PendingSupervisorSurveyAdapter;
+import com.example.streethawkerssurveyapp.supervisor.adapter.SuspendedSupervisorSurveyAdapter;
 import com.example.streethawkerssurveyapp.supervisor.response_pojo.SupervisorViewSurveyData;
 import com.example.streethawkerssurveyapp.supervisor.response_pojo.SupervisorViewSurveyResponse;
 import com.example.streethawkerssurveyapp.supervisor.response_pojo.SurveyorListData;
 import com.example.streethawkerssurveyapp.supervisor.response_pojo.SurveyorListResponse;
 import com.example.streethawkerssurveyapp.supervisor.services.SupervisorInterface;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
-import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyData;
-import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyResponse;
-import com.example.streethawkerssurveyapp.view_survey.services.ViewSurveyInterface;
-import com.labters.documentscanner.base.DocumentScanActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
@@ -54,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ViewSurveySupervisorActivity extends AppCompatActivity implements ViewSurveySupervisorAdapter.RefreshlistListner{
+public class SuspendedSupervisorSurveyListActivity extends AppCompatActivity {
 
     private EditText mEditAdharNo;
     private LinearLayout mLinearDate;
@@ -71,7 +61,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
     private Calendar myCalendar;
     private int mYear, mMonth, mDay;
-    private ViewSurveySupervisorAdapter viewSurveyAdapter;
+    private SuspendedSupervisorSurveyAdapter viewSurveyAdapter;
     private SearchableSpinner mSpinnerType;
 
     ProgressDialog progressDialog;
@@ -86,14 +76,13 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Surveyor Survey List");
+        setTitle("Suspended Survey List");
 
         bindView();
 
         mRecycler_view.setLayoutManager(new LinearLayoutManager(this));
-        viewSurveyAdapter = new ViewSurveySupervisorAdapter(this);
+        viewSurveyAdapter = new SuspendedSupervisorSurveyAdapter(this);
         mRecycler_view.setAdapter(viewSurveyAdapter);
-        viewSurveyAdapter.setListner(ViewSurveySupervisorActivity.this);
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -170,30 +159,30 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
 
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == AllSurveyList.size() - 1) {
-                        //bottom of list!
-                        try {
-                            if (!mTextPageNo.getText().toString().trim().split(":")[1].trim().equals(mTextTotalPages.getText().toString().trim().split(":")[1].trim())){
-                                int PageNo = 1;
+                if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == AllSurveyList.size() - 1) {
+                    //bottom of list!
+                    try {
+                        if (!mTextPageNo.getText().toString().trim().split(":")[1].trim().equals(mTextTotalPages.getText().toString().trim().split(":")[1].trim())){
+                            int PageNo = 1;
 
-                                if (mTextPageNo.getText().toString().trim().contains(":")){
-                                    PageNo = Integer.parseInt(mTextPageNo.getText().toString().trim().split(":")[1].trim()) + 1;
-                                }
-                                ViewPagewiseSurvey(PageNo);
-                            }  else {
-                                mTextNextPage.setVisibility(View.GONE);
-                                mTextPrevPage.setVisibility(View.VISIBLE);
-
-                                ApplicationConstant.displayToastMessage(ViewSurveySupervisorActivity.this,"No more records found");
-
+                            if (mTextPageNo.getText().toString().trim().contains(":")){
+                                PageNo = Integer.parseInt(mTextPageNo.getText().toString().trim().split(":")[1].trim()) + 1;
                             }
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            ViewPagewiseSurvey(PageNo);
+                        }  else {
+                            mTextNextPage.setVisibility(View.GONE);
+                            mTextPrevPage.setVisibility(View.VISIBLE);
 
-                            ApplicationConstant.displayToastMessage(ViewSurveySupervisorActivity.this,"No more records found");
+                            ApplicationConstant.displayToastMessage(SuspendedSupervisorSurveyListActivity.this,"No more records found");
 
                         }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+
+                        ApplicationConstant.displayToastMessage(SuspendedSupervisorSurveyListActivity.this,"No more records found");
+
                     }
+                }
 
             }
         });
@@ -207,7 +196,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 //
                 if (ID.trim().isEmpty()){
 
-                    ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,"","Select Surveyor to display data");
+                    ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,"","Select Surveyor to display data");
                 }else {
                     ViewSearchSurvey(0);
 
@@ -267,7 +256,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(ViewSurveySupervisorActivity.this, R.style.DialogTheme),
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(SuspendedSupervisorSurveyListActivity.this, R.style.DialogTheme),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -288,7 +277,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(ViewSurveySupervisorActivity.this, R.style.DialogTheme),
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(SuspendedSupervisorSurveyListActivity.this, R.style.DialogTheme),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -309,7 +298,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(ViewSurveySupervisorActivity.this, R.style.DialogTheme),
+                DatePickerDialog datePickerDialog = new DatePickerDialog(new ContextThemeWrapper(SuspendedSupervisorSurveyListActivity.this, R.style.DialogTheme),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -352,14 +341,14 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
     private void ViewAllSurvey(String ID) {
 
-        progressDialog = CustomProgressDialog.getDialogue(ViewSurveySupervisorActivity.this);
+        progressDialog = CustomProgressDialog.getDialogue(SuspendedSupervisorSurveyListActivity.this);
         progressDialog.show();
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveySupervisorActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(SuspendedSupervisorSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         SupervisorInterface apiservice = ApiService.getApiClient().create(SupervisorInterface.class);
-        Call<SupervisorViewSurveyResponse> call = apiservice.getSurveyorSurveys(headers,"1","1",
+        Call<SupervisorViewSurveyResponse> call = apiservice.getSurveyorSurveys(headers,"1","-1",
                 ID,
                 mEditDate.getText().toString().trim(),
                 mEditAdharNo.getText().toString().trim());
@@ -375,19 +364,19 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                     if (response.body().isStatus()) {
 
-                      AllSurveyList  = response.body().getResponse().getData();
+                        AllSurveyList  = response.body().getResponse().getData();
 
-                      mTextPageNo.setText("Current Page : "+response.body().getResponse().getCurrentPage());
-                      mTextTotalPages.setText("Total Pages : "+response.body().getResponse().getLastPage());
+                        mTextPageNo.setText("Current Page : "+response.body().getResponse().getCurrentPage());
+                        mTextTotalPages.setText("Total Pages : "+response.body().getResponse().getLastPage());
 
-                      mTextPrevPage.setVisibility(View.GONE);
+                        mTextPrevPage.setVisibility(View.GONE);
 
-                      viewSurveyAdapter.setList(AllSurveyList);
+                        viewSurveyAdapter.setList(AllSurveyList);
 
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                        ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,
                                 "Response",
                                 "Failed to get Data");
                     }
@@ -395,7 +384,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
                 }else {
 
                     try {
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                        ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,
                                 "Response",
                                 response.errorBody().string());
                     }catch (Exception e){
@@ -410,7 +399,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -419,12 +408,12 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
     private void ViewPagewiseSurvey(int pageNo) {
         String NO_PAGE = "";
 
-        progressDialog = CustomProgressDialog.getDialogue(ViewSurveySupervisorActivity.this);
+        progressDialog = CustomProgressDialog.getDialogue(SuspendedSupervisorSurveyListActivity.this);
         progressDialog.show();
 
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveySupervisorActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(SuspendedSupervisorSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         if (pageNo == 0){
             NO_PAGE ="";
@@ -435,11 +424,11 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
         SupervisorInterface apiservice = ApiService.getApiClient().create(SupervisorInterface.class);
         Call<SupervisorViewSurveyResponse> call = apiservice.getSurveyorSurveys(headers,
                 NO_PAGE,
-                "1",
+                "-1",
                 ID,
                 mEditDate.getText().toString().trim(),
                 mEditAdharNo.getText().toString().trim()
-                );
+        );
 
         call.enqueue(new Callback<SupervisorViewSurveyResponse>() {
             @Override
@@ -475,11 +464,11 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                         }
 
-                       viewSurveyAdapter.setList(AllSurveyList);
+                        viewSurveyAdapter.setList(AllSurveyList);
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                        ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,
                                 "Response",
                                 "Failed to get Data");
                     }
@@ -487,7 +476,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
                 }else {
 
                     try {
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                        ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,
                                 "Response",
                                 response.errorBody().string());
                     }catch (Exception e){
@@ -502,7 +491,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -512,13 +501,13 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
     private void ViewSearchSurvey(int pageNo) {
         String NO_PAGE = "";
 
-        progressDialog = CustomProgressDialog.getDialogue(ViewSurveySupervisorActivity.this);
+        progressDialog = CustomProgressDialog.getDialogue(SuspendedSupervisorSurveyListActivity.this);
         progressDialog.show();
 
-        String UNiq_Id =  PrefUtils.getFromPrefs(ViewSurveySupervisorActivity.this, ApplicationConstant.URI_NO_,"");
+        String UNiq_Id =  PrefUtils.getFromPrefs(SuspendedSupervisorSurveyListActivity.this, ApplicationConstant.URI_NO_,"");
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveySupervisorActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(SuspendedSupervisorSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         if (pageNo == 0){
             NO_PAGE ="";
@@ -529,11 +518,11 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
         SupervisorInterface apiservice = ApiService.getApiClient().create(SupervisorInterface.class);
         Call<SupervisorViewSurveyResponse> call = apiservice.getSurveyorSurveys(headers,
                 NO_PAGE,
-                "1",
+                "-1",
                 ID,
                 mEditDate.getText().toString().trim(),
                 mEditAdharNo.getText().toString().trim()
-                );
+        );
 
         call.enqueue(new Callback<SupervisorViewSurveyResponse>() {
             @Override
@@ -571,11 +560,11 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                         }
 
-                       viewSurveyAdapter.setList(AllSurveyList);
+                        viewSurveyAdapter.setList(AllSurveyList);
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                        ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,
                                 "Response",
                                 "Failed to get Data");
                     }
@@ -583,7 +572,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
                 }else {
 
                     try {
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                        ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,
                                 "Response",
                                 response.errorBody().string());
                     }catch (Exception e){
@@ -598,7 +587,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });
@@ -631,12 +620,12 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
     private void ViewSurveyorList() {
 
-        progressDialog = CustomProgressDialog.getDialogue(ViewSurveySupervisorActivity.this);
+        progressDialog = CustomProgressDialog.getDialogue(SuspendedSupervisorSurveyListActivity.this);
         progressDialog.show();
 
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveySupervisorActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
+        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(SuspendedSupervisorSurveyListActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         SupervisorInterface apiservice = ApiService.getApiClient().create(SupervisorInterface.class);
         Call<SurveyorListResponse> call = apiservice.getSurveyorList(headers);
@@ -654,15 +643,16 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                         AllSurveyorList  = response.body().getData();
 
-                        ArrayAdapter<SurveyorListData> listDataArrayAdapter = new ArrayAdapter<>(ViewSurveySupervisorActivity.this,
+                        ArrayAdapter<SurveyorListData> listDataArrayAdapter = new ArrayAdapter<>(SuspendedSupervisorSurveyListActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item,AllSurveyorList);
                         mSpinnerType.setTitle("Select Surveyor");
+
                         mSpinnerType.setAdapter(listDataArrayAdapter);
 
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                        ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,
                                 "Response",
                                 "Failed to get Data");
                     }
@@ -670,7 +660,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
                 }else {
 
                     try {
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
+                        ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this,
                                 "Response",
                                 response.errorBody().string());
                     }catch (Exception e){
@@ -685,167 +675,7 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
-
-            }
-        });
-    }
-
-    @Override
-    public void refrehListwithAction(String URI) {
-
-        CheckSurveyRemark(URI);
-
-    }
-
-    @Override
-    public void refrehListwithPending(String URI) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ViewSurveySupervisorActivity.this);
-                        builder.setTitle("Check Pending Survey");
-                        builder.setMessage("Set this survey as pending survey ?");
-                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-
-                                CheckPendingRemark(URI);
-
-                            }
-                        });
-
-                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-
-                            }
-                        });
-
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.setCancelable(false);
-                        alertDialog.setCanceledOnTouchOutside(false);
-                        alertDialog.show();
-
-    }
-
-
-    private void CheckSurveyRemark(String URI) {
-
-        progressDialog = CustomProgressDialog.getDialogue(ViewSurveySupervisorActivity.this);
-        progressDialog.show();
-
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveySupervisorActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
-
-        SupervisorInterface apiservice = ApiService.getApiClient().create(SupervisorInterface.class);
-        Call<UpdateSurveyResponse> call = apiservice.SendCheckStatus(headers,URI,"1");
-
-        call.enqueue(new Callback<UpdateSurveyResponse>() {
-            @Override
-            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
-
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
-
-                if (response.body() != null) {
-
-                    if (response.body().isStatus()) {
-
-                        ApplicationConstant.displayToastMessage(ViewSurveySupervisorActivity.this,
-                                response.body().getMessage());
-
-                        ViewAllSurvey(ID);
-
-
-                    } else {
-
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
-                                "Response",
-                                response.body().getMessage());
-                    }
-
-                }else {
-
-                    try {
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
-                                "Response",
-                                response.errorBody().string());
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
-
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
-
-            }
-        });
-    }
-
-
-    private void CheckPendingRemark(String URI) {
-
-        progressDialog = CustomProgressDialog.getDialogue(ViewSurveySupervisorActivity.this);
-        progressDialog.show();
-
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(ViewSurveySupervisorActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
-
-        SupervisorInterface apiservice = ApiService.getApiClient().create(SupervisorInterface.class);
-        Call<UpdateSurveyResponse> call = apiservice.SendPendingStatus(headers,URI,"0");
-
-        call.enqueue(new Callback<UpdateSurveyResponse>() {
-            @Override
-            public void onResponse(Call<UpdateSurveyResponse> call, Response<UpdateSurveyResponse> response) {
-
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
-
-                if (response.body() != null) {
-
-                    if (response.body().isStatus()) {
-
-                        ApplicationConstant.displayToastMessage(ViewSurveySupervisorActivity.this,
-                                response.body().getMessage());
-
-                        ViewAllSurvey(ID);
-
-
-                    } else {
-
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
-                                "Response",
-                                response.body().getMessage());
-                    }
-
-                }else {
-
-                    try {
-                        ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this,
-                                "Response",
-                                response.errorBody().string());
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateSurveyResponse> call, Throwable t) {
-
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
 
             }
         });

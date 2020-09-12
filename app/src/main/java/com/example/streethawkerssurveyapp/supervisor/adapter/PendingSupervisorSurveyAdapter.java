@@ -9,9 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
-import com.example.streethawkerssurveyapp.supervisor.activities.ViewSurveySupervisorActivity;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
+import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.supervisor.response_pojo.SupervisorViewSurveyData;
-import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyDetailsActivity;
+import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyData;
 
 import java.text.ParseException;
@@ -24,12 +25,12 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurveySupervisorAdapter.MyViewHolder> {
+public class PendingSupervisorSurveyAdapter extends RecyclerView.Adapter<PendingSupervisorSurveyAdapter.MyViewHolder> {
     private Context context;
     private List<SupervisorViewSurveyData> allSurveyList = new ArrayList<>();
     private RefreshlistListner refreshlistListner;
 
-    public ViewSurveySupervisorAdapter(Context context) {
+    public PendingSupervisorSurveyAdapter(Context context) {
         this.context = context;
     }
 
@@ -37,7 +38,7 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_view_survey_supervisor,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_pending_survey_supervisor,parent,false);
 
         return new MyViewHolder(view);
     }
@@ -57,53 +58,24 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
         holder.mTextZone.setText("Zone : "+SurveyData.getZone());
         holder.mTextCategory.setText("Category : "+SurveyData.getCategory());
         holder.mTextArea.setText("Area : "+SurveyData.getArea());
-        holder.mTextComments.setText("Comments : "+SurveyData.getComments());
-        holder.mTextRemarks.setText("Remark : "+SurveyData.getModComment());
-
-        if (SurveyData.getSurveyStatus().trim().equals("-1")){
-            holder.mTextStatus.setText("Status : Suspended");
-            holder.mTextStatus.setTextColor(context.getResources().getColor(R.color.red));
-
-        }else if (SurveyData.getSurveyStatus().trim().equals("0")){
-            holder.mTextStatus.setText("Status : Pending");
-            holder.mTextStatus.setTextColor(context.getResources().getColor(R.color.orange));
-        }else if (SurveyData.getSurveyStatus().trim().equals("1")){
-            holder.mTextStatus.setText("Status : Completed");
-            holder.mTextStatus.setTextColor(context.getResources().getColor(R.color.green));
-        }
-
-
-        if (SurveyData.getSupervisor_check().trim().equals("1")){
-            holder.mBtn_Check.setVisibility(View.GONE);
-            holder.mBtn_Pending.setVisibility(View.GONE);
-            holder.mTextStatus.setText("Status : Completed | CHECKED");
-
-        }else {
-            holder.mBtn_Check.setVisibility(View.VISIBLE);
-            holder.mBtn_Pending.setVisibility(View.VISIBLE);
-
-        }
+        holder.TextComments.setText("Comment : "+SurveyData.getComments());
 
         holder.mCardSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ViewSurveyDetailsActivity.class);
-                intent.putExtra("URI",SurveyData.getUriNumber());
+
+                PrefUtils.saveToPrefs(context, ApplicationConstant.SURVEY_ID, SurveyData.getUriNumber());
+                PrefUtils.saveToPrefs(context, ApplicationConstant.URI_NO_, SurveyData.getUriNumber());
+
+                Intent intent = new Intent(context, PendingPersonalDetailsActivity.class);
                 context.startActivity(intent);
             }
         });
 
-        holder.mBtn_Check.setOnClickListener(new View.OnClickListener() {
+        holder.Btn_Suspend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 refreshlistListner.refrehListwithAction(SurveyData.getUriNumber());
-            }
-        });
-
-        holder.mBtn_Pending.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                refreshlistListner.refrehListwithPending(SurveyData.getUriNumber());
             }
         });
 
@@ -121,15 +93,14 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
 
     public void setListner(RefreshlistListner refreshlistListner) {
         this.refreshlistListner = refreshlistListner;
-
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private androidx.cardview.widget.CardView mCardSurvey;
         private TextView mTextUriNo;
         private TextView mTextDate;
-        private TextView mTextVendorName;
         private TextView mTextName;
+        private TextView mTextVendorName;
         private TextView mTextCorportaion;
         private TextView mTextSex;
         private TextView mTextWard;
@@ -138,10 +109,8 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
         private TextView mTextCategory;
         private TextView mTextArea;
         private TextView mTextStatus;
-        private TextView mTextComments;
-        private TextView mTextRemarks;
-        private Button mBtn_Check;
-        private Button mBtn_Pending;
+        private TextView TextComments;
+        private Button Btn_Suspend;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -149,8 +118,8 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
             mCardSurvey = (androidx.cardview.widget.CardView) itemView.findViewById(R.id.CardSurvey);
             mTextUriNo = (TextView) itemView.findViewById(R.id.TextUriNo);
             mTextDate = (TextView) itemView.findViewById(R.id.TextDate);
-            mTextVendorName = (TextView) itemView.findViewById(R.id.TextVendorName);
             mTextName = (TextView) itemView.findViewById(R.id.TextName);
+            mTextVendorName = (TextView) itemView.findViewById(R.id.TextVendorName);
             mTextCorportaion = (TextView) itemView.findViewById(R.id.TextCorportaion);
             mTextSex = (TextView) itemView.findViewById(R.id.TextSex);
             mTextWard = (TextView) itemView.findViewById(R.id.TextWard);
@@ -159,14 +128,17 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
             mTextCategory = (TextView) itemView.findViewById(R.id.TextCategory);
             mTextArea = (TextView) itemView.findViewById(R.id.TextArea);
             mTextStatus = (TextView) itemView.findViewById(R.id.TextStatus);
-            mTextComments = (TextView) itemView.findViewById(R.id.TextComments);
-            mTextRemarks = (TextView) itemView.findViewById(R.id.TextRemarks);
-            mBtn_Check = (Button) itemView.findViewById(R.id.Btn_Check);
-            mBtn_Pending = (Button) itemView.findViewById(R.id.Btn_Pending);
-
+            TextComments = (TextView) itemView.findViewById(R.id.TextComments);
+            Btn_Suspend = (Button) itemView.findViewById(R.id.Btn_Suspend);
 
         }
     }
+
+    public interface RefreshlistListner{
+
+        void refrehListwithAction(String URI);
+    }
+
 
     public String getIndianTIme(String utcDate){
 
@@ -192,29 +164,4 @@ public class ViewSurveySupervisorAdapter extends RecyclerView.Adapter<ViewSurvey
         return "";
 
     }
-
-    public static String formatDateToString(Date date, String format,
-                                            String timeZone) {
-        // null check
-        if (date == null) return null;
-        // create SimpleDateFormat object with input format
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        // default system timezone if passed null or empty
-        if (timeZone == null || "".equalsIgnoreCase(timeZone.trim())) {
-            timeZone = Calendar.getInstance().getTimeZone().getID();
-        }
-        // set timezone to SimpleDateFormat
-//        sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
-        // return Date in required format with timezone as String
-        return sdf.format(date);
-    }
-
-    public interface RefreshlistListner{
-
-        void refrehListwithAction(String URI);
-
-        void refrehListwithPending(String URI);
-    }
-
-
 }

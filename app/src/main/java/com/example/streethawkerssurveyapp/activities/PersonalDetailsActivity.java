@@ -167,6 +167,7 @@ public class PersonalDetailsActivity extends MainActivity {
     private EditText mEditAnnualIncome;
 
     private Button mBtnAddharCapture;
+    private Button mBtnAadharQr;
     private TextView BtnAddharVerified;
 
 //    private EditText mEditAccNo;
@@ -267,6 +268,9 @@ public class PersonalDetailsActivity extends MainActivity {
     private SurveyDao surveyDao;
     private String BiometricImagePath="";
 
+    boolean isAadharSetData = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -338,6 +342,17 @@ public class PersonalDetailsActivity extends MainActivity {
                     }
                 }).start();
 
+            }
+        });
+
+        mBtnAadharQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                isAadharSetData = true;
+
+                Intent intent = new Intent(PersonalDetailsActivity.this, ScanQrForAadharActivity.class);
+                startActivityForResult(intent, 12345);
             }
         });
 
@@ -1142,6 +1157,8 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditPPincode = (EditText) findViewById(R.id.EditPPincode);
         mEditAadhar = (EditText) findViewById(R.id.EditAadhar);
         mBtnAddharCapture = (Button) findViewById(R.id.BtnAddharCapture);
+        mBtnAadharQr = (Button) findViewById(R.id.BtnAadharQr);
+        mBtnAadharQr.setVisibility(View.VISIBLE);
         BtnAddharVerified = (TextView) findViewById(R.id.BtnAddharVerified);
 
         mRadioCY = (RadioButton) findViewById(R.id.RadioCY);
@@ -1223,56 +1240,93 @@ public class PersonalDetailsActivity extends MainActivity {
                     {
                         String keyValue = (String)keys.next();
 
-                    try {
-//                        JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
-                        JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
-                        address.setLoc(jsonAadhar.getString("loc"));
-//                        address.setLandmark(jsonAadhar.getString("lm"));
-                        address.setLandmark(null);
-                        address.setSubdist(jsonAadhar.getString("subdist"));
-                        address.setVtc(jsonAadhar.getString("vtc"));
-                        address.setDist(jsonAadhar.getString("dist"));
-                        address.setHouse(jsonAadhar.getString("house"));
-                        address.setPo(jsonAadhar.getString("po"));
-                        address.setState(jsonAadhar.getString("state"));
-                        address.setStreet(jsonAadhar.getString("street"));
-                        address.setCountry("India");
-
-                        aadharData = new AadharData();
-                        aadharData.setAddress(address);
-                        aadharData.setGender(jsonAadhar.getString("gender"));
-
                         try {
-                            String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
-                            aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+//                        JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
+
+                            JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
+
+                            if (jsonAadhar.has("loc")){
+                                address.setLoc(jsonAadhar.getString("loc"));
+                            }else {
+                                address.setLoc("NA");
+
+                            }
+
+                            if (jsonAadhar.has("house")){
+                                address.setHouse(jsonAadhar.getString("house"));
+                            }else {
+                                address.setHouse("NA");
+
+                            }
+
+//                        address.setLandmark(jsonAadhar.getString("lm"));
+                            address.setLandmark(null);
+                            address.setSubdist("NA");
+                            address.setVtc(jsonAadhar.getString("vtc"));
+                            address.setDist(jsonAadhar.getString("dist"));
+                            address.setPo(jsonAadhar.getString("pc"));
+                            address.setState(jsonAadhar.getString("state"));
+                            address.setStreet("NA");
+                            address.setCountry("India");
+
+                            aadharData = new AadharData();
+                            aadharData.setAddress(address);
+                            aadharData.setGender(jsonAadhar.getString("gender"));
+
+                            if (jsonAadhar.has("dob")){
+
+                                if (jsonAadhar.getString("dob").trim().contains("\\/")){
+                                    String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                                }else if (jsonAadhar.getString("dob").trim().contains("-")){
+                                    String[] datearray = jsonAadhar.getString("dob").trim().split("-");
+                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                }else {
+                                    String dob = jsonAadhar.getString("yob");
+                                    aadharData.setDob(dob+"-01-01");
+                                }
+
+                            }else {
+                                String dob = jsonAadhar.getString("yob");
+                                aadharData.setDob(dob+"-01-01");
+                            }
+
+//                            try {
+//                                String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+//                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//
+//                                String dob = jsonAadhar.getString("yob");
+//                                aadharData.setDob(dob+"-01-01");
+//
+//                            }
+
+
+//                        aadharData.setDob(jsonAadhar.getString("dob"));
+                            aadharData.setFullName(jsonAadhar.getString("name"));
+                            aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
+                            aadharData.setRawXml(xmlData);
+                            aadharData.setZip(jsonAadhar.getString("pc"));
+                            aadharData.setZipData("zipdata");
+                            aadharData.setCareOf("careoff");
+                            aadharData.setFaceStatus(false);
+                            aadharData.setFaceScore(-1);
+                            aadharData.setHasImage(false);
+                            aadharData.setClientId("clientid123");
+                            aadharData.setShareCode("0");
+                            aadharData.setProfileImage("sgdvsgsd");
+
+                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
+
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            Gson gson = gsonBuilder.create();
+                            String json_Aadhar = new Gson().toJson(aadharData);
+
+                            AADHAR_DETAILS = json_Aadhar;
+
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            aadharData.setDob("1995-05-30");
-                        }
-
-//                      aadharData.setDob(jsonAadhar.getString("dob"));
-                        aadharData.setFullName(jsonAadhar.getString("name"));
-                        aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
-                        aadharData.setRawXml(xmlData);
-                        aadharData.setZip(jsonAadhar.getString("pc"));
-                        aadharData.setZipData("zipdata");
-                        aadharData.setCareOf("careoff");
-                        aadharData.setFaceStatus(false);
-                        aadharData.setFaceScore(-1);
-                        aadharData.setHasImage(false);
-                        aadharData.setClientId("clientid123");
-                        aadharData.setShareCode("0");
-                        aadharData.setProfileImage("sgdvsgsd");
-
-                        ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "Aadhar Details Scanned Successfully", aadharData.getAadhaarNumber() + "\n" + aadharData.getFullName());
-
-                        GsonBuilder gsonBuilder = new GsonBuilder();
-                        Gson gson = gsonBuilder.create();
-                        String json_Aadhar = new Gson().toJson(aadharData);
-
-                        AADHAR_DETAILS = json_Aadhar;
-
-                    } catch (JSONException e) {
                         e.printStackTrace();
 
 
@@ -1297,13 +1351,22 @@ public class PersonalDetailsActivity extends MainActivity {
                             aadharData.setAddress(address);
                             aadharData.setGender(jsonAadhar.getString("g"));
 
-                            try {
-                                String[] datearray = jsonAadhar.getString("d").trim().split("-");
-                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-                            } catch (JSONException exe) {
-                                exe.printStackTrace();
-                                aadharData.setDob("0000-00-00");
+                            if (jsonAadhar.has("d")){
 
+                                if (jsonAadhar.getString("d").trim().contains("\\/")){
+                                    String[] datearray = jsonAadhar.getString("d").trim().split("\\/");
+                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                                }else if (jsonAadhar.getString("d").trim().contains("-")){
+                                    String[] datearray = jsonAadhar.getString("d").trim().split("-");
+                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                }else {
+                                    aadharData.setDob("6748-01-01");
+
+                                }
+
+                            }else {
+                                aadharData.setDob("6748-01-01");
                             }
 
 
@@ -1337,6 +1400,12 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 }
 
+                    if (isAadharSetData == true){
+
+                        setAadharData(aadharData);
+
+                    }
+
             }
 
             } else if (requestCode == 1) {
@@ -1367,6 +1436,7 @@ public class PersonalDetailsActivity extends MainActivity {
                 if (ApplicationConstant.ISLOCALDB) {
 
                 } else {
+
                     UploadVendingSitePhoto();
 
                 }
@@ -1375,6 +1445,100 @@ public class PersonalDetailsActivity extends MainActivity {
         }
 
     }
+
+    private void setAadharData(AadharData aadharData) {
+
+        if (aadharData.getFullName()!=null && !aadharData.getFullName().isEmpty()){
+
+            String[] splited = aadharData.getFullName().split("\\s+");
+
+            if (splited.length == 3){
+
+                mEditFName.setText(splited[0]);
+                mEditMName.setText(splited[1]);
+                mEditLName.setText(splited[2]);
+
+            }else {
+                mEditFName.setText(splited[0]);
+                mEditLName.setText(splited[1]);
+            }
+        }
+
+        if (aadharData.getGender()!=null && !aadharData.getGender().isEmpty()){
+            if (aadharData.getGender().trim().equals("M")){
+                mRadioM.setChecked(true);
+            }else if (aadharData.getGender().trim().equals("F")){
+                mRadioF.setChecked(true);
+            }else {
+                mRadioO.setChecked(true);
+            }
+        }
+
+        if (aadharData.getDob() !=null && !aadharData.getDob().isEmpty()){
+
+            if (aadharData.getDob().trim().contains("\\/")){
+//                String[] datearray = aadharData.getDob().trim().split("\\/");
+//                mEditDob.setText(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                mEditDob.setText(aadharData.getDob().trim());
+
+            }else if (aadharData.getDob().trim().contains("-")){
+//                String[] datearray = aadharData.getDob().trim().split("-");
+//                mEditDob.setText(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                mEditDob.setText(aadharData.getDob().trim());
+
+            }else {
+
+                mEditDob.setText(aadharData.getDob().trim());
+
+            }
+
+        }else {
+
+            mEditDob.setText(aadharData.getDob().trim());
+
+        }
+
+        if (aadharData.getZip() !=null && !aadharData.getZip().isEmpty()) {
+
+            mEditPincode.setText(aadharData.getZip());
+
+        }
+
+        if (aadharData.getAddress().getVtc() !=null && !aadharData.getAddress().getVtc().isEmpty()) {
+
+            mEditCity.setText(aadharData.getAddress().getVtc());
+
+        }
+        if (aadharData.getAddress().getLoc() !=null && !aadharData.getAddress().getLoc().isEmpty()) {
+
+            mEditArea.setText(aadharData.getAddress().getLoc());
+
+        }
+
+        if (aadharData.getAddress().getHouse() !=null && !aadharData.getAddress().getHouse().isEmpty()) {
+
+            mEditHouseNo.setText(aadharData.getAddress().getHouse());
+
+        }
+
+        if (aadharData.getAddress().getStreet() !=null && !aadharData.getAddress().getStreet().isEmpty()) {
+
+            mEditRoad.setText(aadharData.getAddress().getStreet());
+
+        }
+
+
+   if (aadharData.getAadhaarNumber() !=null && !aadharData.getAadhaarNumber().isEmpty()) {
+
+            mEditAadhar.setText(aadharData.getAadhaarNumber());
+
+        }
+
+        isAadharSetData = false;
+
+        }
 
     private void AddSurvey() {
 

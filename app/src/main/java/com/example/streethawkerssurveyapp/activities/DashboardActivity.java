@@ -3,8 +3,6 @@ package com.example.streethawkerssurveyapp.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -27,13 +25,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.streethawkerssurveyapp.Helper.LocaleHelper;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.officer.activities.SupervisorListActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
+import com.example.streethawkerssurveyapp.supervisor.activities.PendingSupervisorSurveyListActivity;
 import com.example.streethawkerssurveyapp.supervisor.activities.SurveyorListActivity;
+import com.example.streethawkerssurveyapp.supervisor.activities.SuspendedSupervisorSurveyListActivity;
 import com.example.streethawkerssurveyapp.supervisor.activities.ViewSurveySupervisorActivity;
 import com.example.streethawkerssurveyapp.suspended_survey.avtivities.SuspendedSurveyActivity;
 import com.example.streethawkerssurveyapp.utils.GetLocation;
@@ -41,8 +40,6 @@ import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyActivity;
 
 import java.util.Locale;
-
-import io.paperdb.Paper;
 
 public class DashboardActivity extends MainActivity {
 
@@ -71,43 +68,26 @@ public class DashboardActivity extends MainActivity {
     private LinearLayout mLinear_Supervisor;
     private LinearLayout mLinear_surveyorList;
     private LinearLayout mLinear_view_Supervisor;
-    Context context;
+    private LinearLayout mLinear_supervisor_pending;
+    private LinearLayout mLinear_supervisor_suspended;
 
     public GetLocation getLocation;
 
     boolean doubleBackToExitPressedOnce = false;
 
     String USERTYPE = "";
-    boolean lang_selected;
-    Resources resources;
-    private String mLanguageCode = "hi";
-    private String mLanguageCode1 = "en";
-
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleHelper.onAttach(newBase,"hi"));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-//        setAppLocale("hi");
+//        setApplicationLocale("en");
 
         if (getLocation == null) {
             getLocation = new GetLocation(DashboardActivity.this);
         }
 
         bindVieW();
-
-//        Paper.init(this);
-//
-//        String language = Paper.book().read("language");
-//        if(language==null)
-//        Paper.book().write("language","en");
-//
-//        updateView((String)Paper.book().read(language));
 
         setData();
 
@@ -155,6 +135,15 @@ public class DashboardActivity extends MainActivity {
             }
         });
 
+        mLinear_supervisor_pending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(DashboardActivity.this, PendingSupervisorSurveyListActivity.class));
+
+            }
+        });
+
         mLinear_local_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,6 +159,15 @@ public class DashboardActivity extends MainActivity {
 
 //                ApplicationConstant.DisplayMessageDialog(DashboardActivity.this,"","This Feature Coming Soon...");
                 startActivity(new Intent(DashboardActivity.this, SuspendedSurveyActivity.class));
+
+            }
+        });
+
+        mLinear_supervisor_suspended.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(DashboardActivity.this, SuspendedSupervisorSurveyListActivity.class));
 
             }
         });
@@ -247,6 +245,8 @@ public class DashboardActivity extends MainActivity {
         mLinear_Supervisor = (LinearLayout) findViewById(R.id.Linear_Supervisor);
         mLinear_surveyorList = (LinearLayout) findViewById(R.id.linear_surveyorList);
         mLinear_view_Supervisor = (LinearLayout) findViewById(R.id.linear_view_Supervisor);
+        mLinear_supervisor_pending = (LinearLayout) findViewById(R.id.linear_supervisor_pending);
+        mLinear_supervisor_suspended = (LinearLayout) findViewById(R.id.linear_supervisor_suspended);
 
 
     }
@@ -291,8 +291,6 @@ public class DashboardActivity extends MainActivity {
                 return true;
 
             case R.id.language_menu:
-
-//                setAppLocale();
 
 
 

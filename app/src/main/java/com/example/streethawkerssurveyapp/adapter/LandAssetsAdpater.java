@@ -38,7 +38,7 @@ public class LandAssetsAdpater extends RecyclerView.Adapter<LandAssetsAdpater.My
 
         holder.lText_HouseSize.setText("House size : "+landassetesList.get(position).getHouse_size());
         holder.lText_plot.setText("Plot : "+landassetesList.get(position).getPlot());
-        holder.lText_Area.setText("Area : "+landassetesList.get(position).getArea());
+        holder.lText_Area.setText("Location : "+landassetesList.get(position).getArea());
         holder.lText_kuccha.setText("Kuccha : "+landassetesList.get(position).getKucchha());
         holder.lText_Income.setText("Rs : "+landassetesList.get(position).getRental_income());
 

@@ -1,6 +1,7 @@
 package com.example.streethawkerssurveyapp.supervisor.services;
 
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
+import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.supervisor.response_pojo.SupervisorViewSurveyResponse;
 import com.example.streethawkerssurveyapp.supervisor.response_pojo.SurveyorListResponse;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.ViewSurveyResponse;
@@ -27,9 +28,26 @@ public interface SupervisorInterface {
     Call<SupervisorViewSurveyResponse> getSurveyorSurveys(
             @HeaderMap Map<String, String> token,
             @Query("page") String page,
+            @Field("type") String type,
             @Field("surveyor_id") String surveyor_id,
             @Field("date") String date,
             @Field("search_key") String search_key
+    );
+
+    @FormUrlEncoded
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> SendCheckStatus(
+            @HeaderMap Map<String, String> token,
+            @Field("uri_number") String uri_number,
+            @Field("supervisor_check") String supervisor_check
+    );
+
+    @FormUrlEncoded
+    @POST("update-survey")
+    Call<UpdateSurveyResponse> SendPendingStatus(
+            @HeaderMap Map<String, String> token,
+            @Field("uri_number") String uri_number,
+            @Field("survey_status") String survey_status
     );
 
 }
