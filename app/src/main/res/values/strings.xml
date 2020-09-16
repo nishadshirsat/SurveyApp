@@ -115,7 +115,117 @@
     <string name="new_survey">New Survey</string>
     <string name="pending_survey">Pending Survey</string>
     <string name="view_survey" translatable="false">View Survey</string>
+    <string name="survey_list" translatable="false">Surveyor List</string>
     <string name="suspended_survey" translatable="false">Suspended Survey</string>
     <string name="Local_survey" translatable="false">Offline Survey List</string>
+    <string name="Logout" translatable="false">LOGOUT</string>
+    <string name="Start" translatable="false">Start Survey</string>
+    <string name="Scan" translatable="false">Scan QR Code &amp; Start Survey</string>
+    <string name="Personal" translatable="false">A. PERSONAL DETAILS</string>
+    <string name="PREVIOUS" translatable="false">PREVIOUS</string>
+    <string name="NEXT" translatable="false">NEXT</string>
+
+    <string name="VendorPhoto" translatable="false">Photo of the street vendor/Hawker</string>
+    <string name="SitePhoto" translatable="false">* Photo of Vending Site</string>
+    <string name="VendorName" translatable="false">Name of the street vendor/Hawker</string>
+    <string name="First" translatable="false">First</string>
+    <string name="Middle" translatable="false">Middle</string>
+    <string name="Surname" translatable="false">Surname</string>
+    <string name="Sex" translatable="false">Sex</string>
+    <string name="Male" translatable="false">a. Male</string>
+    <string name="Female" translatable="false">b. Female</string>
+    <string name="Other" translatable="false">c. Other</string>
+    <string name="Age" translatable="false">Age</string>
+    <string name="DOB" translatable="false">Date of Birth</string>
+    <string name="Phone" translatable="false">Contact Number</string>
+    <string name="Mobile" translatable="false">Mobile</string>
+    <string name="Landline" translatable="false">Landline</string>
+    <string name="Education" translatable="false">Education Status</string>
+    <string name="HusbandName" translatable="false">Name of Father/Husband</string>
+    <string name="MotherName" translatable="false">Name of Mother</string>
+    <string name="SpouseName" translatable="false">Spouse Name</string>
+    <string name="widowedName" translatable="false">Whether widowed/widower</string>
+    <string name="Yes" translatable="false">Yes</string>
+    <string name="No" translatable="false">No</string>
+    <string name="Category" translatable="false">Category</string>
+    <string name="Income" translatable="false">Annual Income</string>
+    <string name="Address" translatable="false">Present Residential / Correspondence Address</string>
+    <string name="Area" translatable="false">Area</string>
+    <string name="HouseNo" translatable="false">House No.</string>
+    <string name="Road" translatable="false">Road</string>
+    <string name="City" translatable="false">City</string>
+    <string name="Pincode" translatable="false">Pincode No.</string>
+    <string name="PAddress" translatable="false">Permanent Address</string>
+    <string name="same" translatable="false">Same as Residential</string>
+    <string name="Aadhar" translatable="false">Aadhar Card details</string>
+    <string name="AadharNo" translatable="false">Aadhar No</string>
+    <string name="Verify" translatable="false">Verify</string>
+    <string name="Verified" translatable="false">Verified</string>
+    <string name="NoAadhar" translatable="false">No Aadhar Card </string>
+    <string name="Capture" translatable="false">Capture Biometric</string>
+    <string name="Open" translatable="false">Open Device</string>
+    <string name="Case" translatable="false">Whether convicted in any case or criminal case pending?</string>
+    <string name="Ifyes" translatable="false">If yes,</string>
+    <string name="ADD" translatable="false">ADD</string>
+    <string name="Vending" translatable="false">C. VENDING DETAILS</string>
+    <string name="VendingType" translatable="false">Type of vending/ Hawking or items sold </string>
+    <string name="VendingName" translatable="false">Name of Vending/Hawking/Squatting site</string>
+    <string name="Name" translatable="false">Name</string>
+    <string name="VendingTime" translatable="false">Timing of Vending/Hawking/Squatting</string>
+    <string name="From" translatable="false">From</string>
+    <string name="To" translatable="false">To</string>
+    <string name="ActiveDays" translatable="false">No. of days active per week (tick appropriate)</string>
+    <string name="AllDays" translatable="false">All days</string>
+    <string name="Monday" translatable="false">Monday</string>
+    <string name="Tuesday" translatable="false">Tuesday</string>
+    <string name="Wednesday" translatable="false">Wednesday</string>
+    <string name="Thursday" translatable="false">Thursday</string>
+    <string name="Friday" translatable="false">Friday</string>
+    <string name="Saturday" translatable="false">Saturday</string>
+    <string name="Sunday" translatable="false">Sunday</string>
+    <string name="VendingYears" translatable="false">Number of yrs  of Vending/Hawking/Squatting in current location</string>
+    <string name="StreetVendor" translatable="false">Has the applicant been previously recognized as a street vendor?</string>
+    <string name="TypeVehicle" translatable="false">Type of structure / vehicle</string>
+    <string name="DateVending" translatable="false">Date of start of vending activity in current location</string>
+    <string name="Doc" translatable="false">Is document of Tehbazari available? </string>
+    <string name="AreaChoice" translatable="false">Choice of vending area/market allotment </string>
+    <string name="VendorsFam" translatable="false">B. VENDORs FAMILY DETAILS</string>
+    <string name="FamDetails" translatable="false">Details of family members &amp; their occupation</string>
+    <string name="Land" translatable="false">Land/Fixed assets owned by family, if any</string>
+    <string name="SurveyedFam" translatable="false">Have other family members been surveyed?</string>
+    <string name="Relationship" translatable="false">Relationship</string>
+    <string name="AddLand" translatable="false">ADD LAND ASSETS</string>
+    <string name="plot" translatable="false">Plot</string>
+    <string name="HouseSize" translatable="false">House Size</string>
+    <string name="Kuccha" translatable="false">Kuccha</string>
+    <string name="RentalIncome" translatable="false">Rental Income</string>
+    <string name="AddFam" translatable="false">ADD FAMILY MEMBER</string>
+    <string name="ChooseMethod" translatable="false">Choose Method of Authentication</string>
+    <string name="AddCase" translatable="false">ADD CRIMINAL CASES</string>
+    <string name="S.No" translatable="false">S.No</string>
+    <string name="CaseDate" translatable="false">Date of case</string>
+    <string name="FIRNo" translatable="false">FIR No.</string>
+    <string name="PoliceName" translatable="false">Name of Police</string>
+    <string name="CaseStatus" translatable="false">Status of case</string>
+    <string name="Banking" translatable="false">D. BANKING DETAILS</string>
+    <string name="BankAccount" translatable="false">Bank Account details</string>
+    <string name="Account" translatable="false">Account No</string>
+    <string name="BankName" translatable="false">Bank Name</string>
+    <string name="BranchName" translatable="false">Branch Name</string>
+    <string name="IFSCCode" translatable="false">IFSC Code</string>
+    <string name="Documents" translatable="false">E. DOCUMENTS (to be scanned)</string>
+    <string name="ID" translatable="false">Identity proof documents</string>
+    <string name="FP" translatable="false">Front Page</string>
+    <string name="BP" translatable="false">Back Page</string>
+    <string name="VendingHistory" translatable="false">Vending History Proof documents</string>
+    <string name="SP" translatable="false">Second Page</string>
+    <string name="other" translatable="false">Other Documents</string>
+    <string name="allotment" translatable="false">Allotment of Tehbazari document (If available)</string>
+    <string name="undertaking" translatable="false">Undertaking by the Applicant</string>
+    <string name="receipt" translatable="false">Acknowledge receipt</string>
+    <string name="Comments" translatable="false">Comments</string>
+    <string name="UPLOAD" translatable="false">UPLOAD</string>
+
+
 
 </resources>

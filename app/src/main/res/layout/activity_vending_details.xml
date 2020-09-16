@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="C. VENDING DETAILS"
+                    android:text="@string/Vending"
                     android:textColor="@color/black"
                     android:textSize="26sp"
                     android:gravity="center"
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    android:text="C. VENDING DETAILS"
+                    android:text="@string/Vending"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -94,7 +94,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Type of vending/ Hawking or items sold "
+                            android:text="@string/VendingType"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -154,7 +154,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Name of Vending/Hawking/Squatting site"
+                            android:text="@string/VendingName"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/edittext_bg"
-                        android:hint="Name"
+                        android:hint="@string/Name"
                         android:inputType="textCapSentences"
                         android:padding="10dp"
                         android:textSize="14sp" />
@@ -213,7 +213,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Timing of Vending/Hawking/Squatting"
+                            android:text="@string/VendingTime"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -235,7 +235,7 @@
                         android:layout_weight="1.45"
                         android:background="@drawable/edittext_bg"
                         android:focusableInTouchMode="false"
-                        android:hint="From"
+                        android:hint="@string/From"
                         android:inputType="date"
                         android:padding="10dp"
                         android:textSize="14sp" />
@@ -261,7 +261,7 @@
                         android:layout_weight="1.35"
                         android:background="@drawable/edittext_bg"
                         android:focusableInTouchMode="false"
-                        android:hint="To"
+                        android:hint="@string/To"
                         android:inputType="date"
                         android:padding="10dp"
                         android:textSize="14sp" />
@@ -283,7 +283,7 @@
                         android:layout_weight="1.45"
                         android:background="@drawable/edittext_bg"
                         android:focusableInTouchMode="false"
-                        android:hint="From"
+                        android:hint="@string/From"
                         android:inputType="date"
                         android:padding="10dp"
                         android:textSize="14sp" />
@@ -309,7 +309,7 @@
                         android:layout_weight="1.35"
                         android:background="@drawable/edittext_bg"
                         android:focusableInTouchMode="false"
-                        android:hint="To"
+                        android:hint="@string/To"
                         android:inputType="date"
                         android:padding="10dp"
                         android:textSize="14sp" />
@@ -331,7 +331,7 @@
                         android:layout_weight="1.45"
                         android:background="@drawable/edittext_bg"
                         android:focusableInTouchMode="false"
-                        android:hint="From"
+                        android:hint="@string/From"
                         android:inputType="date"
                         android:padding="10dp"
                         android:textSize="14sp" />
@@ -357,7 +357,7 @@
                         android:layout_weight="1.35"
                         android:background="@drawable/edittext_bg"
                         android:focusableInTouchMode="false"
-                        android:hint="To"
+                        android:hint="@string/To"
                         android:inputType="date"
                         android:padding="10dp"
                         android:textSize="14sp" />
@@ -397,7 +397,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="No. of days active per week (tick appropriate)"
+                            android:text="@string/ActiveDays"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -429,7 +429,7 @@
                         android:layout_weight="1"
                         android:textColor="@color/white"
                         android:background="@color/colorAccent"
-                        android:text="All days"
+                        android:text="@string/AllDays"
                         />
 
                 </LinearLayout>
@@ -446,7 +446,7 @@
                         android:id="@+id/CheckM"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Monday"
+                        android:text="@string/Monday"
                         android:layout_weight="1"
                         android:buttonTint="@color/colorAccent"
                         android:backgroundTint="@color/colorPrimaryDark"/>
@@ -455,7 +455,7 @@
                         android:id="@+id/CheckT"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Tuesday"
+                        android:text="@string/Tuesday"
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/dp_size_10"
                         android:buttonTint="@color/colorAccent"
@@ -465,7 +465,7 @@
                         android:id="@+id/CheckW"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Wednesday"
+                        android:text="@string/Wednesday"
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/dp_size_10"
                         android:buttonTint="@color/colorAccent"
@@ -485,7 +485,7 @@
                         android:id="@+id/CheckTh"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Thursday"
+                        android:text="@string/Thursday"
                         android:layout_weight="1"
                         android:buttonTint="@color/colorAccent"
                         android:backgroundTint="@color/colorPrimaryDark"/>
@@ -494,7 +494,7 @@
                         android:id="@+id/CheckF"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Friday"
+                        android:text="@string/Friday"
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/dp_size_10"
                         android:buttonTint="@color/colorAccent"
@@ -504,7 +504,7 @@
                         android:id="@+id/CheckS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Saturday"
+                        android:text="@string/Saturday"
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/dp_size_10"
                         android:buttonTint="@color/colorAccent"
@@ -524,7 +524,7 @@
                         android:id="@+id/CheckSu"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Sunday"
+                        android:text="@string/Sunday"
                         android:layout_weight="1"
                         android:buttonTint="@color/colorAccent"
                         android:backgroundTint="@color/colorPrimaryDark"/>
@@ -579,7 +579,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Number of yrs  of Vending/Hawking/Squatting in current location"
+                            android:text="@string/VendingYears"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -699,7 +699,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Has the applicant been previously recognized as a street vendor?"
+                            android:text="@string/StreetVendor"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -720,7 +720,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Yes"
+                        android:text="@string/Yes"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -729,7 +729,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="No"
+                        android:text="@string/No"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -752,7 +752,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="If yes,"
+                        android:text="@string/Ifyes"
                         android:textColor="@color/colorAccent"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -782,7 +782,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="Type of structure / vehicle"
+                                android:text="@string/TypeVehicle"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -856,7 +856,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Date of start of vending activity in current location"
+                            android:text="@string/DateVending"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -924,7 +924,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Is document of Tehbazari available? "
+                            android:text="@string/Doc"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -945,7 +945,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Yes"
+                        android:text="@string/Yes"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -954,7 +954,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="No"
+                        android:text="@string/No"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -991,7 +991,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Choice of vending area/market allotment"
+                            android:text="@string/AreaChoice"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -1053,7 +1053,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
-            android:text="NEXT"
+            android:text="@string/NEXT"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1069,7 +1069,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
-            android:text="PREVIOUS"
+            android:text="@string/PREVIOUS"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"

@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="B. VENDOR's FAMILY DETAILS"
+                    android:text="@string/VendorsFam"
                     android:textColor="@color/black"
                     android:textSize="26sp"
                     android:gravity="center"
@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="B. VENDOR's FAMILY DETAILS"
+                        android:text="@string/VendorsFam"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:layout_marginTop="15dp"
@@ -88,7 +88,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Details of family members &amp; their occupation"
+                            android:text="@string/FamDetails"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="ADD"
+                    android:text="@string/ADD"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     android:padding="5dp"
@@ -149,7 +149,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Land/Fixed assets owned by family, if any"
+                            android:text="@string/Land"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -169,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="ADD"
+                    android:text="@string/ADD"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     android:padding="5dp"
@@ -210,7 +210,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Have other family members been surveyed?"
+                            android:text="@string/SurveyedFam"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -230,7 +230,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Yes"
+                        android:text="@string/Yes"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -239,7 +239,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="No"
+                        android:text="@string/No"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -283,7 +283,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
-                                android:text="If yes"
+                                android:text="@string/Ifyes"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -304,7 +304,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Name"
+                            android:hint="@string/Name"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -316,7 +316,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Relationship"
+                            android:hint="@string/Relationship"
                             android:inputType="textCapSentences"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -336,7 +336,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Age"
+                            android:hint="@string/Age"
                             android:inputType="number"
                             android:padding="10dp"
                             android:textSize="14sp" />
@@ -348,7 +348,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:hint="Aadhar No"
+                            android:hint="@string/AadharNo"
                             android:maxLength="12"
                             android:inputType="number"
                             android:padding="10dp"
@@ -391,7 +391,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
-            android:text="NEXT"
+            android:text="@string/NEXT"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -407,7 +407,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:padding="10dp"
-            android:text="PREVIOUS"
+            android:text="@string/PREVIOUS"
             android:visibility="visible"
             android:textColor="@color/white"
             android:textSize="16sp"

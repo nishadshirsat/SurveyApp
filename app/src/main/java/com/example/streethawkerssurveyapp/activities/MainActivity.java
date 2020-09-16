@@ -8,8 +8,10 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentSender;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -17,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.streethawkerssurveyapp.Helper.LocaleHelper;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.utils.GetLocation;
@@ -34,6 +37,7 @@ import java.io.IOException;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.pm.PackageManager.GET_META_DATA;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -56,10 +60,26 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         this.EnableGPSAutoMatically();
 
 //      recordAudio();
+        resetTitles();
+
 
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.setLocale(base));
+    }
 
+    protected void resetTitles() {
+        try {
+            ActivityInfo info = getPackageManager().getActivityInfo(getComponentName(), GET_META_DATA);
+            if (info.labelRes != 0) {
+                setTitle(info.labelRes);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void EnableGPSAutoMatically() {
         GoogleApiClient googleApiClient = null;

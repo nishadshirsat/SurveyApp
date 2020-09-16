@@ -40,9 +40,10 @@
                     android:src="@mipmap/start_new"/>
 
                 <TextView
+                    android:id="@+id/TextStart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start Survey"
+                    android:text="@string/Start"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorAccent"
@@ -84,9 +85,10 @@
                     android:src="@mipmap/qr_scan"/>
 
                 <TextView
+                    android:id="@+id/TextScan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Scan QR Code &amp; Start Survey"
+                    android:text="@string/Scan"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"

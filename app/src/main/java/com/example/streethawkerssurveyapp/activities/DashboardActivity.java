@@ -2,16 +2,17 @@ package com.example.streethawkerssurveyapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +26,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.streethawkerssurveyapp.Helper.LocaleHelper;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
-import com.example.streethawkerssurveyapp.officer.activities.SupervisorListActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.supervisor.activities.PendingSupervisorSurveyListActivity;
@@ -77,17 +78,28 @@ public class DashboardActivity extends MainActivity {
 
     String USERTYPE = "";
 
+    public String mLanguageCode = "hi";
+    private String mLanguageCode1 = "en";
+
+    private static Locale myLocale;
+
+    //Shared Preferences Variables
+    private static final String Locale_Preference = "Locale Preference";
+    private static final String Locale_KeyValue = "Saved Locale";
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
+    String lang="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        setApplicationLocale("hi");
-
+//        setApplicationLocale("en");
         if (getLocation == null) {
             getLocation = new GetLocation(DashboardActivity.this);
         }
 
         bindVieW();
+
 
         setData();
 
@@ -157,6 +169,7 @@ public class DashboardActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
+//                ApplicationConstant.DisplayMessageDialog(DashboardActivity.this,"","This Feature Coming Soon...");
                 startActivity(new Intent(DashboardActivity.this, SuspendedSurveyActivity.class));
 
             }
@@ -181,7 +194,15 @@ public class DashboardActivity extends MainActivity {
 
             }
         });
+
+
     }
+
+//    private void updateView(String lang) {
+//        Context context=LocaleHelper.setLocale(this,lang);
+//        Resources resources=context.getResources();
+//    }
+
 
     private void setData() {
 
@@ -206,6 +227,10 @@ public class DashboardActivity extends MainActivity {
     }
 
     private void bindVieW() {
+
+        sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
 
         mProfile_layout = (LinearLayout) findViewById(R.id.profile_layout);
         mRelative1 = (RelativeLayout) findViewById(R.id.relative1);
@@ -283,8 +308,6 @@ public class DashboardActivity extends MainActivity {
 
             case R.id.language_menu:
 
-
-
                 View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
                 RadioGroup RadioLanguages=view1.findViewById(R.id.RadioLanguages);
                 RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
@@ -300,18 +323,18 @@ public class DashboardActivity extends MainActivity {
                         WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-//                boolean checked = ((RadioButton) view1).isChecked();
+
 
                 RadioLanguages.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         if(checkedId==R.id.RadioEnglish){
-                            setApplicationLocale("en");
 
+                            setNewLocale(DashboardActivity.this, LocaleHelper.ENGLISH);
                             alertDialog.dismiss();
                         }else{
-                            setApplicationLocale("hi");
 
+                            setNewLocale(DashboardActivity.this, LocaleHelper.HINDI);
                             alertDialog.dismiss();
                         }
                     }
@@ -334,32 +357,12 @@ public class DashboardActivity extends MainActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setApplicationLocale(String localeCode) {
-
-        Resources resources = getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-//        Configuration config = resources.getConfiguration();
-//        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
-//            config.setLocale(new Locale(localeCode.toLowerCase()));
-//        } else {
-//            config.locale = new Locale(localeCode.toLowerCase());
-//        }
-//        resources.updateConfiguration(config, dm);
-
-        Locale locale;
-        //Log.e("Lan",session.getLanguage());
-        locale = new Locale(localeCode);
-        Configuration config = new Configuration(getResources().getConfiguration());
-        Locale.setDefault(locale);
-        config.setLocale(locale);
-
-
-//        getBaseContext().getResources().updateConfiguration(config,
-//                getBaseContext().getResources().getDisplayMetrics());
-        resources.updateConfiguration(config, dm);
-
-
+    private void setNewLocale(AppCompatActivity mContext, @LocaleHelper.LocaleDef String language) {
+        LocaleHelper.setNewLocale(this, language);
+        Intent intent = mContext.getIntent();
+        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     }
+
 
     @Override
     protected void onResume() {
