@@ -115,6 +115,7 @@
     <string name="new_survey">New Survey</string>
     <string name="pending_survey" translatable="false">Pending Survey</string>
     <string name="view_survey" translatable="false">View Survey</string>
+    <string name="survey_list" translatable="false">Surveyor List</string>
     <string name="suspended_survey" translatable="false">Suspended Survey</string>
     <string name="Local_survey" translatable="false">Offline Survey List</string>
     <string name="Logout" translatable="false">LOGOUT</string>

@@ -296,8 +296,6 @@ public class DashboardActivity extends MainActivity {
 
             case R.id.language_menu:
 
-
-
                 View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
                 RadioGroup RadioLanguages=view1.findViewById(R.id.RadioLanguages);
                 RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
@@ -319,13 +317,13 @@ public class DashboardActivity extends MainActivity {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         if(checkedId==R.id.RadioEnglish){
-                            LocaleHelper.setLocale(DashboardActivity.this, mLanguageCode1);
+                            LocaleHelper.setLocale(getApplicationContext(), mLanguageCode1);
 
                             //It is required to recreate the activity to reflect the change in UI.
                             recreate();
                             alertDialog.dismiss();
                         }else{
-                            LocaleHelper.setLocale(DashboardActivity.this, mLanguageCode);
+                            LocaleHelper.setLocale(getApplicationContext(), mLanguageCode);
 
                             //It is required to recreate the activity to reflect the change in UI.
                             recreate();
