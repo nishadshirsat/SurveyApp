@@ -35,7 +35,7 @@ import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StartSurveyModeActivity extends AppCompatActivity {
+public class StartSurveyModeActivity extends MainActivity {
 
     private androidx.cardview.widget.CardView mCardStartSurvey;
     private androidx.cardview.widget.CardView mCardScanCode;

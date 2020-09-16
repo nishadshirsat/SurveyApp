@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.DashboardActivity;
+import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
+import com.example.streethawkerssurveyapp.activities.VendorsFamDetailsActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
@@ -753,10 +755,26 @@ public class ViewSurveySupervisorActivity extends AppCompatActivity implements V
 
                     if (response.body().isStatus()) {
 
-                        ApplicationConstant.displayToastMessage(ViewSurveySupervisorActivity.this,
-                                response.body().getMessage());
+//                        ApplicationConstant.displayToastMessage(ViewSurveySupervisorActivity.this,
+//                                response.body().getMessage());
 
-                        ViewAllSurvey(ID);
+                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ViewSurveySupervisorActivity.this);
+                        builder.setTitle("Response");
+                        builder.setMessage(response.body().getMessage());
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+
+                                ViewAllSurvey(ID);
+
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.setCancelable(false);
+                        alertDialog.setCanceledOnTouchOutside(false);
+                        alertDialog.show();
 
 
                     } else {

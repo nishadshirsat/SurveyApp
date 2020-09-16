@@ -668,7 +668,6 @@ public class PersonalDetailsActivity extends MainActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 CATEGORY = parent.getItemAtPosition(position).toString().trim();
-
             }
 
             @Override
