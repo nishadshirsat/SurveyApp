@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -131,12 +132,12 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
     private LinearLayout LinearThree;
     private LinearLayout LinearDocuments;
     private TextView TextAddAnother;
-    private String OTHER_DOCUMENT="";
+    private String OTHER_DOCUMENT = "";
     private EditText dEditOtherDocument;
     private ImageView dImgOtherDocument;
     private Button dBtnUploadDoc;
     private TextView dTextDocName;
-    private String OTHER_DOCUMENT_PATH="";
+    private String OTHER_DOCUMENT_PATH = "";
 
     private boolean Is_Uploaded = false;
 
@@ -159,32 +160,32 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+        setTitle("URI NO: " + ApplicationConstant.SurveyId);
 
         TextAddAnother.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (Is_Uploaded == false){
+                if (Is_Uploaded == false) {
 
                     View viewAdd = LayoutInflater.from(PendingDocumentsScanActivity.this).inflate(R.layout.layout_add_otherdoc, null);
 
-                    dEditOtherDocument = (EditText)viewAdd. findViewById(R.id.EditOtherDocument);
-                    dImgOtherDocument = (ImageView)viewAdd. findViewById(R.id.ImgOtherDocument);
+                    dEditOtherDocument = (EditText) viewAdd.findViewById(R.id.EditOtherDocument);
+                    dImgOtherDocument = (ImageView) viewAdd.findViewById(R.id.ImgOtherDocument);
                     dBtnUploadDoc = (Button) viewAdd.findViewById(R.id.BtnUploadDoc);
-                    dTextDocName = (TextView)viewAdd. findViewById(R.id.TextDocName);
+                    dTextDocName = (TextView) viewAdd.findViewById(R.id.TextDocName);
 
                     dImgOtherDocument.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
-                            if (dEditOtherDocument.getText().toString().trim().isEmpty()){
+                            if (dEditOtherDocument.getText().toString().trim().isEmpty()) {
                                 dEditOtherDocument.setError("enter document name first");
                                 dEditOtherDocument.requestFocus();
-                            }else {
+                            } else {
 
                                 OTHER_DOCUMENT = dEditOtherDocument.getText().toString().trim();
-                                CONTROL = ApplicationConstant.SurveyId + "_"+dEditOtherDocument.getText().toString().trim();
+                                CONTROL = ApplicationConstant.SurveyId + "_" + dEditOtherDocument.getText().toString().trim();
                                 startScan();
                             }
 
@@ -201,9 +202,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                     LinearDocuments.addView(viewAdd);
                     Is_Uploaded = true;
 
-                }else {
+                } else {
 
-                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,"","Upload "+OTHER_DOCUMENT+" First");
+                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Upload " + OTHER_DOCUMENT + " First");
 
                 }
 
@@ -212,14 +213,13 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         });
 
 
-
         SpinnerIdentityProof.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("Other")){
+                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("Other")) {
                     IDENTITY_PROOF_TYPE = "Other";
-                }else {
+                } else {
                     try {
                         IDENTITY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
                     } catch (Exception e) {
@@ -241,9 +241,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         SpinnerVendingHistoryProof.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("None")){
+                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("None")) {
                     VENDING_HISTORY_PROOF_TYPE = "None";
-                }else {
+                } else {
                     try {
                         VENDING_HISTORY_PROOF_TYPE = adapterView.getItemAtPosition(i).toString().trim().split("-")[1].trim();
                     } catch (Exception e) {
@@ -342,7 +342,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                     LinearFour.setVisibility(View.GONE);
                     LinearThree.setVisibility(View.GONE);
 
-                }else   if (LinearOne.getVisibility() == View.VISIBLE) {
+                } else if (LinearOne.getVisibility() == View.VISIBLE) {
 
                     if (validate1()) {
 
@@ -350,7 +350,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                             file_identity_front = new File(IDENTITY_PROOF_FRONT_PATH);
                             UploadIdentityProof();
 
-                        }else {
+                        } else {
                             LinearOne.setVisibility(View.GONE);
                             LinearTwo.setVisibility(View.VISIBLE);
                             LinearFour.setVisibility(View.GONE);
@@ -367,7 +367,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                             file_vending_history_front = new File(VENDING_HISTORY_FRONT_PROOF_PATH);
                             Upload_VendingHistoryProof();
 
-                        }else {
+                        } else {
                             LinearTwo.setVisibility(View.GONE);
                             LinearOne.setVisibility(View.GONE);
                             LinearFour.setVisibility(View.GONE);
@@ -379,8 +379,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                     }
 
-                }
-                else if (LinearThree.getVisibility() == View.VISIBLE) {
+                } else if (LinearThree.getVisibility() == View.VISIBLE) {
 
                     LinearThree.setVisibility(View.GONE);
                     LinearOne.setVisibility(View.GONE);
@@ -433,17 +432,20 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
     private boolean validate1() {
 
-        if (!ApplicationConstant.isNetworkAvailable(PendingDocumentsScanActivity.this)) {
+        try {
+            if (!ApplicationConstant.isNetworkAvailable(PendingDocumentsScanActivity.this)) {
 
-            ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
-            return false;
-        }else
-            if (ImgIdentityProofFront.getDrawable().getConstantState() != getResources().getDrawable( R.drawable.scanner).getConstantState()){
+                return false;
+            } else if (ImgIdentityProofFront.getDrawable().getConstantState() != getResources().getDrawable(R.drawable.scanner).getConstantState()) {
                 if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
                     ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Identity Proof Type");
                     return false;
                 }
+            }
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
         }
 
 
@@ -451,19 +453,23 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
     }
 
     private boolean validate2() {
-        if (!ApplicationConstant.isNetworkAvailable(PendingDocumentsScanActivity.this)) {
 
-            ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+        try {
+            if (!ApplicationConstant.isNetworkAvailable(PendingDocumentsScanActivity.this)) {
 
-            return false;
-        }
-       else if (ImgVendingHistoryFront.getDrawable().getConstantState() != getResources().getDrawable( R.drawable.scanner).getConstantState()){
-            if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
-                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Vending History Proof Type");
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
                 return false;
+            } else if (ImgVendingHistoryFront.getDrawable().getConstantState() != getResources().getDrawable(R.drawable.scanner).getConstantState()) {
+                if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
+                    ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Vending History Proof Type");
+                    return false;
+
+                }
 
             }
-
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
         }
 
 //        else {
@@ -547,19 +553,19 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
 //           Bitmap bitmap = BitmapFactory.decodeFile (photoPath);
-           bitmap = ApplicationConstant.CompressedBitmap(new File(photoPath));
+            bitmap = ApplicationConstant.CompressedBitmap(new File(photoPath));
 
-            ScannerConstants.selectedImageBitmap=bitmap;
+            ScannerConstants.selectedImageBitmap = bitmap;
 
-            startActivityForResult(new Intent(PendingDocumentsScanActivity.this,ImageCropActivity.class),1234);
+            startActivityForResult(new Intent(PendingDocumentsScanActivity.this, ImageCropActivity.class), 1234);
 
 
-        }else    if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
 
-            String[] filePath = { MediaStore.Images.Media.DATA };
+            String[] filePath = {MediaStore.Images.Media.DATA};
 
-            Cursor c = PendingDocumentsScanActivity.this.getContentResolver().query(selectedImage,filePath, null, null, null);
+            Cursor c = PendingDocumentsScanActivity.this.getContentResolver().query(selectedImage, filePath, null, null, null);
 
             c.moveToFirst();
 
@@ -571,28 +577,27 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
             bitmap = ApplicationConstant.CompressedBitmap(new File(photoPath));
 
-            ScannerConstants.selectedImageBitmap=bitmap;
+            ScannerConstants.selectedImageBitmap = bitmap;
 
-            startActivityForResult(new Intent(PendingDocumentsScanActivity.this,ImageCropActivity.class),1234);
+            startActivityForResult(new Intent(PendingDocumentsScanActivity.this, ImageCropActivity.class), 1234);
 
 
-        }else
-            if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
             if (ScannerConstants.selectedImageBitmap != null) {
 
-                writeBitmap(ScannerConstants.selectedImageBitmap,new File(photoPath));
+                writeBitmap(ScannerConstants.selectedImageBitmap, new File(photoPath));
 
                 if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "IdentityProof_Front")) {
                     IDENTITY_PROOF_FRONT_PATH = photoPath;
                     ImgIdentityProofFront.setImageBitmap(ScannerConstants.selectedImageBitmap);
 
-                }else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + OTHER_DOCUMENT)) {
+                } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + OTHER_DOCUMENT)) {
                     OTHER_DOCUMENT_PATH = photoPath;
                     dTextDocName.setText(OTHER_DOCUMENT);
                     Is_Uploaded = true;
                     dImgOtherDocument.setImageBitmap(ScannerConstants.selectedImageBitmap);
 
-                }  else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "IdentityProof_Back")) {
+                } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "IdentityProof_Back")) {
                     IDENTITY_PROOF_BACK_PATH = photoPath;
                     ImgIdentityProofBack.setImageBitmap(ScannerConstants.selectedImageBitmap);
 
@@ -608,7 +613,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                     TehBazari_Doc_PATH = photoPath;
                     ImgTehbaziDoc.setImageBitmap(ScannerConstants.selectedImageBitmap);
 
-                }else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Undertaking")) {
+                } else if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Undertaking")) {
                     Undertaking_PATH = photoPath;
                     ImgSignature.setImageBitmap(ScannerConstants.selectedImageBitmap);
 
@@ -617,17 +622,16 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                     ImgAckReceipt.setImageBitmap(ScannerConstants.selectedImageBitmap);
 
                 }
-             }else {
-                ApplicationConstant.displayToastMessage(PendingDocumentsScanActivity.this,"Not Ok");
+            } else {
+                ApplicationConstant.displayToastMessage(PendingDocumentsScanActivity.this, "Not Ok");
             }
 
-        }
-        else if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 //            Uri uri_image = data.getExtras().getParcelable(ScanConstants.SCANNED_RESULT);
             Uri uri_image = null;
 
 
-        if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Acknowledge_Receipt")) {
+            if (CONTROL.trim().equals(ApplicationConstant.SurveyId + "_" + "Acknowledge_Receipt")) {
                 File photoFile = null;
                 try {
                     String photoPath = ApplicationConstant.createImageFile(ApplicationConstant.SurveyId + "_" + "Acknowledge_Receipt.png", "Documents", PendingDocumentsScanActivity.this);
@@ -909,9 +913,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         }
 
-        String CORPORATION =   PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.WARD, "");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -1008,8 +1012,6 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                 RequestBody.create(MediaType.parse("image/png"), file_vending_history_back);
 
 
-
-
 // MultipartBody.Part is used to send also the actual file name
 
         MultipartBody.Part body_vending_history_front = null;
@@ -1033,9 +1035,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         }
 
 
-        String CORPORATION =   PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.WARD, "");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -1125,7 +1127,6 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                 RequestBody.create(MediaType.parse("image/png"), file_identity_back);
 
 
-
 // MultipartBody.Part is used to send also the actual file name
 
         MultipartBody.Part body_identity_front = null;
@@ -1148,10 +1149,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         }
 
 
-
-        String CORPORATION =   PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.WARD, "");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -1266,9 +1266,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         RequestBody URI_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), UNiq_Id);
 
-        String CORPORATION =   PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.WARD, "");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -1332,7 +1332,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayToastMessage(PendingDocumentsScanActivity.this,  getString(R.string.net_speed_problem));
+                ApplicationConstant.displayToastMessage(PendingDocumentsScanActivity.this, getString(R.string.net_speed_problem));
                 Upload_Documents();
 
             }
@@ -1473,7 +1473,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
     private void selectPerticular() {
 
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
 
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(PendingDocumentsScanActivity.this);
 
@@ -1485,8 +1485,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int item) {
 
-                if (options[item].equals("Take Photo"))
-                {
+                if (options[item].equals("Take Photo")) {
 
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //          startActivityForResult(takePictureIntent, 1);
@@ -1496,7 +1495,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                         // Create the File where the photo should go
                         File photoFile = null;
                         try {
-                            photoPath = ApplicationConstant.createImageFile(CONTROL+".jpeg", "Documents", PendingDocumentsScanActivity.this);
+                            photoPath = ApplicationConstant.createImageFile(CONTROL + ".jpeg", "Documents", PendingDocumentsScanActivity.this);
                             photoFile = new File(photoPath);
                         } catch (IOException ex) {
                             // Error occurred while creating the File
@@ -1511,18 +1510,13 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                         }
                     }
-                }
+                } else if (options[item].equals("Choose from Gallery")) {
 
-                else if (options[item].equals("Choose from Gallery"))
-                {
-
-                    Intent intent = new   Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);
 
 
-                }
-
-                else if (options[item].equals("Cancel")) {
+                } else if (options[item].equals("Cancel")) {
 
                     dialog.dismiss();
                 }
@@ -1531,8 +1525,6 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         builder.show();
     }
-
-
 
 
 //    private Bitmap decodeFile(File f) {
@@ -1591,67 +1583,66 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
     private void setDocumentsData() {
 
-        if (SingleSurveyData.getIdentityProofDocumentsType()!=null){
+        if (SingleSurveyData.getIdentityProofDocumentsType() != null) {
 
 
-           if (SpinnerIdentityProof.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getIdentityProofDocumentsType().trim())){
+            if (SpinnerIdentityProof.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getIdentityProofDocumentsType().trim())) {
                 SpinnerIdentityProof.setSelection(1);
-            }else if (SpinnerIdentityProof.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getIdentityProofDocumentsType().trim())){
+            } else if (SpinnerIdentityProof.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getIdentityProofDocumentsType().trim())) {
                 SpinnerIdentityProof.setSelection(2);
-            }else if (SpinnerIdentityProof.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getIdentityProofDocumentsType().trim())){
+            } else if (SpinnerIdentityProof.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getIdentityProofDocumentsType().trim())) {
                 SpinnerIdentityProof.setSelection(3);
-            }else if (SpinnerIdentityProof.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getIdentityProofDocumentsType().trim())){
+            } else if (SpinnerIdentityProof.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getIdentityProofDocumentsType().trim())) {
                 SpinnerIdentityProof.setSelection(4);
             }
 
         }
 
-        if (SingleSurveyData.getVendingHistoryProofDocumentsType()!=null){
+        if (SingleSurveyData.getVendingHistoryProofDocumentsType() != null) {
 
 
-           if (SpinnerVendingHistoryProof.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())){
-               SpinnerVendingHistoryProof.setSelection(1);
-            }else if (SpinnerVendingHistoryProof.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())){
-               SpinnerVendingHistoryProof.setSelection(2);
-            }else if (SpinnerVendingHistoryProof.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())){
-               SpinnerVendingHistoryProof.setSelection(3);
-            }else if (SpinnerVendingHistoryProof.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())){
-               SpinnerVendingHistoryProof.setSelection(4);
-            }  else
-           if (SpinnerVendingHistoryProof.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())){
-               SpinnerVendingHistoryProof.setSelection(5);
-            }else if (SpinnerVendingHistoryProof.getItemAtPosition(6).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())){
-               SpinnerVendingHistoryProof.setSelection(6);
-            }else if (SpinnerVendingHistoryProof.getItemAtPosition(7).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())){
-               SpinnerVendingHistoryProof.setSelection(7);
-            }else if (SpinnerVendingHistoryProof.getItemAtPosition(8).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())){
-               SpinnerVendingHistoryProof.setSelection(8);
+            if (SpinnerVendingHistoryProof.getItemAtPosition(1).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())) {
+                SpinnerVendingHistoryProof.setSelection(1);
+            } else if (SpinnerVendingHistoryProof.getItemAtPosition(2).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())) {
+                SpinnerVendingHistoryProof.setSelection(2);
+            } else if (SpinnerVendingHistoryProof.getItemAtPosition(3).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())) {
+                SpinnerVendingHistoryProof.setSelection(3);
+            } else if (SpinnerVendingHistoryProof.getItemAtPosition(4).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())) {
+                SpinnerVendingHistoryProof.setSelection(4);
+            } else if (SpinnerVendingHistoryProof.getItemAtPosition(5).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())) {
+                SpinnerVendingHistoryProof.setSelection(5);
+            } else if (SpinnerVendingHistoryProof.getItemAtPosition(6).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())) {
+                SpinnerVendingHistoryProof.setSelection(6);
+            } else if (SpinnerVendingHistoryProof.getItemAtPosition(7).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())) {
+                SpinnerVendingHistoryProof.setSelection(7);
+            } else if (SpinnerVendingHistoryProof.getItemAtPosition(8).toString().trim().contains(SingleSurveyData.getVendingHistoryProofDocumentsType().trim())) {
+                SpinnerVendingHistoryProof.setSelection(8);
             }
 
         }
 
-        if (SingleSurveyData.getIdentityProofDocumentsFront()!=null){
+        if (SingleSurveyData.getIdentityProofDocumentsFront() != null) {
             Glide.with(this).load(SingleSurveyData.getIdentityProofDocumentsFront())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(ImgIdentityProofFront);
         }
 
-        if (SingleSurveyData.getIdentityProofDocumentsBack()!=null){
+        if (SingleSurveyData.getIdentityProofDocumentsBack() != null) {
             Glide.with(this).load(SingleSurveyData.getIdentityProofDocumentsBack())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(ImgIdentityProofBack);
         }
 
-        if (SingleSurveyData.getVendingHistoryProofDocumentsFront()!=null){
+        if (SingleSurveyData.getVendingHistoryProofDocumentsFront() != null) {
             Glide.with(this).load(SingleSurveyData.getVendingHistoryProofDocumentsFront())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(ImgVendingHistoryFront);
         }
 
-        if (SingleSurveyData.getVendingHistoryProofDocumentsBack()!=null){
+        if (SingleSurveyData.getVendingHistoryProofDocumentsBack() != null) {
 
             Glide.with(this).load(SingleSurveyData.getVendingHistoryProofDocumentsBack())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -1660,7 +1651,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         }
 
-        if (SingleSurveyData.getAllotmentOfTehbazariDocument()!=null){
+        if (SingleSurveyData.getAllotmentOfTehbazariDocument() != null) {
 
             Glide.with(this).load(SingleSurveyData.getAllotmentOfTehbazariDocument())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -1669,7 +1660,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         }
 
-        if (SingleSurveyData.getUndertakingByTheApplicant()!=null){
+        if (SingleSurveyData.getUndertakingByTheApplicant() != null) {
 
             Glide.with(this).load(SingleSurveyData.getUndertakingByTheApplicant())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -1678,7 +1669,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
         }
 
-        if (SingleSurveyData.getAcknowledgementReceipt()!=null){
+        if (SingleSurveyData.getAcknowledgementReceipt() != null) {
 
             Glide.with(this).load(SingleSurveyData.getAcknowledgementReceipt())
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -1688,7 +1679,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         }
 
         try {
-            if (!SingleSurveyData.getOther_documents().isEmpty()){
+            if (!SingleSurveyData.getOther_documents().isEmpty()) {
 
 //                mTextFamSurveyed.setText("Other Documents List");
 
@@ -1699,7 +1690,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
                 viewOtherDocuments.setAdapter(docDetailsAdpater);
 
-            }else {
+            } else {
 //                mTextFamSurveyed.setText("No Other Documents Uploaded");
             }
         } catch (Exception e) {
@@ -1728,23 +1719,21 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
 
             BtnNext.setText("Next");
 
-        }
-        else if (LinearThree.getVisibility() == View.VISIBLE) {
+        } else if (LinearThree.getVisibility() == View.VISIBLE) {
 
             LinearFour.setVisibility(View.GONE);
             LinearOne.setVisibility(View.GONE);
             LinearThree.setVisibility(View.GONE);
             LinearTwo.setVisibility(View.VISIBLE);
 
-        }
-        else if (LinearTwo.getVisibility() == View.VISIBLE) {
+        } else if (LinearTwo.getVisibility() == View.VISIBLE) {
 
             LinearFour.setVisibility(View.GONE);
             LinearOne.setVisibility(View.VISIBLE);
             LinearThree.setVisibility(View.GONE);
             LinearTwo.setVisibility(View.GONE);
 
-        }  else if (LinearOne.getVisibility() == View.VISIBLE) {
+        } else if (LinearOne.getVisibility() == View.VISIBLE) {
 
             LinearFour.setVisibility(View.GONE);
             LinearOne.setVisibility(View.GONE);
@@ -1789,9 +1778,9 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         }
 
 
-        String CORPORATION =   PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.CORPORATION,"");
-        String ZONE =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.ZONE,"");
-        String WARD =  PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this,ApplicationConstant.WARD,"");
+        String CORPORATION = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.CORPORATION, "");
+        String ZONE = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.ZONE, "");
+        String WARD = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.WARD, "");
 
         RequestBody CORPORATION_ = RequestBody.create(MediaType.parse("multipart/form-data"), CORPORATION);
         RequestBody ZONE_ = RequestBody.create(MediaType.parse("multipart/form-data"), ZONE);
@@ -1831,7 +1820,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
-                                dTextDocName.setText(OTHER_DOCUMENT+" Uploaded");
+                                dTextDocName.setText(OTHER_DOCUMENT + " Uploaded");
                                 dTextDocName.setTextColor(getResources().getColor(R.color.green));
                                 dBtnUploadDoc.setVisibility(View.GONE);
                                 dEditOtherDocument.setEnabled(false);
@@ -1874,6 +1863,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.second, menu);
@@ -1886,7 +1876,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.home_menu:
 
-                AlertDialog.Builder builder =   builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = builder = new AlertDialog.Builder(this);
                 builder.setMessage("Do you want to exit this survey ?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -1921,7 +1911,7 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
         headers.put("Authorization", "Bearer " + PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.USERDETAILS.API_KEY, ""));
 
         ApiInterface apiservice = ApiService.getApiClient().create(ApiInterface.class);
-        Call<UpdateSurveyResponse> call = apiservice.SendSurveyStatus(headers,URI,"1");
+        Call<UpdateSurveyResponse> call = apiservice.SendSurveyStatus(headers, URI, "1");
 
         call.enqueue(new Callback<UpdateSurveyResponse>() {
             @Override
@@ -1958,13 +1948,13 @@ public class PendingDocumentsScanActivity extends AppCompatActivity {
                                 response.body().getErrorCode().trim());
                     }
 
-                }else {
+                } else {
 
                     try {
                         ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this,
                                 "Response",
                                 response.errorBody().string());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 

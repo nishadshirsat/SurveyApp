@@ -20,9 +20,11 @@ import retrofit2.Response;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -269,6 +271,7 @@ public class PersonalDetailsActivity extends MainActivity {
     private String BiometricImagePath="";
 
     boolean isAadharSetData = false;
+    String PIDOPTS = "";
 
 
     @Override
@@ -277,6 +280,8 @@ public class PersonalDetailsActivity extends MainActivity {
         setContentView(R.layout.activity_main);
         bindView();
         initData();
+
+        PIDOPTS = "<PidOptions ver=\"1.0\"> <Opts fCount=\"1\" fType=\"0\" pType=\"0\" pCount=\"0\" pgCount=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" pTimeout=\"20000\" posh=\"UNKNOWN\" /> </PidOptions>";
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -401,6 +406,10 @@ public class PersonalDetailsActivity extends MainActivity {
                         public void onClick(View view) {
                             alertDialog.dismiss();
                             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Credentials not found.");
+
+//                            captureFingureprintNow();
+
+
                         }
                     });
 
@@ -1441,6 +1450,13 @@ public class PersonalDetailsActivity extends MainActivity {
 
                 }
 
+            }else if (requestCode == 15) {
+
+                if (data != null) {
+                  String result = data.getStringExtra("PID_DATA").trim();
+
+                  ApplicationConstant.DisplayMessageDialog(PersonalDetailsActivity.this,"",result);
+                }
             }
         }
 
@@ -2800,5 +2816,62 @@ public class PersonalDetailsActivity extends MainActivity {
         }
     }
 
+    private void captureFingureprintNow() {
+
+        if (PIDOPTS != null) {
+
+                try {
+
+                    if (isAppInstalled(PersonalDetailsActivity.this, "in.bioenable.rdservice.fp")) {
+                        Intent intent2 = new Intent();
+//                          Intent  intent2 = getPackageManager().getLaunchIntentForPackage("com.scl.rdservice");
+                        intent2.setAction("in.gov.uidai.rdservice.fp.CAPTURE");
+                        intent2.setPackage("in.bioenable.rdservice.fp");
+                        intent2.putExtra("PID_OPTIONS", PIDOPTS);
+                        startActivityForResult(intent2, 15);
+
+                    } else {
+                        Intent intent = new Intent();
+                        onGoToAnotherInAppStore(intent, "in.bioenable.rdservice.fp");
+
+                    }
+                } catch (Exception e) {
+                    Intent intent = new Intent();
+                    onGoToAnotherInAppStore(intent, "in.bioenable.rdservice.fp");
+                }
+
+
+        }
+
+    }
+
+    public static boolean isAppInstalled(Context context, String packageName) {
+        try {
+            context.getPackageManager().getApplicationInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    private void onGoToAnotherInAppStore(Intent intent, String appPackageName) {
+
+        try {
+
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("market://details?id=" + appPackageName));
+            startActivity(intent);
+
+        } catch (ActivityNotFoundException anfe) {
+
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName));
+            startActivity(intent);
+
+        }
+
+    }
 
 }

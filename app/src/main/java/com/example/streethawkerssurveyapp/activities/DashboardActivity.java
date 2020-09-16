@@ -81,7 +81,7 @@ public class DashboardActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-//        setApplicationLocale("en");
+        setApplicationLocale("hi");
 
         if (getLocation == null) {
             getLocation = new GetLocation(DashboardActivity.this);
@@ -306,10 +306,12 @@ public class DashboardActivity extends MainActivity {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         if(checkedId==R.id.RadioEnglish){
-                            setApplicationLocale("hi");
+                            setApplicationLocale("en");
+
                             alertDialog.dismiss();
                         }else{
-                            setApplicationLocale("en");
+                            setApplicationLocale("hi");
+
                             alertDialog.dismiss();
                         }
                     }
@@ -336,23 +338,27 @@ public class DashboardActivity extends MainActivity {
 
         Resources resources = getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            config.setLocale(new Locale(localeCode.toLowerCase()));
-            mTextSurvey.setText(resources.getString(R.string.new_survey));
-            TextPending.setText(resources.getString(R.string.pending_survey));
-            TextLocal.setText(resources.getString(R.string.Local_survey));
-            Textsuspended.setText(resources.getString(R.string.suspended_survey));
-            TextView.setText(resources.getString(R.string.view_survey));
-        } else {
-            config.locale = new Locale(localeCode.toLowerCase());
-            mTextSurvey.setText(resources.getString(R.string.new_survey));
-            TextPending.setText(resources.getString(R.string.pending_survey));
-            TextLocal.setText(resources.getString(R.string.Local_survey));
-            Textsuspended.setText(resources.getString(R.string.suspended_survey));
-            TextView.setText(resources.getString(R.string.view_survey));
-        }
+//        Configuration config = resources.getConfiguration();
+//        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
+//            config.setLocale(new Locale(localeCode.toLowerCase()));
+//        } else {
+//            config.locale = new Locale(localeCode.toLowerCase());
+//        }
+//        resources.updateConfiguration(config, dm);
+
+        Locale locale;
+        //Log.e("Lan",session.getLanguage());
+        locale = new Locale(localeCode);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+
+
+//        getBaseContext().getResources().updateConfiguration(config,
+//                getBaseContext().getResources().getDisplayMetrics());
         resources.updateConfiguration(config, dm);
+
+
     }
 
     @Override

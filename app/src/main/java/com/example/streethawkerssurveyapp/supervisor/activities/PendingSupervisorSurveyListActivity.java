@@ -604,17 +604,20 @@ public class PendingSupervisorSurveyListActivity extends AppCompatActivity imple
 
         for (SupervisorViewSurveyData viewSurveyData: AllSurveyList){
 
-            if (viewSurveyData.getUriNumber().toLowerCase().contains(s.toLowerCase())
-                    || viewSurveyData.getNameOfTheStreetVendor().toLowerCase().contains(s.toLowerCase())
-                    || viewSurveyData.getCorporation().toLowerCase().contains(s.toLowerCase())
-                    || viewSurveyData.getCategory().toLowerCase().contains(s.toLowerCase())
-                    || viewSurveyData.getArea().toLowerCase().contains(s.toLowerCase())
-                    || viewSurveyData.getWard().toLowerCase().contains(s.toLowerCase())
-                    || viewSurveyData.getSurveyStatus().toLowerCase().contains(s.toLowerCase())
-                    || viewSurveyData.getZone().toLowerCase().contains(s.toLowerCase())
-            ){
-                listupdated_user.add(viewSurveyData);
+            try {
+                if (viewSurveyData.getUriNumber().toLowerCase().contains(s.toLowerCase())
+                        || viewSurveyData.getNameOfTheStreetVendor().toLowerCase().contains(s.toLowerCase())
+                        || viewSurveyData.getCorporation().toLowerCase().contains(s.toLowerCase())
+                        || viewSurveyData.getArea().toLowerCase().contains(s.toLowerCase())
+                        || viewSurveyData.getWard().toLowerCase().contains(s.toLowerCase())
+                        || viewSurveyData.getSurveyStatus().toLowerCase().contains(s.toLowerCase())
+                        || viewSurveyData.getZone().toLowerCase().contains(s.toLowerCase())
+                ){
+                    listupdated_user.add(viewSurveyData);
 
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

@@ -580,5 +580,4 @@ public class ViewSurveyActivity extends AppCompatActivity {
         viewSurveyAdapter.setList(listupdated_user);
 
     }
-
 }
