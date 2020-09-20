@@ -27,7 +27,7 @@ package com.example.streethawkerssurveyapp.activities;
         import androidx.appcompat.app.AppCompatActivity;
         import androidx.core.app.ActivityCompat;
 
-public class ScanQrForAadharActivity extends AppCompatActivity {
+public class ScanQrForAadharActivity extends MainActivity {
 
     SurfaceView surfaceView;
     private BarcodeDetector barcodeDetector;

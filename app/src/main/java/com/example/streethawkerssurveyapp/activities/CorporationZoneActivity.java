@@ -29,7 +29,7 @@ import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CorporationZoneActivity extends AppCompatActivity {
+public class CorporationZoneActivity extends MainActivity {
 
     private Spinner mSpinnerCorporations;
     private Spinner mSpinnerZones;
@@ -55,7 +55,7 @@ public class CorporationZoneActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+        setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
         bindView();
 

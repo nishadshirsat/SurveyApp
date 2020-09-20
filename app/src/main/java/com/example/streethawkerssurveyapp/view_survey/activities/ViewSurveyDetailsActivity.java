@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharData;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
@@ -49,7 +50,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class ViewSurveyDetailsActivity extends AppCompatActivity {
+public class ViewSurveyDetailsActivity extends MainActivity {
 
     private androidx.cardview.widget.CardView mCardPersonal;
     private ImageView mImgPersonal;
@@ -174,7 +175,7 @@ public class ViewSurveyDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Survey Details");
+        setTitle(R.string.survey_details);
 
         bindView();
 

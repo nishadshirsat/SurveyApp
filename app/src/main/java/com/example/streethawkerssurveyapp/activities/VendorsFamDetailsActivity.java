@@ -53,7 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorsFamDetailsActivity extends AppCompatActivity {
+public class VendorsFamDetailsActivity extends MainActivity {
 
     private LinearLayout mLinearMain;
 
@@ -112,7 +112,7 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle("URI NO: "+ApplicationConstant.SurveyId);
+            setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
         }
 
@@ -686,9 +686,9 @@ public class VendorsFamDetailsActivity extends AppCompatActivity {
         new InsertAsyncTask(surveyDao).execute(familyDetails);
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(VendorsFamDetailsActivity.this);
-        builder.setTitle("Family Details");
-        builder.setMessage("Survey saved locally");
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.family_details);
+        builder.setMessage(R.string.saved);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();

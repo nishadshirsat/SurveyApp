@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -89,6 +90,7 @@ public class DashboardActivity extends MainActivity {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     String lang="";
+    MenuItem LanguageMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -291,6 +293,8 @@ public class DashboardActivity extends MainActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        invalidateOptionsMenu();
+        LanguageMenu=(MenuItem)menu.findItem(R.id.language_menu);
         return true;
     }
 
@@ -330,12 +334,43 @@ public class DashboardActivity extends MainActivity {
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         if(checkedId==R.id.RadioEnglish){
 
-                            setNewLocale(DashboardActivity.this, LocaleHelper.ENGLISH);
-                            alertDialog.dismiss();
-                        }else{
+                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DashboardActivity.this);
+                            builder.setTitle("Are You Sure To Choose This Language ?");
+//                            builder.setMessage(R.string.saved);
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    setNewLocale(DashboardActivity.this, LocaleHelper.ENGLISH);
+                                    alertDialog.dismiss();
+                                    LanguageMenu.setVisible(false);
+                                }
+                            });
 
-                            setNewLocale(DashboardActivity.this, LocaleHelper.HINDI);
-                            alertDialog.dismiss();
+                            android.app.AlertDialog alertDialog = builder.create();
+                            alertDialog.setCancelable(false);
+                            alertDialog.setCanceledOnTouchOutside(false);
+                            alertDialog.show();
+
+                        }else{
+                            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DashboardActivity.this);
+                            builder.setTitle("Are You Sure To Choose This Language ?");
+//                            builder.setMessage(R.string.saved);
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    setNewLocale(DashboardActivity.this, LocaleHelper.HINDI);
+                                    alertDialog.dismiss();
+                                    LanguageMenu.setVisible(false);
+                                }
+                            });
+
+                            android.app.AlertDialog alertDialog = builder.create();
+                            alertDialog.setCancelable(false);
+                            alertDialog.setCanceledOnTouchOutside(false);
+                            alertDialog.show();
+
                         }
                     }
                 });

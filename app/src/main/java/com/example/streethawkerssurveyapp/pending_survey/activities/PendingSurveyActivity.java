@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.activities.VendorsFamDetailsActivity;
@@ -45,7 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PendingSurveyActivity extends AppCompatActivity implements PendingSurveyAdapter.RefreshlistListner {
+public class PendingSurveyActivity extends MainActivity implements PendingSurveyAdapter.RefreshlistListner {
 
     private EditText mEditAdharNo;
     private LinearLayout mLinearDate;
@@ -74,7 +75,7 @@ public class PendingSurveyActivity extends AppCompatActivity implements PendingS
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Pending Survey List");
+        setTitle(R.string.pending_survey_list);
 
         bindView();
 

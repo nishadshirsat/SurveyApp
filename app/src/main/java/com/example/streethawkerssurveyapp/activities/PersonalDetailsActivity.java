@@ -287,7 +287,7 @@ public class PersonalDetailsActivity extends MainActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle("URI NO: "+ApplicationConstant.SurveyId);
+            setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
         }else {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Survey Status","This survey will save locally");
@@ -1677,9 +1677,9 @@ public class PersonalDetailsActivity extends MainActivity {
                         PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.CONTACT, CONTACT_NO);
 
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
-                        builder.setTitle("Personal Details");
-                        builder.setMessage("Saved successfully");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        builder.setTitle(R.string.personal_details);
+                        builder.setMessage(R.string.saved);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();

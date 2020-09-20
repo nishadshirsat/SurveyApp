@@ -267,7 +267,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+        setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
         if (getLocation == null) {
             getLocation = new GetLocation(PendingPersonalDetailsActivity.this);

@@ -114,16 +114,35 @@
 
     <string name="new_survey">New Survey</string>
     <string name="pending_survey">Pending Survey</string>
+    <string name="pending_survey_list" translatable="false">Pending Survey List</string>
+    <string name="completed" translatable="false">Completed Survey List</string>
     <string name="view_survey" translatable="false">View Survey</string>
+    <string name="view_survey_list" translatable="false">View Survey List</string>
     <string name="survey_list" translatable="false">Surveyor List</string>
     <string name="suspended_survey" translatable="false">Suspended Survey</string>
+    <string name="suspended_survey_list" translatable="false">Suspended Survey List</string>
     <string name="Local_survey" translatable="false">Offline Survey List</string>
+    <string name="Local_survey_list" translatable="false">Local Survey List</string>
     <string name="Logout" translatable="false">LOGOUT</string>
     <string name="Start" translatable="false">Start Survey</string>
     <string name="Scan" translatable="false">Scan QR Code &amp; Start Survey</string>
     <string name="Personal" translatable="false">A. PERSONAL DETAILS</string>
+    <string name="personal_details" translatable="false">PERSONAL DETAILS</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string name="saved" translatable="false">Saved successfully</string>
+    <string name="vending_details" translatable="false">Vending Details</string>
+    <string name="family_details" translatable="false">Family Details</string>
+    <string name="banking" translatable="false">Banking Details</string>
     <string name="PREVIOUS" translatable="false">PREVIOUS</string>
     <string name="NEXT" translatable="false">NEXT</string>
+    <string name="URI" translatable="false">URI NO:</string>
+    <string name="pending_supervisor" translatable="false">Pending Supervisor List</string>
+    <string name="supervisor" translatable="false">Supervisor List</string>
+    <string name="suspended_supervisor" translatable="false">Suspended Supervisor List</string>
+    <string name="view_supervisor" translatable="false">View Supervisor List</string>
+    <string name="surveyor_list" translatable="false">Surveyor Survey List</string>
+    <string name="survey_details" translatable="false">Survey Details</string>
+    <string name="scan_aadhar" translatable="false">Scan Aadhar to get data</string>
 
     <string name="VendorPhoto" translatable="false">Photo of the street vendor/Hawker</string>
     <string name="SitePhoto" translatable="false">* Photo of Vending Site</string>
@@ -225,6 +244,11 @@
     <string name="receipt" translatable="false">Acknowledge receipt</string>
     <string name="Comments" translatable="false">Comments</string>
     <string name="UPLOAD" translatable="false">UPLOAD</string>
+    <string name="Date" translatable="false">Date</string>
+    <string name="uri_search" translatable="false">Search by URI</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="search_by" translatable="false">Search by uri or name or zone, ward, corporaion</string>
+    <string name="adhar_upi" translatable="false">Aadhar Or URI Or Name</string>
 
 
 

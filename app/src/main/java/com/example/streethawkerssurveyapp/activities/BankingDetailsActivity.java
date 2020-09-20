@@ -42,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BankingDetailsActivity extends AppCompatActivity {
+public class BankingDetailsActivity extends MainActivity {
 
     private LinearLayout mLinearMain;
     private LinearLayout mLinearHead;
@@ -73,7 +73,7 @@ public class BankingDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle("URI NO: "+ApplicationConstant.SurveyId);
+            setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
         }
 
@@ -225,9 +225,9 @@ public class BankingDetailsActivity extends AppCompatActivity {
 
 
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(BankingDetailsActivity.this);
-                        builder.setTitle("Banking Details");
-                        builder.setMessage("Saved successfully");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        builder.setTitle(R.string.banking);
+                        builder.setMessage(R.string.saved);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();

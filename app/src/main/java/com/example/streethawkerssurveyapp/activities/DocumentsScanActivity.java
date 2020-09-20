@@ -72,7 +72,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DocumentsScanActivity extends AppCompatActivity {
+public class DocumentsScanActivity extends MainActivity {
 
     private LinearLayout LinearMain;
     private LinearLayout LinearOne;
@@ -160,7 +160,7 @@ public class DocumentsScanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle("URI NO: "+ApplicationConstant.SurveyId);
+            setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
         }
 

@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-public class SuspendedSupervisorListActivity extends AppCompatActivity {
+public class SuspendedSupervisorListActivity extends MainActivity {
 
     private EditText mText_search;
     private SearchableSpinner SpinnerType;
@@ -20,7 +21,7 @@ public class SuspendedSupervisorListActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Suspended Supervisor List");
+        setTitle(R.string.suspended_supervisor);
 
         bindView();
 

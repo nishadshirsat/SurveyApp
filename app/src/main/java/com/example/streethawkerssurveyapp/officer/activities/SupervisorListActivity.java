@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-public class SupervisorListActivity extends AppCompatActivity {
+public class SupervisorListActivity extends MainActivity {
 
     private SearchableSpinner SpinnerSupervisor,SpinnerSurveyor;
     private androidx.recyclerview.widget.RecyclerView mRecycleSurveyor;
@@ -21,7 +22,7 @@ public class SupervisorListActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Supervisor List");
+        setTitle(R.string.supervisor);
 
         bindView();
 

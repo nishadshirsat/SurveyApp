@@ -26,7 +26,7 @@ import java.io.IOException;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-public class ScannedBarcodeActivity extends AppCompatActivity {
+public class ScannedBarcodeActivity extends MainActivity {
 
     SurfaceView surfaceView;
     EditText txtBarcodeValue;

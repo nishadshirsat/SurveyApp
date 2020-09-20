@@ -84,7 +84,7 @@
                         android:drawableLeft="@mipmap/qr_scan"
                         android:background="@drawable/edittext_bg"
                         android:visibility="gone"
-                        android:text="Scan Aadhar to get data"
+                        android:text="@string/scan_aadhar"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />

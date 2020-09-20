@@ -64,7 +64,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendingDetailsActivity extends AppCompatActivity {
+public class VendingDetailsActivity extends MainActivity {
 
     private LinearLayout mLinearMain;
     private LinearLayout mLinearOne;
@@ -165,7 +165,7 @@ public class VendingDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle("URI NO: "+ApplicationConstant.SurveyId);
+            setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
         }
 
@@ -931,9 +931,9 @@ public class VendingDetailsActivity extends AppCompatActivity {
                     if (response.body().isStatus()) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(VendingDetailsActivity.this);
-                        builder.setTitle("Vending Details");
-                        builder.setMessage("Saved successfully");
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        builder.setTitle(R.string.vending_details);
+                        builder.setMessage(R.string.saved);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();

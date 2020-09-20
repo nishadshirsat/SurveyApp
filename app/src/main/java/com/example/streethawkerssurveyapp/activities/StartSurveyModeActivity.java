@@ -42,8 +42,7 @@ public class StartSurveyModeActivity extends MainActivity {
 
 
     private ProgressDialog progressDialog;
-    private String mLanguageCode = "hi";
-    private String mLanguageCode1 = "en";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +50,7 @@ public class StartSurveyModeActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Start Survey");
+        setTitle(R.string.Start);
 
         bindViews();
 
