@@ -1088,14 +1088,16 @@ public class PersonalDetailsActivity extends MainActivity {
 //            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Select Options");
 ////            mEditAge.requestFocus();
 //            return false;
-//        } else if (linear_cases.getVisibility() == View.VISIBLE) {
-//
-//            if (listCriminalCases.isEmpty()) {
-//                ApplicationConstant.DisplayMessageDialog(PersonalDetailsActivity.this, "", "Add Criminal Cases");
-//                return false;
-//            }
-//
-//        }
+//        } else
+
+            if (linear_cases.getVisibility() == View.VISIBLE) {
+
+            if (listCriminalCases.isEmpty()) {
+                ApplicationConstant.DisplayMessageDialog(PersonalDetailsActivity.this, "", "Add Criminal Cases");
+                return false;
+            }
+
+        }
 
 
 //        else if (!getLocation.isGPSEnabled) {
@@ -2768,6 +2770,7 @@ public class PersonalDetailsActivity extends MainActivity {
         }
         return SurveyId;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.second, menu);

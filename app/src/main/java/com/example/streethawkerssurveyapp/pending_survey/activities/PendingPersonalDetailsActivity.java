@@ -1046,14 +1046,15 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 //            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Options");
 ////            mEditAge.requestFocus();
 //            return false;
-//        }else if (linear_cases.getVisibility() == View.VISIBLE) {
-//
-//            if (listCriminalCases.isEmpty()){
-//                ApplicationConstant.DisplayMessageDialog(PendingPersonalDetailsActivity.this,"","Add Criminal Cases");
-//                return false;
-//            }
-//
 //        }
+        else if (linear_cases.getVisibility() == View.VISIBLE) {
+
+            if (listCriminalCases.isEmpty()){
+                ApplicationConstant.DisplayMessageDialog(PendingPersonalDetailsActivity.this,"","Add Criminal Cases");
+                return false;
+            }
+
+        }
 
 
 //        else if (!getLocation.isGPSEnabled) {
