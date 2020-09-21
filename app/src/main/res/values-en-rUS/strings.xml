@@ -1,17 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string-array name="education">
+        <item>a. Primary (5th std)</item>
+        <item>b. Middle (6th to 8th std)</item>
+        <item>c. Secondary (till 10th Std)</item>
+        <item>d. Higher Secondary (till 12th Std)</item>
+        <item>e. Diploma/ Graduate/ Postgraduate</item>
+        <item>f. Illiterate</item>
+    </string-array>
+
+    <string-array name="vehicals">
+        <item>Pucca</item>
+        <item>Kuchha</item>
+        <item>Metallic cycle cart</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="choice">
+        <item>First Choice (within 1 km)</item>
+        <item>Second Choice (within 3 km)</item>
+        <item>Third Choice (within 5km) </item>
+        <item>Fourth Choice (5+km)</item>
+        <item>Fifth Choice (5+km)</item>
+    </string-array>
+
+    <string-array name="identity_proof_type">
+        <item>Select</item>
+        <item>Aadhar Card-AC</item>
+        <item>Driving Licence-DL</item>
+        <item>Voter-ID-Card-VI</item>
+        <item>Bank Passbook-BP</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="vending_history_proof_type">
+        <item>Select</item>
+        <item>Festival Receipts-FR</item>
+        <item>Tokens-TK</item>
+        <item>Challan(s)-LC</item>
+        <item>Traffic Police Challan(s)-PC</item>
+        <item>Police Challan-PC</item>
+        <item>Receipt of Fine or Fees-FR</item>
+        <item>Certificates issued by Local Authorities-CL</item>
+        <item>Document attested by the relevant RWA or Market Association as conferring such rights 26-CL</item>
+        <item>None</item>
+    </string-array>
+
+    <string-array name="time_select">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+
+    <string-array name="corporatation">
+        <item>ED-East Delhi Municipal Corporation</item>
+        <item>SD-South Delhi Municipal Corporation</item>
+        <item>ND-North Delhi Municipal Corporation</item>
+        <item>NC-New Delhi Municipal Council</item>
+        <item>CN-Delhi Cantonment Board</item>
+    </string-array>
+
+    <string-array name="zones">
+        <item>NZ-No Zone</item>
+        <item>01-Shahdara South Zone</item>
+        <item>02-Shahdara North Zone</item>
+        <item>03-Central Zone</item>
+        <item>04-South Zone</item>
+        <item>05-West Zone</item>
+        <item>06-Nalafgarh Zone</item>
+        <item>07-City-SP Zone</item>
+        <item>08-Karol Bagh Zone</item>
+        <item>09-Keshav Puram</item>
+        <item>10-Narela</item>
+        <item>11-Rohini</item>
+        <item>12-Civil Lines</item>
+    </string-array>
+
+    <string-array name="items">
+        <item>a. Food/ Snack with gas cylinder/ fire </item>
+        <item>b. Food/ Snack without gas cylinder/ fire</item>
+        <item>c. Vegetables</item>
+        <item>d. Electronic items</item>
+        <item>e. Clothes</item>
+        <item>f. Household items</item>
+        <item>g. Fancy items</item>
+        <item>h. Pan/tobacco</item>
+        <item>i. Flower</item>
+        <item>j. Footwear</item>
+        <item>k. Utilities</item>
+        <item>l. Fruits</item>
+        <item>m. Pottery</item>
+        <item>n. Toys</item>
+        <item>o. Bags</item>
+    </string-array>
+
+    <string-array name="category">
+        <item>GEN</item>
+        <item>SC</item>
+        <item>ST</item>
+        <item>OBC</item>
+        <item>PERSONNEL</item>
+        <item>WOMEN</item>
+        <item>WIDOW</item>
+        <item>MINORITY</item>
+        <item>PERSON WITH DISABILITIES</item>
+        <item>EX-SERVICEMEN</item>
+        <item>OTHERS</item>
+    </string-array>
+
+    <string name="app_name" translatable="false">Hawkers Survey Test App</string>
     <string name="new_survey">New Survey</string>
     <string name="survey_list" translatable="false">Surveyor List</string>
     <string name="pending_survey" >Pending Survey</string>
+    <string name="pending_survey_list" translatable="false">Pending Survey List</string>
+    <string name="completed" translatable="false">Completed Survey List</string>
     <string name="view_survey">View Survey</string>
     <string name="suspended_survey" >Suspended Survey</string>
+    <string name="suspended_survey_list" translatable="false">Suspended Survey List</string>
     <string name="Local_survey" >Offline Survey List</string>
+    <string name="Local_survey_list" translatable="false">Local Survey List</string>
     <string name="Logout" >LOGOUT</string>
     <string name="Start" >Start Survey</string>
     <string name="Scan" >Scan QR Code &amp; Start Survey</string>
     <string name="Personal" >A. PERSONAL DETAILS</string>
+    <string name="personal_details" translatable="false">PERSONAL DETAILS</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string name="vending_details" translatable="false">Vending Details</string>
+    <string name="family_details" translatable="false">Family Details</string>
+    <string name="banking" translatable="false">Banking Details</string>
+    <string name="saved" translatable="false">Saved successfully</string>
     <string name="PREVIOUS" >PREVIOUS</string>
     <string name="NEXT" >NEXT</string>
+    <string name="URI" translatable="false">URI NO:</string>
+    <string name="pending_supervisor" translatable="false">Pending Supervisor List</string>
+    <string name="supervisor" translatable="false">Supervisor List</string>
+    <string name="suspended_supervisor" translatable="false">Suspended Supervisor List</string>
+    <string name="view_supervisor" translatable="false">View Supervisor List"</string>
+    <string name="view_survey_list" translatable="false">View Survey List</string>
+    <string name="surveyor_list" translatable="false">Surveyor Survey List</string>
+    <string name="survey_details" translatable="false">Survey Details</string>
+    <string name="scan_aadhar" translatable="false">SCAN AADHAR TO GET DATA</string>
 
     <string name="VendorPhoto" >Photo of the street vendor/Hawker</string>
     <string name="SitePhoto" >* Photo of Vending Site</string>
@@ -113,5 +241,10 @@
     <string name="receipt" >Acknowledge receipt</string>
     <string name="Comments" >Comments</string>
     <string name="UPLOAD" >UPLOAD</string>
+    <string name="Date" translatable="false">Date</string>
+    <string name="uri_search" translatable="false">Search by URI</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="search_by" translatable="false">Search by uri or name or zone, ward, corporaion</string>
+    <string name="adhar_upi" translatable="false">Aadhar Or URI Or Name</string>
 
 </resources>

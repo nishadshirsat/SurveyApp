@@ -12,6 +12,7 @@ import android.view.View;
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.DashboardActivity;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.activities.StartSurveyModeActivity;
 import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
@@ -69,7 +70,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocalSurveyListActivity extends AppCompatActivity implements ViewLocalSurveyAdapter.UploadAndRefresh {
+public class LocalSurveyListActivity extends MainActivity implements ViewLocalSurveyAdapter.UploadAndRefresh {
 
     private androidx.recyclerview.widget.RecyclerView mRecycler_view;
 
@@ -96,7 +97,7 @@ public class LocalSurveyListActivity extends AppCompatActivity implements ViewLo
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Local Survey List");
+        setTitle(R.string.Local_survey);
 
         surveyDatabase = SurveyDatabase.getDatabase(LocalSurveyListActivity.this);
         surveyDao = surveyDatabase.surveyDao();

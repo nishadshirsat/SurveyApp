@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.DashboardActivity;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.activities.VendingDetailsActivity;
 import com.example.streethawkerssurveyapp.activities.VendorsFamDetailsActivity;
@@ -56,7 +57,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
+public class PendingVendorsFamDetailsActivity extends MainActivity {
 
     private LinearLayout mLinearMain;
 
@@ -119,7 +120,7 @@ public class PendingVendorsFamDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+        setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
 
         RGFam.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

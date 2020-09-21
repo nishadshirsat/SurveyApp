@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
@@ -47,7 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PendingSupervisorSurveyListActivity extends AppCompatActivity implements PendingSupervisorSurveyAdapter.RefreshlistListner{
+public class PendingSupervisorSurveyListActivity extends MainActivity implements PendingSupervisorSurveyAdapter.RefreshlistListner{
 
     private EditText mEditAdharNo;
     private LinearLayout mLinearDate;
@@ -79,7 +80,7 @@ public class PendingSupervisorSurveyListActivity extends AppCompatActivity imple
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Pending Survey List");
+        setTitle(R.string.pending_survey_list);
 
         bindView();
 

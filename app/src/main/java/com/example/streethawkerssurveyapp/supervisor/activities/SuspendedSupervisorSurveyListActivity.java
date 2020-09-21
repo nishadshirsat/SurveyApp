@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
@@ -44,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SuspendedSupervisorSurveyListActivity extends AppCompatActivity {
+public class SuspendedSupervisorSurveyListActivity extends MainActivity {
 
     private EditText mEditAdharNo;
     private LinearLayout mLinearDate;
@@ -76,7 +77,7 @@ public class SuspendedSupervisorSurveyListActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Suspended Survey List");
+        setTitle(R.string.suspended_survey_list);
 
         bindView();
 

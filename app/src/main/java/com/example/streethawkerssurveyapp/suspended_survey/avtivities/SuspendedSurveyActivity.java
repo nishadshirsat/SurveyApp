@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
@@ -38,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SuspendedSurveyActivity extends AppCompatActivity {
+public class SuspendedSurveyActivity extends MainActivity {
 
     private EditText mEditAdharNo;
     private LinearLayout mLinearDate;
@@ -67,7 +68,7 @@ public class SuspendedSurveyActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Suspended Survey List");
+        setTitle(R.string.suspended_survey_list);
 
         bindView();
 

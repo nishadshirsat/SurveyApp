@@ -1,18 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hawkers Survey App</string>
+
+    <string-array name="education">
+        <item>a. प्राथमिक (5 वीं)</item>
+        <item>b. मध्य (छठी से आठवीं कक्षा)</item>
+        <item>c. माध्यमिक (10 वीं कक्षा तक)</item>
+        <item>d. उच्चतर माध्यमिक (12 वीं तक)</item>
+        <item>e. डिप्लोमा / स्नातक / स्नातकोत्तर</item>
+        <item>f. निरक्षर</item>
+    </string-array>
+
+    <string-array name="vehicals">
+        <item>पक्का</item>
+        <item>कच्चा</item>
+        <item>धातु चक्र की गाड़ी</item>
+        <item>अन्य</item>
+    </string-array>
+
+    <string-array name="choice">
+        <item>पहली पसंद (1 किमी के भीतर)</item>
+        <item>दूसरी पसंद (3 किमी केभीतर)</item>
+        <item>तीसरी पसंद (5 किमी के भीतर)</item>
+        <item>चौथा विकल्प (5 + किमी)</item>
+        <item>पांचवां विकल्प (5 + किमी)</item>
+    </string-array>
+
+    <string-array name="identity_proof_type">
+        <item>चुनते हैं</item>
+        <item>आधार कार्ड-AC</item>
+        <item>ड्राइविंग लाइसेंस-DL</item>
+        <item>मतदाता-आईडी कार्ड-VI</item>
+        <item>बैंक पासबुक-BP</item>
+        <item>अन्य</item>
+    </string-array>
+
+    <string-array name="vending_history_proof_type">
+        <item>चुनते हैं</item>
+        <item>त्योहार प्राप्तियां-FR</item>
+        <item>टोकन-TK</item>
+        <item>चालान(s)-LC</item>
+        <item>यातायात पुलिस चालान(s)-PC</item>
+        <item>पुलिस चालान-PC</item>
+        <item>जुर्माना या शुल्क की प्राप्ति-FR</item>
+        <item>स्थानीय अधिकारियों द्वारा जारी किए गए प्रमाण पत्र-CL</item>
+        <item>ऐसे अधिकार 26 का संदर्भ देते हुए संबंधित आरडब्ल्यूए या मार्केट एसोसिएशन द्वारा प्रमाणित दस्तावेज-CL</item>
+        <item>कोई नहीं</item>
+    </string-array>
+
+    <string-array name="time_select">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+
+    <string-array name="corporatation">
+        <item>ED-पूर्व दिल्ली नगर निगम</item>
+        <item>SD-दक्षिण दिल्ली नगर निगम</item>
+        <item>ND-उत्तर दिल्ली नगर निगम</item>
+        <item>NC-नई दिल्ली नगरपालिका परिषद</item>
+        <item>CN-दिल्ली छावनी बोर्ड</item>
+    </string-array>
+
+    <string-array name="zones">
+        <item>NZ-कोई ज़ोन नहीं</item>
+        <item>01-शाहदरा दक्षिण क्षेत्र</item>
+        <item>02-शाहदरा उत्तरी क्षेत्र</item>
+        <item>03-मध्य क्षेत्र</item>
+        <item>04-दक्षिण क्षेत्र</item>
+        <item>05-पश्चिम क्षेत्र</item>
+        <item>06-नालफगढ़ क्षेत्र</item>
+        <item>07-सिटी-एसपी क्षेत्र</item>
+        <item>08-करोल बाग क्षेत्र</item>
+        <item>09-केशव पुरम</item>
+        <item>10-नरेला</item>
+        <item>11-रोहिणी</item>
+        <item>12-नागरिक पंक्तियां</item>
+    </string-array>
+
+    <string-array name="items">
+        <item>a. गैस सिलेंडर / आग से भोजन / नाश्ता </item>
+        <item>b. गैस सिलेंडर / आग के बिना भोजन / नाश्ता</item>
+        <item>c. सब्जियां</item>
+        <item>d. इलेक्ट्रॉनिक आइटम</item>
+        <item>e. वस्त्र</item>
+        <item>f. घर का सामान</item>
+        <item>g. फैंसी आइटम</item>
+        <item>h. पान/तंबाकू</item>
+        <item>i. पुष्प</item>
+        <item>j. जूते</item>
+        <item>k. उपयोगिताएँ</item>
+        <item>l. फल</item>
+        <item>m. मिट्टी के पात्र</item>
+        <item>n. खिलौने</item>
+        <item>o. बैग</item>
+    </string-array>
+
+    <string-array name="category">
+        <item>GEN</item>
+        <item>SC</item>
+        <item>ST</item>
+        <item>OBC</item>
+        <item>PERSONNEL</item>
+        <item>WOMEN</item>
+        <item>WIDOW</item>
+        <item>MINORITY</item>
+        <item>PERSON WITH DISABILITIES</item>
+        <item>EX-SERVICEMEN</item>
+        <item>OTHERS</item>
+    </string-array>
+
+
+    <string name="app_name">हॉकर्स सर्वे ऐप</string>
     <string name="new_survey">नया सर्वेक्षण</string>
     <string name="survey_list">सर्वेक्षक सूची</string>
     <string name="pending_survey">लंबित सर्वेक्षण</string>
+    <string name="pending_survey_list">लंबित सर्वेक्षण सूची</string>
+    <string name="completed">पूर्ण सर्वेक्षण सूची</string>
     <string name="view_survey">सर्वेक्षण देखें</string>
     <string name="suspended_survey">निलंबित सर्वेक्षण</string>
+    <string name="suspended_survey_list">निलंबित सर्वेक्षण सूची</string>
     <string name="Local_survey" >ऑफलाइन सर्वेक्षण सूची</string>
+    <string name="Local_survey_list">स्थानीय सर्वेक्षण सूची</string>
     <string name="Logout">लॉग आउट</string>
     <string name="Start" >सर्वेक्षण शुरू करें</string>
     <string name="Scan" >स्कैन QR कोड और सर्वेक्षण प्रारंभ करें</string>
     <string name="Personal">ए. व्यक्तिगत विवरण</string>
+    <string name="personal_details" >व्यक्तिगत विवरण</string>
+    <string name="ok" >ठीक है</string>
+    <string name="vending_details">वेंडिंग विवरण</string>
+    <string name="family_details">परिवार का विवरण</string>
+    <string name="banking">बैंकिंग विवरण</string>
+    <string name="saved" >सफलतापूर्वक संचित किया</string>
     <string name="PREVIOUS">पिछला</string>
     <string name="NEXT">आगे</string>
+    <string name="URI">यूआरआई नंबर:</string>
+    <string name="pending_supervisor">लंबित पर्यवेक्षक सूची</string>
+    <string name="supervisor">पर्यवेक्षक सूची</string>
+    <string name="suspended_supervisor">निलंबित पर्यवेक्षक सूची</string>
+    <string name="view_supervisor">पर्यवेक्षक सूची देखें</string>
+    <string name="view_survey_list">सर्वे सूची देखें</string>
+    <string name="surveyor_list">सर्वेयर सर्वेक्षण सूची</string>
+    <string name="survey_details">सर्वेक्षण विवरण</string>
+    <string name="scan_aadhar">स्कैन आधार डेटा प्राप्त करने के लिए</string>
 
     <string name="VendorPhoto">स्ट्रीट वेंडर / फेरीवाला की तस्वीर</string>
     <string name="SitePhoto">* वेंडिंग साइट की तस्वीर</string>
@@ -106,7 +234,7 @@
     <string name="ID" >पहचान प्रमाण दस्तावेज</string>
     <string name="FP" >मुखपृष्ठ</string>
     <string name="BP" >पिछला पेज</string>
-    <string name="VendingHistory" >पइतिहास प्रूफ दस्तावेज़</string>
+    <string name="VendingHistory" >इतिहास प्रूफ दस्तावेज़</string>
     <string name="SP" >दूसरा पेज</string>
     <string name="other" >अन्य कागजात</string>
     <string name="allotment" >तहबाजारी दस्तावेज का आवंटन (यदि उपलब्ध हो)</string>
@@ -114,5 +242,10 @@
     <string name="receipt" >पावती रसीद</string>
     <string name="Comments" >टिप्पणियाँ</string>
     <string name="UPLOAD" >डालना</string>
+    <string name="Date">तारीख</string>
+    <string name="uri_search" >URI द्वारा खोजें</string>
+    <string name="search">खोजें</string>
+    <string name="search_by" >यूरी या नाम या क्षेत्र, वार्ड, निगम द्वारा खोज</string>
+    <string name="adhar_upi">आधार या यूआरआई या नाम</string>
 
 </resources>

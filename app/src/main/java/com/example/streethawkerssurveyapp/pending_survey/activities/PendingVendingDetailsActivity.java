@@ -29,6 +29,7 @@ import android.widget.TimePicker;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.BankingDetailsActivity;
 import com.example.streethawkerssurveyapp.activities.DashboardActivity;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.activities.VendingDetailsActivity;
 import com.example.streethawkerssurveyapp.pojo_class.VendingTypeData;
@@ -53,7 +54,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PendingVendingDetailsActivity extends AppCompatActivity {
+public class PendingVendingDetailsActivity extends MainActivity {
 
     private LinearLayout mLinearMain;
     private LinearLayout mLinearOne;
@@ -162,7 +163,7 @@ public class PendingVendingDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("URI NO: "+ApplicationConstant.SurveyId);
+        setTitle(R.string.URI+ApplicationConstant.SurveyId);
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);

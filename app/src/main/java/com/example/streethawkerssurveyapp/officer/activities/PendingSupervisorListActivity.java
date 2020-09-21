@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-public class PendingSupervisorListActivity extends AppCompatActivity {
+public class PendingSupervisorListActivity extends MainActivity {
 
     private EditText mText_search;
     private SearchableSpinner SpinnerType;
@@ -20,7 +21,7 @@ public class PendingSupervisorListActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Pending Supervisor List");
+        setTitle(R.string.pending_supervisor);
 
         bindView();
 

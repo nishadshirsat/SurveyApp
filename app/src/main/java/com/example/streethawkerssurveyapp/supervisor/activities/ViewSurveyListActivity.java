@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-public class ViewSurveyListActivity extends AppCompatActivity {
+public class ViewSurveyListActivity extends MainActivity {
 
     private EditText mText_search;
     private SearchableSpinner SpinnerType;
@@ -22,7 +23,7 @@ public class ViewSurveyListActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("View Survey List");
+        setTitle(R.string.view_survey_list);
 
         bindView();
 

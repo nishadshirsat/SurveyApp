@@ -36,7 +36,7 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/edittext_bg"
                 android:focusableInTouchMode="false"
-                android:hint="Date"
+                android:hint="@string/Date"
                 android:padding="@dimen/dp_size_10"
                 android:paddingLeft="@dimen/padding_5"
                 android:textSize="@dimen/txt_16sp" />
@@ -56,7 +56,7 @@
             android:drawableLeft="@drawable/ic_search_black_24dp"
             android:drawablePadding="@dimen/padding_5"
             android:drawableTint="@color/colorPrimaryDark"
-            android:hint="search"
+            android:hint="@string/search"
             android:padding="8dp" />
 
 
