@@ -255,6 +255,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
     private String BiometricImagePath="";
 
+    boolean IS_CAPTURE_LOCATION = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1418,8 +1419,10 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         String username = PrefUtils.getFromPrefs(PendingPersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, "");
 
         if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
-            Latitude = getLocation.getLatitude();
-            Longitude = getLocation.getLongitude();
+            if (IS_CAPTURE_LOCATION == true){
+                Latitude = getLocation.getLatitude();
+                Longitude = getLocation.getLongitude();
+            }
         }
 
 
@@ -1655,7 +1658,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         ApplicationConstant.displayToastMessage(PendingPersonalDetailsActivity.this,
                                 "Photo saved successfully");
 
-
+                        IS_CAPTURE_LOCATION = true;
                     } else {
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
@@ -1773,16 +1776,13 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                     if (response.body().isStatus()) {
 
-
-
-
-
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
                         ApplicationConstant.displayToastMessage(PendingPersonalDetailsActivity.this,
                                 "Vending Site Photo saved successfully");
 
+                        IS_CAPTURE_LOCATION = true;
 
                     } else {
                         if (progressDialog != null && progressDialog.isShowing())

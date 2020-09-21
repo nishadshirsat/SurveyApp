@@ -272,7 +272,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
     boolean isAadharSetData = false;
     String PIDOPTS = "";
-
+    boolean IS_CAPTURE_LOCATION = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1570,8 +1570,11 @@ public class PersonalDetailsActivity extends MainActivity {
         String username = PrefUtils.getFromPrefs(PersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, "");
 
         if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
-            Latitude = getLocation.getLatitude();
-            Longitude = getLocation.getLongitude();
+
+            if (IS_CAPTURE_LOCATION == true){
+                Latitude = getLocation.getLatitude();
+                Longitude = getLocation.getLongitude();
+            }
         }
 
         File file_biometric = new File(BiometricImagePath);
@@ -1796,6 +1799,7 @@ public class PersonalDetailsActivity extends MainActivity {
 
                         ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
                                 "Photo saved successfully");
+                        IS_CAPTURE_LOCATION = true;
 
 
                     } else {
@@ -1921,6 +1925,7 @@ public class PersonalDetailsActivity extends MainActivity {
                         ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
                                 "Vending Site Photo saved successfully");
 
+                        IS_CAPTURE_LOCATION = true;
 
                     } else {
                         if (progressDialog != null && progressDialog.isShowing())
