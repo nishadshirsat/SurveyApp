@@ -127,12 +127,13 @@
     <string name="Start" translatable="false">Start Survey</string>
     <string name="Scan" translatable="false">Scan QR Code &amp; Start Survey</string>
     <string name="Personal" translatable="false">A. PERSONAL DETAILS</string>
-    <string name="personal_details" translatable="false">PERSONAL DETAILS</string>
+    <string name="personal_details" translatable="false">Personal Details</string>
     <string name="ok" translatable="false">Ok</string>
     <string name="saved" translatable="false">Saved successfully</string>
     <string name="vending_details" translatable="false">Vending Details</string>
     <string name="family_details" translatable="false">Family Details</string>
     <string name="banking" translatable="false">Banking Details</string>
+    <string name="documents" translatable="false">Documents</string>
     <string name="PREVIOUS" translatable="false">PREVIOUS</string>
     <string name="NEXT" translatable="false">NEXT</string>
     <string name="URI" translatable="false">URI NO:</string>
@@ -145,7 +146,7 @@
     <string name="scan_aadhar" translatable="false">Scan Aadhar to get data</string>
 
     <string name="VendorPhoto" translatable="false">Photo of the street vendor/Hawker</string>
-    <string name="SitePhoto" translatable="false">* Photo of Vending Site</string>
+    <string name="SitePhoto" translatable="false">Photo of Vending Site</string>
     <string name="VendorName" translatable="false">Name of the street vendor/Hawker</string>
     <string name="First" translatable="false">First</string>
     <string name="Middle" translatable="false">Middle</string>
@@ -236,6 +237,8 @@
     <string name="ID" translatable="false">Identity proof documents</string>
     <string name="FP" translatable="false">Front Page</string>
     <string name="BP" translatable="false">Back Page</string>
+    <string name="VF" translatable="false">View Front</string>
+    <string name="VB" translatable="false">View Back</string>
     <string name="VendingHistory" translatable="false">Vending History Proof documents</string>
     <string name="SP" translatable="false">Second Page</string>
     <string name="other" translatable="false">Other Documents</string>
@@ -249,6 +252,32 @@
     <string name="search" translatable="false">Search</string>
     <string name="search_by" translatable="false">Search by uri or name or zone, ward, corporaion</string>
     <string name="adhar_upi" translatable="false">Aadhar Or URI Or Name</string>
+    <string name="vendingDoc" translatable="false">Vending History Proof Documents</string>
+    <string name="view" translatable="false">View</string>
+    <string name="recording" translatable="false">Recording</string>
+    <string name="VR" translatable="false">View Recording</string>
+    <string name="ProfileImage" translatable="false">Profile Image</string>
+    <string name="Biometric" translatable="false">Biometric Image</string>
+    <string name="FName" translatable="false">Full Name</string>
+    <string name="Gender" translatable="false">Gender</string>
+    <string name="House" translatable="false">House</string>
+    <string name="ZipCode" translatable="false">Zip Code</string>
+    <string name="PostOffice" translatable="false">Post Office</string>
+    <string name="State" translatable="false">State</string>
+    <string name="vtc" translatable="false">VTC</string>
+    <string name="District" translatable="false">District</string>
+    <string name="SubDistrict" translatable="false">Sub District</string>
+    <string name="Landmark" translatable="false">Landmark</string>
+    <string name="Street" translatable="false">Street</string>
+    <string name="Location" translatable="false">Location</string>
+    <string name="Country" translatable="false">Country</string>
+    <string name="DONE" translatable="false">DONE</string>
+    <string name="BAN" translatable="false">Barcode Application Number</string>
+    <string name="Corp" translatable="false">Corporation</string>
+    <string name="Zone" translatable="false">Zone</string>
+    <string name="Ward" translatable="false">Ward</string>
+    <string name="VendorLocation" translatable="false">Vendor Location</string>
+    <string name="ShowLocation" translatable="false">Show Location</string>
 
 
 

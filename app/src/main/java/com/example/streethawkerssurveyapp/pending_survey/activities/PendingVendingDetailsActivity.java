@@ -163,7 +163,7 @@ public class PendingVendingDetailsActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle(R.string.URI+ApplicationConstant.SurveyId);
+        setTitle("URI NO : "+ApplicationConstant.SurveyId);
 
         myCalendar = Calendar.getInstance();
         mYear = myCalendar.get(Calendar.YEAR);
@@ -355,7 +355,7 @@ public class PendingVendingDetailsActivity extends MainActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
                 IS_RECOGNIZED_STREET_VENDOR = radioSexButton.getText().toString().trim();
-                if (IS_RECOGNIZED_STREET_VENDOR.contains("Yes")) {
+                if (IS_RECOGNIZED_STREET_VENDOR.contains("Yes")||IS_RECOGNIZED_STREET_VENDOR.contains("हाँ")) {
                     TextYes.setVisibility(View.VISIBLE);
                     LinearVehical.setVisibility(View.VISIBLE);
 
@@ -373,7 +373,7 @@ public class PendingVendingDetailsActivity extends MainActivity {
                 RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
                 TEHABZARI_AVAILABLE = radioSexButton.getText().toString().trim();
 
-                if (TEHABZARI_AVAILABLE.contains("Yes")) {
+                if (TEHABZARI_AVAILABLE.contains("Yes")||TEHABZARI_AVAILABLE.contains("हाँ")) {
 
                 } else {
 
@@ -1043,7 +1043,7 @@ public class PendingVendingDetailsActivity extends MainActivity {
 
         if (SingleSurveyData.getTehbazariAvailable() != null ){
 
-            if (SingleSurveyData.getTehbazariAvailable().trim().equals("No")){
+            if (SingleSurveyData.getTehbazariAvailable().trim().equals("No")||SingleSurveyData.getTehbazariAvailable().trim().equals("नहीं")){
                 mRadioDN.setChecked(true);
             }else {
                 mRadioDY.setChecked(true);
@@ -1073,7 +1073,7 @@ public class PendingVendingDetailsActivity extends MainActivity {
 
         if (SingleSurveyData.getApplicantRecognizedAsAStreetVendor()!=null){
 
-            if (SingleSurveyData.getApplicantRecognizedAsAStreetVendor().trim().equals("No")){
+            if (SingleSurveyData.getApplicantRecognizedAsAStreetVendor().trim().equals("No")||SingleSurveyData.getTehbazariAvailable().trim().equals("नहीं")){
 
                 mRadioN.setChecked(true);
 

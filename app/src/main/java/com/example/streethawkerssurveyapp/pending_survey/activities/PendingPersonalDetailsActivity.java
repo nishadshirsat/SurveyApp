@@ -268,7 +268,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle(R.string.URI+ApplicationConstant.SurveyId);
+        setTitle("URI NO : "+ApplicationConstant.SurveyId);
 
         if (getLocation == null) {
             getLocation = new GetLocation(PendingPersonalDetailsActivity.this);
@@ -528,7 +528,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
                 IS_CRIMINALCASE = radioSexButton.getText().toString().trim();
-                if (IS_CRIMINALCASE.contains("Yes")) {
+                if (IS_CRIMINALCASE.contains("Yes")||IS_CRIMINALCASE.contains("हाँ")) {
                     linear_cases.setVisibility(View.VISIBLE);
                     IS_CRIMINALCASE ="1";
 
@@ -656,9 +656,9 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         int selectedId = RGSex.getCheckedRadioButtonId();
                         RadioButton radioSexButton = (RadioButton) findViewById(selectedId);
 
-                        if ( radioSexButton.getText().toString().trim().equals("a. Male")){
+                        if ( radioSexButton.getText().toString().trim().equals("a. Male")||radioSexButton.getText().toString().trim().equals("a. पुरुष")){
                             SEX = "M";
-                        } else if ( radioSexButton.getText().toString().trim().equals("b. Female")){
+                        } else if (radioSexButton.getText().toString().trim().equals("b. Female")||radioSexButton.getText().toString().trim().equals("b. महिला")){
                             SEX = "F";
                         } else {
                             SEX = "O";

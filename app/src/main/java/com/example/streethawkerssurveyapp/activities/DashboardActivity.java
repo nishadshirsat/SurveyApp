@@ -60,7 +60,7 @@ public class DashboardActivity extends MainActivity {
     private TextView mTextUsername;
     private LinearLayout mLinear_Surveyor;
     private LinearLayout mLinear_newSurvey;
-    private TextView mTextSurvey,TextPending,TextView,Textsuspended,TextLocal;
+    private TextView mTextSurvey, TextPending, TextView, Textsuspended, TextLocal;
     private LinearLayout mLinear_pending;
     private ImageView mImage_dth;
     private LinearLayout mLinear_view;
@@ -89,8 +89,12 @@ public class DashboardActivity extends MainActivity {
     private static final String Locale_KeyValue = "Saved Locale";
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
-    String lang="";
+    String lang = "";
     MenuItem LanguageMenu;
+    Menu globalMenu;
+
+    RadioButton RadioEnglish, RadioHindi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,11 +222,11 @@ public class DashboardActivity extends MainActivity {
         String Role = PrefUtils.getFromPrefs(DashboardActivity.this, ApplicationConstant.USERDETAILS.UserType, "");
 
         mProfile_name.setText(Name);
-        mAreaName.setText("AREA : "+AREA);
-        mCorporationName.setText("Corporation : "+CORP);
-        mZoneName.setText("Zone : "+ZONE);
-        mWardName.setText("Ward : "+WARD);
-        mTvcName.setText("TVC : "+TVC);
+        mAreaName.setText("AREA : " + AREA);
+        mCorporationName.setText("Corporation : " + CORP);
+        mZoneName.setText("Zone : " + ZONE);
+        mWardName.setText("Ward : " + WARD);
+        mTvcName.setText("TVC : " + TVC);
         mTextUsername.setText(Role);
 
 
@@ -232,7 +236,6 @@ public class DashboardActivity extends MainActivity {
 
         sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
 
         mProfile_layout = (LinearLayout) findViewById(R.id.profile_layout);
         mRelative1 = (RelativeLayout) findViewById(R.id.relative1);
@@ -293,10 +296,12 @@ public class DashboardActivity extends MainActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        invalidateOptionsMenu();
-        LanguageMenu=(MenuItem)menu.findItem(R.id.language_menu);
+        globalMenu = menu;
+        LanguageMenu = (MenuItem) menu.findItem(R.id.language_menu);
+//        LanguageMenu.setVisible(false);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -313,10 +318,10 @@ public class DashboardActivity extends MainActivity {
             case R.id.language_menu:
 
                 View view1 = getLayoutInflater().inflate(R.layout.layout_select_language, null);
-                RadioGroup RadioLanguages=view1.findViewById(R.id.RadioLanguages);
-                RadioButton RadioEnglish=view1.findViewById(R.id.RadioEnglish);
-                RadioButton RadioHindi=view1.findViewById(R.id.RadioHindi);
-                Button BtnDone=view1.findViewById(R.id.BtnDone);
+                RadioGroup RadioLanguages = view1.findViewById(R.id.RadioLanguages);
+                RadioEnglish = view1.findViewById(R.id.RadioEnglish);
+                RadioHindi = view1.findViewById(R.id.RadioHindi);
+                Button BtnDone = view1.findViewById(R.id.BtnDone);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 
@@ -328,11 +333,10 @@ public class DashboardActivity extends MainActivity {
                 alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
-
                 RadioLanguages.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        if(checkedId==R.id.RadioEnglish){
+                        if (checkedId == R.id.RadioEnglish) {
 
                             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DashboardActivity.this);
                             builder.setTitle("Are You Sure To Choose This Language ?");
@@ -343,7 +347,7 @@ public class DashboardActivity extends MainActivity {
                                     dialogInterface.dismiss();
                                     setNewLocale(DashboardActivity.this, LocaleHelper.ENGLISH);
                                     alertDialog.dismiss();
-                                    LanguageMenu.setVisible(false);
+
                                 }
                             });
 
@@ -352,7 +356,7 @@ public class DashboardActivity extends MainActivity {
                             alertDialog.setCanceledOnTouchOutside(false);
                             alertDialog.show();
 
-                        }else{
+                        } else {
                             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DashboardActivity.this);
                             builder.setTitle("Are You Sure To Choose This Language ?");
 //                            builder.setMessage(R.string.saved);
@@ -362,7 +366,7 @@ public class DashboardActivity extends MainActivity {
                                     dialogInterface.dismiss();
                                     setNewLocale(DashboardActivity.this, LocaleHelper.HINDI);
                                     alertDialog.dismiss();
-                                    LanguageMenu.setVisible(false);
+
                                 }
                             });
 
@@ -398,6 +402,15 @@ public class DashboardActivity extends MainActivity {
         startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
+//    @Override
+//    public boolean onPrepareOptionsMenu(final Menu menu) {
+//
+//
+//        menu.findItem(R.id.language_menu).setVisible(false);
+//
+//        return super.onPrepareOptionsMenu(menu);
+//    }
+
 
     @Override
     protected void onResume() {
@@ -407,10 +420,10 @@ public class DashboardActivity extends MainActivity {
 
             ApplicationConstant.ISLOCALDB = true;
 
-            ApplicationConstant.displayToastMessage(DashboardActivity.this,  "No Internet Connection! Storing survey in local Database now.");
+            ApplicationConstant.displayToastMessage(DashboardActivity.this, "No Internet Connection! Storing survey in local Database now.");
 
 
-        }else {
+        } else {
 
             ApplicationConstant.ISLOCALDB = false;
 

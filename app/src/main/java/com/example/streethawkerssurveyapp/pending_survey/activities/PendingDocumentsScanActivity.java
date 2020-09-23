@@ -161,7 +161,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle(R.string.URI+ ApplicationConstant.SurveyId);
+        setTitle("URI NO : "+ ApplicationConstant.SurveyId);
 
         TextAddAnother.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,7 +218,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("Other")) {
+                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("Other")||adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("अन्य")){
                     IDENTITY_PROOF_TYPE = "Other";
                 } else {
                     try {
@@ -242,7 +242,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
         SpinnerVendingHistoryProof.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("None")) {
+                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("None")||adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("कोई नहीं")) {
                     VENDING_HISTORY_PROOF_TYPE = "None";
                 } else {
                     try {
@@ -440,7 +440,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
                 return false;
             } else if (ImgIdentityProofFront.getDrawable().getConstantState() != getResources().getDrawable(R.drawable.scanner).getConstantState()) {
-                if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
+                if (IDENTITY_PROOF_TYPE.trim().equals("Select")||IDENTITY_PROOF_TYPE.trim().equals("चुनते हैं")) {
                     ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Identity Proof Type");
                     return false;
                 }
@@ -462,7 +462,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
                 return false;
             } else if (ImgVendingHistoryFront.getDrawable().getConstantState() != getResources().getDrawable(R.drawable.scanner).getConstantState()) {
-                if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
+                if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")||VENDING_HISTORY_PROOF_TYPE.trim().equals("चुनते हैं")) {
                     ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select Vending History Proof Type");
                     return false;
 

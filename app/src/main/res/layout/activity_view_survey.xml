@@ -37,7 +37,7 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/edittext_bg"
                 android:focusableInTouchMode="false"
-                android:hint="Date"
+                android:hint="@string/Date"
                 android:padding="@dimen/dp_size_10"
                 android:paddingLeft="@dimen/padding_5"
                 android:textSize="@dimen/txt_16sp" />
@@ -53,7 +53,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="0.4"
             android:background="@drawable/edittext_bg"
-            android:hint="Search by URI"
+            android:hint="@string/uri_search"
             android:inputType="text"
             android:padding="@dimen/dp_size_10"
             android:paddingLeft="@dimen/padding_5"
@@ -70,7 +70,7 @@
             android:layout_marginRight="@dimen/padding_5"
             android:textColor="@color/white"
             android:background="@color/colorAccent"
-            android:text="search"/>
+            android:text="@string/search"/>
     </LinearLayout>
 
 
@@ -94,7 +94,7 @@
             android:drawableLeft="@drawable/ic_search_black_24dp"
             android:drawablePadding="@dimen/padding_5"
             android:drawableTint="@color/colorPrimaryDark"
-            android:hint="search by uri or name or zone, ward, corporaion"
+            android:hint="@string/search_by"
             android:padding="8dp" />
 
 

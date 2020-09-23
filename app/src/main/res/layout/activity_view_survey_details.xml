@@ -48,7 +48,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/padding_5"
                         android:gravity="center_vertical"
-                        android:text="Personal Details"
+                        android:text="@string/personal_details"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -88,7 +88,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/padding_5"
                         android:gravity="center_vertical"
-                        android:text="Family Details"
+                        android:text="@string/family_details"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -137,7 +137,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/padding_5"
                         android:gravity="center_vertical"
-                        android:text="Banking Details"
+                        android:text="@string/banking"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -178,7 +178,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/padding_5"
                         android:gravity="center_vertical"
-                        android:text="Vending Details"
+                        android:text="@string/vending_details"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -227,7 +227,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/padding_5"
                         android:gravity="center_vertical"
-                        android:text="Documents"
+                        android:text="@string/documents"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -341,7 +341,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Barcode Application Number :"
+                                    android:text="@string/BAN"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -369,7 +369,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Corporation :"
+                                    android:text="@string/Corp"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -397,7 +397,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Zone:"
+                                    android:text="@string/Zone"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -425,7 +425,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Ward :"
+                                    android:text="@string/Ward"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -453,7 +453,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Area :"
+                                    android:text="@string/Area"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -481,7 +481,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Vendor Location :"
+                                    android:text="@string/VendorLocation"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -491,7 +491,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="Show Location"
+                                    android:text="@string/ShowLocation"
                                     android:textColor="@color/blue"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -509,7 +509,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Photo of the street vendor / Hawker :"
+                                    android:text="@string/VendorPhoto"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -535,7 +535,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Photo of the Vending / Hawking Site :"
+                                    android:text="@string/SitePhoto"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -561,7 +561,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Name of the Street Vendor/Hawker :"
+                                    android:text="@string/VendorName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -589,7 +589,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Adhaar Number :"
+                                    android:text="@string/AadharNo"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -617,7 +617,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Sex :"
+                                    android:text="@string/Sex"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -645,7 +645,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Age :"
+                                    android:text="@string/Age"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -673,7 +673,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Date Of Birth :"
+                                    android:text="@string/DOB"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -701,7 +701,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Mobile Number :"
+                                    android:text="@string/Mobile"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -729,7 +729,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Landline Number :"
+                                    android:text="@string/Landline"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -757,7 +757,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Education Status :"
+                                    android:text="@string/Education"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -785,7 +785,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Name of Father/Husband :"
+                                    android:text="@string/HusbandName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -813,7 +813,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Name of Mother :"
+                                    android:text="@string/MotherName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -841,7 +841,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Spouse Name :"
+                                    android:text="@string/SpouseName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -869,7 +869,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Whether widowed/widower :"
+                                    android:text="@string/widowedName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -897,7 +897,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Category :"
+                                    android:text="@string/Category"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -925,7 +925,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Residential / Correspondence Address :"
+                                    android:text="@string/Address"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -953,7 +953,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Permanent Address :"
+                                    android:text="@string/PAddress"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -981,7 +981,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Annual Income :"
+                                    android:text="@string/Income"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1009,7 +1009,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Whether convicted in any case or criminal case pending? :"
+                                    android:text="@string/Case"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1053,7 +1053,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Details of family members &amp; their occupation :"
+                                    android:text="@string/FamDetails"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1077,7 +1077,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Land/Fixed assets owned by family, if any :"
+                                    android:text="@string/Land"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1111,7 +1111,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Have other family members been surveyed :"
+                                    android:text="@string/SurveyedFam"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1156,7 +1156,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Bank Account No. :"
+                                    android:text="@string/BankAccount"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1184,7 +1184,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Bank name :"
+                                    android:text="@string/BankName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1212,7 +1212,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Branch name :"
+                                    android:text="@string/BranchName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1240,7 +1240,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="IFSC Code :"
+                                    android:text="@string/IFSCCode"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1278,7 +1278,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Type of vending/ Hawking or items sold :"
+                                    android:text="@string/VendingType"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1306,7 +1306,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Name of Vending/Hawking/Squatting site :"
+                                    android:text="@string/VendorName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1334,7 +1334,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Timing of Vending/Hawking/Squatting :"
+                                    android:text="@string/VendingTime"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1350,7 +1350,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="from1"
+                                        android:text="@string/From"
                                         android:textStyle="bold"
                                         android:textColor="@color/colorAccent"
                                         android:textSize="@dimen/txt_16sp" />
@@ -1361,7 +1361,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/dp_size_10"
                                         android:layout_weight="1"
-                                        android:text="from2"
+                                        android:text="@string/From"
                                         android:textColor="@color/colorAccent"
                                         android:textSize="@dimen/txt_16sp"
                                         android:textStyle="bold" />
@@ -1383,7 +1383,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Number of yrs of Vending/Hawking/Squatting in current location :"
+                                    android:text="@string/VendingYears"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1411,7 +1411,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Has the applicant been previously recognized as a street vendor? :"
+                                    android:text="@string/StreetVendor"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1439,7 +1439,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Type of structure / vehicle :"
+                                    android:text="@string/TypeVehicle"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1467,7 +1467,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="No of Days Active :"
+                                    android:text="@string/ActiveDays"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1495,7 +1495,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Date of start of vending activity in current location :"
+                                    android:text="@string/DateVending"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1523,7 +1523,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Is document of Tehbazari available? :"
+                                    android:text="@string/Doc"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1551,7 +1551,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Choice of vending area/market allotment :"
+                                    android:text="@string/AreaChoice"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1590,7 +1590,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Identity proof documents :"
+                                    android:text="@string/ID"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1606,7 +1606,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="View Front"
+                                        android:text="@string/VF"
                                         android:textColor="@color/blue"
                                         android:textSize="@dimen/txt_16sp"
                                         android:textStyle="bold" />
@@ -1616,7 +1616,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="View Back"
+                                        android:text="@string/VB"
                                         android:layout_marginLeft="@dimen/padding_5"
                                         android:textColor="@color/blue"
                                         android:textSize="@dimen/txt_16sp"
@@ -1639,7 +1639,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Vending History Proof documents :"
+                                    android:text="@string/vendingDoc"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1655,7 +1655,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="View Front"
+                                        android:text="@string/VF"
                                         android:textColor="@color/blue"
                                         android:textSize="@dimen/txt_16sp"
                                         android:textStyle="bold" />
@@ -1665,7 +1665,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="View Back"
+                                        android:text="@string/VB"
                                         android:layout_marginLeft="@dimen/padding_5"
                                         android:textColor="@color/blue"
                                         android:textSize="@dimen/txt_16sp"
@@ -1688,7 +1688,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Allotment of Tehbazari document (If available) :"
+                                    android:text="@string/allotment"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1698,7 +1698,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="View"
+                                    android:text="@string/view"
                                     android:textColor="@color/blue"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -1716,7 +1716,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Undertaking by the Applicant :"
+                                    android:text="@string/undertaking"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1726,7 +1726,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="View"
+                                    android:text="@string/view"
                                     android:textColor="@color/blue"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -1744,7 +1744,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Acknowledgement Receipt :"
+                                    android:text="@string/receipt"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1754,7 +1754,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="View"
+                                    android:text="@string/view"
                                     android:textColor="@color/blue"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -1778,7 +1778,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Other Documents :"
+                                    android:text="@string/other"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1811,7 +1811,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Comments :"
+                                    android:text="@string/Comments"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1846,7 +1846,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Recording :"
+                                    android:text="@string/recording"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1856,7 +1856,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dp_size_10"
                                     android:layout_weight="1"
-                                    android:text="View Recording"
+                                    android:text="@string/VR"
                                     android:textColor="@color/blue"
                                     android:textSize="@dimen/txt_16sp"
                                     android:textStyle="bold" />
@@ -1885,7 +1885,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Aaadhar Number :"
+                                    android:text="@string/AadharNo"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1913,7 +1913,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Profile Image :"
+                                    android:text="@string/ProfileImage"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1941,7 +1941,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Biometric Image"
+                                    android:text="@string/Biometric"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1969,7 +1969,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Full Name :"
+                                    android:text="@string/FName"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -1997,7 +1997,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Gender :"
+                                    android:text="@string/Gender"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2025,7 +2025,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Date of Birth :"
+                                    android:text="@string/DOB"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2053,7 +2053,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="House :"
+                                    android:text="@string/House"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2081,7 +2081,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Zip Code :"
+                                    android:text="@string/ZipCode"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2109,7 +2109,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Post Office :"
+                                    android:text="@string/PostOffice"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2137,7 +2137,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="State :"
+                                    android:text="@string/State"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2165,7 +2165,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="VTC :"
+                                    android:text="@string/vtc"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2193,7 +2193,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="District :"
+                                    android:text="@string/District"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2221,7 +2221,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Sub District :"
+                                    android:text="@string/SubDistrict"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2249,7 +2249,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Landmark :"
+                                    android:text="@string/Landmark"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2277,7 +2277,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Street :"
+                                    android:text="@string/Street"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2305,7 +2305,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Location :"
+                                    android:text="@string/Location"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2333,7 +2333,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Country :"
+                                    android:text="@string/Country"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="@dimen/txt_16sp" />
 
@@ -2370,7 +2370,7 @@
                     android:background="@drawable/button_bg"
                     android:paddingLeft="@dimen/dp_size_10"
                     android:paddingRight="@dimen/dp_size_10"
-                    android:text="DONE"
+                    android:text="@string/DONE"
                     android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="18sp"
