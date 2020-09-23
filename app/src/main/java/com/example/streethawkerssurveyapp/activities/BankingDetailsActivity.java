@@ -73,7 +73,7 @@ public class BankingDetailsActivity extends MainActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle(R.string.URI+ApplicationConstant.SurveyId);
+            setTitle("URI NO : "+ApplicationConstant.SurveyId);
 
         }
 

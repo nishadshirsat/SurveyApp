@@ -287,7 +287,7 @@ public class PersonalDetailsActivity extends MainActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle(R.string.URI+ApplicationConstant.SurveyId);
+            setTitle("URI NO : "+ApplicationConstant.SurveyId);
 
         }else {
             ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this,"Survey Status","This survey will save locally");
@@ -571,7 +571,7 @@ public class PersonalDetailsActivity extends MainActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
                 IS_CRIMINALCASE = radioSexButton.getText().toString().trim();
-                if (IS_CRIMINALCASE.contains("Yes")) {
+                if (IS_CRIMINALCASE.contains("Yes")||IS_CRIMINALCASE.contains("हाँ")) {
                     linear_cases.setVisibility(View.VISIBLE);
                     IS_CRIMINALCASE = "1";
 
@@ -697,9 +697,9 @@ public class PersonalDetailsActivity extends MainActivity {
                         int selectedId = RGSex.getCheckedRadioButtonId();
                         RadioButton radioSexButton = (RadioButton) findViewById(selectedId);
 
-                        if (radioSexButton.getText().toString().trim().equals("a. Male")) {
+                        if (radioSexButton.getText().toString().trim().equals("a. Male")||radioSexButton.getText().toString().trim().equals("a. पुरुष")) {
                             SEX = "M";
-                        } else if (radioSexButton.getText().toString().trim().equals("b. Female")) {
+                        } else if (radioSexButton.getText().toString().trim().equals("b. Female")||radioSexButton.getText().toString().trim().equals("b. महिला")) {
                             SEX = "F";
                         } else {
                             SEX = "O";
@@ -1682,9 +1682,9 @@ public class PersonalDetailsActivity extends MainActivity {
                         PrefUtils.saveToPrefs(PersonalDetailsActivity.this, ApplicationConstant.CONTACT, CONTACT_NO);
 
                         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
-                        builder.setTitle(R.string.personal_details);
-                        builder.setMessage(R.string.saved);
-                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        builder.setTitle("PERSONAL DETAILS");
+                        builder.setMessage("Saved Successfully");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();

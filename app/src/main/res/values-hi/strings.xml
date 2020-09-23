@@ -129,6 +129,7 @@
     <string name="vending_details">वेंडिंग विवरण</string>
     <string name="family_details">परिवार का विवरण</string>
     <string name="banking">बैंकिंग विवरण</string>
+    <string name="documents">दस्तावेज़</string>
     <string name="saved" >सफलतापूर्वक संचित किया</string>
     <string name="PREVIOUS">पिछला</string>
     <string name="NEXT">आगे</string>
@@ -234,9 +235,11 @@
     <string name="ID" >पहचान प्रमाण दस्तावेज</string>
     <string name="FP" >मुखपृष्ठ</string>
     <string name="BP" >पिछला पेज</string>
+    <string name="VF">मुखपृष्ठ देखें</string>
+    <string name="VB">पिछला पेज देखें</string>
     <string name="VendingHistory" >इतिहास प्रूफ दस्तावेज़</string>
     <string name="SP" >दूसरा पेज</string>
-    <string name="other" >अन्य कागजात</string>
+    <string name="other" >अन्य</string>
     <string name="allotment" >तहबाजारी दस्तावेज का आवंटन (यदि उपलब्ध हो)</string>
     <string name="undertaking" >आवेदक द्वारा अंडरटेकिंग</string>
     <string name="receipt" >पावती रसीद</string>
@@ -247,5 +250,48 @@
     <string name="search">खोजें</string>
     <string name="search_by" >यूरी या नाम या क्षेत्र, वार्ड, निगम द्वारा खोज</string>
     <string name="adhar_upi">आधार या यूआरआई या नाम</string>
+    <string name="vendingDoc">लंबित इतिहास प्रमाण दस्तावेज</string>
+    <string name="view" translatable="false">देखें</string>
+    <string name="recording">रिकॉर्डिंग</string>
+    <string name="VR">रिकॉर्डिंग देखें</string>
+    <string name="ProfileImage">प्रोफ़ाइल छवि</string>
+    <string name="Biometric">बॉयोमीट्रिक छवि</string>
+    <string name="FName">पूरा नाम</string>
+    <string name="Gender">लिंग</string>
+    <string name="House">मकान</string>
+    <string name="ZipCode">पिन कोड</string>
+    <string name="PostOffice" >डाकघर</string>
+    <string name="State">राज्य</string>
+    <string name="vtc">वी टी सी</string>
+    <string name="District">जिला</string>
+    <string name="SubDistrict">उप जिला</string>
+    <string name="Landmark">सीमाचिह्न</string>
+    <string name="Street">सड़क</string>
+    <string name="Location" >स्थान</string>
+    <string name="Country" >देश</string>
+    <string name="DONE" >समाप्त</string>
+    <string name="BAN">बारकोड एप्लीकेशन नंबर</string>
+    <string name="Corp" >निगम</string>
+    <string name="Zone">क्षेत्र</string>
+    <string name="Ward">वार्ड</string>
+    <string name="VendorLocation">विक्रेता स्थान</string>
+    <string name="ShowLocation">स्थान दिखाना</string>
+    <string name="appId">एप्लिकेशन आईडी दर्ज करें</string>
+    <string name="enter">या दर्ज करें</string>
+    <string name="SelectSurveyor">सर्वेयर का चयन करें</string>
+    <string name="OTP">ओ टी पी</string>
+    <string name="ReadQR">क्यूआर पढ़ें</string>
+    <string name="sorry">माफ़ करना...!</string>
+    <string name="msg" >यह सर्वेक्षण निलंबित कर दिया गया है। अधिक जानकारी के लिए अपने व्यवस्थापक से संपर्क करें।</string>
+    <string name="thanx">धन्यवाद...!</string>
+    <string name="suspendRemark">सस्पेंड रिमार्क दर्ज करें</string>
+    <string name="RemarkSuspend">सस्पेंड का रिमार्क</string>
+    <string name="SUBMIT">प्रस्तुत</string>
+    <string name="Pending">विचाराधीन</string>
+    <string name="Check">जाँच</string>
+    <string name="Continue">जारी रखें</string>
+    <string name="Suspend">निलंबित करें</string>
+
+
 
 </resources>

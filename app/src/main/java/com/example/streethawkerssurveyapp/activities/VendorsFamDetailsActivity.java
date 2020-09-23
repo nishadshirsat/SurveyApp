@@ -112,7 +112,7 @@ public class VendorsFamDetailsActivity extends MainActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle(R.string.URI+ApplicationConstant.SurveyId);
+            setTitle("URI NO : "+ApplicationConstant.SurveyId);
 
         }
 
@@ -125,7 +125,7 @@ public class VendorsFamDetailsActivity extends MainActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
                 IS_Fam = radioSexButton.getText().toString().trim();
-                if (IS_Fam.contains("Yes")) {
+                if (IS_Fam.contains("Yes")||IS_Fam.contains("हाँ")) {
                     LinearYes.setVisibility(View.VISIBLE);
                     IS_Fam = "1";
 

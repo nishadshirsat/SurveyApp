@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OTP"
+                    android:text="@string/OTP"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
@@ -175,7 +175,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Read QR"
+                    android:text="@string/ReadQR"
                     android:textStyle="bold"
                     android:layout_gravity="center"
                     android:gravity="center"

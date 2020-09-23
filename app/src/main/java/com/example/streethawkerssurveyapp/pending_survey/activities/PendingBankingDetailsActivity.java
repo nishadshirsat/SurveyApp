@@ -76,7 +76,7 @@ public class PendingBankingDetailsActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle(R.string.URI+ApplicationConstant.SurveyId);
+        setTitle("URI NO : "+ApplicationConstant.SurveyId);
 
 
         mBtnPrevious.setOnClickListener(new View.OnClickListener() {

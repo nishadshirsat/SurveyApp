@@ -160,7 +160,7 @@ public class DocumentsScanActivity extends MainActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle(R.string.URI+ApplicationConstant.SurveyId);
+            setTitle("URI NO : "+ApplicationConstant.SurveyId);
 
         }
 
@@ -244,7 +244,7 @@ public class DocumentsScanActivity extends MainActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("Other")){
+                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("Other")||adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("अन्य")){
                     IDENTITY_PROOF_TYPE = "Other";
                 }else {
                     try {
@@ -270,7 +270,7 @@ public class DocumentsScanActivity extends MainActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
 
-                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("None")){
+                if (adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("None")||adapterView.getItemAtPosition(i).toString().trim().equalsIgnoreCase("कोई नहीं")) {
                     VENDING_HISTORY_PROOF_TYPE = "None";
                 }else {
                     try {
@@ -492,14 +492,14 @@ public class DocumentsScanActivity extends MainActivity {
 //        else
             if (!IDENTITY_PROOF_FRONT_PATH.trim().isEmpty()) {
 
-                if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
+                if (IDENTITY_PROOF_TYPE.trim().equals("Select")||IDENTITY_PROOF_TYPE.trim().equals("चुनते हैं")) {
             ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
             return false;
                 }
 
             } else
 
-                if (IDENTITY_PROOF_TYPE.trim().equals("Select")) {
+                if (IDENTITY_PROOF_TYPE.trim().equals("Select")||IDENTITY_PROOF_TYPE.trim().equals("चुनते हैं")) {
                 IDENTITY_PROOF_TYPE="";
 //            ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Identity Proof Type");
 //            return true;
@@ -529,13 +529,13 @@ public class DocumentsScanActivity extends MainActivity {
 //        else
             if (!VENDING_HISTORY_FRONT_PROOF_PATH.trim().isEmpty()) {
 
-            if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
+            if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")||VENDING_HISTORY_PROOF_TYPE.trim().equals("चुनते हैं")) {
                 ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select Vending History Proof Type");
                 return false;
 
             }
 
-        } else  if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")) {
+        } else  if (VENDING_HISTORY_PROOF_TYPE.trim().equals("Select")||VENDING_HISTORY_PROOF_TYPE.trim().equals("चुनते हैं")) {
                 VENDING_HISTORY_PROOF_TYPE="";
             }
         return true;

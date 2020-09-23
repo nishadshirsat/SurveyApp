@@ -71,7 +71,7 @@
         android:layout_marginLeft="@dimen/dp_size_10"
         android:layout_marginRight="@dimen/dp_size_10"
         android:layout_marginBottom="@dimen/dp_size_10"
-        app:hintText="Select Surveyor"
+        app:hintText="@string/SelectSurveyor"
         android:background="@drawable/edittext_bg"
         android:padding="8dp" />
 

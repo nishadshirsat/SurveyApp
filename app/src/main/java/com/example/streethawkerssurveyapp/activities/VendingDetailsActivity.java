@@ -165,7 +165,7 @@ public class VendingDetailsActivity extends MainActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (!ApplicationConstant.ISLOCALDB) {
-            setTitle(R.string.URI+ApplicationConstant.SurveyId);
+            setTitle("URI NO : "+ApplicationConstant.SurveyId);
 
         }
 
@@ -362,7 +362,7 @@ public class VendingDetailsActivity extends MainActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
                 IS_RECOGNIZED_STREET_VENDOR = radioSexButton.getText().toString().trim();
-                if (IS_RECOGNIZED_STREET_VENDOR.contains("Yes")) {
+                if (IS_RECOGNIZED_STREET_VENDOR.contains("Yes")||IS_RECOGNIZED_STREET_VENDOR.contains("हाँ")) {
                     TextYes.setVisibility(View.VISIBLE);
                     LinearVehical.setVisibility(View.VISIBLE);
 
@@ -380,7 +380,7 @@ public class VendingDetailsActivity extends MainActivity {
                 RadioButton radioSexButton = (RadioButton) findViewById(checkedId);
                 TEHABZARI_AVAILABLE = radioSexButton.getText().toString().trim();
 
-                if (TEHABZARI_AVAILABLE.contains("Yes")) {
+                if (TEHABZARI_AVAILABLE.contains("Yes")||TEHABZARI_AVAILABLE.contains("हाँ")) {
 
                 } else {
 
@@ -931,9 +931,9 @@ public class VendingDetailsActivity extends MainActivity {
                     if (response.body().isStatus()) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(VendingDetailsActivity.this);
-                        builder.setTitle(R.string.vending_details);
-                        builder.setMessage(R.string.saved);
-                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        builder.setTitle("Vending Details");
+                        builder.setMessage("Saved Successfully");
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
