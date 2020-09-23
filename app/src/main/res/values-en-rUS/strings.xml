@@ -275,5 +275,20 @@
     <string name="Ward" translatable="false">Ward</string>
     <string name="VendorLocation" translatable="false">Vendor Location</string>
     <string name="ShowLocation" translatable="false">Show Location</string>
+    <string name="appId" translatable="false">Enter Application Id</string>
+    <string name="enter" translatable="false">Or Enter</string>
+    <string name="SelectSurveyor" translatable="false">Select Surveyor</string>
+    <string name="OTP" translatable="false">OTP</string>
+    <string name="ReadQR" translatable="false">Read QR</string>
+    <string name="sorry" translatable="false">Sorry...!</string>
+    <string name="msg" translatable="false">This Survey has been suspended.Contact your Administrator for more information.</string>
+    <string name="thanx" translatable="false">Thank You...!</string>
+    <string name="suspendRemark" translatable="false">Enter Suspend Remark</string>
+    <string name="RemarkSuspend" translatable="false">Remark of Suspend</string>
+    <string name="SUBMIT" translatable="false">SUBMIT</string>
+    <string name="Pending" translatable="false">Pending</string>
+    <string name="Check" translatable="false">Check</string>
+    <string name="Continue" translatable="false">Continue</string>
+    <string name="Suspend" translatable="false">SUSPEND</string>
 
 </resources>

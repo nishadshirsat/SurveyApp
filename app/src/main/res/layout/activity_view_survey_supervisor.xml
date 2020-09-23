@@ -33,7 +33,7 @@
             android:visibility="visible"
             android:layout_marginLeft="@dimen/dp_size_10"
             android:layout_marginRight="@dimen/dp_size_10"
-            app:hintText="Select Surveyor"
+            app:hintText="@string/SelectSurveyor"
             android:background="@drawable/edittext_bg"
             android:padding="8dp" />
     </LinearLayout>
@@ -67,7 +67,7 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/edittext_bg"
                 android:focusableInTouchMode="false"
-                android:hint="Date"
+                android:hint="@string/Date"
                 android:padding="@dimen/dp_size_10"
                 android:paddingLeft="@dimen/padding_5"
                 android:textSize="@dimen/txt_16sp" />
@@ -83,7 +83,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="0.4"
             android:background="@drawable/edittext_bg"
-            android:hint="Search by URI"
+            android:hint="@string/uri_search"
             android:inputType="text"
             android:padding="@dimen/dp_size_10"
             android:paddingLeft="@dimen/padding_5"
@@ -125,7 +125,7 @@
             android:drawableLeft="@drawable/ic_search_black_24dp"
             android:drawablePadding="@dimen/padding_5"
             android:drawableTint="@color/colorPrimaryDark"
-            android:hint="search by uri or name or zone, ward, corporaion"
+            android:hint="@string/search_by"
             android:padding="8dp" />
 
 

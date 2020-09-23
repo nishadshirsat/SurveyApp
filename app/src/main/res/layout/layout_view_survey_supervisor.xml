@@ -242,7 +242,7 @@
                     android:layout_width="wrap_content"
                     android:layout_gravity="right"
                     android:background="@color/red"
-                    android:text="Pending"
+                    android:text="@string/Pending"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:layout_height="35dp"/>
@@ -252,7 +252,7 @@
                     android:layout_width="wrap_content"
                     android:layout_gravity="right"
                     android:background="@color/colorPrimary"
-                    android:text="Check"
+                    android:text="@string/Check"
                     android:layout_marginLeft="@dimen/dp_size_10"
                     android:textColor="@color/white"
                     android:textSize="14sp"

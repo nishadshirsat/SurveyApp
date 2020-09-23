@@ -276,5 +276,22 @@
     <string name="Ward">वार्ड</string>
     <string name="VendorLocation">विक्रेता स्थान</string>
     <string name="ShowLocation">स्थान दिखाना</string>
+    <string name="appId">एप्लिकेशन आईडी दर्ज करें</string>
+    <string name="enter">या दर्ज करें</string>
+    <string name="SelectSurveyor">सर्वेयर का चयन करें</string>
+    <string name="OTP">ओ टी पी</string>
+    <string name="ReadQR">क्यूआर पढ़ें</string>
+    <string name="sorry">माफ़ करना...!</string>
+    <string name="msg" >यह सर्वेक्षण निलंबित कर दिया गया है। अधिक जानकारी के लिए अपने व्यवस्थापक से संपर्क करें।</string>
+    <string name="thanx">धन्यवाद...!</string>
+    <string name="suspendRemark">सस्पेंड रिमार्क दर्ज करें</string>
+    <string name="RemarkSuspend">सस्पेंड का रिमार्क</string>
+    <string name="SUBMIT">प्रस्तुत</string>
+    <string name="Pending">विचाराधीन</string>
+    <string name="Check">जाँच</string>
+    <string name="Continue">जारी रखें</string>
+    <string name="Suspend">निलंबित करें</string>
+
+
 
 </resources>
