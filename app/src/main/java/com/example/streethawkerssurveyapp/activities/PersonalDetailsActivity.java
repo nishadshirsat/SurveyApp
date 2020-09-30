@@ -281,7 +281,10 @@ public class PersonalDetailsActivity extends MainActivity {
         bindView();
         initData();
 
-        PIDOPTS = "<PidOptions ver=\"1.0\"> <Opts fCount=\"1\" fType=\"0\" pType=\"0\" pCount=\"0\" pgCount=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" pTimeout=\"20000\" posh=\"UNKNOWN\" /> </PidOptions>";
+//        PIDOPTS = "<PidOptions ver=\"1.0\"> <Opts fCount=\"1\" fType=\"0\" pType=\"0\" pCount=\"0\" pgCount=\"2\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" pTimeout=\"20000\" posh=\"UNKNOWN\" /> </PidOptions>";
+
+
+        PIDOPTS = "<PidOptions ver=\"1.0\"> <Opts fCount=\"1\" fType=\"0\" iType=\"0\" iCount=\"0\" pType=\"0\" pCount=\"0\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" posh=\"UNKNOWN\" /> </PidOptions>";
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -405,9 +408,9 @@ public class PersonalDetailsActivity extends MainActivity {
                         @Override
                         public void onClick(View view) {
                             alertDialog.dismiss();
-                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Credentials not found.");
+//                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Credentials not found.");
 
-//                            captureFingureprintNow();
+                            captureFingureprintNow();
 
 
                         }
@@ -1456,7 +1459,25 @@ public class PersonalDetailsActivity extends MainActivity {
                 if (data != null) {
                   String result = data.getStringExtra("PID_DATA").trim();
 
-                  ApplicationConstant.DisplayMessageDialog(PersonalDetailsActivity.this,"",result);
+
+                  View view = getLayoutInflater().inflate(R.layout.layout_display_pid,null);
+                  EditText edit_aadharpid = view.findViewById(R.id.edit_aadharpid);
+
+                  AlertDialog.Builder builder = new AlertDialog.Builder(PersonalDetailsActivity.this);
+                  builder.setView(view);
+
+                  builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                      @Override
+                      public void onClick(DialogInterface dialogInterface, int i) {
+                          dialogInterface.dismiss();
+                      }
+                  });
+
+                  edit_aadharpid.setText(result);
+
+                  builder.show();
+
+//                  ApplicationConstant.DisplayMessageDialog(PersonalDetailsActivity.this,"",result);
                 }
             }
         }
@@ -2827,25 +2848,45 @@ public class PersonalDetailsActivity extends MainActivity {
 
         if (PIDOPTS != null) {
 
-                try {
+//                try {
+//
+//                    if (isAppInstalled(PersonalDetailsActivity.this, "in.bioenable.rdservice.fp")) {
+//                        Intent intent2 = new Intent();
+////                          Intent  intent2 = getPackageManager().getLaunchIntentForPackage("com.scl.rdservice");
+//                        intent2.setAction("in.gov.uidai.rdservice.fp.CAPTURE");
+//                        intent2.setPackage("in.bioenable.rdservice.fp");
+//                        intent2.putExtra("PID_OPTIONS", PIDOPTS);
+//                        startActivityForResult(intent2, 15);
+//
+//                    } else {
+//                        Intent intent = new Intent();
+//                        onGoToAnotherInAppStore(intent, "in.bioenable.rdservice.fp");
+//
+//                    }
+//                } catch (Exception e) {
+//                    Intent intent = new Intent();
+//                    onGoToAnotherInAppStore(intent, "in.bioenable.rdservice.fp");
+//                }
 
-                    if (isAppInstalled(PersonalDetailsActivity.this, "in.bioenable.rdservice.fp")) {
-                        Intent intent2 = new Intent();
+            try {
+
+                if (isAppInstalled(PersonalDetailsActivity.this, "com.scl.rdservice")) {
+                    Intent intent2 = new Intent();
 //                          Intent  intent2 = getPackageManager().getLaunchIntentForPackage("com.scl.rdservice");
-                        intent2.setAction("in.gov.uidai.rdservice.fp.CAPTURE");
-                        intent2.setPackage("in.bioenable.rdservice.fp");
-                        intent2.putExtra("PID_OPTIONS", PIDOPTS);
-                        startActivityForResult(intent2, 15);
+                    intent2.setAction("in.gov.uidai.rdservice.fp.CAPTURE");
+                    intent2.setPackage("com.scl.rdservice");
+                    intent2.putExtra("PID_OPTIONS", PIDOPTS);
+                    startActivityForResult(intent2, 15);
 
-                    } else {
-                        Intent intent = new Intent();
-                        onGoToAnotherInAppStore(intent, "in.bioenable.rdservice.fp");
-
-                    }
-                } catch (Exception e) {
+                } else {
                     Intent intent = new Intent();
-                    onGoToAnotherInAppStore(intent, "in.bioenable.rdservice.fp");
+                    onGoToAnotherInAppStore(intent, "com.scl.rdservice");
+
                 }
+            } catch (Exception e) {
+                Intent intent = new Intent();
+                onGoToAnotherInAppStore(intent, "com.scl.rdservice");
+            }
 
 
         }

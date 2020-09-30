@@ -51,6 +51,7 @@ public class ApplicationConstant {
     public static final String TVC = "tvc";
     public static final String AREA = "survey_area";
     public static final String LOCAL_SURVEYID = "local_surveyid";
+    public static final String ISLANGSELECTED = "false";
     public static boolean ISLOCALDB = false;
     public static String URI_NO_ = "uri_no";
     public static String SurveyId ="";

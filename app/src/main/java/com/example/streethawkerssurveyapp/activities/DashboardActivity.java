@@ -90,7 +90,6 @@ public class DashboardActivity extends MainActivity {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     String lang = "";
-    MenuItem LanguageMenu;
     Menu globalMenu;
 
     RadioButton RadioEnglish, RadioHindi;
@@ -297,7 +296,22 @@ public class DashboardActivity extends MainActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         globalMenu = menu;
-        LanguageMenu = (MenuItem) menu.findItem(R.id.language_menu);
+
+       MenuItem item = menu.findItem(R.id.language_menu);
+
+      String LangSelected =  PrefUtils.getFromPrefs(DashboardActivity.this,ApplicationConstant.ISLANGSELECTED,"false");
+
+        if (LangSelected.trim().equalsIgnoreCase("false")){
+            if (item != null) {
+                item.setVisible(true);
+            }
+        }else {
+            if (item != null) {
+                item.setVisible(false);
+            }
+        }
+
+
 //        LanguageMenu.setVisible(false);
         return true;
     }
@@ -345,8 +359,12 @@ public class DashboardActivity extends MainActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
+
+                                    PrefUtils.saveToPrefs(DashboardActivity.this,ApplicationConstant.ISLANGSELECTED,"true");
+
                                     setNewLocale(DashboardActivity.this, LocaleHelper.ENGLISH);
                                     alertDialog.dismiss();
+
 
                                 }
                             });
@@ -364,8 +382,18 @@ public class DashboardActivity extends MainActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
+
+//                                    if(globalMenu != null) {
+//
+//                                        globalMenu.findItem(R.id.language_menu).setVisible(false);
+//
+//                                    }
+
+                                    PrefUtils.saveToPrefs(DashboardActivity.this,ApplicationConstant.ISLANGSELECTED,"true");
+
                                     setNewLocale(DashboardActivity.this, LocaleHelper.HINDI);
                                     alertDialog.dismiss();
+
 
                                 }
                             });
@@ -400,6 +428,12 @@ public class DashboardActivity extends MainActivity {
         LocaleHelper.setNewLocale(this, language);
         Intent intent = mContext.getIntent();
         startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+
+        if(globalMenu != null) {
+
+            globalMenu.findItem(R.id.language_menu).setVisible(false);
+
+        }
     }
 
 //    @Override
