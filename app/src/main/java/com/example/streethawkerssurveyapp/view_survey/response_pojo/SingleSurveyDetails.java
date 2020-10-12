@@ -2,6 +2,8 @@ package com.example.streethawkerssurveyapp.view_survey.response_pojo;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class SingleSurveyDetails implements Serializable {
@@ -120,8 +122,15 @@ public class SingleSurveyDetails implements Serializable {
 	@SerializedName("latitude")
 	private String latitude;
 
+	public List<String> getRecording() {
+		return recording;
+	}
+//	@SerializedName("recording")
+//	private String recording;
+
 	@SerializedName("recording")
-	private String recording;
+	@Expose
+	private List<String> recording;
 
 	@SerializedName("created_at")
 	private String createdAt;
@@ -207,6 +216,16 @@ public class SingleSurveyDetails implements Serializable {
 	@SerializedName("age")
 	private String age;
 
+	public String getAadhaar_verified() {
+		return aadhaar_verified;
+	}
+
+	public void setAadhaar_verified(String aadhaar_verified) {
+		this.aadhaar_verified = aadhaar_verified;
+	}
+
+	@SerializedName("aadhaar_verified")
+	private String aadhaar_verified;
 
 
 	@SerializedName("tehbazari_available")
@@ -520,13 +539,13 @@ public class SingleSurveyDetails implements Serializable {
 		return latitude;
 	}
 
-	public void setRecording(String recording){
-		this.recording = recording;
-	}
-
-	public String getRecording(){
-		return recording;
-	}
+//	public void setRecording(String recording){
+//		this.recording = recording;
+//	}
+//
+//	public String getRecording(){
+//		return recording;
+//	}
 
 	public void setCreatedAt(String createdAt){
 		this.createdAt = createdAt;
@@ -694,6 +713,10 @@ public class SingleSurveyDetails implements Serializable {
 
 	public String getBarCode(){
 		return barCode;
+	}
+
+	public void setRecording(List<String> recording) {
+		this.recording = recording;
 	}
 
 	public void setNoOfDaysActive(String noOfDaysActive){

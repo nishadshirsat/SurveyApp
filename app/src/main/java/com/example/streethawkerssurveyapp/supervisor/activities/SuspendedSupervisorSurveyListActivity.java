@@ -400,7 +400,7 @@ public class SuspendedSupervisorSurveyListActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -492,7 +492,7 @@ public class SuspendedSupervisorSurveyListActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -588,7 +588,7 @@ public class SuspendedSupervisorSurveyListActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -676,7 +676,7 @@ public class SuspendedSupervisorSurveyListActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SuspendedSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

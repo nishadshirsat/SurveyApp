@@ -145,11 +145,17 @@ public class BankingDetailsActivity extends MainActivity {
 //            mEditBranchName.setError("Enter Branch Name");
 //            mEditBranchName.requestFocus();
 //            return false;
-//        } else if (mEditIfscCode.getText().toString().trim().isEmpty()) {
-//            mEditIfscCode.setError("Enter IFSC Code");
-//            mEditIfscCode.requestFocus();
-//            return false;
-//        }
+//        } else
+//
+        if (!mEditIfscCode.getText().toString().trim().isEmpty()) {
+
+            if (mEditIfscCode.getText().toString().trim().length() != 11) {
+                mEditIfscCode.setError("Enter correct ifsc code");
+                mEditIfscCode.requestFocus();
+                return false;
+            }
+
+        }
 
         return true;
     }
@@ -270,7 +276,7 @@ public class BankingDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(BankingDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(BankingDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

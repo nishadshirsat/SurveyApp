@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
@@ -240,7 +241,7 @@ public class CorporationZoneActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(CorporationZoneActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(CorporationZoneActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

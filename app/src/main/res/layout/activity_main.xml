@@ -1472,6 +1472,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
+                            android:visibility="gone"
                             android:text="@string/NoAadhar"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
@@ -1537,7 +1538,7 @@
                         android:layout_marginBottom="@dimen/dp_size_10"
                         app:cardCornerRadius="5dp"
                         android:layout_gravity="center"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:cardElevation="5dp">
 
                         <LinearLayout

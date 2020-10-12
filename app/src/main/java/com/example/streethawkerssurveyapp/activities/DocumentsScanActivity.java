@@ -37,6 +37,7 @@ import com.example.streethawkerssurveyapp.database_pack.SurveyDao;
 import com.example.streethawkerssurveyapp.database_pack.SurveyDatabase;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingDocumentsScanActivity;
 import com.example.streethawkerssurveyapp.activities.DocumentsScanActivity;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.response_pack.OtherDocDetails;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services.AudioRecordService;
@@ -219,7 +220,13 @@ public class DocumentsScanActivity extends MainActivity {
 
                                 ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
 
-                            } else {
+                            }else if (dEditOtherDocument.getText().toString().trim().isEmpty()){
+                                dEditOtherDocument.setError("enter document name first");
+                                dEditOtherDocument.requestFocus();
+                            }else if (Is_Uploaded == false) {
+                                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "", "Select doc Image first");
+
+                            }else {
                                 UploadOtherDocument();
 
                             }
@@ -1047,7 +1054,7 @@ public class DocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1141,7 +1148,7 @@ public class DocumentsScanActivity extends MainActivity {
                         LinearOne.setVisibility(View.GONE);
                         LinearFour.setVisibility(View.GONE);
                         LinearThree.setVisibility(View.VISIBLE);
-                        stopService(new Intent(DocumentsScanActivity.this, AudioRecordService.class));
+//                        stopService(new Intent(DocumentsScanActivity.this, AudioRecordService.class));
 
                     } else {
 
@@ -1167,7 +1174,7 @@ public class DocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1284,7 +1291,7 @@ public class DocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1400,7 +1407,7 @@ public class DocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1519,7 +1526,7 @@ public class DocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayToastMessage(DocumentsScanActivity.this,  getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
                 Upload_Documents();
 
             }
@@ -1983,7 +1990,7 @@ public class DocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(DocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

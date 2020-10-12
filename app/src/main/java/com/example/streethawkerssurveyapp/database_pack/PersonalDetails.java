@@ -66,6 +66,8 @@ public class PersonalDetails {
 
     private String criminal_details_json;
 
+    private String CurrentDateTime;
+
     private String biometric_image;
 
     public PersonalDetails(@NonNull String survey_id,
@@ -93,6 +95,7 @@ public class PersonalDetails {
                            String aadhar_details_json,
                            String is_criminal_case,
                            String criminal_details_json,
+                           String CurrentDateTime,
                            String biometric_image) {
 
         this.survey_id = survey_id;
@@ -120,6 +123,7 @@ public class PersonalDetails {
         this.aadhar_details_json = aadhar_details_json;
         this.is_criminal_case = is_criminal_case;
         this.criminal_details_json = criminal_details_json;
+        this.CurrentDateTime = CurrentDateTime;
         this.biometric_image = biometric_image;
 
 
@@ -141,6 +145,13 @@ public class PersonalDetails {
         this.aadhar_details = aadhar_details;
     }
 
+    public String getCurrentDateTime() {
+        return CurrentDateTime;
+    }
+
+    public void setCurrentDateTime(String currentDateTime) {
+        CurrentDateTime = currentDateTime;
+    }
 
     public String getPhoto_of_vendor() {
         return photo_of_vendor;

@@ -54,11 +54,10 @@ public class ApplicationConstant {
     public static final String ISLANGSELECTED = "false";
     public static boolean ISLOCALDB = false;
     public static String URI_NO_ = "uri_no";
-    public static String SurveyId ="";
+    public static String SurveyId = "";
     public static final long IMAGE_SIZE = 950;
 
     public static int orientation;
-
 
 
     public class USERDETAILS {
@@ -81,7 +80,6 @@ public class ApplicationConstant {
 
         public static final String API_KEY = "";
     }
-
 
 
     public static void displayToastMessage(Context mContext, String message) {
@@ -165,41 +163,294 @@ public class ApplicationConstant {
     public static void displayErrorMessage(Context context, String errorCode) {
         String message = "";
 
-        if (errorCode.trim().equals("8001")){
+        if (errorCode.trim().equals("8001")) {
             message = "Authorization Header Empty";
-        } else if (errorCode.trim().equals("8002")){
+        } else if (errorCode.trim().equals("8002")) {
             message = "Authorization Token Invalid";
-        }else if (errorCode.trim().equals("8003")){
+        } else if (errorCode.trim().equals("8003")) {
             message = "Invalid Credentials";
-        }else if (errorCode.trim().equals("8004")){
+        } else if (errorCode.trim().equals("8004")) {
             message = "Undefined Data";
-        }else if (errorCode.trim().equals("8005")){
+        } else if (errorCode.trim().equals("8005")) {
             message = "User not authorized for Login";
-        }else if (errorCode.trim().equals("8006")){
+        } else if (errorCode.trim().equals("8006")) {
             message = "Invalid Data family Members";
-        }else if (errorCode.trim().equals("8007")){
+        } else if (errorCode.trim().equals("8007")) {
             message = "Database Save Error";
-        }
-        else if (errorCode.trim().equals("8008")){
+        } else if (errorCode.trim().equals("8008")) {
             message = "Phone Number Required For Sending SMS";
-        } else if (errorCode.trim().equals("8009")){
+        } else if (errorCode.trim().equals("8009")) {
             message = "Criminal case Data Invalid";
-        }else if (errorCode.trim().equals("8010")){
+        } else if (errorCode.trim().equals("8010")) {
             message = "Land Assets Data Invalid";
-        }else if (errorCode.trim().equals("8011")){
+        } else if (errorCode.trim().equals("8011")) {
             message = "Survey with this barcode already present";
-        }else if (errorCode.trim().equals("8012")){
+        } else if (errorCode.trim().equals("8012")) {
             message = "Corporation required/ Ward required/Zone required";
-        }else if (errorCode.trim().equals("8013")){
+        } else if (errorCode.trim().equals("8013")) {
             message = "Type of Identity Required";
-        }else if (errorCode.trim().equals("8014")){
+        } else if (errorCode.trim().equals("8014")) {
             message = "Type of Vending History Proof Required";
-        }
-        else if (errorCode.trim().equals("8015")){
+        } else if (errorCode.trim().equals("8015")) {
             message = "Invalid barcode scanned";
+        } else if (errorCode.trim().equals("8016")) {
+            message = "Survey Type is required";
+        } else if (errorCode.trim().equals("8017")) {
+            message = "date or search_key or type is required";
+        } else if (errorCode.trim().equals("8018")) {
+            message = "No Surveyors Allotted";
+        }else if (errorCode.trim().equals("8019")) {
+            message = "Survey with this Aadhaar Number already present";
+        }else if (errorCode.trim().equals("8020")) {
+            message = "Area Not Alloted";
+        }else if (errorCode.trim().equals("8021")) {
+            message = "Ward Not Alloted";
+        }else if (errorCode.trim().equals("8022")) {
+            message = "Zone Not Alloted";
+        }else if (errorCode.trim().equals("8023")) {
+            message = "User Account Disabled";
+        }else if (errorCode.trim().equals("8024")) {
+            message = "Surveyor ID Required";
+        }else if (errorCode.trim().equals("8999")) {
+            message = "Server Error";
         }
-   else if (errorCode.trim().equals("8016")){
-            message = "Aadhaar Save Error";
+
+        if (context != null) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+            builder1.setMessage(message);
+            builder1.setCancelable(true);
+            builder1.setTitle("");
+
+            builder1.setPositiveButton(
+                    "Okay",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.setCanceledOnTouchOutside(false);
+            alert11.show();
+        }
+    }
+
+    public static void displayAadharErrorMessage(Context context, String errorCode) {
+        String message = "";
+
+        if (errorCode.trim().equals("100")) {
+            message = "Pi (basic) attributes of demographic data did not match";
+        } else if (errorCode.trim().equals("200")) {
+            message = "Pa (address) attributes of demographic data did not match";
+        } else if (errorCode.trim().equals("300")) {
+            message = "Biometric data did not match.";
+        } else if (errorCode.trim().equals("310")) {
+            message = "Duplicate fingers used";
+        } else if (errorCode.trim().equals("311")) {
+            message = "Duplicate Irises used";
+        } else if (errorCode.trim().equals("312")) {
+            message = "FMR and FIR cannot be used in same transaction";
+        } else if (errorCode.trim().equals("313")) {
+            message = "Single FIR record contains more than one finger";
+        } else if (errorCode.trim().equals("314")) {
+            message = "Number of FMR/FIR should not exceed 10";
+        } else if (errorCode.trim().equals("315")) {
+            message = "Number of IIR should not exceed 2";
+        } else if (errorCode.trim().equals("316")) {
+            message = "Number of FID should not exceed 1";
+        } else if (errorCode.trim().equals("330")) {
+            message = "Biometrics locked by Aadhaar holder";
+        } else if (errorCode.trim().equals("400")) {
+            message = "Invalid OTP value";
+        } else if (errorCode.trim().equals("402")) {
+            message = "txn value did not match with “txn” value used in Request OTP API";
+        } else if (errorCode.trim().equals("500")) {
+            message = "Invalid encryption of session key";
+        } else if (errorCode.trim().equals("501")) {
+            message = "Invalid certificate identifier in “ci” attribute of Skey";
+        } else if (errorCode.trim().equals("502")) {
+            message = "Invalid encryption of PID";
+        } else if (errorCode.trim().equals("503")) {
+            message = "Invalid encryption of Hmac";
+        } else if (errorCode.trim().equals("504")) {
+            message = "Session key re-initiation required due to expiry or key out of sync";
+        } else if (errorCode.trim().equals("505")) {
+            message = "Synchronized Key usage not allowed for the AUA";
+        } else if (errorCode.trim().equals("510")) {
+            message = "Invalid Auth XML format";
+        } else if (errorCode.trim().equals("511")) {
+            message = "Invalid PID XML format";
+        } else if (errorCode.trim().equals("512")) {
+            message = "Invalid Aadhaar holder consent in “rc” attribute of Auth";
+        } else if (errorCode.trim().equals("520")) {
+            message = "Invalid tid value";
+        } else if (errorCode.trim().equals("521")) {
+            message = "Invalid dc code under Meta tag";
+        } else if (errorCode.trim().equals("524")) {
+            message = "Invalid “mi” code under Meta tag";
+        } else if (errorCode.trim().equals("527")) {
+            message = "Invalid “mc” code under Meta tag";
+        } else if (errorCode.trim().equals("530")) {
+            message = "Invalid authenticator code.";
+        } else if (errorCode.trim().equals("540")) {
+            message = "Invalid Auth XML version";
+        } else if (errorCode.trim().equals("541")) {
+            message = "Invalid PID XML version";
+        } else if (errorCode.trim().equals("542")) {
+            message = "AUA not authorized for ASA. This error will be returned if AUA and\n" +
+                    "ASA do not have linking in the portal";
+        } else if (errorCode.trim().equals("543")) {
+            message = "– Sub-AUA not associated with “AUA”. This error will be returned if\n" +
+                    "Sub-AUA specified in “sa” attribute is not added as “Sub-AUA” in portal.";
+        } else if (errorCode.trim().equals("550")) {
+            message = "Invalid “Uses” element attributes.";
+        } else if (errorCode.trim().equals("551")) {
+            message = "Invalid “tid” value";
+        } else if (errorCode.trim().equals("553")) {
+            message = "Registered devices currently not supported. This feature is being\n" +
+                    "implemented in a phased manner";
+        } else if (errorCode.trim().equals("554")) {
+            message = "Public devices are not allowed to be used";
+        } else if (errorCode.trim().equals("555")) {
+            message = "rdsId is invalid and not part of certification registry";
+        } else if (errorCode.trim().equals("556")) {
+            message = "rdsVer is invalid and not part of certification registry";
+        } else if (errorCode.trim().equals("557")) {
+            message = "dpId is invalid and not part of certification registry";
+        } else if (errorCode.trim().equals("558")) {
+            message = "Invalid dih";
+        } else if (errorCode.trim().equals("559")) {
+            message = "Device Certificat has expired";
+        } else if (errorCode.trim().equals("560")) {
+            message = "DP Master Certificate has expired";
+        } else if (errorCode.trim().equals("561")) {
+            message = "Request expired (“Pid->ts” value is older than N hours where N is\n" +
+                    "a configured threshold in authentication server).";
+        } else if (errorCode.trim().equals("562")) {
+            message = "Timestamp value is future time (value specified “Pid->ts” is ahead\n" +
+                    "of authentication server time beyond acceptable threshold)";
+        } else if (errorCode.trim().equals("563")) {
+            message = "Duplicate request (this error occurs when exactly same\n" +
+                    "authentication request was re-sent by AUA).";
+        } else if (errorCode.trim().equals("564")) {
+            message = "HMAC Validation failed";
+        } else if (errorCode.trim().equals("565")) {
+            message = "AUA license has expired";
+        } else if (errorCode.trim().equals("566")) {
+            message = "Invalid non-decryptable license key";
+        } else if (errorCode.trim().equals("567")) {
+            message = "– Invalid input(this error occurs when unsupported characters were\n" +
+                    "found in Indian language values, “lname” or “lav”).";
+        } else if (errorCode.trim().equals("568")) {
+            message = "Unsupported Language.";
+        } else if (errorCode.trim().equals("569")) {
+            message = "Digital signature verification failed (means that authentication\n" +
+                    "request XML was modified after it was signed).";
+        } else if (errorCode.trim().equals("570")) {
+            message = "Invalid key info in digital signature (this means that certificate used\n" +
+                    "for signing the authentication request is not valid – it is either expired, or\n" +
+                    "does not belong to the AUA or is not created by a well-known Certification\n" +
+                    "Authority)";
+        } else if (errorCode.trim().equals("571")) {
+            message = "PIN requires reset";
+        } else if (errorCode.trim().equals("572")) {
+            message = "Invalid biometric position";
+        } else if (errorCode.trim().equals("573")) {
+            message = "Pi usage not allowed as per license.";
+        } else if (errorCode.trim().equals("574")) {
+            message = "Pa usage not allowed as per license.";
+        } else if (errorCode.trim().equals("575")) {
+            message = "Pfa usage not allowed as per license";
+        } else if (errorCode.trim().equals("576")) {
+            message = "FMR usage not allowed as per license";
+        } else if (errorCode.trim().equals("577")) {
+            message = "FIR usage not allowed as per license.";
+        } else if (errorCode.trim().equals("578")) {
+            message = "IIR usage not allowed as per license";
+        } else if (errorCode.trim().equals("579")) {
+            message = "OTP usage not allowed as per license";
+        } else if (errorCode.trim().equals("580")) {
+            message = "PIN usage not allowed as per license";
+        } else if (errorCode.trim().equals("581")) {
+            message = "Fuzzy matching usage not allowed as per license";
+        } else if (errorCode.trim().equals("582")) {
+            message = "– Local language usage not allowed as per license";
+        } else if (errorCode.trim().equals("586")) {
+            message = "FID usage not allowed as per license. This feature is being\n" +
+                    "implemented in a phased manner";
+        } else if (errorCode.trim().equals("587")) {
+            message = "Name space not allowed.";
+        } else if (errorCode.trim().equals("588")) {
+            message = "Registered device not allowed as per license.\n";
+        } else if (errorCode.trim().equals("590")) {
+            message = "Public device not allowed as per license";
+        } else if (errorCode.trim().equals("710")) {
+            message = "Missing “Pi” data as specified in “Uses";
+        } else if (errorCode.trim().equals("720")) {
+            message = "Missing “Pa” data as specified in Uses";
+        } else if (errorCode.trim().equals("721")) {
+            message = "Missing “Pfa” data as specified in “Uses”.";
+        } else if (errorCode.trim().equals("730")) {
+            message = "– Missing PIN data as specified in Uses";
+        } else if (errorCode.trim().equals("740")) {
+            message = "Missing OTP data as specified in Uses";
+        } else if (errorCode.trim().equals("800")) {
+            message = "Invalid biometric data.";
+        } else if (errorCode.trim().equals("810")) {
+            message = "Missing biometric data as specified in Uses";
+        } else if (errorCode.trim().equals("811")) {
+            message = "Missing biometric data in CIDR for the given Aadhaar number";
+        } else if (errorCode.trim().equals("812")) {
+            message = "Aadhaar holder has not done “Best Finger Detection”. Application\n" +
+                    "should initiate BFD to help Aadhaar holder identify their best fingers";
+        } else if (errorCode.trim().equals("820")) {
+            message = "Missing or empty value for “bt” attribute in “Uses” element";
+        } else if (errorCode.trim().equals("821")) {
+            message = "Invalid value in the “bt” attribute of “Uses” element.";
+        } else if (errorCode.trim().equals("822")) {
+            message = "Invalid value in the “bs” attribute of “Bio” element within Pid";
+        } else if (errorCode.trim().equals("901")) {
+            message = "No authentication data found in the request (this corresponds to a\n" +
+                    "scenario wherein none of the auth data – Demo, Pv, or Bios – is present).";
+        } else if (errorCode.trim().equals("902")) {
+            message = "Invalid “dob” value in the “Pi” element (this corresponds to a\n" +
+                    "scenarios wherein “dob” attribute is not of the format “YYYY” or “YYYYMM-DD”, or the age is not in valid range).";
+        } else if (errorCode.trim().equals("911")) {
+            message = "Invalid “mv” value in the “Pfa” element";
+        } else if (errorCode.trim().equals("912")) {
+            message = "Invalid “ms” value";
+        } else if (errorCode.trim().equals("913")) {
+            message = "Both “Pa” and “Pfa” are present in the authentication request (Pa\n" +
+                    "and Pfa are mutually exclusive)";
+        } else if (errorCode.trim().equals("930")) {
+            message = "Technical error that are internal to authentication server";
+        } else if (errorCode.trim().equals("930")) {
+            message = "Technical error that are internal to authentication server";
+        } else if (errorCode.trim().equals("939")) {
+            message = "Technical error that are internal to authentication server";
+        } else if (errorCode.trim().equals("940")) {
+            message = "Unauthorized ASA channel.";
+        } else if (errorCode.trim().equals("941")) {
+            message = "Unspecified ASA channel.";
+        } else if (errorCode.trim().equals("950")) {
+            message = "OTP store related technical error";
+        } else if (errorCode.trim().equals("951")) {
+            message = "Biometric lock related technical error.";
+        } else if (errorCode.trim().equals("980")) {
+            message = "Unsupported option";
+        } else if (errorCode.trim().equals("995")) {
+            message = "Aadhaar suspended by competent authority";
+        } else if (errorCode.trim().equals("996")) {
+            message = "Aadhaar cancelled (Aadhaar is no in authenticable status)";
+        } else if (errorCode.trim().equals("997")) {
+            message = "Aadhaar suspended (Aadhaar is not in authenticatable status).";
+        } else if (errorCode.trim().equals("998")) {
+            message = "Invalid Aadhaar Number.";
+        } else if (errorCode.trim().equals("999")) {
+            message = "Unknown error";
+        } else {
+            message = errorCode.trim();
+
         }
 
         if (context != null) {
@@ -240,12 +491,12 @@ public class ApplicationConstant {
 
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public static String createImageFile(String file_image, String subfolder,Context context) throws IOException {
+    public static String createImageFile(String file_image, String subfolder, Context context) throws IOException {
 
         String filePath = "";
 
@@ -266,17 +517,17 @@ public class ApplicationConstant {
         if (!f1.exists()) {
             filePath = f1.getAbsolutePath();
 
-            return  filePath;
-        }else {
+            return filePath;
+        } else {
 
-            deleteCache(context,f1);
+            deleteCache(context, f1);
 
             File f1_new = new File(sub_folder, file_image);
 
             filePath = f1_new.getAbsolutePath();
 
 
-            return  filePath;
+            return filePath;
 
         }
     }
@@ -287,10 +538,10 @@ public class ApplicationConstant {
 
             dir.delete();
 //      deleteDir(dir);
-        } catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-
 
 
     private static int calculateInSampleSize(BitmapFactory.Options options,
@@ -329,12 +580,11 @@ public class ApplicationConstant {
     }
 
 
-
-    public static Bitmap CompressedBitmap(File file){
+    public static Bitmap CompressedBitmap(File file) {
 
         int newWidth = 700;
         int newHeight = 800;
-        float scaleWidth ;
+        float scaleWidth;
         float scaleHeight;
         Bitmap compressedbitmap = null;
         Bitmap resizedBitmap = null;
@@ -343,15 +593,15 @@ public class ApplicationConstant {
         long length_check;
 
         do {
-            length_check = file.length()/ 1024;
+            length_check = file.length() / 1024;
 
             try {
 
                 ExifInterface ei = new ExifInterface(file.getPath());
                 orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                compressedbitmap = BitmapFactory.decodeFile (file.getPath ());
+                compressedbitmap = BitmapFactory.decodeFile(file.getPath());
 
-               Matrix matrix = new Matrix();
+                Matrix matrix = new Matrix();
                 scaleWidth = ((float) newWidth) / compressedbitmap.getWidth();
                 scaleHeight = ((float) newHeight) / compressedbitmap.getHeight();
                 matrix.postScale(scaleWidth, scaleHeight);
@@ -360,18 +610,17 @@ public class ApplicationConstant {
 
                 actual_bitmap = rotateImageIfRequired(resizedBitmap);
 
-                actual_bitmap.compress (Bitmap.CompressFormat.JPEG, quantity, new FileOutputStream(file));
+                actual_bitmap.compress(Bitmap.CompressFormat.JPEG, quantity, new FileOutputStream(file));
 
 
-            }
-            catch (Throwable t) {
-                Log.e("ERROR", "Error compressing file." + t.toString ());
-                t.printStackTrace ();
+            } catch (Throwable t) {
+                Log.e("ERROR", "Error compressing file." + t.toString());
+                t.printStackTrace();
             }
 
             quantity = quantity - 10;
 
-        }while (length_check > ApplicationConstant.IMAGE_SIZE);
+        } while (length_check > ApplicationConstant.IMAGE_SIZE);
 
         return actual_bitmap;
 

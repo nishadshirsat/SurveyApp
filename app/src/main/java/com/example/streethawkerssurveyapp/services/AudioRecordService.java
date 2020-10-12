@@ -65,7 +65,7 @@ public class AudioRecordService extends Service {
             mRecorder.release();
             mRecorder = null;
 
-        Toast.makeText(AudioRecordService.this, "Recording Stopped", Toast.LENGTH_LONG).show();
+//        Toast.makeText(AudioRecordService.this, "Recording Stopped", Toast.LENGTH_LONG).show();
 
     }
 

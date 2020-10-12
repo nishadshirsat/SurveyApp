@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_bg"
             android:hint="@string/HouseSize"
-            android:inputType="textCapSentences"
+            android:inputType="number"
             android:imeOptions="actionNext"
             android:padding="10dp"
             android:textSize="14sp" />

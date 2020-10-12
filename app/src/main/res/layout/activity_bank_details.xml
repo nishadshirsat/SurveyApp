@@ -163,6 +163,7 @@
                         android:hint="@string/IFSCCode"
                         android:inputType="textCapCharacters"
                         android:padding="10dp"
+                        android:maxLength="11"
                         android:imeOptions="actionNext"
                         android:textAllCaps="true"
                         android:textSize="14sp" />

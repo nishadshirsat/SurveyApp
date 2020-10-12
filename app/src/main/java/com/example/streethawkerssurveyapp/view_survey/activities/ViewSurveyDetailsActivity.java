@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.MainActivity;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.response_pack.aadhar_response.AadharData;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
@@ -44,6 +45,8 @@ import com.example.streethawkerssurveyapp.view_survey.response_pojo.LandFixedAss
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyDetails;
 import com.example.streethawkerssurveyapp.view_survey.response_pojo.SingleSurveyResponse;
 import com.example.streethawkerssurveyapp.view_survey.services.ViewSurveyInterface;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -124,6 +127,7 @@ public class ViewSurveyDetailsActivity extends MainActivity {
     private TextView mTextBranch;
     private TextView mTextIfsc;
     private LinearLayout mCardVendingDetails;
+    private TextView TextAadharVerified;
     private TextView mTextVendingType;
     private TextView mTextNameVending;
     private TextView TextTimeFrom1,TextTimeFrom2;
@@ -460,7 +464,11 @@ public class ViewSurveyDetailsActivity extends MainActivity {
 
     private void setDocumentsData() {
 
-        mTextComments.setText(SingleSurveyData.getComments());
+        if (SingleSurveyData.getComments()!=null){
+            mTextComments.setText(SingleSurveyData.getComments());
+
+        }
+
 
         try {
             if (!SingleSurveyData.getOther_documents().isEmpty()){
@@ -585,10 +593,14 @@ public class ViewSurveyDetailsActivity extends MainActivity {
             public void onClick(View view) {
 
                 if (SingleSurveyData.getRecording() != null){
-                    Intent viewIntent =
-                            new Intent("android.intent.action.VIEW",
-                                    Uri.parse(SingleSurveyData.getRecording().trim()));
-                    startActivity(viewIntent);
+                    try {
+                        Intent viewIntent =
+                                new Intent("android.intent.action.VIEW",
+                                        Uri.parse(SingleSurveyData.getRecording().get(0)));
+                        startActivity(viewIntent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }else {
                     ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this,"","No Recording Found");
@@ -630,7 +642,12 @@ public class ViewSurveyDetailsActivity extends MainActivity {
 
     private void setVendingData() {
 
-        mTextVendingType.setText(SingleSurveyData.getTypeOfVending());
+        try {
+            mTextVendingType.setText(SingleSurveyData.getTypeOfVending());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         mTextNameVending.setText(SingleSurveyData.getNameOfVendingSite());
         TextTimeFrom1.setText(SingleSurveyData.getTimingOfVendingFrom() +" - "+SingleSurveyData.getTimingOfVendingTo());
         TextTimeFrom2.setText(SingleSurveyData.getTimingOfVendingFrom1() +" - "+SingleSurveyData.getTimingOfVendingTo1());
@@ -715,6 +732,14 @@ public class ViewSurveyDetailsActivity extends MainActivity {
     private void setPersonalData() {
 
         mTextUriNo.setText("URI NUMBER : "+SingleSurveyData.getUriNumber());
+
+        if (SingleSurveyData.getAadhaar_verified().trim().equalsIgnoreCase("1")){
+            TextAadharVerified.setVisibility(View.VISIBLE);
+        }else {
+            TextAadharVerified.setVisibility(View.GONE);
+
+        }
+
         mTextBarcodeApplicationNo.setText(SingleSurveyData.getBarCode());
         mTextCorporation.setText(SingleSurveyData.getCorporation());
         mTextZone.setText(SingleSurveyData.getZone());
@@ -732,7 +757,21 @@ public class ViewSurveyDetailsActivity extends MainActivity {
                 .into(mImgVendorSite);
 
         mTextVendorName.setText(SingleSurveyData.getNameOfTheStreetVendor());
-        mTextAadharNo.setText(SingleSurveyData.getAadhaarNumber());
+
+        if (SingleSurveyData.getAadhaarNumber()!=null){
+
+            if (!SingleSurveyData.getAadhaarNumber().trim().isEmpty()){
+                mTextAadharNo.setText(SingleSurveyData.getAadhaarNumber());
+
+            }else {
+                mTextAadharNo.setText("No Aadhar Card");
+
+            }
+        }else {
+            mTextAadharNo.setText("No Aadhar Card");
+
+        }
+
         mTextGender.setText(SingleSurveyData.getSex());
         mTextAge.setText(SingleSurveyData.getAge());
         mTextDOB.setText(SingleSurveyData.getDateOfBirth());
@@ -805,6 +844,7 @@ public class ViewSurveyDetailsActivity extends MainActivity {
         mTextBank = (TextView) findViewById(R.id.TextBank);
         mCardVendor = (androidx.cardview.widget.CardView) findViewById(R.id.CardVendor);
         mImgVending = (ImageView) findViewById(R.id.ImgVending);
+        TextAadharVerified = (TextView) findViewById(R.id.TextAadharVerified);
 
         Recycler_CriminalCase = (RecyclerView) findViewById(R.id.Recycler_CriminalCase);
         Recycler_CriminalCase.setLayoutManager(new LinearLayoutManager(ViewSurveyDetailsActivity.this));
@@ -976,7 +1016,7 @@ public class ViewSurveyDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveyDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

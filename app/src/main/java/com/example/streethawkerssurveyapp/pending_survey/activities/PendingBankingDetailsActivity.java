@@ -141,6 +141,16 @@ public class PendingBankingDetailsActivity extends MainActivity {
 //            return false;
 //        }
 
+        if (!mEditIfscCode.getText().toString().trim().isEmpty()) {
+
+            if (mEditIfscCode.getText().toString().trim().length() != 11) {
+                mEditIfscCode.setError("Enter correct ifsc code");
+                mEditIfscCode.requestFocus();
+                return false;
+            }
+
+        }
+
         return true;
     }
 
@@ -262,7 +272,7 @@ public class PendingBankingDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingBankingDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingBankingDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

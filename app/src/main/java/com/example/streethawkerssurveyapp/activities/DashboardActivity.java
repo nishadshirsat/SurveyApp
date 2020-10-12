@@ -41,6 +41,9 @@ import com.example.streethawkerssurveyapp.utils.GetLocation;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class DashboardActivity extends MainActivity {
@@ -91,8 +94,11 @@ public class DashboardActivity extends MainActivity {
     private static SharedPreferences.Editor editor;
     String lang = "";
     Menu globalMenu;
+    private Calendar myCalendar;
+    private int mYear, mMonth, mDay;
 
     RadioButton RadioEnglish, RadioHindi;
+    private TextView TextTimeDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +111,10 @@ public class DashboardActivity extends MainActivity {
 
         bindVieW();
 
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm");
+        String currentDateandTime = sdf.format(new Date());
+        TextTimeDate.setText("Login Time: "+currentDateandTime);
 
         setData();
 
@@ -236,6 +246,7 @@ public class DashboardActivity extends MainActivity {
         sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        TextTimeDate = (TextView) findViewById(R.id.TextTimeDate);
         mProfile_layout = (LinearLayout) findViewById(R.id.profile_layout);
         mRelative1 = (RelativeLayout) findViewById(R.id.relative1);
         mCard_profile = (androidx.cardview.widget.CardView) findViewById(R.id.card_profile);
@@ -296,20 +307,20 @@ public class DashboardActivity extends MainActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         globalMenu = menu;
-
-       MenuItem item = menu.findItem(R.id.language_menu);
-
-      String LangSelected =  PrefUtils.getFromPrefs(DashboardActivity.this,ApplicationConstant.ISLANGSELECTED,"false");
-
-        if (LangSelected.trim().equalsIgnoreCase("false")){
-            if (item != null) {
-                item.setVisible(true);
-            }
-        }else {
-            if (item != null) {
-                item.setVisible(false);
-            }
-        }
+//
+//       MenuItem item = menu.findItem(R.id.language_menu);
+//
+//       String LangSelected =  PrefUtils.getFromPrefs(DashboardActivity.this,ApplicationConstant.ISLANGSELECTED,"false");
+//
+//        if (LangSelected.trim().equalsIgnoreCase("false")){
+//            if (item != null) {
+//                item.setVisible(true);
+//            }
+//        }else {
+//            if (item != null) {
+//                item.setVisible(false);
+//            }
+//        }
 
 
 //        LanguageMenu.setVisible(false);

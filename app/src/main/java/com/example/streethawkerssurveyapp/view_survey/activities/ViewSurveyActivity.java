@@ -365,7 +365,7 @@ public class ViewSurveyActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -457,7 +457,7 @@ public class ViewSurveyActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -552,7 +552,7 @@ public class ViewSurveyActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveyActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.MainActivity;
+import com.example.streethawkerssurveyapp.pending_survey.activities.PendingPersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.pending_survey.activities.PendingSurveyActivity;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
 import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
@@ -404,7 +405,7 @@ public class PendingSupervisorSurveyListActivity extends MainActivity implements
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -496,7 +497,7 @@ public class PendingSupervisorSurveyListActivity extends MainActivity implements
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -592,7 +593,7 @@ public class PendingSupervisorSurveyListActivity extends MainActivity implements
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -682,7 +683,7 @@ public class PendingSupervisorSurveyListActivity extends MainActivity implements
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -780,7 +781,7 @@ public class PendingSupervisorSurveyListActivity extends MainActivity implements
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingSupervisorSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

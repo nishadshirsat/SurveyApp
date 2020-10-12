@@ -163,7 +163,7 @@ public class SurveyorListActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(SurveyorListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(SurveyorListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

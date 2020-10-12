@@ -144,7 +144,7 @@ public class PendingVendingDetailsActivity extends MainActivity {
     private RadioButton mRadioN;
 
     private List<VendingTypeData> listVendingType = new ArrayList<>();
-
+    private boolean ISALLDAYS  = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,13 +224,30 @@ public class PendingVendingDetailsActivity extends MainActivity {
         btn_all_days.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCheckM.setChecked(true);
-                mCheckT.setChecked(true);
-                mCheckW.setChecked(true);
-                mCheckTh.setChecked(true);
-                mCheckF.setChecked(true);
-                mCheckS.setChecked(true);
-                mCheckSu.setChecked(true);
+                if (ISALLDAYS == true){
+
+                    mCheckM.setChecked(false);
+                    mCheckT.setChecked(false);
+                    mCheckW.setChecked(false);
+                    mCheckTh.setChecked(false);
+                    mCheckF.setChecked(false);
+                    mCheckS.setChecked(false);
+                    mCheckSu.setChecked(false);
+
+                    ISALLDAYS = false;
+
+                }else {
+                    mCheckM.setChecked(true);
+                    mCheckT.setChecked(true);
+                    mCheckW.setChecked(true);
+                    mCheckTh.setChecked(true);
+                    mCheckF.setChecked(true);
+                    mCheckS.setChecked(true);
+                    mCheckSu.setChecked(true);
+
+                    ISALLDAYS = true;
+
+                }
 
             }
         });
@@ -950,7 +967,7 @@ public class PendingVendingDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingVendingDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

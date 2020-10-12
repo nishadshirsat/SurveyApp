@@ -11,6 +11,7 @@ import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -96,6 +97,7 @@ public interface ApiInterface {
             @Part("permanent_address") RequestBody permanent_address,
             @Part("aadhar_card_details") RequestBody aadhar_card_details,
             @Part("aadhaar_number") RequestBody aadhaar_number,
+            @Part("aadhaar_verified") RequestBody aadhaar_verified_,
             @Part("criminal_case_pending") RequestBody criminal_case_pending,
             @Part("criminal_case_details") RequestBody criminal_case_details,
 //            @Part("criminal_case_date") RequestBody criminal_case_date,
@@ -103,6 +105,7 @@ public interface ApiInterface {
 //            @Part("criminal_case_name_of_police") RequestBody criminal_case_name_of_police,
             @Part("latitude") RequestBody latitude,
             @Part("longitude") RequestBody longitude,
+            @Part("created_at") RequestBody created_at,
             @Part MultipartBody.Part aadhaar_fingerprint);
 
 
@@ -305,5 +308,16 @@ public interface ApiInterface {
             @Field("survey_status") String survey_status,
             @Field("comments") String comments
     );
+
+    //Aadhar Verify Service
+
+    @Multipart
+    @POST("auaservice/authenticate/")
+    Call<ResponseBody> VerifyAadharTHumb(
+            @Part("uri_number") RequestBody uri_number,
+            @Part("corporation") RequestBody corporation,
+            @Part("zone") RequestBody zone,
+            @Part("ward") RequestBody ward,
+            @Part MultipartBody.Part photo_of_vendor_site);
 
 }

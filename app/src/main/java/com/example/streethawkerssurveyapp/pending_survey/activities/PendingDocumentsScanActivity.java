@@ -31,6 +31,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.streethawkerssurveyapp.BuildConfig;
 import com.example.streethawkerssurveyapp.R;
 import com.example.streethawkerssurveyapp.activities.DashboardActivity;
+import com.example.streethawkerssurveyapp.activities.DocumentsScanActivity;
 import com.example.streethawkerssurveyapp.activities.MainActivity;
 import com.example.streethawkerssurveyapp.activities.PersonalDetailsActivity;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
@@ -39,6 +40,7 @@ import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+import com.example.streethawkerssurveyapp.supervisor.activities.PendingSupervisorSurveyListActivity;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
 import com.example.streethawkerssurveyapp.view_survey.activities.ViewSurveyDetailsActivity;
@@ -196,7 +198,22 @@ public class PendingDocumentsScanActivity extends MainActivity {
                     dBtnUploadDoc.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            UploadOtherDocument();
+
+                            if (!ApplicationConstant.isNetworkAvailable(PendingDocumentsScanActivity.this)) {
+
+                                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                            }else if (dEditOtherDocument.getText().toString().trim().isEmpty()){
+                                dEditOtherDocument.setError("enter document name first");
+                                dEditOtherDocument.requestFocus();
+                            }else if (Is_Uploaded == false) {
+                                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "", "Select doc Image first");
+
+                            }else {
+                                UploadOtherDocument();
+
+                            }
+
                         }
                     });
 
@@ -987,7 +1004,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1077,7 +1094,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
                         LinearFour.setVisibility(View.GONE);
                         LinearThree.setVisibility(View.VISIBLE);
                         BtnNext.setText("Submit");
-                        stopService(new Intent(PendingDocumentsScanActivity.this, AudioRecordService.class));
+//                        stopService(new Intent(PendingDocumentsScanActivity.this, AudioRecordService.class));
 
                     } else {
 
@@ -1103,7 +1120,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1215,7 +1232,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1333,7 +1350,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayToastMessage(PendingDocumentsScanActivity.this, getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
                 Upload_Documents();
 
             }
@@ -1697,9 +1714,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
         } catch (Exception e) {
             e.printStackTrace();
 
-
         }
-
 
         EditComments.setText(SingleSurveyData.getComments());
 
@@ -1859,7 +1874,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1967,7 +1982,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingDocumentsScanActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

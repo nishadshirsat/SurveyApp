@@ -166,24 +166,25 @@ public class VendorsFamDetailsActivity extends MainActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if (lEditPlot.getText().toString().trim().isEmpty()){
-                            lEditPlot.setError("enter plot");
-                            lEditPlot.requestFocus();
-                        }else  if (lEditHouseSize.getText().toString().trim().isEmpty()){
-                            lEditHouseSize.setError("enter house size");
-                            lEditHouseSize.requestFocus();
-                        }else if (lEditArea.getText().toString().trim().isEmpty()){
-                            lEditArea.setError("enter area");
-                            lEditArea.requestFocus();
-                        }else if (lEditKuccha.getText().toString().trim().isEmpty()){
-                            lEditKuccha.setError("enter kuccha");
-                            lEditKuccha.requestFocus();
-                        }
+//                        if (lEditPlot.getText().toString().trim().isEmpty()){
+//                            lEditPlot.setError("enter plot");
+//                            lEditPlot.requestFocus();
+//                        }else  if (lEditHouseSize.getText().toString().trim().isEmpty()){
+//                            lEditHouseSize.setError("enter house size");
+//                            lEditHouseSize.requestFocus();
+//                        }else if (lEditArea.getText().toString().trim().isEmpty()){
+//                            lEditArea.setError("enter area");
+//                            lEditArea.requestFocus();
+//                        }else if (lEditKuccha.getText().toString().trim().isEmpty()){
+//                            lEditKuccha.setError("enter kuccha");
+//                            lEditKuccha.requestFocus();
+//                        }
+
 //                        else if (lEditRent.getText().toString().trim().isEmpty()){
 //                            lEditRent.setError("enter rent");
 //                            lEditRent.requestFocus();
 //                        }
-                        else {
+//                        else {
 
                             LandAssets landAssets = new LandAssets(lEditPlot.getText().toString().trim(),
                                     lEditHouseSize.getText().toString().trim(),
@@ -199,7 +200,7 @@ public class VendorsFamDetailsActivity extends MainActivity {
                             view_LandAssets.setAdapter(landAssetsAdpater);
                             alertDialog.dismiss();
 
-                        }
+//                        }
 
                     }
                 });
@@ -621,7 +622,7 @@ public class VendorsFamDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(VendorsFamDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

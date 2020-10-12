@@ -233,7 +233,7 @@ public class StartSurveyModeActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(StartSurveyModeActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(StartSurveyModeActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

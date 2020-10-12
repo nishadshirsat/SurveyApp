@@ -413,7 +413,7 @@ public class ViewSurveySupervisorActivity extends MainActivity implements ViewSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -505,7 +505,7 @@ public class ViewSurveySupervisorActivity extends MainActivity implements ViewSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -601,7 +601,7 @@ public class ViewSurveySupervisorActivity extends MainActivity implements ViewSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -688,7 +688,7 @@ public class ViewSurveySupervisorActivity extends MainActivity implements ViewSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -803,7 +803,7 @@ public class ViewSurveySupervisorActivity extends MainActivity implements ViewSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -864,7 +864,7 @@ public class ViewSurveySupervisorActivity extends MainActivity implements ViewSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(ViewSurveySupervisorActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

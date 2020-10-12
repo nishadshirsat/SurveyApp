@@ -44,6 +44,7 @@ import com.example.streethawkerssurveyapp.services_pack.ApiInterface;
 import com.example.streethawkerssurveyapp.services_pack.ApiService;
 import com.example.streethawkerssurveyapp.services_pack.ApplicationConstant;
 import com.example.streethawkerssurveyapp.services_pack.CustomProgressDialog;
+import com.example.streethawkerssurveyapp.supervisor.activities.PendingSupervisorSurveyListActivity;
 import com.example.streethawkerssurveyapp.utils.PrefUtils;
 import com.example.streethawkerssurveyapp.utils.SurveyAppFileProvider;
 import com.google.gson.Gson;
@@ -409,7 +410,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -518,7 +519,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -668,7 +669,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -731,6 +732,10 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
         RequestBody IS_CRIMINALCASE_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getIs_criminal_case());
         RequestBody CRIMINALCASE_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getCriminal_details_json());
         RequestBody ANNUAL_INCOME_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getAnnual_income());
+        RequestBody CurrentDateTime_ = RequestBody.create(MediaType.parse("multipart/form-data"), surveyData.getCurrentDateTime());
+
+        RequestBody AADHAR_VEIFY_ = RequestBody.create(MediaType.parse("multipart/form-data"), "0");
+
 
         RequestBody LATITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + surveyData.getLatitude());
         RequestBody LONGITUDE = RequestBody.create(MediaType.parse("multipart/form-data"), "" + surveyData.getLongitude());
@@ -762,10 +767,12 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
                 PERMENENT_ADDRESS_,
                 AADHAR_DETAILS_,
                 AADHAR_NO_,
+                AADHAR_VEIFY_,
                 IS_CRIMINALCASE_,
                 CRIMINALCASE_NO_,
                 LATITUDE,
                 LONGITUDE,
+                CurrentDateTime_,
                 body_biometric
 //                CRIMINALCASE_STATUS_
         );
@@ -869,7 +876,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1006,7 +1013,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1139,7 +1146,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1269,7 +1276,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1376,7 +1383,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayToastMessage(LocalSurveyListActivity.this,  getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
                 Upload_Documents();
 
             }
@@ -1492,7 +1499,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1612,7 +1619,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1758,7 +1765,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1811,7 +1818,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1919,7 +1926,7 @@ public class LocalSurveyListActivity extends MainActivity implements ViewLocalSu
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(LocalSurveyListActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });

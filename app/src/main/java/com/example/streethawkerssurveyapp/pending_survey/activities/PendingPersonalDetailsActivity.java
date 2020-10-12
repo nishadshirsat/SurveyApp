@@ -3,12 +3,15 @@ package com.example.streethawkerssurveyapp.pending_survey.activities;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
@@ -74,9 +77,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -256,6 +264,22 @@ public class PendingPersonalDetailsActivity extends MainActivity {
     private String BiometricImagePath="";
 
     boolean IS_CAPTURE_LOCATION = false;
+    String PIDOPTS = "";
+
+    private String Aadhar_Number="";
+    private String MC="";
+    private String SKEY="";
+    private String CI="";
+    private String TYPE="";
+    private String DATATYPE="";
+    private String HMAC="";
+    private String RequestXML="";
+    private String DC="";
+    private String MI="";
+
+
+    private String AADHAR_VEIFY="0";
+    private String CurrentDateTime ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,6 +287,9 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         setContentView(R.layout.activity_main);
         bindView();
         initData();
+
+        PIDOPTS = "<PidOptions ver=\"1.0\"> <Opts fCount=\"1\" fType=\"0\" iType=\"0\" iCount=\"0\" pType=\"0\" pCount=\"0\" format=\"0\" pidVer=\"2.0\" timeout=\"10000\" posh=\"UNKNOWN\" /> </PidOptions>";
+
 
         ApplicationConstant.SurveyId = PrefUtils.getFromPrefs(PendingPersonalDetailsActivity.this, ApplicationConstant.SURVEY_ID, "");
 
@@ -365,7 +392,12 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         public void onClick(View view) {
                             alertDialog.dismiss();
 
-                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Credentials not found.");
+//                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Credentials not found.");
+
+                            captureFingureprintNow();
+
+
+
                         }
                     });
 
@@ -989,21 +1021,23 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 //            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Capture Vending Place photo");
 //
 //            return false;
-//        } else if (mEditFName.getText().toString().trim().isEmpty()) {
-//            mEditFName.setError("Enter First Name");
-//            mEditFName.requestFocus();
-//            return false;
-//        }
+//        } else
+        if (mEditFName.getText().toString().trim().isEmpty()) {
+            mEditFName.setError("Enter First Name");
+            mEditFName.requestFocus();
+            return false;
+        }
 //        else if (mEditMName.getText().toString().trim().isEmpty()) {
 //            mEditMName.setError("Enter Middle Name");
 //            mEditMName.requestFocus();
 //            return false;
 //        }
-//        else if (mEditLName.getText().toString().trim().isEmpty()) {
-//            mEditLName.setError("Enter Last Name");
-//            mEditLName.requestFocus();
-//            return false;
-//        } else if (SEX.trim().isEmpty()) {
+        else if (mEditLName.getText().toString().trim().isEmpty()) {
+            mEditLName.setError("Enter Last Name");
+            mEditLName.requestFocus();
+            return false;
+        }else
+//        else if (SEX.trim().isEmpty()) {
 //            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Gender");
 //            return false;
 //        } else if (mEditAge.getText().toString().trim().isEmpty()) {
@@ -1188,162 +1222,88 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 }else
 
                 if (data!=null){
-                    String xmlData = data.getExtras().getString("SCANDATA");
 
-                    XmlToJson xmlToJson = new XmlToJson.Builder(xmlData).build();
+                    try {
+                        String xmlData = data.getExtras().getString("SCANDATA");
 
-                    JSONObject jsonObject = xmlToJson.toJson();
+                        XmlToJson xmlToJson = new XmlToJson.Builder(xmlData).build();
 
-                    String Name = "";
+                        JSONObject jsonObject = xmlToJson.toJson();
 
-                    Address address = new Address();
-                    Iterator<String> keys=jsonObject.keys();
+                        String Name = "";
 
-                    while (keys.hasNext()) {
-                        String keyValue = (String) keys.next();
+                        Address address = new Address();
+                        Iterator<String> keys=jsonObject.keys();
 
-                        try {
-//                        JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
+                        while (keys.hasNext()) {
+                            String keyValue = (String) keys.next();
 
-                            JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
+                            try {
+    //                        JSONObject jsonAadhar = jsonObject.getJSONObject("PrintLetterBarcodeData");
 
-                            address.setLoc(jsonAadhar.getString("loc"));
-//                        address.setLandmark(jsonAadhar.getString("lm"));
-                            address.setLandmark(null);
-                            address.setSubdist("NA");
-                            address.setVtc(jsonAadhar.getString("vtc"));
-                            address.setDist(jsonAadhar.getString("dist"));
-                            address.setHouse("NA");
-                            address.setPo(jsonAadhar.getString("pc"));
-                            address.setState(jsonAadhar.getString("state"));
-                            address.setStreet("NA");
-                            address.setCountry("India");
+                                JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
 
-                            aadharData = new AadharData();
-                            aadharData.setAddress(address);
-                            aadharData.setGender(jsonAadhar.getString("gender"));
+                                address.setLoc(jsonAadhar.getString("loc"));
+    //                        address.setLandmark(jsonAadhar.getString("lm"));
+                                address.setLandmark(null);
+                                address.setSubdist("NA");
+                                address.setVtc(jsonAadhar.getString("vtc"));
+                                address.setDist(jsonAadhar.getString("dist"));
+                                address.setHouse("NA");
+                                address.setPo(jsonAadhar.getString("pc"));
+                                address.setState(jsonAadhar.getString("state"));
+                                address.setStreet("NA");
+                                address.setCountry("India");
+
+                                aadharData = new AadharData();
+                                aadharData.setAddress(address);
+                                aadharData.setGender(jsonAadhar.getString("gender"));
 
 
-                            if (jsonAadhar.has("dob")){
+                                if (jsonAadhar.has("dob")){
 
-                                if (jsonAadhar.getString("dob").trim().contains("\\/")){
-                                    String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
-                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                    if (jsonAadhar.getString("dob").trim().contains("\\/")){
+                                        String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+                                        aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
 
-                                }else if (jsonAadhar.getString("dob").trim().contains("-")){
-                                    String[] datearray = jsonAadhar.getString("dob").trim().split("-");
-                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                    }else if (jsonAadhar.getString("dob").trim().contains("-")){
+                                        String[] datearray = jsonAadhar.getString("dob").trim().split("-");
+                                        aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                    }else {
+                                        String dob = jsonAadhar.getString("yob");
+                                        aadharData.setDob(dob+"-01-01");
+                                    }
+
                                 }else {
                                     String dob = jsonAadhar.getString("yob");
                                     aadharData.setDob(dob+"-01-01");
                                 }
 
-                            }else {
-                                String dob = jsonAadhar.getString("yob");
-                                aadharData.setDob(dob+"-01-01");
-                            }
+
+    //                            try {
+    //                                String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
+    //                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+    //                            } catch (JSONException e) {
+    //                                e.printStackTrace();
+    //
+    //                                String dob = jsonAadhar.getString("yob");
+    //                                aadharData.setDob(dob+"-01-01");
+    //
+    //                            }
 
 
-//                            try {
-//                                String[] datearray = jsonAadhar.getString("dob").trim().split("\\/");
-//                                aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//
-//                                String dob = jsonAadhar.getString("yob");
-//                                aadharData.setDob(dob+"-01-01");
-//
-//                            }
-
-
-//                        aadharData.setDob(jsonAadhar.getString("dob"));
-                            aadharData.setFullName(jsonAadhar.getString("name"));
-                            aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
-                            aadharData.setRawXml(xmlData);
-                            aadharData.setZip(jsonAadhar.getString("pc"));
-                            aadharData.setZipData("zipdata");
-                            aadharData.setCareOf("careoff");
-                            aadharData.setFaceStatus(false);
-                            aadharData.setFaceScore(-1);
-                            aadharData.setHasImage(false);
-                            aadharData.setClientId("clientid123");
-                            aadharData.setShareCode("0");
-                            aadharData.setProfileImage("sgdvsgsd");
-
-                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
-
-                            GsonBuilder gsonBuilder = new GsonBuilder();
-                            Gson gson = gsonBuilder.create();
-                            String json_Aadhar = new Gson().toJson(aadharData);
-
-                            AADHAR_DETAILS = json_Aadhar;
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-
-//                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Invalid QR Data");
-
-                            try {
-                                JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
-
-                                address.setLoc(jsonAadhar.getString("a"));
-//                        address.setLandmark(jsonAadhar.getString("lm"));
-                                address.setLandmark(null);
-                                address.setSubdist("");
-                                address.setVtc("");
-                                address.setDist("");
-                                address.setHouse("");
-                                address.setPo("");
-                                address.setState("");
-                                address.setStreet("");
-                                address.setCountry("India");
-
-                                aadharData = new AadharData();
-                                aadharData.setAddress(address);
-                                aadharData.setGender(jsonAadhar.getString("g"));
-
-                                if (jsonAadhar.has("d")){
-
-                                    if (jsonAadhar.getString("d").trim().contains("\\/")){
-                                        String[] datearray = jsonAadhar.getString("d").trim().split("\\/");
-                                        aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-
-                                    }else if (jsonAadhar.getString("d").trim().contains("-")){
-                                        String[] datearray = jsonAadhar.getString("d").trim().split("-");
-                                        aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-                                    }else {
-                                        aadharData.setDob("6748-01-01");
-
-                                    }
-
-                                }else {
-                                    aadharData.setDob("6748-01-01");
-                                }
-
-
-
-//                                try {
-//                                    String[] datearray = jsonAadhar.getString("d").trim().split("-");
-//                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
-//                                } catch (JSONException exe) {
-//                                    exe.printStackTrace();
-//                                    aadharData.setDob("0000-00-00");
-//
-//                                }
-
-
-//                        aadharData.setDob(jsonAadhar.getString("dob"));
-                                aadharData.setFullName(jsonAadhar.getString("n"));
-                                aadharData.setAadhaarNumber(jsonAadhar.getString("u"));
+    //                        aadharData.setDob(jsonAadhar.getString("dob"));
+                                aadharData.setFullName(jsonAadhar.getString("name"));
+                                aadharData.setAadhaarNumber(jsonAadhar.getString("uid"));
                                 aadharData.setRawXml(xmlData);
-                                aadharData.setZip("");
+                                aadharData.setZip(jsonAadhar.getString("pc"));
                                 aadharData.setZipData("zipdata");
                                 aadharData.setCareOf("careoff");
                                 aadharData.setFaceStatus(false);
                                 aadharData.setFaceScore(-1);
                                 aadharData.setHasImage(false);
                                 aadharData.setClientId("clientid123");
-                                aadharData.setShareCode("0");
+                                aadharData.setShareCode("SMS");
                                 aadharData.setProfileImage("sgdvsgsd");
 
                                 ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
@@ -1353,14 +1313,96 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                                 String json_Aadhar = new Gson().toJson(aadharData);
 
                                 AADHAR_DETAILS = json_Aadhar;
-                            }catch (Exception e2){
-                                  ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Invalid QR Data");
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+
+    //                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Invalid QR Data");
+
+                                try {
+                                    JSONObject jsonAadhar = jsonObject.getJSONObject(keyValue);
+
+                                    address.setLoc(jsonAadhar.getString("a"));
+    //                        address.setLandmark(jsonAadhar.getString("lm"));
+                                    address.setLandmark(null);
+                                    address.setSubdist("");
+                                    address.setVtc("");
+                                    address.setDist("");
+                                    address.setHouse("");
+                                    address.setPo("");
+                                    address.setState("");
+                                    address.setStreet("");
+                                    address.setCountry("India");
+
+                                    aadharData = new AadharData();
+                                    aadharData.setAddress(address);
+                                    aadharData.setGender(jsonAadhar.getString("g"));
+
+                                    if (jsonAadhar.has("d")){
+
+                                        if (jsonAadhar.getString("d").trim().contains("\\/")){
+                                            String[] datearray = jsonAadhar.getString("d").trim().split("\\/");
+                                            aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+
+                                        }else if (jsonAadhar.getString("d").trim().contains("-")){
+                                            String[] datearray = jsonAadhar.getString("d").trim().split("-");
+                                            aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+                                        }else {
+                                            aadharData.setDob("6748-01-01");
+
+                                        }
+
+                                    }else {
+                                        aadharData.setDob("6748-01-01");
+                                    }
+
+
+
+    //                                try {
+    //                                    String[] datearray = jsonAadhar.getString("d").trim().split("-");
+    //                                    aadharData.setDob(datearray[2] + "-" + datearray[1] + "-" + datearray[0]);
+    //                                } catch (JSONException exe) {
+    //                                    exe.printStackTrace();
+    //                                    aadharData.setDob("0000-00-00");
+    //
+    //                                }
+
+
+    //                        aadharData.setDob(jsonAadhar.getString("dob"));
+                                    aadharData.setFullName(jsonAadhar.getString("n"));
+                                    aadharData.setAadhaarNumber(jsonAadhar.getString("u"));
+                                    aadharData.setRawXml(xmlData);
+                                    aadharData.setZip("");
+                                    aadharData.setZipData("zipdata");
+                                    aadharData.setCareOf("careoff");
+                                    aadharData.setFaceStatus(false);
+                                    aadharData.setFaceScore(-1);
+                                    aadharData.setHasImage(false);
+                                    aadharData.setClientId("clientid123");
+                                    aadharData.setShareCode("SMS");
+                                    aadharData.setProfileImage("sgdvsgsd");
+
+                                    ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"Aadhar Details Scanned Successfully",aadharData.getAadhaarNumber()+"\n"+aadharData.getFullName());
+
+                                    GsonBuilder gsonBuilder = new GsonBuilder();
+                                    Gson gson = gsonBuilder.create();
+                                    String json_Aadhar = new Gson().toJson(aadharData);
+
+                                    AADHAR_DETAILS = json_Aadhar;
+                                }catch (Exception e2){
+                                      ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Invalid QR Data");
+
+                                }
+
+
 
                             }
 
-
-
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                        ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Not able to scan the data. Invalid QR");
 
                     }
 
@@ -1391,6 +1433,82 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                 UploadVendingSitePhoto();
 
+            }else if (requestCode == 15) {
+
+                if (data != null) {
+                    try {
+                        String result = data.getStringExtra("PID_DATA").trim();
+
+                        XmlToJson xmlToJson = new XmlToJson.Builder(result).build();
+
+                        JSONObject jsonDataAadhar = xmlToJson.toJson();
+
+                        if (jsonDataAadhar.has("PidData")){
+
+    //                        AadharVerifyResponse verifyResponse = new AadharVerifyResponse();
+                            try {
+                                JSONObject pidData = jsonDataAadhar.getJSONObject("PidData");
+                                HMAC = pidData.getString("Hmac");
+
+                                JSONObject data_ = pidData.getJSONObject("Data");
+                                DATATYPE = data_.getString("content");
+                                TYPE = data_.getString("type");
+
+                                JSONObject skeydata = pidData.getJSONObject("Skey");
+                                CI = skeydata.getString("ci");
+                                SKEY = skeydata.getString("content");
+
+                                JSONObject deviceInfo = pidData.getJSONObject("DeviceInfo");
+                                DC = deviceInfo.getString("dc");
+                                MI = deviceInfo.getString("mi");
+                                MC = deviceInfo.getString("mc");
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+
+                        RequestXML = "<Auth  uid=\""+AADHAR_NO+"\" " +
+                                "rc=\"Y\" tid=\"registered\" ac=\"STGDEGS001\" sa=\"DL001SRDH\" accessid=\"347\" " +
+                                "ver=\"2.5\"" +
+                                " txn=\""+generateTXN(AADHAR_NO)+"\" " +
+                                "lk=\"SRDH-nia0o5PwZX38nZp\" xmlns=\"http://www.uidai.gov.in/authentication/uid-auth-request/2.0\"> " +
+                                "<Uses pi=\"n\" pa=\"n\" pfa=\"n\" bio=\"y\" bt=\"FMR\" pin=\"n\" otp=\"n\" /> " +
+                                "<Meta rdsId=\"SCPL.AND.001\" rdsVer=\"1.1.5\" dpId=\"Morpho.SmartChip\" " +
+                                "dc=\""+DC+"\" " +
+                                "mi=\""+MI+"\" " +
+                                " mc=\""+MC+"\" />" +
+                                " <Skey ci=\""+CI+"\" "+">"+
+                                SKEY +
+                                "    </Skey>" +
+                                "   <Data type=\""+TYPE+"\" " +">"+
+                                DATATYPE +
+                                "   </Data>" +
+                                "   <Hmac>"+HMAC+"</Hmac> " +
+                                "</Auth>";
+
+
+                        if (!ApplicationConstant.isNetworkAvailable(PendingPersonalDetailsActivity.this)) {
+
+                            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "No Internet Connection", "Please enable internet connection first to proceed");
+
+                        } else {
+
+                            SendXML_Data(RequestXML);
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                        ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"","Not able to get Aadhar data");
+
+                    }
+
+                }
             }
         }
 
@@ -1417,13 +1535,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         progressDialog.show();
 
         String username = PrefUtils.getFromPrefs(PendingPersonalDetailsActivity.this, ApplicationConstant.USERDETAILS.API_KEY, "");
-
-        if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
-            if (IS_CAPTURE_LOCATION == true){
-                Latitude = getLocation.getLatitude();
-                Longitude = getLocation.getLongitude();
-            }
-        }
 
 
 
@@ -1479,6 +1590,10 @@ public class PendingPersonalDetailsActivity extends MainActivity {
         RequestBody CRIMINALCASE_NO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_NO);
         RequestBody ANNUAL_INCOME_ = RequestBody.create(MediaType.parse("multipart/form-data"), ANNUAL_INCOME);
 
+        RequestBody AADHAR_VEIFY_ = RequestBody.create(MediaType.parse("multipart/form-data"), AADHAR_VEIFY);
+        RequestBody CurrentDateTime_ = RequestBody.create(MediaType.parse("multipart/form-data"), CurrentDateTime);
+
+
 //        RequestBody CRIMINALCASE_DATE_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_DATE);
 //        RequestBody CRIMINALCASE_FIRNO_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_FIRNO);
 //        RequestBody CRIMINALCASE_POLICA_NAME_ = RequestBody.create(MediaType.parse("multipart/form-data"), CRIMINALCASE_POLICA_NAME);
@@ -1516,10 +1631,12 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                 PERMENENT_ADDRESS_,
                 AADHAR_DETAILS_,
                 AADHAR_NO_,
+                AADHAR_VEIFY_,
                 IS_CRIMINALCASE_,
                 CRIMINALCASE_NO_,
                 LATITUDE,
                 LONGITUDE,
+                CurrentDateTime_,
                 body_biometric
 //                CRIMINALCASE_STATUS_
         );
@@ -1586,7 +1703,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1650,8 +1767,6 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                     if (response.body().isStatus()) {
 
-
-
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
@@ -1659,7 +1774,19 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                                 "Photo saved successfully");
 
                         IS_CAPTURE_LOCATION = true;
+
+                        if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
+                            if (IS_CAPTURE_LOCATION == true){
+                                Latitude = getLocation.getLatitude();
+                                Longitude = getLocation.getLongitude();
+                            }
+                        }
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        CurrentDateTime = sdf.format(new Date());
+
                     } else {
+
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
@@ -1687,7 +1814,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1812,7 +1939,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1939,7 +2066,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -1980,6 +2107,9 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                         if (response.body().getData()!=null){
                             AadharData aadhar_data = response.body().getData();
                             alertDialog.dismiss();
+
+                            AADHAR_VEIFY = "1";
+
 
                             BtnAddharVerified.setVisibility(View.VISIBLE);
                             mBtnAddharCapture.setVisibility(View.GONE);
@@ -2024,7 +2154,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -2101,7 +2231,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", t.getMessage().toString().trim());
 
             }
         });
@@ -2175,7 +2305,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", getString(R.string.net_speed_problem));
+                ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "Response", t.getMessage().trim());
 
             }
         });
@@ -2402,6 +2532,16 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        if (SingleSurveyData.getAadhaar_verified() != null ){
+
+            if (SingleSurveyData.getAadhaar_verified().trim().equalsIgnoreCase("1")){
+                BtnAddharVerified.setVisibility(View.VISIBLE);
+                mBtnAddharCapture.setVisibility(View.GONE);
+                mEditAadhar.setEnabled(false);
+            }
+
         }
 
         if (SingleSurveyData.getPermanentAddress() != null ){
@@ -2884,6 +3024,288 @@ public class PendingPersonalDetailsActivity extends MainActivity {
             e.printStackTrace();
         }
     }
+
+
+    public void SendXML_Data(String request){
+
+        progressDialog = CustomProgressDialog.getDialogue(PendingPersonalDetailsActivity.this);
+        progressDialog.show();
+
+        new SendXMLTask().execute();
+
+//        View view = getLayoutInflater().inflate(R.layout.layout_display_pid,null);
+//        EditText edit_aadharpid = view.findViewById(R.id.edit_aadharpid);
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(PersonalDetailsActivity.this);
+//        builder.setView(view);
+//
+//        builder.setPositiveButton("SEND", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//
+//                progressDialog = CustomProgressDialog.getDialogue(PersonalDetailsActivity.this);
+//                progressDialog.show();
+//
+//                new SendXMLTask().execute();
+//            }
+//        });
+//
+//        edit_aadharpid.setText(""+request);
+//
+//
+//        builder.show();
+
+    }
+
+    private String generateTXN(String uid) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        String txn = uid + dateFormat.format(new Date())+"SRDH";
+        System.out.println("Txn====="+txn);
+        return txn;
+    }
+
+    public class SendXMLTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            StringBuilder response = null;
+            try {
+                URL url = new URL("http://164.100.72.223/aua/auaservice/authenticate/");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                // Set timeout as per needs
+                connection.setConnectTimeout(20000);
+                connection.setReadTimeout(20000);
+
+                // Set DoOutput to true if you want to use URLConnection for output.
+                // Default is false
+                connection.setDoOutput(true);
+
+                connection.setUseCaches(true);
+                connection.setRequestMethod("POST");
+
+                // Set uyHeaders
+                connection.setRequestProperty("Accept", "application/xml");
+                connection.setRequestProperty("Content-Type", "application/xml");
+
+                // Write XML
+                OutputStream outputStream = connection.getOutputStream();
+                byte[] b = RequestXML.getBytes("UTF-8");
+                outputStream.write(b);
+                outputStream.flush();
+                outputStream.close();
+
+                // Read XML
+                InputStream inputStream = connection.getInputStream();
+                byte[] res = new byte[2048];
+                int i = 0;
+                response = new StringBuilder();
+                while ((i = inputStream.read(res)) != -1) {
+                    response.append(new String(res, 0, i));
+                }
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            return response.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+
+            if (progressDialog != null && progressDialog.isShowing())
+                progressDialog.dismiss();
+
+//            View view = getLayoutInflater().inflate(R.layout.layout_display_pid,null);
+//            EditText edit_aadharpid = view.findViewById(R.id.edit_aadharpid);
+//
+//            AlertDialog.Builder builder = new AlertDialog.Builder(PersonalDetailsActivity.this);
+//            builder.setView(view);
+//
+//            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    dialogInterface.dismiss();
+//                }
+//            });
+//
+//            edit_aadharpid.setText(""+response.toString());
+//
+//            builder.show();
+
+            System.out.println("ResponseXML: " + response.toString());
+
+            XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
+            JSONObject jsonCheckAadhar = xmlToJson.toJson();
+
+            if (jsonCheckAadhar.has("AuthRes")){
+
+//                        AadharVerifyResponse verifyResponse = new AadharVerifyResponse();
+                try {
+                    JSONObject authData = jsonCheckAadhar.getJSONObject("AuthRes");
+                    String ISVERIFY = authData.getString("ret");
+
+                    if (ISVERIFY.trim().equalsIgnoreCase("y")){
+
+                        AADHAR_VEIFY = "1";
+
+                        ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"Response","Aadhar verification successful");
+
+                        BtnAddharVerified.setVisibility(View.VISIBLE);
+                        mBtnAddharCapture.setVisibility(View.GONE);
+                        mEditAadhar.setEnabled(false);
+
+                        String ClientId  = authData.getString("txn");
+
+                        Address address = new Address();
+                        address.setLoc("");
+                        address.setHouse("");
+                        address.setLandmark("");
+                        address.setSubdist("");
+                        address.setVtc("");
+                        address.setDist("");
+                        address.setPo("");
+                        address.setState("");
+                        address.setStreet("");
+                        address.setCountry("India");
+
+                        aadharData = new AadharData();
+                        aadharData.setClientId(ClientId);
+
+                        aadharData.setGender("");
+                        aadharData.setDob("2020-07-10");
+                        aadharData.setFullName("");
+                        aadharData.setAadhaarNumber(AADHAR_NO);
+                        aadharData.setRawXml("");
+                        aadharData.setZip("");
+                        aadharData.setZipData("");
+                        aadharData.setCareOf("");
+                        aadharData.setFaceStatus(false);
+                        aadharData.setFaceScore(-1);
+                        aadharData.setHasImage(false);
+                        aadharData.setShareCode("BIO");
+                        aadharData.setProfileImage("");
+                        aadharData.setAddress(address);
+
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        Gson gson = gsonBuilder.create();
+                        String json_Aadhar = new Gson().toJson(aadharData);
+
+                        AADHAR_DETAILS = json_Aadhar;
+
+                    }else if (authData.has("err")){
+
+                        AADHAR_VEIFY = "0";
+
+
+                        String ERROR = authData.getString("err");
+
+                        ApplicationConstant.displayAadharErrorMessage(PendingPersonalDetailsActivity.this,ERROR);
+
+                    }else {
+
+                        AADHAR_VEIFY = "0";
+
+                        ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this,"Response","Not Verified");
+
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+
+        }
+    }
+
+
+    private void captureFingureprintNow() {
+
+        if (PIDOPTS != null) {
+
+//                try {
+//
+//                    if (isAppInstalled(PersonalDetailsActivity.this, "in.bioenable.rdservice.fp")) {
+//                        Intent intent2 = new Intent();
+////                          Intent  intent2 = getPackageManager().getLaunchIntentForPackage("com.scl.rdservice");
+//                        intent2.setAction("in.gov.uidai.rdservice.fp.CAPTURE");
+//                        intent2.setPackage("in.bioenable.rdservice.fp");
+//                        intent2.putExtra("PID_OPTIONS", PIDOPTS);
+//                        startActivityForResult(intent2, 15);
+//
+//                    } else {
+//                        Intent intent = new Intent();
+//                        onGoToAnotherInAppStore(intent, "in.bioenable.rdservice.fp");
+//
+//                    }
+//                } catch (Exception e) {
+//                    Intent intent = new Intent();
+//                    onGoToAnotherInAppStore(intent, "in.bioenable.rdservice.fp");
+//                }
+
+            try {
+
+                if (isAppInstalled(PendingPersonalDetailsActivity.this, "com.scl.rdservice")) {
+                    Intent intent2 = new Intent();
+//                          Intent  intent2 = getPackageManager().getLaunchIntentForPackage("com.scl.rdservice");
+                    intent2.setAction("in.gov.uidai.rdservice.fp.CAPTURE");
+                    intent2.setPackage("com.scl.rdservice");
+                    intent2.putExtra("PID_OPTIONS", PIDOPTS);
+                    startActivityForResult(intent2, 15);
+
+                } else {
+                    Intent intent = new Intent();
+                    onGoToAnotherInAppStore(intent, "com.scl.rdservice");
+
+                }
+            } catch (Exception e) {
+                Intent intent = new Intent();
+                onGoToAnotherInAppStore(intent, "com.scl.rdservice");
+            }
+
+
+        }
+
+    }
+
+    public static boolean isAppInstalled(Context context, String packageName) {
+        try {
+            context.getPackageManager().getApplicationInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    private void onGoToAnotherInAppStore(Intent intent, String appPackageName) {
+
+        try {
+
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("market://details?id=" + appPackageName));
+            startActivity(intent);
+
+        } catch (ActivityNotFoundException anfe) {
+
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName));
+            startActivity(intent);
+
+        }
+
+    }
+
 
 
 }

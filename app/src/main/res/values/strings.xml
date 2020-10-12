@@ -1,7 +1,7 @@
 <resources>
 <!--    <string name="app_name" translatable="false">Hawkers Survey App</string>-->
     <string name="app_name" translatable="false">Hawkers Survey Test App</string>
-    <string name="net_speed_problem" translatable="false">Unable to connect! Please check internet connection speed</string>
+<!--    <string name="net_speed_problem" translatable="false">Unable to connect! Please check internet connection speed</string>-->
 
 
     <string-array name="education">
