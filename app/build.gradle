@@ -27,8 +27,8 @@ android {
     }
 
     defaultConfig {
-//        applicationId "com.streethawkerssurveyapp"
-        applicationId "com.test_streetsurveyapp"
+        applicationId "com.streethawkerssurveyapp"
+//        applicationId "com.test_streetsurveyapp"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1

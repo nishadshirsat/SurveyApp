@@ -1,33 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".supervisor.activities.SurveyorListActivity">
 
-    <EditText
-        android:id="@+id/text_search"
+
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/TextFooter"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/text_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:visibility="visible"
+            android:layout_margin="@dimen/dp_size_10"
+            android:background="@drawable/edittext_bg"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:drawablePadding="@dimen/padding_5"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:hint="@string/search"
+            android:padding="8dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecycleSurveyor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/TextFooter"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:visibility="visible"
-        android:layout_margin="@dimen/dp_size_10"
-        android:background="@drawable/edittext_bg"
-        android:drawableLeft="@drawable/ic_search_black_24dp"
-        android:drawablePadding="@dimen/padding_5"
-        android:drawableTint="@color/colorPrimaryDark"
-        android:hint="@string/search"
-        android:padding="8dp" />
+        android:padding="3dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Powered By - Kash IT Solutions LTD"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="normal" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecycleSurveyor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:orientation="vertical" />
-
-
-</LinearLayout>
+</RelativeLayout>

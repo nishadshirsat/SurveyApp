@@ -145,6 +145,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
     private boolean Is_Uploaded = false;
 
     private RecyclerView viewOtherDocuments;
+    String recordingFile = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1241,7 +1242,7 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
     private void Upload_Recordings() {
 
-        String recordingFile = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.RECORDING, "");
+        recordingFile = PrefUtils.getFromPrefs(PendingDocumentsScanActivity.this, ApplicationConstant.RECORDING, "");
 
 //        String recordingFile = null;
 //        try {
@@ -1986,6 +1987,19 @@ public class PendingDocumentsScanActivity extends MainActivity {
 
             }
         });
+    }
+
+    private void DeleteRecording() {
+
+        File fdelete = new File(recordingFile);
+        if (fdelete.exists()) {
+            if (fdelete.delete()) {
+
+            } else {
+
+            }
+        }
+
     }
 
 

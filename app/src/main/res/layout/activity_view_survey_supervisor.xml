@@ -1,224 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
     tools:context=".view_survey.activities.ViewSurveyActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:layout_marginLeft="5dp"-->
-<!--            android:text="Select Surveyor"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:padding="@dimen/dp_size_10"-->
-<!--            android:paddingLeft="@dimen/padding_5"-->
-<!--            android:textSize="@dimen/txt_16sp" />-->
-
-        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-            android:id="@+id/SpinnerType"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size40dp"
-            android:inputType="text"
-            android:visibility="visible"
-            android:layout_marginLeft="@dimen/dp_size_10"
-            android:layout_marginRight="@dimen/dp_size_10"
-            app:hintText="@string/SelectSurveyor"
-            android:background="@drawable/edittext_bg"
-            android:padding="8dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_size_10"
-        android:paddingLeft="5dp"
-        android:weightSum="1">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/TextFooter"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/LinearDate"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size40dp"
-            android:layout_weight="0.4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/ImgDate"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/color_calender" />
+            <!--        <TextView-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_gravity="center_vertical"-->
+            <!--            android:layout_marginLeft="5dp"-->
+            <!--            android:text="Select Surveyor"-->
+            <!--            android:textColor="@color/black"-->
+            <!--            android:padding="@dimen/dp_size_10"-->
+            <!--            android:paddingLeft="@dimen/padding_5"-->
+            <!--            android:textSize="@dimen/txt_16sp" />-->
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/SpinnerType"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size40dp"
+                android:inputType="text"
+                android:visibility="visible"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_marginRight="@dimen/dp_size_10"
+                app:hintText="@string/SelectSurveyor"
+                android:background="@drawable/edittext_bg"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_size_10"
+            android:paddingLeft="5dp"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:id="@+id/LinearDate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size40dp"
+                android:layout_weight="0.4"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ImgDate"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/color_calender" />
+
+                <EditText
+                    android:id="@+id/EditDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/edittext_bg"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/Date"
+                    android:padding="@dimen/dp_size_10"
+                    android:paddingLeft="@dimen/padding_5"
+                    android:textSize="@dimen/txt_16sp" />
+
+            </LinearLayout>
+
 
             <EditText
-                android:id="@+id/EditDate"
-                android:layout_width="match_parent"
+                android:id="@+id/EditAdharNo"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="0.4"
                 android:background="@drawable/edittext_bg"
-                android:focusableInTouchMode="false"
-                android:hint="@string/Date"
+                android:hint="@string/uri_search"
+                android:inputType="text"
                 android:padding="@dimen/dp_size_10"
                 android:paddingLeft="@dimen/padding_5"
                 android:textSize="@dimen/txt_16sp" />
 
+            <Button
+                android:id="@+id/btn_SearchData"
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="35dp"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/padding_5"
+                android:layout_marginRight="@dimen/padding_5"
+                android:textColor="@color/white"
+                android:background="@color/colorAccent"
+                android:text="search"/>
+
         </LinearLayout>
 
 
-        <EditText
-            android:id="@+id/EditAdharNo"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="0.4"
-            android:background="@drawable/edittext_bg"
-            android:hint="@string/uri_search"
-            android:inputType="text"
+            android:orientation="horizontal"
             android:padding="@dimen/dp_size_10"
-            android:paddingLeft="@dimen/padding_5"
-            android:textSize="@dimen/txt_16sp" />
-
-        <Button
-            android:id="@+id/btn_SearchData"
-            android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:layout_height="35dp"
-            android:textSize="12sp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/padding_5"
-            android:layout_marginRight="@dimen/padding_5"
-            android:textColor="@color/white"
-            android:background="@color/colorAccent"
-            android:text="search"/>
-
-    </LinearLayout>
+            android:weightSum="1">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_size_10"
-        android:weightSum="1">
+            <EditText
+                android:id="@+id/text_search"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/size40dp"
+                android:inputType="text"
+                android:layout_marginLeft="5dp"
+                android:visibility="visible"
+                android:background="@drawable/edittext_bg"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:drawablePadding="@dimen/padding_5"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:hint="@string/search_by"
+                android:padding="8dp" />
 
 
-        <EditText
-            android:id="@+id/text_search"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="@dimen/size40dp"
-            android:inputType="text"
-            android:layout_marginLeft="5dp"
-            android:visibility="visible"
-            android:background="@drawable/edittext_bg"
-            android:drawableLeft="@drawable/ic_search_black_24dp"
-            android:drawablePadding="@dimen/padding_5"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:hint="@string/search_by"
-            android:padding="8dp" />
+        </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp_size_10"
-        android:visibility="gone"
-        android:paddingRight="@dimen/dp_size_10"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/TextPageNo"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:gravity="center"
-            android:text="Current Page: 1"
-            android:textColor="@color/black" />
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_size_10"
+            android:visibility="gone"
+            android:paddingRight="@dimen/dp_size_10"
+            android:weightSum="2">
 
+            <TextView
+                android:id="@+id/TextPageNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:text="Current Page: 1"
+                android:textColor="@color/black" />
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_weight="0.01"
+                android:background="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/TextTotalPages"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_weight="1.1"
+                android:gravity="center"
+                android:text="Total Pages : 5"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp_size_10"
-            android:layout_weight="0.01"
-            android:background="@color/colorPrimaryDark" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dark_gray"
+            android:layout_margin="10dp"/>
 
-        <TextView
-            android:id="@+id/TextTotalPages"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginLeft="@dimen/dp_size_10"
-            android:layout_weight="1.1"
-            android:gravity="center"
-            android:text="Total Pages : 5"
-            android:textColor="@color/black" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_size_10"
+            android:visibility="gone"
+            android:paddingRight="@dimen/dp_size_10"
+            android:weightSum="2">
 
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dark_gray"
-        android:layout_margin="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp_size_10"
-        android:visibility="gone"
-        android:paddingRight="@dimen/dp_size_10"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/TextPrevPage"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:gravity="left|center_vertical"
-            android:textStyle="bold"
-            android:drawableLeft="@drawable/ic_keyboard_arrow_left"
-            android:text="  Prev Page"
-            android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/TextPrevPage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:gravity="left|center_vertical"
+                android:textStyle="bold"
+                android:drawableLeft="@drawable/ic_keyboard_arrow_left"
+                android:text="  Prev Page"
+                android:textColor="@color/black" />
 
 
-        <TextView
-            android:id="@+id/TextNextPage"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:layout_marginLeft="@dimen/dp_size_10"
-            android:layout_weight="1.1"
-            android:textStyle="bold"
-            android:drawableRight="@drawable/ic_keyboard_arrow_right"
-            android:gravity="right|center_vertical"
-            android:text="Next Page "
-            android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/TextNextPage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/dp_size_10"
+                android:layout_weight="1.1"
+                android:textStyle="bold"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                android:gravity="right|center_vertical"
+                android:text="Next Page "
+                android:textColor="@color/black" />
 
 
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/TextFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Powered By - Kash IT Solutions LTD"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="normal" />
+
+</RelativeLayout>

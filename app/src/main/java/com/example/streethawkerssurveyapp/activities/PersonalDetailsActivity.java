@@ -396,48 +396,51 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     AADHAR_NO = mEditAadhar.getText().toString().trim();
 
-                    View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_select_type, null);
-                    CardView cCardOTP = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardOTP);
-                    CardView cCardBiometric = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardBiometric);
-                    CardView cCardScanQR = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardScanQR);
+                    captureFingureprintNow();
 
 
-                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
-                    builder.setView(viewAdd);
-                    final android.app.AlertDialog alertDialog = builder.create();
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    alertDialog.setCancelable(true);
-
-                    cCardBiometric.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.dismiss();
-//                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Credentials not found.");
-
-                            captureFingureprintNow();
-
-
-                        }
-                    });
-
-                    cCardOTP.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.dismiss();
-                            SendOtpForAadhar();
-                        }
-                    });
-
-                    cCardScanQR.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.dismiss();
-                            Intent intent = new Intent(PersonalDetailsActivity.this, ScanQrForAadharActivity.class);
-                            startActivityForResult(intent, 12345);
-                        }
-                    });
-
-                    alertDialog.show();
+//                    View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_select_type, null);
+//                    CardView cCardOTP = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardOTP);
+//                    CardView cCardBiometric = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardBiometric);
+//                    CardView cCardScanQR = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardScanQR);
+//
+//
+//                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
+//                    builder.setView(viewAdd);
+//                    final android.app.AlertDialog alertDialog = builder.create();
+//                    alertDialog.setCanceledOnTouchOutside(false);
+//                    alertDialog.setCancelable(true);
+//
+//                    cCardBiometric.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            alertDialog.dismiss();
+////                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Credentials not found.");
+//
+//                            captureFingureprintNow();
+//
+//
+//                        }
+//                    });
+//
+//                    cCardOTP.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            alertDialog.dismiss();
+//                            SendOtpForAadhar();
+//                        }
+//                    });
+//
+//                    cCardScanQR.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            alertDialog.dismiss();
+//                            Intent intent = new Intent(PersonalDetailsActivity.this, ScanQrForAadharActivity.class);
+//                            startActivityForResult(intent, 12345);
+//                        }
+//                    });
+//
+//                    alertDialog.show();
 
                 }
 
@@ -1179,7 +1182,7 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditAadhar = (EditText) findViewById(R.id.EditAadhar);
         mBtnAddharCapture = (Button) findViewById(R.id.BtnAddharCapture);
         mBtnAadharQr = (Button) findViewById(R.id.BtnAadharQr);
-        mBtnAadharQr.setVisibility(View.VISIBLE);
+//        mBtnAadharQr.setVisibility(View.VISIBLE);
         BtnAddharVerified = (TextView) findViewById(R.id.BtnAddharVerified);
 
         mRadioCY = (RadioButton) findViewById(R.id.RadioCY);

@@ -149,6 +149,7 @@ public class DocumentsScanActivity extends MainActivity {
 
     private SurveyDatabase surveyDatabase;
     private SurveyDao surveyDao;
+    String recordingFile = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1416,7 +1417,7 @@ public class DocumentsScanActivity extends MainActivity {
 
     private void Upload_Recordings() {
 
-        String recordingFile = PrefUtils.getFromPrefs(DocumentsScanActivity.this, ApplicationConstant.RECORDING, "");
+        recordingFile = PrefUtils.getFromPrefs(DocumentsScanActivity.this, ApplicationConstant.RECORDING, "");
 
 //        String recordingFile = null;
 //        try {
@@ -1955,6 +1956,9 @@ public class DocumentsScanActivity extends MainActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
+
+                                DeleteRecording();
+
                                 startActivity(new Intent(DocumentsScanActivity.this, DashboardActivity.class));
                                 finish();
 
@@ -1996,6 +2000,17 @@ public class DocumentsScanActivity extends MainActivity {
         });
     }
 
+    private void DeleteRecording() {
 
+        File fdelete = new File(recordingFile);
+        if (fdelete.exists()) {
+            if (fdelete.delete()) {
+
+            } else {
+
+            }
+        }
+
+    }
 
 }

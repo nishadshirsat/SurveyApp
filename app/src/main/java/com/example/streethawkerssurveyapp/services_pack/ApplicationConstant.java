@@ -213,6 +213,9 @@ public class ApplicationConstant {
             message = "Surveyor ID Required";
         }else if (errorCode.trim().equals("8999")) {
             message = "Server Error";
+        }else {
+            message = "Some Error has occured";
+
         }
 
         if (context != null) {

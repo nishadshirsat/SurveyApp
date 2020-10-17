@@ -24,6 +24,16 @@
         </LinearLayout>
     </ScrollView>
 
-
+    <TextView
+        android:id="@+id/TextFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Powered By - Kash IT Solutions LTD"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="normal" />
 
 </RelativeLayout>

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="15dp"
     tools:context=".activities.PersonalDetailsActivity">
 
     <ScrollView
@@ -1731,8 +1730,8 @@
         android:id="@+id/relative_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
+        android:layout_above="@+id/TextFooter"
+        android:layout_margin="10dp"
         android:gravity="bottom">
 
         <Button
@@ -1770,6 +1769,19 @@
 
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/TextFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Powered By - Kash IT Solutions LTD"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="normal" />
+
 
 
 </RelativeLayout>
