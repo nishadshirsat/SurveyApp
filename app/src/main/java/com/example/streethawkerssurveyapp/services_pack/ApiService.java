@@ -27,7 +27,7 @@ public class ApiService {
 
 
   public static OkHttpClient client = getClient();
-  public static final String BASE_URL = "http://dashboard.delhistreethawker.com/api/";
+  public static final String BASE_URL = "https://dashboard.delhistreethawker.com/api/";
 //  public static final String BASE_URL = "https://staging.delhistreethawker.com/api/";
   public static final String AADHAR_URL = "https://kyc-api.aadhaarkyc.io/api/v1/aadhaar-v2/";
 

@@ -396,51 +396,51 @@ public class PersonalDetailsActivity extends MainActivity {
 
                     AADHAR_NO = mEditAadhar.getText().toString().trim();
 
-                    captureFingureprintNow();
+//                    captureFingureprintNow();
 
 
-//                    View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_select_type, null);
-//                    CardView cCardOTP = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardOTP);
-//                    CardView cCardBiometric = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardBiometric);
-//                    CardView cCardScanQR = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardScanQR);
-//
-//
-//                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
-//                    builder.setView(viewAdd);
-//                    final android.app.AlertDialog alertDialog = builder.create();
-//                    alertDialog.setCanceledOnTouchOutside(false);
-//                    alertDialog.setCancelable(true);
-//
-//                    cCardBiometric.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            alertDialog.dismiss();
-////                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Credentials not found.");
-//
-//                            captureFingureprintNow();
-//
-//
-//                        }
-//                    });
-//
-//                    cCardOTP.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            alertDialog.dismiss();
-//                            SendOtpForAadhar();
-//                        }
-//                    });
-//
-//                    cCardScanQR.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            alertDialog.dismiss();
-//                            Intent intent = new Intent(PersonalDetailsActivity.this, ScanQrForAadharActivity.class);
-//                            startActivityForResult(intent, 12345);
-//                        }
-//                    });
-//
-//                    alertDialog.show();
+                    View viewAdd = LayoutInflater.from(PersonalDetailsActivity.this).inflate(R.layout.layout_select_type, null);
+                    CardView cCardOTP = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardOTP);
+                    CardView cCardBiometric = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardBiometric);
+                    CardView cCardScanQR = (androidx.cardview.widget.CardView) viewAdd.findViewById(R.id.CardScanQR);
+
+
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PersonalDetailsActivity.this);
+                    builder.setView(viewAdd);
+                    final android.app.AlertDialog alertDialog = builder.create();
+                    alertDialog.setCanceledOnTouchOutside(false);
+                    alertDialog.setCancelable(true);
+
+                    cCardBiometric.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+//                            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Credentials not found.");
+
+                            captureFingureprintNow();
+
+
+                        }
+                    });
+
+                    cCardOTP.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                            SendOtpForAadhar();
+                        }
+                    });
+
+                    cCardScanQR.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                            Intent intent = new Intent(PersonalDetailsActivity.this, ScanQrForAadharActivity.class);
+                            startActivityForResult(intent, 12345);
+                        }
+                    });
+
+                    alertDialog.show();
 
                 }
 
@@ -1053,11 +1053,12 @@ public class PersonalDetailsActivity extends MainActivity {
 //        }
 
 
-        else if (mEditLName.getText().toString().trim().isEmpty()) {
-            mEditLName.setError("Enter Last Name");
-            mEditLName.requestFocus();
-            return false;
-        }else
+//        else if (mEditLName.getText().toString().trim().isEmpty()) {
+//            mEditLName.setError("Enter Last Name");
+//            mEditLName.requestFocus();
+//            return false;
+//        }
+//        else
 //        else if (SEX.trim().isEmpty()) {
 //            ApplicationConstant.displayMessageDialog(PersonalDetailsActivity.this, "", "Select Gender");
 //            return false;
@@ -1067,7 +1068,7 @@ public class PersonalDetailsActivity extends MainActivity {
 //            return false;
 //        } else
 
-            if (mEditAge.getText().toString().trim().length() > 3) {
+           else if (mEditAge.getText().toString().trim().length() > 3) {
             mEditAge.setError("Enter Correct Age");
             mEditAge.requestFocus();
             return false;
@@ -1182,7 +1183,7 @@ public class PersonalDetailsActivity extends MainActivity {
         mEditAadhar = (EditText) findViewById(R.id.EditAadhar);
         mBtnAddharCapture = (Button) findViewById(R.id.BtnAddharCapture);
         mBtnAadharQr = (Button) findViewById(R.id.BtnAadharQr);
-//        mBtnAadharQr.setVisibility(View.VISIBLE);
+        mBtnAadharQr.setVisibility(View.VISIBLE);
         BtnAddharVerified = (TextView) findViewById(R.id.BtnAddharVerified);
 
         mRadioCY = (RadioButton) findViewById(R.id.RadioCY);
@@ -1886,8 +1887,7 @@ public class PersonalDetailsActivity extends MainActivity {
                         if (progressDialog != null && progressDialog.isShowing())
                             progressDialog.dismiss();
 
-                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
-                                "Photo saved successfully");
+
                         IS_CAPTURE_LOCATION = true;
 
                         if (getLocation.getLatitude() > 0.0D && getLocation.getLongitude() > 0.0D) {
@@ -1898,8 +1898,11 @@ public class PersonalDetailsActivity extends MainActivity {
                             }
                         }
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         CurrentDateTime = sdf.format(new Date());
+
+                        ApplicationConstant.displayToastMessage(PersonalDetailsActivity.this,
+                                "Photo saved successfully");
 
 
                     } else {

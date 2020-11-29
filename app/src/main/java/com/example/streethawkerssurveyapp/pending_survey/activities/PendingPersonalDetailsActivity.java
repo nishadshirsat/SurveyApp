@@ -375,6 +375,8 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 
                     AADHAR_NO = mEditAadhar.getText().toString().trim();
 
+//                    captureFingureprintNow();
+
 
                     View viewAdd = LayoutInflater.from(PendingPersonalDetailsActivity.this).inflate(R.layout.layout_select_type, null);
                     CardView cCardOTP = (CardView)viewAdd. findViewById(R.id.CardOTP);
@@ -1032,11 +1034,11 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 //            mEditMName.requestFocus();
 //            return false;
 //        }
-        else if (mEditLName.getText().toString().trim().isEmpty()) {
-            mEditLName.setError("Enter Last Name");
-            mEditLName.requestFocus();
-            return false;
-        }else
+//        else if (mEditLName.getText().toString().trim().isEmpty()) {
+//            mEditLName.setError("Enter Last Name");
+//            mEditLName.requestFocus();
+//            return false;
+//        }
 //        else if (SEX.trim().isEmpty()) {
 //            ApplicationConstant.displayMessageDialog(PendingPersonalDetailsActivity.this, "", "Select Gender");
 //            return false;
@@ -1046,7 +1048,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
 //            return false;
 //        } else
 
-            if (mEditAge.getText().toString().trim().length() > 3) {
+        else if (mEditAge.getText().toString().trim().length() > 3) {
             mEditAge.setError("Enter Correct Age");
             mEditAge.requestFocus();
             return false;
@@ -1782,7 +1784,7 @@ public class PendingPersonalDetailsActivity extends MainActivity {
                             }
                         }
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         CurrentDateTime = sdf.format(new Date());
 
                     } else {

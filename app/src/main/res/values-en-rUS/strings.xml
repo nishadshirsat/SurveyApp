@@ -108,7 +108,7 @@
         <item>OTHERS</item>
     </string-array>
 
-    <string name="app_name" translatable="false">Hawkers Survey Test App</string>
+    <string name="app_name" translatable="false">Delhi Street Hawker Survey</string>
     <string name="new_survey">New Survey</string>
     <string name="survey_list" translatable="false">Surveyor List</string>
     <string name="pending_survey" >Pending Survey</string>

@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="V 3.0"
+                    android:text="V 1.0"
                     android:layout_alignParentRight="true"
                     android:paddingTop="@dimen/dp_size_10"
                     android:paddingRight="@dimen/dp_size_10"
