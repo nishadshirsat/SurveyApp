@@ -10,8 +10,19 @@ public class SurveyResponse{
 	@SerializedName("status")
 	private boolean status;
 
+	@SerializedName("msg")
+	private String Message;
+
 	public void setUriNumber(String uriNumber){
 		this.uriNumber = uriNumber;
+	}
+
+	public String getMessage() {
+		return Message;
+	}
+
+	public void setMessage(String message) {
+		Message = message;
 	}
 
 	public String getUriNumber(){

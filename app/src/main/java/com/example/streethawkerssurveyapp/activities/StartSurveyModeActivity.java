@@ -23,6 +23,7 @@ import android.widget.RadioGroup;
 
 import com.example.streethawkerssurveyapp.Helper.LocaleHelper;
 import com.example.streethawkerssurveyapp.R;
+import com.example.streethawkerssurveyapp.local_storage_pack.activities.LocalSurveyListActivity;
 import com.example.streethawkerssurveyapp.response_pack.SurveyDetailsResponse;
 import com.example.streethawkerssurveyapp.response_pack.SurveyResponse;
 import com.example.streethawkerssurveyapp.response_pack.UpdateSurveyResponse;
@@ -210,9 +211,8 @@ public class StartSurveyModeActivity extends MainActivity {
 
                     } else {
 
-                        ApplicationConstant.displayMessageDialog(StartSurveyModeActivity.this,
-                                "Response",
-                                String.valueOf(response.body().isStatus()));
+                        ApplicationConstant.displayMessageDialog(StartSurveyModeActivity.this,"Response",
+                                response.body().getMessage());
                     }
 
                 }else {
